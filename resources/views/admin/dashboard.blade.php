@@ -18,20 +18,15 @@
 				</div>
 				<div class="card-body pad table-responsive">
 					<p>Marcas que pertenecen al cliente</p>
-					<div class="row">
-						<div class="col-sm-3">
-		                    <div class="position-relative p-3 bg-gray" style="height: 180px">
-		                      <div class="ribbon-wrapper ribbon-lg">
-		                        <div class="ribbon bg-info text-lg">
-		                          Marca
-		                        </div>
-		                      </div>
-		                      Imagen??
-		                    </div>
-		                    <small>Calificacion de Limpieza: <u>10</u></small>
-		                </div>
+					<div class="col-lg-3 col-6">
+						<div class="small-box bg-primary">
+							<div class="inner">
+								<h3></h3>
+								<img src="marcas/5e30b9005e314-logo_liv.png" alt="">
+							</div>
+							<a href="#" class="small-box-footer">Calificacion de Limpieza: 10 <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	</div>
