@@ -20,7 +20,7 @@
 <!-- Automatic element centering -->
 <div class="lockscreen-wrapper">
   <div class="lockscreen-logo">
-    <a href="adminLTE/index2.html">
+    <a href="{{ route('admin.users.index') }}">
         <img src="{{ url('images/logowmc.png') }}" width="200px" alt=""></a>
   </div>
   <!-- User name -->
