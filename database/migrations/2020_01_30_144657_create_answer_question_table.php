@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSucursalsTable extends Migration
+class CreateAnswerQuestionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateSucursalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sucursals', function (Blueprint $table) {
+        Schema::create('answer_question', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('marca_id');
-            $table->string('name');
-            $table->string('ciudad');
-            $table->string('puntuacion_total');
+            $table->unsignedInteger('answer_id');
+            $table->unsignedInteger('question_id');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateSucursalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sucursals');
+        Schema::dropIfExists('answer_question');
     }
 }
