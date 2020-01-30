@@ -30,6 +30,7 @@
 			<div class="card-body">
 				<form method="POST" action="{{ route('admin.users.update', $user) }}" class="form-horizontal">
 					@csrf
+          @method('PUT')
                 <div class="card-body">
                   <div class="form-group">
                     <label for="" class="col-form-label">Nombre de Usuario</label>

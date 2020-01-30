@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Marca;
+use App\Sucursal;
+use App\InspeccionSanitaria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -16,7 +18,7 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas = Marca::all();
+        $marcas = Marca::allowed()->get();
         return view('admin.marcas.index', compact('marcas'));
     }
 
@@ -67,7 +69,9 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
-        //
+        $s = Sucursal::where('marca_id', '=', $marca->id)->get();
+        // $sucursal = Marca::with('sucursales')->where('id', '=', $marca->id)->get();
+        return view('admin.marcas.show', compact('marca', 's'));
     }
 
     /**

@@ -16,22 +16,26 @@
 						Inicio
 					</h3>
 				</div>
-				<div class="card-body pad table-responsive">
 					<p>Marcas que pertenecen al cliente</p>
 					<div class="row">
-						<div class="col-sm-3">
-		                    <div class="position-relative p-3 bg-gray" style="height: 180px">
-		                      <div class="ribbon-wrapper ribbon-lg">
-		                        <div class="ribbon bg-info text-lg">
-		                          Marca
-		                        </div>
-		                      </div>
-		                      Imagen??
-		                    </div>
-		                    <small>Calificacion de Limpieza: <u>10</u></small>
-		                </div>
-					</div>
-				</div>
+					@foreach ($marcas as $marca)
+			          <div class="col-12 col-sm-6 col-md-3">
+			            <div class="info-box">
+							<a href="{{ route('admin.marcas.show', $marca) }}">
+			                	<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px">
+			                </a>
+			              <div class="info-box-content">
+			              </div>
+			              <!-- /.info-box-content -->
+			            </div>
+			            <!-- /.info-box -->
+			          </div>
+			          <!-- /.col -->
+			          <!-- fix for small devices only -->
+			          <div class="clearfix hidden-md-up"></div>
+					@endforeach
+			        </div>
+
 			</div>
 		</div>
 	</div>

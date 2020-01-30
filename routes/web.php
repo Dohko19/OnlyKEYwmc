@@ -11,4 +11,5 @@ function (){
 	Route::get('/', 'AdminController@index')->name('admin.index');
 	Route::resource('users', 'UsersController', ['as' => 'admin']);
 	Route::resource('marcas', 'MarcaController', ['as' => 'admin']);
+	Route::resource('sucursales', 'SucursalController', ['as' => 'admin']);
 });

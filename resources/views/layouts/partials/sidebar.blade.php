@@ -14,7 +14,7 @@
         {{-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
       </div>
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
       </div>
     </div>
 
@@ -55,6 +55,24 @@
             <p>
               Marcas
               <span class="badge badge-danger right">new</span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link {{ setActiveRoute('admin.marcas.index') }}">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              Panel de Accion
+              <span class="badge badge-danger right"></span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.sucursales.index') }}" class="nav-link {{ setActiveRoute('admin.sucursales.index') }}">
+            <i class="nav-icon fas far fa-building"></i>
+            <p>
+              Sucursales
+              <span class="badge badge-danger right"></span>
             </p>
           </a>
         </li>

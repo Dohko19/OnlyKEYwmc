@@ -2,7 +2,7 @@
 @section('content')
 @section('header')
 <ol class="breadcrumb float-sm-right">
-	<li class="breadcrumb-item"><a href="{{ route('admin.marcas.index') }}">Marcas</a></li>
+	<li class="breadcrumb-item"><a href="{{ route('admin.sucursales.index') }}">Sucursales</a></li>
 	<li class="breadcrumb-item active">Inicio</li>
 </ol>
 @endsection
@@ -13,8 +13,8 @@
 				<div class="card-header">
 					<h3 class="card-title">
 						<i class="fas fa-marcas"></i>
-							Marcas
-						<a href="{{ route('admin.marcas.create') }}" class="btn btn-info pull-right"><i class="fas fa-plus"></i> Crear Marca</a>
+							Sucursales
+						<a href="{{ route('admin.sucursales.create') }}" class="btn btn-info pull-right"><i class="fas fa-plus"></i> Crear Sucursal</a>
 					</h3>
 				</div>
 			<div class="card-body">
@@ -24,18 +24,18 @@
                 <tr>
                   <th>ID</th>
                   <th>Nombre</th>
-                  <th>Descripcion</th>
+                  <th>Ciudad</th>
                   <th>Creado el:</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                	@foreach ($marcas as $marca)
+                	@foreach ($sucursales as $sucursale)
                 		<tr>
-		                  <td>{{ $marca->id }}</td>
-		                  <td>{{ $marca->name ?? 'Sin datos diposnibles'}}</td>
-		                  <td>{{ $marca->description }}</td>
-		                  <td><img src="{{ url('/marcas/'.$marca->photo) }}" alt="{{ $marca->id .'-'. $marca->name }}" width="100px"></td>
+		                  <td>{{ $sucursale->id }}</td>
+		                  <td>{{ $sucursale->name ?? 'Sin datos diposnibles'}}</td>
+		                  <td>{{ $sucursale->ciudad }}</td>
+		                  <td>{{ $sucursale->created_at->format('d/m/Y') }}</td>
 		                  <td>
 			                  	<button
 			                  	data-toggle="modal"
@@ -44,14 +44,14 @@
 			                  	<i class="fas fa-eye" style="color: gray;"></i>
 			                  	</button>
 		                  	<form
-			                  	action="{{ route('admin.marcas.destroy', $marca) }}"
+			                  	action="{{ route('admin.sucursales.destroy', $sucursale) }}"
 			                  	method="POST"
 			                  	style="display: inline;">
                         		@csrf
                         		@method('DELETE')
-			                  	<a class="btn" href="{{ route('admin.marcas.edit', $marca) }}" style="color: #add8e6;"><i class="far fa-edit"></i></a>
+			                  	<a class="btn" href="{{ route('admin.sucursales.edit', $sucursale) }}" style="color: #add8e6;"><i class="far fa-edit"></i></a>
 			                  	<button class="btn "
-			                  	onclick="return confirm('Estas seguro de Eliminar esta Marca?')"
+			                  	onclick="return confirm('Estas seguro de Eliminar esta Sucursal?')"
 			                  	><i class="fas fa-trash" style="color: red"></i></button>
 	                        </form>
 		                  </td>
