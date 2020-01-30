@@ -10,4 +10,9 @@ class Question extends Model
     {
     	return $this->belongstoMany(Answer::class);
     }
+
+    public function sucursals()
+    {
+    	return $this->belongsTo(Sucursal::class);
+    }
 }

@@ -23,6 +23,7 @@
 						</div>
 						<div class="col-md-9">
 							<h2>Concentrado de Sucursales</h2>
+              {{ $s->name }}
 						</div>
 					</div>
 					<div class="row">
@@ -94,7 +95,7 @@ Highcharts.chart('container', {
        @foreach ($s as $suc)
         {
           name: "{{ $suc->name }}",
-          y: 100, //calificacion en general
+          y: {{ $suc->puntuacion_total }}, //calificacion en general
           drilldown: "{{ $suc->name }}"
         },
 

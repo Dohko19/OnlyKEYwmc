@@ -18,7 +18,7 @@ class CreateSucursalsTable extends Migration
             $table->unsignedInteger('marca_id');
             $table->string('name');
             $table->string('ciudad');
-            $table->string('puntuacion_total');
+            $table->string('puntuacion_total')->nullable();
             $table->timestamps();
         });
     }
