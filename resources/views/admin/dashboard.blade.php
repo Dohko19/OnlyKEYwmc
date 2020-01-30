@@ -17,6 +17,7 @@
 					</h3>
 				</div>
 					<p>Marcas que pertenecen al cliente</p>
+<<<<<<< HEAD
 					<div class="row">
 					@foreach ($marcas as $marca)
 			          <div class="col-12 col-sm-6 col-md-3">
@@ -36,6 +37,17 @@
 					@endforeach
 			        </div>
 
+=======
+					<div class="col-lg-3 col-6">
+						<div class="small-box bg-primary">
+							<div class="inner">
+								<h3></h3>
+								<img src="marcas/5e30b9005e314-logo_liv.png" alt="">
+							</div>
+							<a href="#" class="small-box-footer">Calificacion de Limpieza: 10 <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+>>>>>>> d85af56abd3e5be5a564346dfe9928f376bea8ad
 			</div>
 		</div>
 	</div>
