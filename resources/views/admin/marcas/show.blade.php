@@ -22,8 +22,16 @@
 							<img src="{{ url('marcas/'.$marca->photo) }}" alt="" width="300px">
 						</div>
 						<div class="col-md-9">
-							<h2>Concentrado de Sucursales</h2>
-              {{ $s->collection('name') }}
+							<h2>Concentrado de Sucursales En</h2>
+              @foreach ($sucursales as $sucursal)
+              <b><u>{{ $sucursal->name }}</b></u>
+                @foreach ($sucursal->questions as $squestion)
+                  {{ $squestion->segmento }} <br>
+                  @foreach ($squestion->answers as $sanswers)
+                  {{ $sanswers->respuesta }} <br>
+                  @endforeach
+                @endforeach
+              @endforeach
 						</div>
 					</div>
 					<div class="row">
@@ -54,7 +62,7 @@ Highcharts.chart('container', {
     type: 'column'
   },
   title: {
-    text: 'Sucursal {{ $marca->name }} en CDMX'
+    text: 'Sucursal {{ $marca->name }}'
   },
   subtitle: {
     text: 'Click en las columnas para ver la calificacion por areas.'
@@ -92,11 +100,11 @@ Highcharts.chart('container', {
       name: "SUCURSALES",
       colorByPoint: true,
       data: [
-       @foreach ($s as $suc)
+       @foreach ($sucursales as $sucursal)
         {
-          name: "{{ $suc->name }}",
-          y: {{ $suc->puntuacion_total }}, //calificacion en general
-          drilldown: "{{ $suc->name }}"
+          name: "{{ $sucursal->name }}",
+          y: {{ $sucursal->puntuacion_total }}, //calificacion en general
+          drilldown: "{{ $sucursal->name }}"
         },
 
       @endforeach
@@ -105,9 +113,11 @@ Highcharts.chart('container', {
   ],
   drilldown: {
     series: [
+        @foreach ($sucursales as $sucursal)
       {
-        name: "Otro",
-        id: "Otro",
+        name: "{{ $sucursal->name }}",
+        id: "{{ $sucursal->name }}",
+
         data: [
           [
             "INSTALACIONES Y ÁREAS",
@@ -163,6 +173,7 @@ Highcharts.chart('container', {
           ]
         ]
       },
+       @endforeach
     ]
   }
 });
