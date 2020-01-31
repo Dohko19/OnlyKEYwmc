@@ -23,7 +23,7 @@
 						</div>
 						<div class="col-md-9">
 							<h2>Concentrado de Sucursales</h2>
-              {{ $s->name }}
+              {{ $s->collection('name') }}
 						</div>
 					</div>
 					<div class="row">
