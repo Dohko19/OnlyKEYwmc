@@ -8,18 +8,19 @@
 @endsection
 <div class="container-fluid">
 	<div class="row">
+    <div class="col-md-4"></div>
 		<div class="col-md-4 col-lg-4">
 			<div class="card card-primary card-outline">
 				<div class="card-header">
 						@if ($errors->any())
-	                        <ul class="list-group">
-	                          @foreach ($errors->all() as $error)
-	                            <li class="list-group-item list-group-item-danger">
-	                              {{ $error }}
-	                            </li>
-	                          @endforeach
-	                        </ul>
-                    	@endif
+                <ul class="list-group">
+                  @foreach ($errors->all() as $error)
+                    <li class="list-group-item list-group-item-danger">
+                      {{ $error }}
+                    </li>
+                  @endforeach
+                </ul>
+          	@endif
 					<h3 class="card-title">
 						<i class="fas fa-user"></i>
 						Crear Usuario
@@ -76,9 +77,26 @@
                         @enderror
                     </div>
                   </div>
+                  <div class="col-md-12">
+                <div class="form-group">
+                   <label>Marca a la que pertenece</label>
+                    <select name="roles[]" class="form-control select2bs4" multiple="multiple" data-placeholder="Selecciona un Rol" style="width: 100%;" required>
+                      @foreach ($roles as $id => $name)
+                        <option value="{{ $id }}" {{ $roles->pluck('id')->contains($id) ? 'select' : '' }}>{{ $name }}</option>
+                      @endforeach
+                    </select>
+                        @error('category_id')
+                          <div class="help-block">
+                            <strong>{{ $message }}</strong>
+                          </div>
+                        @enderror
+                    <small class="text-muted">Permisos de usuario</small>
+                    {!! $errors->first('roles','<span class=error>:message</span>')  !!}
+                </div>
+              </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
+                <div class="">
                   <button type="submit" class="btn btn-info btn-block">Crear</button>
                 </div>
                 <!-- /.card-footer -->
@@ -90,3 +108,21 @@
 	</div>
 </div>
 @endsection
+@push('styles')
+  <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
+@endpush
+@push('scripts')
+<script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+  })
+
+</script>
+@endpush

@@ -80,9 +80,25 @@
                         @enderror
                     </div>
                   </div>
+                  <div class="form-group">
+                   <label>Marca a la que pertenece</label>
+                    <select name="roles[]" class="form-control select2bs4" multiple="multiple" data-placeholder="Selecciona un Rol" style="width: 100%;" required>
+                      @foreach ($roles as $id => $name)
+                        <option
+                        {{ $user->roles->pluck('id')->contains($id) ? 'selected' : '' }}
+                        value="{{ $id }}">{{ $name }}</option>
+                      @endforeach
+                    </select>
+                        @error('roles')
+                          <div class="help-block">
+                            <strong>{{ $message }}</strong>
+                          </div>
+                        @enderror
+                    <small class="text-muted">Permisos de usuario</small>
+                </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
+                <div class="">
                   <button type="submit" class="btn btn-info btn-block">Crear</button>
                 </div>
                 <!-- /.card-footer -->
@@ -94,3 +110,21 @@
 	</div>
 </div>
 @endsection
+@push('styles')
+  <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
+@endpush
+@push('scripts')
+<script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+  })
+
+</script>
+@endpush

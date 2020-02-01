@@ -23,15 +23,16 @@
 						</div>
 						<div class="col-md-9">
 							<h2>Concentrado de Sucursales En</h2>
-              @foreach ($sucursales as $sucursal)
-              <b><u>{{ $sucursal->name }}</b></u>
+            {{--   @foreach ($sucursales as $sucursal)
+              <u>Nombre Sucursal: {{ $sucursal->name }}</u>
                 @foreach ($sucursal->questions as $squestion)
-                  {{ $squestion->segmento }} <br>
+                  Segmento: {{ $squestion->segmento }} <br>
                   @foreach ($squestion->answers as $sanswers)
                   {{ $sanswers->respuesta }} <br>
                   @endforeach
                 @endforeach
-              @endforeach
+              @endforeach --}}
+
 						</div>
 					</div>
 					<div class="row">
@@ -100,13 +101,12 @@ Highcharts.chart('container', {
       name: "SUCURSALES",
       colorByPoint: true,
       data: [
-       @foreach ($sucursales as $sucursal)
+      @foreach ($sucursales as $sucursal)
         {
           name: "{{ $sucursal->name }}",
           y: {{ $sucursal->puntuacion_total }}, //calificacion en general
           drilldown: "{{ $sucursal->name }}"
         },
-
       @endforeach
       ]
     }
@@ -117,60 +117,13 @@ Highcharts.chart('container', {
       {
         name: "{{ $sucursal->name }}",
         id: "{{ $sucursal->name }}",
-
         data: [
+         @foreach ($sucursal->questions as $squestion)
           [
-            "INSTALACIONES Y ÁREAS",
-            100
+            "{{ $squestion->segmento}}",
+            {{ $sucursal->puntuacion_total }}
           ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            1.3
-          ],
-          [
-            " <a href='#'> SERVICIOS</a> ",
-            53.02
-          ],
-          [
-            "ALMACENAMIENTO",
-            1.4
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.88
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-          [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
+        @endforeach
         ]
       },
        @endforeach

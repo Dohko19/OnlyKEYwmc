@@ -30,7 +30,7 @@
   @stack('styles')
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
-<div class="wrapper">
+<div class="wrapper" id="app">
 
   <!-- Navbar -->
   @include('layouts.partials.nav')

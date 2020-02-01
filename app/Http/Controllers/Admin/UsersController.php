@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::pluck('display_name', 'id');
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -44,6 +46,9 @@ class UsersController extends Controller
         ]);
 
         $user = User::create($request->all());
+
+        $user->roles()->attach($request->roles);
+
         return redirect()->back()->with('info', 'Usuario Creado Correctamente');
     }
 
@@ -66,7 +71,8 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::pluck('display_name', 'id');
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -79,6 +85,7 @@ class UsersController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update( $request->validated() );
+        $user->roles()->sync($request->roles);
         return back()->with('info','Usuario Actualizado');
     }
 
@@ -91,6 +98,7 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        $user->roles()->sync([]);
         return back()->with('info', 'Usuario Eliminado Correctamente');
     }
 }

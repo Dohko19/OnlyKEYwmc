@@ -40,13 +40,15 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item">
+        @if(auth()->user()->isAdmin())
+          <li class="nav-item">
           <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">
             <i class="nav-icon fas fa-users"></i>
             <p>
               Usuarios
             </p>
           </a>
+        @endif
         </li>
         <li class="nav-header">WHM</li>
         <li class="nav-item">
@@ -74,6 +76,12 @@
               Sucursales
               <span class="badge badge-danger right"></span>
             </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.planes.index') }}" class="nav-link {{ setActiveRoute('admin.planes.index') }}">
+            <i class="fas fa-file-contract nav-icon"></i>
+            <p>Planes de Acción</p>
           </a>
         </li>
           </ul>

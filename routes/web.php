@@ -1,6 +1,5 @@
 <?php
 Auth::routes(['register' => false]);
-
 Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::group([
@@ -12,4 +11,5 @@ function (){
 	Route::resource('users', 'UsersController', ['as' => 'admin']);
 	Route::resource('marcas', 'MarcaController', ['as' => 'admin']);
 	Route::resource('sucursales', 'SucursalController', ['as' => 'admin']);
+	Route::resource('planes', 'PlanesAccionController', ['as' => 'admin']);
 });

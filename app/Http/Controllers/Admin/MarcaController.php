@@ -69,7 +69,7 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
-        $sucursales = Sucursal::where('marca_id', '=', $marca->id)->get();
+        $sucursales = Sucursal::where('marca_id', '=', $marca->id)->orderBy('puntuacion_total', 'DESC')->get();
         // $sucursal = Marca::with('sucursales')->where('id', '=', $marca->id)->get();
         return view('admin.marcas.show', compact('marca', 'sucursales'));
     }
