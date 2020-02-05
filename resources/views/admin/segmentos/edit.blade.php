@@ -65,7 +65,11 @@
           <span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-        <p><img src="{{ url('question/'.$question->photo) }}" alt="{{ $question->question }}"> </p>
+        @if (empty($question->photo))
+        <p>Sin Imagen...</p>
+        @else
+        <p><img src="{{ url('question/'.$question->photo) }}" alt="{{ $question->question ?? ''  }}"> </p>
+        @endif
       </div>
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>

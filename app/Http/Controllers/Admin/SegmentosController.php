@@ -16,7 +16,9 @@ class SegmentosController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.segmentos.index',[
+            'segmentos' => Segmento::all(),
+        ]);
     }
 
     /**

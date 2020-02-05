@@ -42,14 +42,22 @@
         </li>
         @if(auth()->user()->isAdmin())
           <li class="nav-item">
-          <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">
-            <i class="nav-icon fas fa-users"></i>
-            <p>
-              Usuarios
-            </p>
-          </a>
+            <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Usuarios
+              </p>
+            </a>
+          </li>
         @endif
-        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.segmentos.index') }}" class="nav-link {{ setActiveRoute('admin.segmentos.index') }}">
+              <i class="nav-icon fab fa-gg-circle"></i>
+              <p>
+                Panel de Accion
+              </p>
+            </a>
+          </li>
         <li class="nav-header">WHM</li>
         <li class="nav-item">
           <a href="{{ route('admin.marcas.index') }}" class="nav-link {{ setActiveRoute('admin.marcas.index') }}">
