@@ -6,37 +6,26 @@
   <li class="breadcrumb-item active">Inicio</li>
 </ol>
 @endsection
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="card card-primary card-outline">
-				<div class="card-header">
-					<h3 class="card-title">
-						<i class="fab fa-buffer"></i>
-						Inicio
-					</h3>
-				</div>
-					<p>Marcas que pertenecen al cliente</p>
-				<div class="row">
-				@foreach ($marcas as $marca)
-		          <div class="col-12 col-sm-6 col-md-3">
-		            <div class="info-box">
-						<a href="{{ route('admin.marcas.show', $marca) }}">
-		                	<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px">
-		                </a>
-		              <div class="info-box-content">
-		              </div>
-		              <!-- /.info-box-content -->
-		            </div>
-		            <!-- /.info-box -->
+<section class="content text-center" >
+  <div class="container-fluid">
+    <h5 class="mb-2">Marcas que le pertencen al Cliente | KEY</h5>
+    <div class="row justify-content-center align-items-center minh-100" >
+		@foreach ($marcas as $marca)
+	      <div class="col-md-3 col-sm-6 col-12">
+	        	<div class="info-box">
+		          <div class="info-box-content">
+		          	<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px">
 		          </div>
-		          <!-- /.col -->
-		          <!-- fix for small devices only -->
-		          <div class="clearfix hidden-md-up"></div>
-				@endforeach
-		        </div>
-			</div>
-		</div>
-	</div>
-</div>
+	          		<!-- /.info-box-content -->
+	        	</div>
+	          	<a href="{{ route('admin.marcas.show', $marca) }}" class="btn btn-sm btn-primary small-box-footer"><i class="fas fa-star"></i> Calificacion de Limpieza:
+	          	 <u>{{ $marca->puntuacion_general }}</u></a>
+	        	<!-- /.info-box -->
+	      </div>
+      		<!-- /.col -->
+		@endforeach
+    </div>
+    <!-- /.row -->
+</section>
+
 @endsection

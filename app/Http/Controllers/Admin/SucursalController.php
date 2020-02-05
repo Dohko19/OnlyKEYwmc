@@ -54,7 +54,7 @@ class SucursalController extends Controller
      * @param  \App\Sucursal  $sucursal
      * @return \Illuminate\Http\Response
      */
-    public function show(Sucursal $sucursal)
+    public function show($id)
     {
         //
     }
@@ -80,7 +80,13 @@ class SucursalController extends Controller
      */
     public function update(Request $request, Sucursal $sucursale)
     {
-        //
+        $this->validate($request, [
+            'name' => 'min:3|string',
+            'ciudad' => 'min:1|string'
+        ]);
+
+        $sucursal = Sucursal::update($request->all());
+        return redirect()->route('admin.sucursales.index')->with('info', 'Agregado Correctamente');
     }
 
     /**

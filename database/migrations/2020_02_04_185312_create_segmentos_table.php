@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlanesAccionsTable extends Migration
+class CreateSegmentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreatePlanesAccionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('planes_accions', function (Blueprint $table) {
+        Schema::create('segmentos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id');
-            $table->text('comments')->nullable();
-            $table->bigInteger('aprobado')->nullable();
+            $table->string('segmento');
+            $table->bigInteger('puntuacion');
+            $table->unsignedInteger('sucursal_id')->nullable();
+            $table->string('comments');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreatePlanesAccionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('planes_accions');
+        Schema::dropIfExists('segmentos');
     }
 }

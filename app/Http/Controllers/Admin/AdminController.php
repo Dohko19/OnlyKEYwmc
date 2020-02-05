@@ -10,8 +10,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-    	$marcas = Marca::allowed()->get();
-    	$marcas = Marca::all();
+    		$marcas = Marca::allowed()->get();
     	return view('admin.dashboard', compact('marcas'));
     }
 }

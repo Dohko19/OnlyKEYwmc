@@ -12,39 +12,38 @@
 					</h3>
 				</div>
 			<div class="card-body">
-
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Creado el:</th>
-                  <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                	@foreach ($users as $user)
-                		<tr>
-		                  <td>{{ $user->id }}</td>
-		                  <td>{{ $user->name }}</td>
-		                  <td>{{ $user->email }}</td>
-		                  <td>{{ $user->created_at->format('d/m/Y') }}</td>
-		                  <td>
-		                  	<form action="{{ route('admin.users.destroy', $user) }}" method="POST">
-                        		@csrf
-                        		@method('DELETE')
-			                  	<a class="btn" href="#"><i class="fas fa-eye" style="color: gray;"></i></a>
-			                  	<a class="btn" href="{{ route('admin.users.edit', $user) }}" style="color: #add8e6;"><i class="far fa-edit"></i></a>
-			                  	<button class="btn "
-			                  	onclick="return confirm('Estas seguro de Eliminar este Usuario?')"
-			                  	><i class="fas fa-trash" style="color: red"></i></button>
-	                        </form>
-		                  </td>
-                		</tr>
-                	@endforeach
-                </tbody>
-              </table>
+	            <table id="example2" class="table table-bordered table-hover">
+	                <thead>
+		                <tr>
+		                  <th>ID</th>
+		                  <th>Nombre</th>
+		                  <th>Email</th>
+		                  <th>Creado el:</th>
+		                  <th>Acciones</th>
+		                </tr>
+	                </thead>
+	                <tbody>
+	                	@foreach ($users as $user)
+	                		<tr>
+			                  <td>{{ $user->id }}</td>
+			                  <td>{{ $user->name }}</td>
+			                  <td>{{ $user->email }}</td>
+			                  <td>{{ $user->created_at->format('d/m/Y') }}</td>
+			                  <td>
+			                  	<form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+	                        		@csrf
+	                        		@method('DELETE')
+				                  	<a class="btn" href="#"><i class="fas fa-eye" style="color: gray;"></i></a>
+				                  	<a class="btn" href="{{ route('admin.users.edit', $user) }}" style="color: #add8e6;"><i class="far fa-edit"></i></a>
+				                  	<button class="btn "
+				                  	onclick="return confirm('Estas seguro de Eliminar este Usuario?')"
+				                  	><i class="fas fa-trash" style="color: red"></i></button>
+		                        </form>
+			                  </td>
+	                		</tr>
+	                	@endforeach
+	                </tbody>
+	            </table>
             </div>
             <!-- /.card-body -->
 			</div>

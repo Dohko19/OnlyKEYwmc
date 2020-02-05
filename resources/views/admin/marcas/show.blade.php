@@ -13,7 +13,7 @@
 				<div class="card-header">
 					<h3 class="card-title">
 						<i class="fab fa-buffer"></i>
-						Vista show de marcas
+						Resumen
 					</h3>
 				</div>
 				<div class="card-body">
@@ -22,16 +22,17 @@
 							<img src="{{ url('marcas/'.$marca->photo) }}" alt="" width="300px">
 						</div>
 						<div class="col-md-9">
-							<h2>Concentrado de Sucursales En</h2>
-            {{--   @foreach ($sucursales as $sucursal)
-              <u>Nombre Sucursal: {{ $sucursal->name }}</u>
-                @foreach ($sucursal->questions as $squestion)
-                  Segmento: {{ $squestion->segmento }} <br>
-                  @foreach ($squestion->answers as $sanswers)
-                  {{ $sanswers->respuesta }} <br>
-                  @endforeach
-                @endforeach
+							<h2>Concentrado de Sucursales en
+             {{--  @foreach ($sucursales as $sucursal)
+                {{ $sucursal->ciudad }}
               @endforeach --}}
+            </h2>
+              @foreach ($sucursales as $sucursal)
+              <u>Nombre Sucursal: {{ $sucursal->name }}</u>
+              @foreach ($sucursal->segmentos as $segmento)
+                {{ $segmento->segmento }}
+              @endforeach
+              @endforeach
 
 						</div>
 					</div>
@@ -66,7 +67,7 @@ Highcharts.chart('container', {
     text: 'Sucursal {{ $marca->name }}'
   },
   subtitle: {
-    text: 'Click en las columnas para ver la calificacion por areas.'
+    text: 'Click en las columnas para ver la calificacion por sucursal.'
   },
   xAxis: {
     type: 'category'
@@ -103,7 +104,7 @@ Highcharts.chart('container', {
       data: [
       @foreach ($sucursales as $sucursal)
         {
-          name: "{{ $sucursal->name }}",
+          name: "{{ $sucursal->name }} - {{ $sucursal->ciudad }}",
           y: {{ $sucursal->puntuacion_total }}, //calificacion en general
           drilldown: "{{ $sucursal->name }}"
         },
@@ -118,10 +119,10 @@ Highcharts.chart('container', {
         name: "{{ $sucursal->name }}",
         id: "{{ $sucursal->name }}",
         data: [
-         @foreach ($sucursal->questions as $squestion)
+        @foreach ($sucursal->segmentos as $segmento)
           [
-            "{{ $squestion->segmento}}",
-            {{ $sucursal->puntuacion_total }}
+            "<a href='{{ route('admin.segmentos.edit', $segmento) }}'> {{ $segmento->segmento}}</a>",
+            {{ $segmento->puntuacion }}
           ],
         @endforeach
         ]

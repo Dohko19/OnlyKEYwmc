@@ -11,5 +11,8 @@ function (){
 	Route::resource('users', 'UsersController', ['as' => 'admin']);
 	Route::resource('marcas', 'MarcaController', ['as' => 'admin']);
 	Route::resource('sucursales', 'SucursalController', ['as' => 'admin']);
-	Route::resource('planes', 'PlanesAccionController', ['as' => 'admin']);
+	Route::resource('questions', 'QuestionsController', ['as' => 'admin']);
+	Route::resource('segmentos', 'SegmentosController', ['as' => 'admin']);
+	// Route::get('planes/nuevo/{s}', 'PlanesAccionController@plan', ['as' => 'admin'])->name('admin.planes.plan');
+
 });

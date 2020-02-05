@@ -15,10 +15,11 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('segmento');
+            $table->string('segmento_id');
             $table->text('question');
-            $table->unsignedInteger('sucursal_id')->nullable();
-            $table->unsignedInteger('planesAccion_id');
+            $table->string('photo')->nullable()->default('question.png');
+            $table->string('comments')->nullable();
+            $table->string('approved')->nullable();
             $table->timestamps();
         });
     }

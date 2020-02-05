@@ -23,8 +23,8 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <li class="nav-item has-treeview {{ setActiveCollapse('admin') }}">
-          <a href="#" class="nav-link {{ setActiveRoute('admin') }}">
+        <li class="nav-item has-treeview {{ setActiveCollapse('admin.index') }}">
+          <a href="#" class="nav-link {{ setActiveRoute('admin.index') }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Panel de Control
@@ -61,27 +61,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link {{ setActiveRoute('admin.marcas.index') }}">
-            <i class="nav-icon fas fa-columns"></i>
-            <p>
-              Panel de Accion
-              <span class="badge badge-danger right"></span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="{{ route('admin.sucursales.index') }}" class="nav-link {{ setActiveRoute('admin.sucursales.index') }}">
             <i class="nav-icon fas far fa-building"></i>
             <p>
               Sucursales
               <span class="badge badge-danger right"></span>
             </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('admin.planes.index') }}" class="nav-link {{ setActiveRoute('admin.planes.index') }}">
-            <i class="fas fa-file-contract nav-icon"></i>
-            <p>Planes de Acción</p>
           </a>
         </li>
           </ul>

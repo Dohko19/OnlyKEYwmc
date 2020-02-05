@@ -15,8 +15,8 @@ class Sucursal extends Model
     	return $this->belongsTo(Marca::class, 'marca_id');
     }
 
-    public function questions()
+    public function segmentos()
     {
-    	return $this->hasMany(Question::class);
+    	return $this->hasMany(Segmento::class);
     }
 }

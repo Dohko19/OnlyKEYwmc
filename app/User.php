@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Marca::class);
     }
+
+    public function segmentos()
+    {
+        return $this->hasMany(Segmento::class);
+    }
 }

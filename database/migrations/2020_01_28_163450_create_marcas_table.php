@@ -19,6 +19,7 @@ class CreateMarcasTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('photo')->nullable();
+            $table->Integer('puntuacion_general')->nullable()->default('50');
             $table->timestamps();
         });
     }
