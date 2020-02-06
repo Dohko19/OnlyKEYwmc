@@ -14,8 +14,8 @@
 					<h3 class="card-title">
 						<i class="fas fa-marcas"></i>
 							Sucursales
-						<a href="{{ route('admin.sucursales.create') }}" class="btn btn-info pull-right"><i class="fas fa-plus"></i> Crear Sucursal</a>
 					</h3>
+					<a href="{{ route('admin.sucursales.create') }}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Crear Sucursal</a>
 				</div>
 			<div class="card-body">
 
@@ -25,17 +25,22 @@
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Ciudad</th>
+                  <th>Puntuacion</th>
+                  <th>De la marca</th>
                   <th>Creado el:</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 	@foreach ($sucursales as $sucursale)
+                	@foreach ($sucursale->sucursales as $suc)
                 		<tr>
-		                  <td>{{ $sucursale->id }}</td>
-		                  <td>{{ $sucursale->name ?? 'Sin datos diposnibles'}}</td>
-		                  <td>{{ $sucursale->ciudad }}</td>
-		                  <td>{{ $sucursale->created_at->format('d/m/Y') }}</td>
+		                  <td>{{ $suc->id }}</td>
+		                  <td>{{ $suc->name ?? 'Sin datos diposnibles'}}</td>
+		                  <td>{{ $suc->ciudad }}</td>
+		                  <td>{{ $suc->puntuacion_total }}</td>
+		                  <td>{{ $sucursale->name }}</td>
+		                  <td>{{ $suc->created_at->format('d/m/Y') }}</td>
 		                  <td>
 			                  	<button
 			                  	data-toggle="modal"
@@ -44,18 +49,19 @@
 			                  	<i class="fas fa-eye" style="color: gray;"></i>
 			                  	</button>
 		                  	<form
-			                  	action="{{ route('admin.sucursales.destroy', $sucursale) }}"
+			                  	action="{{ route('admin.sucursales.destroy', $suc) }}"
 			                  	method="POST"
 			                  	style="display: inline;">
                         		@csrf
                         		@method('DELETE')
-			                  	<a class="btn" href="{{ route('admin.sucursales.edit', $sucursale) }}" style="color: #add8e6;"><i class="far fa-edit"></i></a>
+			                  	<a class="btn" href="{{ route('admin.sucursales.edit', $suc) }}" style="color: #add8e6;"><i class="far fa-edit"></i></a>
 			                  	<button class="btn "
 			                  	onclick="return confirm('Estas seguro de Eliminar esta Sucursal?')"
 			                  	><i class="fas fa-trash" style="color: red"></i></button>
 	                        </form>
 		                  </td>
                 		</tr>
+                	@endforeach
                 	@endforeach
                 </tbody>
               </table>

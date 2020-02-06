@@ -16,7 +16,7 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        $sucursales = Sucursal::all();
+        $sucursales = Marca::allowed()->get();
         return view('admin.sucursales.index', compact('sucursales'));
     }
 
@@ -67,7 +67,7 @@ class SucursalController extends Controller
      */
     public function edit(Sucursal $sucursale)
     {
-        $marcas = Marca::all();
+        $marcas = Marca::allowed()->get();
         return view('admin.sucursales.edit', compact('sucursale', 'marcas'));
     }
 

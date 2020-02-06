@@ -14,8 +14,8 @@
 					<h3 class="card-title">
 						<i class="fas fa-marcas"></i>
 							Marcas
-						<a href="{{ route('admin.marcas.create') }}" class="btn btn-info pull-right"><i class="fas fa-plus"></i> Crear Marca</a>
 					</h3>
+						<a href="{{ route('admin.marcas.create') }}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Crear Marca</a>
 				</div>
 			<div class="card-body">
 
