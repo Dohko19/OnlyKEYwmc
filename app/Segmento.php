@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Segmento extends Model
 {
-	protected $fillable = ['comments'];
+	protected $fillable = ['comments', 'puntuacion', 'sucursal_id', 'approved'];
 
 	public function sucursals()
 	{
@@ -23,5 +23,13 @@ class Segmento extends Model
     	return $this->hasMany(Question::class);
     }
 
+    public function scopeAllowed($query)
+    {
+        if (auth()->user()->can('view', $this))
+        {
+            return $query; //Verficacion de si es administrador
+        }
+            return $query->where('user_id', auth()->id());
+    }
 
 }

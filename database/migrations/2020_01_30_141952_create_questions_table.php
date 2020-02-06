@@ -19,7 +19,6 @@ class CreateQuestionsTable extends Migration
             $table->text('question');
             $table->string('photo')->nullable()->default('question.png');
             $table->string('comments')->nullable();
-            $table->string('approved')->nullable();
             $table->timestamps();
         });
     }

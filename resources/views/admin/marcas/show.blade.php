@@ -21,20 +21,23 @@
 						<div class="col-md-3">
 							<img src="{{ url('marcas/'.$marca->photo) }}" alt="" width="300px">
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-6">
 							<h2>Concentrado de Sucursales en
+                {{ $marca->name }}
              {{--  @foreach ($sucursales as $sucursal)
                 {{ $sucursal->ciudad }}
               @endforeach --}}
             </h2>
-              @foreach ($sucursales as $sucursal)
-              <u>Nombre Sucursal: {{ $sucursal->name }}</u>
-              @foreach ($sucursal->segmentos as $segmento)
-                {{ $segmento->segmento }}
-              @endforeach
-              @endforeach
-
 						</div>
+            <div class="col-md-3">
+                <label for="graphic">Filtro por Fecha</label>
+              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
+                <input name="graphics" type="text" class="form-control pull-right" id="datepicker">
+                <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                </button>
+              </form>
+            </div>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -49,22 +52,25 @@
 	</div>
 </div>
 @endsection
+@push('styles')
+  <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datepicker/datepicker3.css') }}">
+@endpush
 @push('scripts')
 	<script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
+  <script src="https://code.highcharts.com/modules/data.js"></script>
  	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
  	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/data.js"></script>
 	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
+  <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <script>
 Highcharts.chart('container', {
   chart: {
     type: 'column'
   },
   title: {
-    text: 'Sucursal {{ $marca->name }}'
+    text: 'Marca {{ $marca->name }}'
   },
   subtitle: {
     text: 'Click en las columnas para ver la calificacion por sucursal.'
@@ -121,7 +127,7 @@ Highcharts.chart('container', {
         data: [
         @foreach ($sucursal->segmentos as $segmento)
           [
-            "<a href='{{ route('admin.segmentos.edit', $segmento) }}'> {{ $segmento->segmento}}</a>",
+            "<a href='{{ route('admin.segmentos.edit', $segmento) }}'>{{ $segmento->segmento}}</a>",
             {{ $segmento->puntuacion }}
           ],
         @endforeach
@@ -131,5 +137,15 @@ Highcharts.chart('container', {
     ]
   }
 });
+</script>
+<script>
+  $('#datepicker').datepicker({
+        autoclose: true,
+        language: 'es',
+        format: 'yyyy-mm',
+        viewMode: "months",
+        minViewMode: "months"
+      });
+
 </script>
 @endpush

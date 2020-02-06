@@ -1,4 +1,4 @@
-@if (session('status'))
+{{-- @if (session('status'))
     <div class="alert alert-success" role="alert">
         {{ session('status') }}
     </div>
@@ -12,3 +12,14 @@
 		<span>{{ session('info') }}</span>
 	</div>
 @endif
+@if ($errors->any())
+	<ul class="list-group">
+		@foreach ($errors->all() as $error)
+			<li class="list-group-item list-group-item-danger">
+				{{ $error }}
+			</li>
+		@endforeach
+	</ul>
+@endif --}}
+
+@include('sweetalert::alert')

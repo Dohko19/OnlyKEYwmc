@@ -17,7 +17,7 @@ class SegmentosController extends Controller
     public function index()
     {
         return view('admin.segmentos.index',[
-            'segmentos' => Segmento::all(),
+            'segmentos' => Segmento::allowed()->get(),
         ]);
     }
 
@@ -50,7 +50,7 @@ class SegmentosController extends Controller
      */
     public function show(Segmento $segmento)
     {
-
+        return view('admin.segmentos.show', compact('segmento'));
     }
 
     /**
@@ -76,14 +76,20 @@ class SegmentosController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Segmento  $segmento
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Segmento $segmento)
+    public function approved(Request $request, Segmento $segmento)
     {
-        //
+        // return $request;
+        $segmento->update($request->only('approved'));
+        if($request->approved = 1)
+        {
+            $segmento->puntuacion = "100";
+            $segmento->save();
+        }
+        else
+        {
+            $segmento->puntuacion = "70";
+            $segmento->save();
+        }
+        return redirect()->route('admin.segmentos.index')->withInfo('Aprovado, se mostrara mas en el panel de inicio');
     }
 }

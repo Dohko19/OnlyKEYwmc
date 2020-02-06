@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\InspeccionSanitaria;
 use App\Marca;
 use App\Sucursal;
-use App\InspeccionSanitaria;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Alert;
 
 class MarcaController extends Controller
 {
@@ -58,7 +60,8 @@ class MarcaController extends Controller
                     $marca->save();
                 }
         }
-        return redirect()->route('admin.marcas.index', compact('marca'))->with('info', 'Agregado Correctamente');
+         // alert()->success('Completado','Registro Agregado Correctamente');
+        return redirect()->route('admin.marcas.index', compact('marca'))->with('success', 'Registro Agregado Correctamente');
     }
 
     /**
@@ -67,10 +70,14 @@ class MarcaController extends Controller
      * @param  \App\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function show(Marca $marca)
+    public function show(Request $request, Marca $marca)
     {
-        $sucursales = Sucursal::where('marca_id', '=', $marca->id)->orderBy('puntuacion_total', 'DESC')->get();
-        // $sucursal = Marca::with('sucursales')->where('id', '=', $marca->id)->get();
+        $graphics = $request->get('graphics') ?? '';
+        $sucursales = Sucursal::whereNotNull('created_at')
+        ->graphics($graphics)
+        ->Where('marca_id', '=', $marca->id)
+        ->orderBy('puntuacion_total', 'DESC')
+        ->get();
         return view('admin.marcas.show', compact('marca', 'sucursales'));
     }
 
@@ -127,6 +134,7 @@ class MarcaController extends Controller
     {
         File::delete('marcas/'.$marca->photo); //Borra la foto junto con el registro
         $marca->delete();
-        return back()->with('info', 'Eliminado Correctamente');
+        toast('Registro Eliminado Correctamente','info');
+        return back();
     }
 }

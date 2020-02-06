@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dfbf90542e9cf9cbd7ccb22ea5ef428",
+    "content-hash": "43d123b03df05a91ccc2d373eba269bc",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -424,16 +424,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.13.1",
+            "version": "v6.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f0059760814b76fb5f98bb80628607c7560ebe58"
+                "reference": "9e78f1aeb2c60bd7badcbafc352a9a2c5863c60c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f0059760814b76fb5f98bb80628607c7560ebe58",
-                "reference": "f0059760814b76fb5f98bb80628607c7560ebe58",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/9e78f1aeb2c60bd7badcbafc352a9a2c5863c60c",
+                "reference": "9e78f1aeb2c60bd7badcbafc352a9a2c5863c60c",
                 "shasum": ""
             },
             "require": {
@@ -521,9 +521,9 @@
                 "ext-posix": "Required to use all features of the queue worker.",
                 "ext-redis": "Required to use the Redis cache and queue drivers.",
                 "filp/whoops": "Required for friendly error pages in development (^2.4).",
-                "fzaninotto/faker": "Required to use the eloquent factory builder (^1.4).",
+                "fzaninotto/faker": "Required to use the eloquent factory builder (^1.9.1).",
                 "guzzlehttp/guzzle": "Required to use the Mailgun mail driver and the ping methods on schedules (^6.0).",
-                "laravel/tinker": "Required to use the tinker console command (^1.0).",
+                "laravel/tinker": "Required to use the tinker console command (^2.0).",
                 "league/flysystem-aws-s3-v3": "Required to use the Flysystem S3 driver (^1.0).",
                 "league/flysystem-cached-adapter": "Required to use the Flysystem cache (^1.0).",
                 "league/flysystem-sftp": "Required to use the Flysystem SFTP driver (^1.0).",
@@ -567,20 +567,20 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-01-28T21:44:01+00:00"
+            "time": "2020-02-04T14:38:06+00:00"
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.1.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "d8ce361f2fd979c03e5f66c79d4a95a1c1e68640"
+                "reference": "37579c93271ec30ef099dd633ec7c2de5e5fb112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/d8ce361f2fd979c03e5f66c79d4a95a1c1e68640",
-                "reference": "d8ce361f2fd979c03e5f66c79d4a95a1c1e68640",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/37579c93271ec30ef099dd633ec7c2de5e5fb112",
+                "reference": "37579c93271ec30ef099dd633ec7c2de5e5fb112",
                 "shasum": ""
             },
             "require": {
@@ -592,7 +592,8 @@
                 "symfony/var-dumper": "^4.0|^5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.0"
+                "mockery/mockery": "^1.3.1",
+                "phpunit/phpunit": "^8.0|^9.0"
             },
             "suggest": {
                 "illuminate/database": "The Illuminate Database package (^6.0|^7.0)."
@@ -630,7 +631,7 @@
                 "laravel",
                 "psysh"
             ],
-            "time": "2020-01-14T16:58:39+00:00"
+            "time": "2020-02-05T15:00:44+00:00"
         },
         {
             "name": "league/commonmark",
@@ -770,16 +771,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.63",
+            "version": "1.0.64",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6"
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8132daec326565036bc8e8d1876f77ec183a7bd6",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
                 "shasum": ""
             },
             "require": {
@@ -791,7 +792,7 @@
             },
             "require-dev": {
                 "phpspec/phpspec": "^3.4",
-                "phpunit/phpunit": "^5.7.10"
+                "phpunit/phpunit": "^5.7.26"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -850,7 +851,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-01-04T16:30:31+00:00"
+            "time": "2020-02-05T18:14:17+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1520,6 +1521,72 @@
                 "uuid"
             ],
             "time": "2019-12-17T08:18:51+00:00"
+        },
+        {
+            "name": "realrashid/sweet-alert",
+            "version": "v3.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/realrashid/sweet-alert.git",
+                "reference": "05b6726005cfb46dcdea2f1b21d58b9d403c7956"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/05b6726005cfb46dcdea2f1b21d58b9d403c7956",
+                "reference": "05b6726005cfb46dcdea2f1b21d58b9d403c7956",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.4|^6.0|^7.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "symfony/thanks": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RealRashid\\SweetAlert\\SweetAlertServiceProvider"
+                    ],
+                    "aliases": {
+                        "Alert": "RealRashid\\SweetAlert\\Facades\\Alert"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RealRashid\\SweetAlert\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rashid Ali",
+                    "email": "realrashid05@gmail.com",
+                    "homepage": "https://realrashid.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A BEAUTIFUL, RESPONSIVE, CUSTOMIZABLE, ACCESSIBLE (WAI-ARIA) REPLACEMENT FOR JAVASCRIPT'S POPUP BOXES FOR LARAVEL BY RASHID ALI",
+            "homepage": "https://github.com/realrashid/sweet-alert",
+            "keywords": [
+                "alert",
+                "laravel",
+                "laravel-package",
+                "notifier",
+                "noty",
+                "sweet-alert",
+                "sweet-alert2",
+                "toast"
+            ],
+            "time": "2020-01-24T18:38:56+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4459,16 +4526,16 @@
         },
         {
             "name": "scrivo/highlight.php",
-            "version": "v9.18.0.0",
+            "version": "v9.18.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scrivo/highlight.php.git",
-                "reference": "0e7860058231b5bc843d1f5ac5c091be6b15b2d1"
+                "reference": "a57c858cb753f543965a1e17af386a648012ed8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scrivo/highlight.php/zipball/0e7860058231b5bc843d1f5ac5c091be6b15b2d1",
-                "reference": "0e7860058231b5bc843d1f5ac5c091be6b15b2d1",
+                "url": "https://api.github.com/repos/scrivo/highlight.php/zipball/a57c858cb753f543965a1e17af386a648012ed8f",
+                "reference": "a57c858cb753f543965a1e17af386a648012ed8f",
                 "shasum": ""
             },
             "require": {
@@ -4523,7 +4590,7 @@
                 "highlight.php",
                 "syntax"
             ],
-            "time": "2020-01-29T15:18:09+00:00"
+            "time": "2020-02-03T02:19:36+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

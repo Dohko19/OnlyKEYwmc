@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Sucursal extends Model
@@ -18,5 +19,11 @@ class Sucursal extends Model
     public function segmentos()
     {
     	return $this->hasMany(Segmento::class);
+    }
+
+    public function scopeGraphics($query, $graphics)
+    {
+        if($graphics)
+            return $query->where('created_at', 'LIkE', "%$graphics%");
     }
 }

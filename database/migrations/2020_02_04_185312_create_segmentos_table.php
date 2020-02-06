@@ -19,6 +19,7 @@ class CreateSegmentosTable extends Migration
             $table->string('segmento');
             $table->bigInteger('puntuacion');
             $table->unsignedInteger('sucursal_id')->nullable();
+            $table->string('approved')->nullable();
             $table->string('comments');
             $table->timestamps();
         });
