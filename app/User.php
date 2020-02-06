@@ -66,4 +66,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Segmento::class);
     }
+
+    public function scopeAllowed($query)
+    {
+        if (auth()->user()->can('view', $this))
+        {
+            return $query;
+        }
+            return $query->where('id', auth()->id());
+    }
 }

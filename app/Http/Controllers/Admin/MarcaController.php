@@ -43,8 +43,7 @@ class MarcaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['string'],
+            'name' => ['required', 'string', 'max:255',],
             'photo' => ['image'],
         ]);
 

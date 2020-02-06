@@ -2,6 +2,7 @@
 @section('title', 'Key | Planes de Accion')
 @section('headertitle', 'Plan de Accion:'. " $segmento->segmento ".'')
 @section('content')
+
 <section class="content">
   <!-- Default box -->
   <div class="card">
@@ -104,6 +105,7 @@
   <!-- /.card -->
 </section>
 @endsection
+
 <div class="modal fade" id="modal-img-segmento">
   <div class="modal-dialog">
     <div class="modal-content bg-info">

@@ -8,8 +8,8 @@
 					<h3 class="card-title">
 						<i class="fas fa-users"></i>
 						Usuarios
-						<a href="{{ route('admin.users.create') }}" class="btn btn-info pull-right"><i class="fas fa-plus"></i> Crear Usuario</a>
 					</h3>
+						<a href="{{ route('admin.users.create') }}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Crear Usuario</a>
 				</div>
 			<div class="card-body">
 	            <table id="example2" class="table table-bordered table-hover">

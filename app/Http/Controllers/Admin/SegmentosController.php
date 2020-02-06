@@ -50,6 +50,7 @@ class SegmentosController extends Controller
      */
     public function show(Segmento $segmento)
     {
+        // $segmento = Segmento::with('questions')->get();
         return view('admin.segmentos.show', compact('segmento'));
     }
 

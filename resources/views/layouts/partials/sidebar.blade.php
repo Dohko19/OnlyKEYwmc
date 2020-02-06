@@ -3,7 +3,7 @@
   <a href="{{ route('admin.index') }}" class="brand-link">
     <img src="{{ url('images/key.png') }}" width="50px" alt="Key Logo" class="brand-image img-circle elevation-3"
          style="opacity: .8">
-    <span class="brand-text font-weight-light">Key</span>
+    <span class="brand-text font-weight-light"><p></p></span>
   </a>
 
   <!-- Sidebar -->
@@ -14,7 +14,7 @@
         {{-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
       </div>
       <div class="info">
-        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+        <a href="{{ route('admin.index') }}" class="d-block">WMC</a>
       </div>
     </div>
 
@@ -23,23 +23,13 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <li class="nav-item has-treeview {{ setActiveCollapse('admin.index') }}">
-          <a href="#" class="nav-link {{ setActiveRoute('admin.index') }}">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              Panel de Control
-              <i class="right fas fa-angle-left"></i>
-            </p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ route('admin.index') }}" class="nav-link {{ setActiveRoute('admin.index') }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Inicio</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.index') }}" class="nav-link {{ setActiveRoute('admin.index') }}">
+              <i class="fas fa-tachometer-alt nav-icon"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
         @if(auth()->user()->isAdmin())
           <li class="nav-item">
             <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">
@@ -52,7 +42,7 @@
         @endif
         <li class="nav-item">
             <a href="{{ route('admin.segmentos.index') }}" class="nav-link {{ setActiveRoute('admin.segmentos.index') }}">
-              <i class="nav-icon fab fa-gg-circle"></i>
+              <i class="nav-icon far fa-clipboard"></i>
               <p>
                 Panel de Accion
               </p>
