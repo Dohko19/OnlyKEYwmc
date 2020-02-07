@@ -25,17 +25,20 @@
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Descripcion</th>
+                  <th>Logo:</th>
                   <th>Creado el:</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                	@foreach ($marcas as $marca)
+                	@foreach ($grupos as $grupo)
+                	@foreach ($grupo->marcas as $marca)
                 		<tr>
 		                  <td>{{ $marca->id }}</td>
 		                  <td>{{ $marca->name ?? 'Sin datos diposnibles'}}</td>
 		                  <td>{{ $marca->description }}</td>
 		                  <td><img src="{{ url('/marcas/'.$marca->photo) }}" alt="{{ $marca->id .'-'. $marca->name }}" width="100px"></td>
+		                  <td>{{ $marca->created_at->format('Y-m-d') }}</td>
 		                  <td>
 			                  	<button
 			                  	data-toggle="modal"
@@ -49,13 +52,14 @@
 			                  	style="display: inline;">
                         		@csrf
                         		@method('DELETE')
-			                  	<a class="btn" href="{{ route('admin.marcas.edit', $marca) }}" style="color: #add8e6;"><i class="far fa-edit"></i></a>
+			                  	<a class="btn" href="{{ route('admin.marcas.edit', $marca) }}" style="color: blue;"><i class="far fa-edit"></i></a>
 			                  	<button class="btn "
 			                  	onclick="return confirm('Estas seguro de Eliminar esta Marca?')"
 			                  	><i class="fas fa-trash" style="color: red"></i></button>
 	                        </form>
 		                  </td>
                 		</tr>
+                	@endforeach
                 	@endforeach
                 </tbody>
               </table>

@@ -11,18 +11,22 @@ class Marca extends Model
     	'user_id', 'name', 'description', 'photo',
     ];
 
-    public static function create(array $attributes = [])
+    // public static function create(array $attributes = [])
+    // {
+    //     $attributes['user_id'] = auth()->id();
+
+    //     $marca = static::query()->create($attributes);
+
+    //     return $marca;
+    // }
+
+    // public function users()
+    // {
+    // 	return $this->belongsTo(User::class);
+    // }
+    public function grupos()
     {
-        $attributes['user_id'] = auth()->id();
-
-        $marca = static::query()->create($attributes);
-
-        return $marca;
-    }
-
-    public function users()
-    {
-    	return $this->belongsTo(User::class);
+        return $this->belongsTo(GrupoMarca::class, 'grupo_marca_id');
     }
 
     public function sucursales()
@@ -36,7 +40,7 @@ class Marca extends Model
         {
             return $query; //Verficacion de si es administrador
         }
-            return $query->where('user_id', auth()->id());
+            return $query->where('grupo_marca_id', auth()->id());
     }
 
     public function scopeGraphics($query, $graphics)
