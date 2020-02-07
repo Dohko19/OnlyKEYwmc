@@ -14,7 +14,7 @@
         {{-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
       </div>
       <div class="info">
-        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+        <a href="#" class="d-block">WHM</a>
       </div>
     </div>
 
@@ -41,11 +41,11 @@
             <a href="{{ route('admin.segmentos.index') }}" class="nav-link {{ setActiveRoute('admin.segmentos.index') }}">
               <i class="nav-icon fab fa-gg-circle"></i>
               <p>
-                Panel de Accion
+                Planes de Accion
               </p>
             </a>
           </li>
-        <li class="nav-header">WHM</li>
+        <li class="nav-header">Root</li>
         <li class="nav-item">
           <a href="{{ route('admin.marcas.index') }}" class="nav-link {{ setActiveRoute('admin.marcas.index') }}">
             <i class="nav-icon fab fa-bandcamp"></i>
@@ -60,6 +60,15 @@
             <i class="nav-icon fas far fa-building"></i>
             <p>
               Sucursales
+              <span class="badge badge-danger right"></span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link {{ setActiveRoute('admin.sucursales.index') }}">
+            <i class="nav-icon fas fa-users-cog"></i>
+            <p>
+              Grupos de Marcas
               <span class="badge badge-danger right"></span>
             </p>
           </a>
