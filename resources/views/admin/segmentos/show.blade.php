@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 @section('title', 'Key | Planes de Accion')
+@section('headertitle', $segmento->sucursals->marcas->name )
+@section('header')
+  <img class="float-right" width="70px" height="70px" src="{{ url('marcas/'.$segmento->sucursals->marcas->photo) }}" alt="">
+@endsection
 @section('content')
 
   <section class="content">
@@ -34,16 +38,17 @@
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>Segmento</th>
-                      <th>Plan de Accion</th>
-                      <th>Imagen...</th>
+                      <th style="width: 33%">Segmento</th>
+                      <th style="width: 4%">Plan de Accion</th>
+                      <th style="width: 15%">Imagen...</th>
+                      <th style="width: 25%">Aprobado</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($segmento->questions as $question)
                       @if (!$question->approved == 1)
                         <tr>
-                          <td style="width: 600px;">
+                          <td>
                             {{ $question->question }}
                           </td>
                           <td>
@@ -57,10 +62,29 @@
                             </div>
                             </td>
                             <td>
-                                <a href="{{ route('admin.segmentos.edit', $segmento) }}" class="btn btn-primary"><i class="far fa-edit"></i> Editar</a>
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-img-segmento">
+                                <a href="{{ route('admin.segmentos.edit', $segmento) }}" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Editar</a>
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-img-segmento">
                                   Ver Imagen
                                 </button>
+                            </td>
+                            <td class="align-content-center">
+                               @if (auth()->user()->isAdmin())
+                                <form action="{{ route('admin.questions.approved', $question) }}" method="POST" style="display: inline;">
+                                  @csrf
+                                  @method('PUT')
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <select class="form-control" name="approved" id="">
+                                        <option value="0">No</option>
+                                        <option value="1">Si</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-6">
+                                      <button type="submit" class="btn btn-primary">Enviar</button>
+                                    </div>
+                                  </div>
+                                  </form>
+                              @endif
                             </td>
                         </tr>
                       @endif
@@ -73,8 +97,8 @@
             <!-- /.card -->
           </div>
         </div>
-          <a href="{{ route('admin.segmentos.index') }}"
-          class="btn btn-danger float-right">Cancelar</a>
+          <a href="{{ route('admin.segmentos.status') }}"
+          class="btn btn-danger float-right">Ver Estado</a>
         </div>
       </div>
     </div>
@@ -96,7 +120,7 @@
         @if (empty($question->photo))
         <p>Sin Imagen...</p>
         @else
-        <p><img src="{{ url('question/'.$question->photo) }}" alt="{{ $question->question ?? ''  }}"> </p>
+        <p class="text-center"><img src="{{ url('/'.$question->photo) }} " alt="{{ $question->question ?? ''  }}"> </p>
         @endif
       </div>
       <div class="modal-footer justify-content-between">

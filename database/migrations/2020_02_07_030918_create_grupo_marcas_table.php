@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMarcasTable extends Migration
+class CreateGrupoMarcasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateMarcasTable extends Migration
      */
     public function up()
     {
-        Schema::create('marcas', function (Blueprint $table) {
+        Schema::create('grupo_marcas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('grupo_marca_id');
+            $table->unsignedInteger('user_id');
             $table->string('name');
-            $table->text('description');
-            $table->string('photo')->nullable();
-            $table->Integer('puntuacion_general')->nullable()->default('50');
+            $table->text('description')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateMarcasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marcas');
+        Schema::dropIfExists('grupo_marcas');
     }
 }

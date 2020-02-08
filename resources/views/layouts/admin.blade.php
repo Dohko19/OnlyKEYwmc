@@ -30,49 +30,49 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
   <style>
-    .loader-page {
-    position: fixed;
-    z-index: 25000;
-    background: rgb(255, 255, 255);
-    left: 0px;
-    top: 0px;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition:all .3s ease;
-  }
-  .loader-page::before {
-    content: "";
-    position: absolute;
-    border: 2px solid rgb(50, 150, 176);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-sizing: border-box;
-    border-left: 2px solid rgba(50, 150, 176,0);
-    border-top: 2px solid rgba(50, 150, 176,0);
-    animation: rotarload 1s linear infinite;
-    transform: rotate(0deg);
-  }
-  @keyframes rotarload {
-      0%   {transform: rotate(0deg)}
-      100% {transform: rotate(360deg)}
-  }
-  .loader-page::after {
-    content: "";
-    position: absolute;
-    border: 2px solid rgba(50, 150, 176,.5);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-sizing: border-box;
-    border-left: 2px solid rgba(50, 150, 176, 0);
-    border-top: 2px solid rgba(50, 150, 176, 0);
-    animation: rotarload 1s ease-out infinite;
-    transform: rotate(0deg);
-  }
+      .loader-page {
+        position: fixed;
+        z-index: 25000;
+        background: rgb(255, 255, 255);
+        left: 0px;
+        top: 0px;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:all .3s ease;
+      }
+      .loader-page::before {
+        content: "";
+        position: absolute;
+        border: 2px solid rgb(50, 150, 176);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border-left: 2px solid rgba(50, 150, 176,0);
+        border-top: 2px solid rgba(50, 150, 176,0);
+        animation: rotarload 1s linear infinite;
+        transform: rotate(0deg);
+      }
+      @keyframes rotarload {
+          0%   {transform: rotate(0deg)}
+          100% {transform: rotate(360deg)}
+      }
+      .loader-page::after {
+        content: "";
+        position: absolute;
+        border: 2px solid rgba(50, 150, 176,.5);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border-left: 2px solid rgba(50, 150, 176, 0);
+        border-top: 2px solid rgba(50, 150, 176, 0);
+        animation: rotarload 1s ease-out infinite;
+        transform: rotate(0deg);
+      }
   </style>
   @stack('styles')
 </head>
@@ -81,13 +81,27 @@
 <div class="wrapper" id="app">
 
   <!-- Navbar -->
+  @include('layouts.partials.nav')
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   @include('layouts.partials.sidebar')
   <div class="content-wrapper">
-  <div class="content-header">
-  </div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">@yield('headertitle', '')</h1>
+          </div><!-- /.col -->
+           <div class="col-sm-6">
+            @yield('header')
+           </div>
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- /.content-header -->
 
     <!-- Main content -->
     <section class="content">

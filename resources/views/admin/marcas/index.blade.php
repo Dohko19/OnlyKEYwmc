@@ -30,7 +30,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                	@foreach ($marcas as $marca)
+                	@foreach ($grupos as $grupo)
+                	@foreach($grupo->marcas as $marca)
                 		<tr>
 		                  <td>{{ $marca->id }}</td>
 		                  <td>{{ $marca->name ?? 'Sin datos diposnibles'}}</td>
@@ -56,6 +57,7 @@
 	                        </form>
 		                  </td>
                 		</tr>
+                	@endforeach
                 	@endforeach
                 </tbody>
               </table>

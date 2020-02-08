@@ -18,7 +18,7 @@ class UsersController extends Controller
     public function index()
     {
 
-        $users = User::allowed()->get();
+        $users = User::all();
         return view('admin.users.index', compact('users'));
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\InspeccionSanitaria;
 use App\Marca;
+use App\GrupoMarca;
 use App\Sucursal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,8 +21,9 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas = Marca::allowed()->get();
-        return view('admin.marcas.index', compact('marcas'));
+        $grupos = GrupoMarca::where('user_id', auth()->id())->get();
+        // ddd($marcas);
+        return view('admin.marcas.index', compact('grupos'));
     }
 
     /**
@@ -31,7 +33,9 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        return view('admin.marcas.create');
+        return view('admin.marcas.create',[
+            'grupos' => GrupoMarca::all(),
+        ]);
     }
 
     /**

@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->string('segmento_id');
             $table->text('question');
             $table->string('photo')->nullable()->default('question.png');
+            $table->string('approved')->nullable();
             $table->string('comments')->nullable();
             $table->timestamps();
         });

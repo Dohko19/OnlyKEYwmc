@@ -32,4 +32,10 @@ class Segmento extends Model
             return $query->where('user_id', auth()->id());
     }
 
+    public function scopeSegmento($query, $segmento)
+    {
+        if($segmento)
+            return $query->where('segmento', 'LIkE', "%$segmento%");
+    }
+
 }
