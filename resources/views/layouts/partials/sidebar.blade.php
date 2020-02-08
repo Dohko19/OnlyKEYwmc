@@ -43,13 +43,6 @@
             </p>
           </a>
         </li>
-         @if(auth()->user()->isAdmin())
-            <li class="nav-item">
-              <a href="{{ route('admin.index') }}" class="nav-link {{ setActiveRoute('admin.index') }}">
-                <i class="nav'icon fas fa-tachometer-alt"></i>
-                <p>Dashboard</p>
-              </a>
-            </li>
         @if(auth()->user()->isAdmin())
           <li class="nav-item">
             <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">
@@ -60,14 +53,6 @@
             </a>
           </li>
         @endif
-        <li class="nav-item">
-            <a href="{{ route('admin.segmentos.index') }}" class="nav-link {{ setActiveRoute('admin.segmentos.index') }}">
-              <i class="nav-icon fab fa-gg-circle"></i>
-              <p>
-                Planes de Accion
-              </p>
-            </a>
-          </li>
         <li class="nav-header">Root</li>
         <li class="nav-item">
           <a href="{{ route('admin.marcas.index') }}" class="nav-link {{ setActiveRoute('admin.marcas.index') }}">
@@ -89,7 +74,6 @@
         </li>
         <li class="nav-item">
           <a href="{{ route('admin.gruposm.index') }}" class="nav-link {{ setActiveRoute('admin.gruposm.index') }}">
-          <a href="" class="nav-link {{ setActiveRoute('admin.sucursales.index') }}">
             <i class="nav-icon fas fa-users-cog"></i>
             <p>
               Grupos de Marcas
