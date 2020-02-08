@@ -46,6 +46,7 @@ class GruposMarcasController extends Controller
             'name' => 'required',
             'user_id' => 'required',
             'description' => 'string',
+            'tipo' => 'string',
         ]);
 
         $grupomarcas = GrupoMarca::create($data);

@@ -92,6 +92,18 @@
                           </div>
                         @enderror
                   </div>
+                  <div class="form-group">
+                    <label>En esta Marca se realizara:</label>
+                    <select name="tipo" class="form-control select2" style="width: 100%;" required>
+                        <option value="auditorias">Auditorias</option>
+                        <option value="cuestionarios">Cuestionarios</option>
+                    </select>
+                        @error('user_id')
+                          <div class="help-block">
+                            <strong>{{ $message }}</strong>
+                          </div>
+                        @enderror
+                  </div>
               </div>
                 </div>
                 <!-- /.card-body -->
