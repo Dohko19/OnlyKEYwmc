@@ -14,7 +14,7 @@
 	      <div class="col-md-3 col-sm-6 col-12">
 	        	<div class="info-box">
 		          <div class="info-box-content">
-		          	<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300">
+		          	<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="200px" height="200px">
 		          </div>
 	        	</div>
 	        	@if ($marca->puntuacion_general >= 90)
