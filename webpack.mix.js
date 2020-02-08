@@ -15,7 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
 
 mix.browserSync({
-    proxy: 'http://key.test:8001/'
+    proxy: 'http://onlykeywmc.sw/'
 });
 
 if(mix.inProduction())

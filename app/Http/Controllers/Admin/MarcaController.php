@@ -75,13 +75,17 @@ class MarcaController extends Controller
      */
     public function show(Request $request, Marca $marca)
     {
-        $graphics = $request->get('graphics') ?? '';
-        $sucursales = Sucursal::whereNotNull('created_at')
-        ->graphics($graphics)
-        ->Where('marca_id', '=', $marca->id)
-        ->orderBy('puntuacion_total', 'DESC')
-        ->get();
-        return view('admin.marcas.show', compact('marca', 'sucursales'));
+        if($marca->grupos->tipo == 'auditorias')
+        {
+            $graphics = $request->get('graphics') ?? '';
+            $sucursales = Sucursal::whereNotNull('created_at')
+            ->graphics($graphics)
+            ->Where('marca_id', '=', $marca->id)
+            ->orderBy('puntuacion_total', 'DESC')
+            ->get();
+            return view('admin.marcas.show', compact('marca', 'sucursales'));
+        }
+            return 'esta parte es de cuestionarios';
     }
 
     /**
