@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Marca;
 use App\PlanesAccion;
 use App\Segmento;
 use Illuminate\Http\Request;
@@ -14,11 +15,28 @@ class SegmentosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.segmentos.index',[
-            'segmentos' => Segmento::allowed()->get(),
-        ]);
+        $marca = Marca::existe()->count();
+        if($marca)
+        {
+            return view('admin.segmentos.index',[
+                'segmentos' => Segmento::allowed()->get(),
+            ]);
+        }
+            return redirect()->route('admin.index')->withInfo('Debes pertencer a un grupo de marca o una marca para poder ver esta seccion');
+    }
+
+    public function status()
+    {
+         $marca = Marca::existe()->count();
+        if($marca)
+        {
+            return view('admin.segmentos.status',[
+                'segmentos' => Segmento::allowed()->get(),
+            ]);
+        }
+            return redirect()->route('admin.index')->withInfo('Debes pertencer a un grupo de marca o una marca para poder ver esta seccion');
     }
 
     /**
@@ -50,6 +68,7 @@ class SegmentosController extends Controller
      */
     public function show(Segmento $segmento)
     {
+        // $segmento = Segmento::with('questions')->get();
         return view('admin.segmentos.show', compact('segmento'));
     }
 
@@ -85,11 +104,11 @@ class SegmentosController extends Controller
             $segmento->puntuacion = "100";
             $segmento->save();
         }
-        else
+        elseif($request->approved = 0)
         {
             $segmento->puntuacion = "70";
             $segmento->save();
         }
-        return redirect()->route('admin.segmentos.index')->withInfo('Aprovado, se mostrara mas en el panel de inicio');
+        return redirect()->back()->withInfo('Cambios realizados');
     }
 }

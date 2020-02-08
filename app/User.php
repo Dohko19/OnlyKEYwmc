@@ -66,4 +66,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(GrupoMarca::class);
     }
+
+    public function scopeAllowed($query)
+    {
+        if (auth()->user()->can('view', $this))
+        {
+            return $query; //Verficacion de si es administrador
+        }
+            return $query->where('id', auth()->id());
+    }
 }

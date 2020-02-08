@@ -1,11 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-@section('header')
-<ol class="breadcrumb float-sm-right">
-  <li class="breadcrumb-item">Panel de Control</li>
-  <li class="breadcrumb-item active">Mostrar Marca</li>
-</ol>
-@endsection
+@section('headertitle', '')
+@section('title', 'Key | Mis Sucursales')
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -19,20 +16,18 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-3">
-							<img src="{{ url('marcas/'.$marca->photo) }}" alt="" width="300px">
+							<img src="{{ url('marcas/'.$marca->photo) }}" alt="" width="100px" height="100px">
 						</div>
 						<div class="col-md-6">
-							<h2>Concentrado de Sucursales en
+							<h2 class="text-center">
                 {{ $marca->name }}
-             {{--  @foreach ($sucursales as $sucursal)
-                {{ $sucursal->ciudad }}
-              @endforeach --}}
-            </h2>
+              </h2>
+              <p class="text-center">Calificación de auditoria por sucursal</p>
 						</div>
             <div class="col-md-3">
                 <label for="graphic">Filtro por Fecha</label>
               <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
-                <input name="graphics" type="text" class="form-control pull-right" id="datepicker">
+                <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off">
                 <button type="submit" class="btn btn-default">
                     <i class="fas fa-search"></i>
                 </button>
@@ -43,6 +38,7 @@
 						<div class="col-md-12">
 							<div class="text-center">
 								<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                <small class="text-muted"></small>
 							</div>
 						</div>
 					</div>
@@ -62,19 +58,55 @@
  	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/data.js"></script>
 	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <script>
 Highcharts.chart('container', {
   chart: {
-    type: 'column'
+    type: 'column',
+    events: {
+            load: function () {
+                var label = this.renderer.label("*Click en el nombre para ver plan de accion")
+                .css({
+                    width: '400px',
+                    fontSize: '13px'
+                })
+                .attr({
+                    'stroke': 'silver',
+                    'stroke-width': 1,
+                    'r': 2,
+                    'padding': 5
+                })
+                .add();
+
+                label.align(Highcharts.extend(label.getBBox(), {
+                    align: 'center',
+                    x: 20, // offset
+                    verticalAlign: 'bottom',
+                    y: 0 // offset
+                }), null, 'spacingBox');
+
+            }
+        },
+        marginBottom: 120,
+    inverted: false,
+    scrollablePlotArea: {
+            minWidth: 700,
+            scrollPositionX: 1
+        },
   },
   title: {
-    text: 'Marca {{ $marca->name }}'
+    text: ''
   },
   subtitle: {
     text: 'Click en las columnas para ver la calificacion por sucursal.'
   },
+  accessibility: {
+        announceNewData: {
+            enabled: true
+        }
+    },
   xAxis: {
     type: 'category'
   },
@@ -82,12 +114,16 @@ Highcharts.chart('container', {
     title: {
       text: 'Calificaciones',
       title: 'Sucursales'
-    }
-
+    },
+     min: 0,
+     max: 100,
   },
   legend: {
-    enabled: false
+    enabled: false,
   },
+  credits: {
+    enabled: false
+},
   plotOptions: {
     series: {
       borderWidth: 0,
@@ -119,6 +155,12 @@ Highcharts.chart('container', {
     }
   ],
   drilldown: {
+    drillUpButton: {
+      position: {
+          x: -30,
+          y: -40,
+      }
+  },
     series: [
         @foreach ($sucursales as $sucursal)
       {
@@ -127,7 +169,7 @@ Highcharts.chart('container', {
         data: [
         @foreach ($sucursal->segmentos as $segmento)
           [
-            "<a href='{{ route('admin.segmentos.edit', $segmento) }}'>{{ $segmento->segmento}}</a>",
+            "<a href='{{ route('admin.segmentos.edit', $segmento) }}'><u>{{ $segmento->segmento}}</u></a>",
             {{ $segmento->puntuacion }}
           ],
         @endforeach

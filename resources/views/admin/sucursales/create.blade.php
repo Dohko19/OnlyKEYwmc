@@ -55,7 +55,7 @@
                      @enderror
                     </div>
                   </div>
-                    <div class="form-group">
+                  <div class="form-group">
                     <label>Marca a la que pertenece</label>
                     <select name="marca_id" class="form-control select2" style="width: 100%;" required>
                       @foreach ($marcas as $marca)
@@ -67,7 +67,7 @@
                             <strong>{{ $message }}</strong>
                           </div>
                         @enderror
-                    <small class="text-muted">Necesitas agregar una marca para poder completar esta informacion</small>
+                        <small class="text-muted">Necesitas agregar una marca para poder completar esta informacion</small>
                   </div>
                   </div>
                 </div>

@@ -17,6 +17,7 @@ class UsersController extends Controller
      */
     public function index()
     {
+
         $users = User::all();
         return view('admin.users.index', compact('users'));
     }
@@ -28,6 +29,8 @@ class UsersController extends Controller
      */
     public function create()
     {
+        $user = new User;
+        $this->authorize('create', $user);
         $roles = Role::pluck('display_name', 'id');
         return view('admin.users.create', compact('roles'));
     }
@@ -40,6 +43,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', new User);
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'unique:users', 'email', 'string'],
@@ -60,7 +64,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->authorize('view', $user);
     }
 
     /**
@@ -71,6 +75,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         $roles = Role::pluck('display_name', 'id');
         return view('admin.users.edit', compact('user', 'roles'));
     }
@@ -84,6 +89,7 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        $this->authorize('update', $user);
         $user->update( $request->validated() );
         $user->roles()->sync($request->roles);
         return back()->with('info','Usuario Actualizado');
@@ -97,6 +103,7 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
         $user->delete();
         $user->roles()->sync([]);
         return back()->with('info', 'Usuario Eliminado Correctamente');

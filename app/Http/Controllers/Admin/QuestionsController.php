@@ -22,14 +22,11 @@ class QuestionsController extends Controller
         return back()->withInfo('Informacion Actualizada');
     }
 
-    // public function approved(Request $request, Question $question)
-    // {
-    //     $question->update($request->only('approved'));
-    //     // if($request->approved == "1")
-    //     // {
-    //     //     $seg = Segmento::find($question->segmento_id);
-    //     //     $seg->puntuacion = "100";
-    //     // }
-    //     return back()->withInfo('Aprovado, no se mostrara mas en el panel de inicio');
-    // }
+    public function approved(Request $request, Question $question)
+    {
+        // return $request;
+        $question->update($request->only('approved'));
+
+        return redirect()->route('admin.segmentos.index')->withInfo('Aprovado');
+    }
 }

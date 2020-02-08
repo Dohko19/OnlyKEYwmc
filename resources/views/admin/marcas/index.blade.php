@@ -32,6 +32,7 @@
                 </thead>
                 <tbody>
                 	@foreach ($grupos as $grupo)
+
                 	@foreach ($grupo->marcas as $marca)
                 		<tr>
 		                  <td>{{ $marca->id }}</td>

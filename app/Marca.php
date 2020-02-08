@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Marca extends Model
 {
     protected $fillable = [
-    	'user_id', 'name', 'description', 'photo',
+    	'grupo_marca_id', 'name', 'description', 'photo',
     ];
 
     // public static function create(array $attributes = [])
@@ -41,6 +41,11 @@ class Marca extends Model
             return $query; //Verficacion de si es administrador
         }
             return $query->where('grupo_marca_id', auth()->id());
+    }
+
+    public function scopeExiste($query)
+    {
+        return $query->where('grupo_marca_id', auth()->id());
     }
 
     public function scopeGraphics($query, $graphics)

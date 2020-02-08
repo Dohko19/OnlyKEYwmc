@@ -1,13 +1,16 @@
 @extends('layouts.admin')
 @section('title', 'Key | Planes de Accion')
 @section('headertitle', 'Plan de Accion:'. " $segmento->segmento ".'')
+@section('header')
+  <img class="float-right" width="70px" height="70px" src="{{ url('marcas/'.$segmento->sucursals->marcas->photo) }}" alt="">
+@endsection
 @section('content')
+
 <section class="content">
   <!-- Default box -->
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title"><b>{{ $segmento->sucursals->name }}</b>
-        de la marca <b>{{ $segmento->sucursals->marcas->name }}</b></h3>
+      <h3 class="card-title"><b>{{ $segmento->sucursals->marcas->name }}</b>  <b>{{ $segmento->sucursals->name }}</b></h3>
 
       <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -78,23 +81,8 @@
           </div>
         </div>
 
-          @if (auth()->user()->isAdmin())
-            <div class="col-md-2 float">
-            <b>Aprovado</b>
-            <form action="{{ route('admin.segmentos.approved', $segmento) }}" method="POST">
-              @csrf
-              @method('PUT')
-                <select class="form-control" name="approved" id="">
-                  <option value="0">No</option>
-                  <option value="1">Si</option>
-                </select>
-                <small class="text-muted">Una vez Seleccionada la opcion no se puede cambiar</small><br>
-              <button type="submit" class="btn btn-primary">Cambiar</button>
-              </form>
-            </div>
-          @endif
-          <a href="{{ route('admin.segmentos.index') }}"
-          class="btn btn-danger float-right">Cancelar</a>
+          <a href="{{ route('admin.segmentos.status') }}"
+          class="btn btn-danger float-right">Ir a Estado de Acciones</a>
         </div>
       </div>
     </div>
@@ -104,6 +92,7 @@
   <!-- /.card -->
 </section>
 @endsection
+
 <div class="modal fade" id="modal-img-segmento">
   <div class="modal-dialog">
     <div class="modal-content bg-info">
@@ -116,7 +105,7 @@
         @if (empty($question->photo))
         <p>Sin Imagen...</p>
         @else
-        <p><img src="{{ url('question/'.$question->photo) }}" alt="{{ $question->question ?? ''  }}"> </p>
+        <p class="text-center"><img src="{{ url('/'.$question->photo) }} " alt="{{ $question->question ?? ''  }}"> </p>
         @endif
       </div>
       <div class="modal-footer justify-content-between">

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>@yield('title', 'Key | Inicio')</title>
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -27,8 +28,56 @@
   <link rel="stylesheet" href="{{ asset('adminLTE/plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <style>
+      .loader-page {
+        position: fixed;
+        z-index: 25000;
+        background: rgb(255, 255, 255);
+        left: 0px;
+        top: 0px;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:all .3s ease;
+      }
+      .loader-page::before {
+        content: "";
+        position: absolute;
+        border: 2px solid rgb(50, 150, 176);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border-left: 2px solid rgba(50, 150, 176,0);
+        border-top: 2px solid rgba(50, 150, 176,0);
+        animation: rotarload 1s linear infinite;
+        transform: rotate(0deg);
+      }
+      @keyframes rotarload {
+          0%   {transform: rotate(0deg)}
+          100% {transform: rotate(360deg)}
+      }
+      .loader-page::after {
+        content: "";
+        position: absolute;
+        border: 2px solid rgba(50, 150, 176,.5);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border-left: 2px solid rgba(50, 150, 176, 0);
+        border-top: 2px solid rgba(50, 150, 176, 0);
+        animation: rotarload 1s ease-out infinite;
+        transform: rotate(0deg);
+      }
+  </style>
   @stack('styles')
 </head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="loader-page"></div>
 <body class="hold-transition layout-fixed">
 <div class="wrapper" id="app">
 
@@ -38,15 +87,13 @@
 
   <!-- Main Sidebar Container -->
   @include('layouts.partials.sidebar')
-
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">@yield('headertitle', 'Inicio')</h1>
+            <h1 class="m-0 text-dark">@yield('headertitle', '')</h1>
           </div><!-- /.col -->
            <div class="col-sm-6">
             @yield('header')
@@ -115,5 +162,14 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('adminLTE/js/demo.js') }}"></script>
 @stack('scripts')
+</script>
+<script>
+  $(window).on('load', function () {
+      setTimeout(function () {
+    $(".loader-page").css({visibility:"hidden",opacity:"0"})
+  }, 1);
+
+});
+</script>
 </body>
 </html>

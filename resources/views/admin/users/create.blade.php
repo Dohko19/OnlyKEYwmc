@@ -44,6 +44,34 @@
 	                    @enderror
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label for="" class="col-form-label">Apellidos</label>
+                    <small>*</small>
+                    <div class="">
+                      <input type="text"
+                        class="form-control @error('lastname') is-invalid @else @enderror"
+                        placeholder="Apellidos..." name="lastname" value="{{ old('lastname') }}">
+                        @error('lastname')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="" class="col-form-label">Telefono</label>
+                    <small>*</small>
+                    <div class="">
+                      <input type="number"
+                        class="form-control @error('phone') is-invalid @else @enderror"
+                        placeholder="Telefono..." name="phone" value="{{ old('phone') }}">
+                        @error('phone')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                  </div>
                   <div class="form-group ">
                     <label for="" class="col-form-label">Email</label>
                     <div class="">
