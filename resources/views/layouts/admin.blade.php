@@ -78,6 +78,7 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="loader-page"></div>
+<body class="hold-transition layout-fixed">
 <div class="wrapper" id="app">
 
   <!-- Navbar -->

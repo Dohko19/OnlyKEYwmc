@@ -10,12 +10,11 @@
   </ul>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
-    <!-- Messages Dropdown Menu -->
 
     <!-- Notifications Dropdown Menu -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
-         <i class="far fa-user"></i> {{ auth()->user()->name }}
+        {{ Auth::user()->name }} <i class="nav-icon far fa-user"></i>
         <span class="badge badge-warning navbar-badge"></span>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
