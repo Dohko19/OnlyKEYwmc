@@ -15,7 +15,7 @@ class CreateQuestionnairesTable extends Migration
     {
         Schema::create('questionnaires', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unisgnedInteger('marca_id');
+            $table->unsignedInteger('marca_id');
             $table->string('name');
             $table->string('photo')->nullable();
             $table->bigInteger('value');
