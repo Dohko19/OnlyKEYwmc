@@ -46,6 +46,7 @@ class Marca extends Model
             return $query; //Verficacion de si es administrador
         }
             return $query->where('grupo_marca_id', auth()->id());
+            dd($query);
     }
 
     public function scopeExiste($query)
@@ -58,4 +59,5 @@ class Marca extends Model
         if($graphics)
             return $query->where('created_at', 'LIkE', "%$graphics%");
     }
+
 }

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Alert;
+use App\GrupoMarca;
 use App\Http\Controllers\Controller;
 use App\InspeccionSanitaria;
 use App\Marca;
-use App\GrupoMarca;
+use App\Questionnaire;
 use App\Sucursal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Alert;
 
 class MarcaController extends Controller
 {
@@ -85,7 +86,14 @@ class MarcaController extends Controller
             ->get();
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
-            return 'esta parte es de cuestionarios';
+            $sucursales = Sucursal::with('marcas')
+            ->where('sucursals.marca_id', $marca->id)
+            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.marca_id')
+            ->get();
+
+            // $count = Questionnaire::where('value', '<', 1)->count();
+            // ddd($count);
+            return view('admin.marcas.showquestionnary', compact('marca','sucursales'));
     }
 
     /**

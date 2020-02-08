@@ -9,7 +9,7 @@
 <div class="container-fluid">
 	<div class="row">
     <div class="col-md-2"></div>
-		<div class="col-md-6 col-lg-6">
+		<div class="col-md-12 col-lg-12">
 			<div class="card card-primary card-outline">
 				<div class="card-header">
 						@if ($errors->any())
@@ -27,7 +27,7 @@
 					</h3>
 				</div>
 			<div class="card-body">
-				<form method="POST" action="{{ route('admin.gruposm.store') }}" class="form-horizontal">
+				<form method="POST" action="{{ route('admin.gruposm.store') }}" enctype="multipart/form-data" class="form-horizontal">
 					@csrf
                 <div class="card-body">
                   <div class="form-group">
@@ -126,6 +126,7 @@
 @endpush
 @push('scripts')
 <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('adminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -135,5 +136,10 @@
 
   })
 
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+  bsCustomFileInput.init();
+});
 </script>
 @endpush

@@ -12,7 +12,6 @@
     <div class="row justify-content-center align-items-center minh-100" >
 		@foreach ($grupos as $grupo)
 			@foreach ($grupo->marcas as $marca)
-				{{ $grupo }}
 		      <div class="col-md-3 col-sm-6 col-12">
 		        	<div class="info-box">
 			          <div class="info-box-content">

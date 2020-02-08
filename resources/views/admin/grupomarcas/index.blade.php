@@ -29,7 +29,7 @@
 			                  <td>{{ $grupoMarca->id }}</td>
 			                  <td>{{ $grupoMarca->name }}</td>
 			                  <td>{{ $grupoMarca->description }}</td>
-			                  <td><img src="{{ url('/'.$grupoMarca->logo) }}" alt="" width="100px" height="100px"></td>
+			                  <td><img src="{{ url('grupomarcas/'.$grupoMarca->logo) }}" alt="" width="100px" height="100px"></td>
 			                  <td>{{ $grupoMarca->created_at->format('d/m/Y') }}</td>
 			                  <td>
 			                  	<form action="{{ route('admin.gruposm.destroy', $grupoMarca) }}" method="POST">

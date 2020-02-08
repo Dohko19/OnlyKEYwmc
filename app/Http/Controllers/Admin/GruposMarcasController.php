@@ -42,15 +42,26 @@ class GruposMarcasController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+       $this->validate($request, [
             'name' => 'required',
             'user_id' => 'required',
             'description' => 'string',
             'tipo' => 'string',
+            'logo' => 'image',
         ]);
 
-        $grupomarcas = GrupoMarca::create($data);
-
+        $grupomarcas = GrupoMarca::create($request->except('logo'));
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $path = public_path() . '/grupomarcas/';
+            $fileName = uniqid() .'-'. $file->getClientOriginalName();
+            $moved = $file->move($path, $fileName);
+            if ($moved)
+                {
+                    $grupomarcas->logo = $fileName;
+                    $grupomarcas->save();
+                }
+        }
         return redirect()->back()->with('info', 'Grupo Creado Correctamente');
     }
 
