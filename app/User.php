@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->hasMany(GrupoMarca::class);
     }
 
+    public function segmentos()
+    {
+        return $this->hasMany(Segmento::class);
+    }
+
     public function scopeAllowed($query)
     {
         if (auth()->user()->can('view', $this))

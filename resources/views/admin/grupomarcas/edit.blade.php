@@ -2,8 +2,8 @@
 @section('content')
 @section('header')
 <ol class="breadcrumb float-sm-right">
-  <li class="breadcrumb-item"><a href="{{ route('admin.gruposm.index') }}">Usuarios</a></li>
-  <li class="breadcrumb-item active">Crear Usuario</li>
+  <li class="breadcrumb-item"><a href="{{ route('admin.gruposm.index') }}">Grupos de Marca</a></li>
+  <li class="breadcrumb-item active">Editar Grupo de Marca</li>
 </ol>
 @endsection
 <div class="container-fluid">
@@ -23,12 +23,13 @@
           	@endif
 					<h3 class="card-title">
 						<i class="fas fa-user"></i>
-						Crear Grupo de la marca
+						Editar Grupo de la marca
 					</h3>
 				</div>
 			<div class="card-body">
-				<form method="POST" action="{{ route('admin.gruposm.store') }}" enctype="multipart/form-data" class="form-horizontal">
+				<form method="POST" action="{{ route('admin.gruposm.update',  $gruposMarca) }}" enctype="multipart/form-data" class="form-horizontal">
 					@csrf
+          @method('PUT')
                 <div class="card-body">
                   <div class="form-group">
                     <label for="" class="col-form-label">Nombre</label>
@@ -36,7 +37,7 @@
                     <div class="col-md-12">
                       <input type="text"
                       	class="form-control @error('name') is-invalid @else @enderror"
-                      	placeholder="Grupo de la Marca..." name="name" value="{{ old('name') }}">
+                      	placeholder="Grupo de la Marca..." name="name" value="{{ old('name', $gruposMarca->name) }}">
                       	@error('name')
 	                        <span class="invalid-feedback" role="alert">
 	                            <strong>{{ $message }}</strong>
@@ -52,7 +53,7 @@
                       id="description"
                       cols="10"
                       rows="5"
-                      class="form-control" >{{ old('description') }}</textarea>
+                      class="form-control" >{{ old('description', $gruposMarca->description) }}</textarea>
                       @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -80,10 +81,11 @@
                         @enderror
                   </div>
                   <div class="form-group">
-                    <label>Pertece al usurio</label>
+                    <label>Marca a la que pertenece</label>
                     <select name="user_id" class="form-control select2" style="width: 100%;" required>
                       @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        <option value="{{ $user->id }}"
+                          {{ old('user_id', $gruposMarca->marca_id) == $user->id ? 'selected' : ''}}>{{ $user->name }}</option>
                       @endforeach
                     </select>
                         @error('user_id')
@@ -108,7 +110,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="">
-                  <button type="submit" class="btn btn-info btn-block">Guardar</button>
+                  <button type="submit" class="btn btn-info btn-block">Actualizar</button>
                 </div>
                 <!-- /.card-footer -->
               </form>

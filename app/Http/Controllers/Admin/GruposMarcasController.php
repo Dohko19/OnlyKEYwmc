@@ -6,6 +6,7 @@ use App\GrupoMarca;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class GruposMarcasController extends Controller
 {
@@ -82,9 +83,11 @@ class GruposMarcasController extends Controller
      * @param  \App\GrupoMarca  $grupoMarca
      * @return \Illuminate\Http\Response
      */
-    public function edit(GrupoMarca $grupoMarca)
+    public function edit($id)
     {
-        //
+        $gruposMarca = GrupoMarca::findOrFail($id);
+        $users = User::all();
+        return view('admin.grupomarcas.edit', compact('gruposMarca', 'users'));
     }
 
     /**
@@ -96,7 +99,29 @@ class GruposMarcasController extends Controller
      */
     public function update(Request $request, GrupoMarca $grupoMarca)
     {
-        //
+         $this->validate($request, [
+            'name' => 'required',
+            'user_id' => 'required',
+            'description' => 'string',
+            'tipo' => 'string',
+            'logo' => 'image',
+        ]);
+         File::delete('grupomarcas/'.$grupoMarca->photo);
+        $grupoMarca->update($request->except('logo'));
+        if ($request->hasFile('logo'))
+        {
+            $file = $request->file('logo');
+            $path = public_path() . '/grupomarcas/';
+            $fileName = uniqid().'-'.$file->getClientOriginalName();
+            $moved = $file->move($path, $fileName);
+            if ($moved)
+            {
+                $grupoMarca->logo = $fileName;
+                $grupoMarca->save();
+            }
+        }
+
+        return redirect()->route('admin.gruposm.index')->with('info', 'Datos Actualizados Correctamente');
     }
 
     /**

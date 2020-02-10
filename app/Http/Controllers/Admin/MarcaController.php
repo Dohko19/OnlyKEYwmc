@@ -87,22 +87,33 @@ class MarcaController extends Controller
             ->get();
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
-            $sucursales = Sucursal::select('name')->where('sucursals.id', $marca->id)
-            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+            $graphics = $request->get('graphics') ?? '';
+            $sucursales = Sucursal::where('marca_id', '=', $marca->id)
+            ->graphics($graphics)
+            ->orderBy('puntuacion_total', 'DESC')
             ->get();
-            $ss = Sucursal::select('value')->where('sucursals.id', $marca->id)
-            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
-            ->orderBy('value', 'DESC')
-            ->get()->toArray();
-            $ss = array_filter($ss);
-            $f = 100;
-            $sum = 0;
+            // $sucursales = Sucursal::where('marca_id', '=', $marca->id)
+            // ->get();
+            // $questions = Sucursal::where('questionnaires.riesgo', 'C')
+            // ->where('sucursals.id', $marca->id)
+            // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+            // ->get();
+            // ddd($questions);
+            // $ss = Sucursal::select('value')->where('sucursals.id', $marca->id)
+            // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+            // ->orderBy('value', 'DESC')
+            // ->get()->toArray();
+            // $ss = array_filter($ss);
+            // $f = 100;
+            // $sum = 0;
 
-            foreach($ss as $num => $values) {
-                $sum += $values['value'];
-            }
-            $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca','sucursales', 'average'));
+            // foreach($ss as $num => $values) {
+            //     $sum += $values['value'];
+            // }
+
+            // $average = $sum*$f/count($ss);
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales'));
+            // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 
     /**
@@ -145,7 +156,7 @@ class MarcaController extends Controller
             }
         }
 
-        return redirect()->route('admin.marcas.index', compact('ema'))->with('info', 'Datos Actualizados Correctamente');
+        return redirect()->route('admin.marcas.index')->with('info', 'Datos Actualizados Correctamente');
     }
 
     /**
