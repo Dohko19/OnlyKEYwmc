@@ -11,6 +11,7 @@ use App\Questionnaire;
 use App\Sucursal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class MarcaController extends Controller
@@ -86,14 +87,22 @@ class MarcaController extends Controller
             ->get();
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
-            $sucursales = Sucursal::with('marcas')
-            ->where('sucursals.marca_id', $marca->id)
-            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.marca_id')
+            $sucursales = Sucursal::select('name')->where('sucursals.id', $marca->id)
+            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
             ->get();
+            $ss = Sucursal::select('value')->where('sucursals.id', $marca->id)
+            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+            ->orderBy('value', 'DESC')
+            ->get()->toArray();
+            $ss = array_filter($ss);
+            $f = 100;
+            $sum = 0;
 
-            // $count = Questionnaire::where('value', '<', 1)->count();
-            // ddd($count);
-            return view('admin.marcas.showquestionnary', compact('marca','sucursales'));
+            foreach($ss as $num => $values) {
+                $sum += $values['value'];
+            }
+            $average = $sum*$f/count($ss);
+            return view('admin.marcas.showquestionnary', compact('marca','sucursales', 'average'));
     }
 
     /**

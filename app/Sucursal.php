@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sucursal extends Model
 {
 	protected $fillable = [
-		'name', 'marca_id', 'ciudad'
+		'name', 'marca_id', 'ciudad', 'IdCte'
 	];
 
     public function marcas()
@@ -19,6 +19,11 @@ class Sucursal extends Model
     public function segmentos()
     {
     	return $this->hasMany(Segmento::class);
+    }
+
+    public function questionnaires()
+    {
+        return $this->hasMany(Questionnaire::class);
     }
 
     public function scopeGraphics($query, $graphics)

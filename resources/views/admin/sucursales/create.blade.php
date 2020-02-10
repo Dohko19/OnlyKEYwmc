@@ -55,6 +55,18 @@
                      @enderror
                     </div>
                   </div>
+                  <div class="form-group ">
+                    <label for="" class="col-form-label">Ingresa el id del cliente</label>
+                    <div class="">
+                      <input required type="text" class="form-control @error('IdCte') is-invalid @else border-1 @enderror"
+                      name="IdCte" placeholder="Cliente id" value="{{ old('IdCte') }}">
+                      @error('IdCte')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label>Marca a la que pertenece</label>
                     <select name="marca_id" class="form-control select2" style="width: 100%;" required>

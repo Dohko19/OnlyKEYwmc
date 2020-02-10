@@ -44,7 +44,8 @@ class SucursalController extends Controller
     {
         $this->validate($request, [
             'name' => 'min:3|string',
-            'ciudad' => 'min:1|string'
+            'ciudad' => 'min:1|string',
+            'IdCte' => 'min:1'
         ]);
 
         $sucursal = Sucursal::create($request->all());

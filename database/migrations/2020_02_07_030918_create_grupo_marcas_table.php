@@ -19,6 +19,7 @@ class CreateGrupoMarcasTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('logo')->nullable();
+            $table->string('tipo');
             $table->timestamps();
         });
     }

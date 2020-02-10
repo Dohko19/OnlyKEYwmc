@@ -22,7 +22,7 @@
 							<h2 class="text-center">
                 			{{ $marca->name }}
               				</h2>
-              					<p class="text-center">Calificación de auditoria por sucursal</p>
+              					<p class="text-center">Calificación por sucursal</p>
 						</div>
 			            <div class="col-md-3">
 			                <label for="graphic">Filtro por Fecha</label>
@@ -34,6 +34,9 @@
 			              </form>
 			            </div>
 					</div>
+          @foreach ($sucursales as $sucursal)
+              {{ $sucursal }}
+          @endforeach
 					<!--Graficas-->
         <div class="row">
           <div class="col-12">
@@ -98,7 +101,7 @@ Highcharts.chart('critico', {
     type: 'column',
     events: {
             load: function () {
-                var label = this.renderer.label("*Click en el nombre para ver plan de accion")
+                var label = this.renderer.label("*Click en el nombre para ver detalladamente")
                 .css({
                     width: '400px',
                     fontSize: '13px'
@@ -178,7 +181,7 @@ Highcharts.chart('critico', {
       @foreach ($sucursales as $sucursal)
         {
           name: "{{ $sucursal->name }} - {{ $sucursal->ciudad }}",
-          y: {{ $sucursal->puntuacion_total }}, //calificacion en general
+          y: {{ $average }}, //proemdio
           drilldown: "{{ $sucursal->name }}"
         },
       @endforeach
