@@ -88,19 +88,36 @@ class MarcaController extends Controller
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
             $graphics = $request->get('graphics') ?? '';
+
             $sucursales = Sucursal::where('sucursals.marca_id', '=', $marca->id)
             ->graphics($graphics)
             ->orderBy('puntuacion_total', 'DESC')
             ->get();
+            $i = 0;
+            // ddd(count($sucursales));
+            for($i = 0; $i <= count($sucursales); $i++)
+            {
+                $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
+                ->join('questionnaires', 'sucursals.'.[i], '=', 'questionnaires.sucursal_id')
+                ->where('riesgo', '=', "C")
+                ->get()->toArray();
 
-            $questions = Questionnaire::select('sucursal_id','Value', 'riesgo')
-            ->join('sucursals', 'questionnaires.sucursal_id', '=', 'sucursals.id')
-            ->where('sucursals.id', $marca->id)
-            ->get();
+                $sum = 0;
 
-            $promedio = Sucursal::join('qresults', 'qresults.sucursal_id', '=', 'sucursals.id' )
-            ->where('sucursals.id', $marca->id)
-            ->get();
+                foreach($C as $num => $values) {
+                    $sum += $values['Value'];
+                }
+                $averageC = $sum*100/count($C);
+            }
+            return averageC;
+            // $questions = Questionnaire::select('sucursal_id','Value', 'riesgo')
+            // ->join('sucursals', 'questionnaires.sucursal_id', '=', 'sucursals.id')
+            // ->where('sucursals.id', $marca->id)
+            // ->get();
+
+            // $promedio = Sucursal::join('qresults', 'qresults.sucursal_id', '=', 'sucursals.id' )
+            // ->where('sucursals.id', $marca->id)
+            // ->get();
 
             $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
             ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
