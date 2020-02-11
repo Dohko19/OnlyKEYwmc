@@ -93,56 +93,43 @@ class MarcaController extends Controller
             ->graphics($graphics)
             ->orderBy('puntuacion_total', 'DESC')
             ->get();
-            $i = 0;
-            // ddd(count($sucursales));
-            for($i = 0; $i <= count($sucursales); $i++)
-            {
-                $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
-                ->join('questionnaires', 'sucursals.'.[i], '=', 'questionnaires.sucursal_id')
-                ->where('riesgo', '=', "C")
-                ->get()->toArray();
-
-                $sum = 0;
-
-                foreach($C as $num => $values) {
-                    $sum += $values['Value'];
-                }
-                $averageC = $sum*100/count($C);
-            }
-            return averageC;
-            // $questions = Questionnaire::select('sucursal_id','Value', 'riesgo')
-            // ->join('sucursals', 'questionnaires.sucursal_id', '=', 'sucursals.id')
-            // ->where('sucursals.id', $marca->id)
-            // ->get();
 
             // $promedio = Sucursal::join('qresults', 'qresults.sucursal_id', '=', 'sucursals.id' )
             // ->where('sucursals.id', $marca->id)
             // ->get();
 
-            $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
-            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
-            ->where('riesgo', '=', "C")
-            ->get()->toArray();
+            // $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
+            // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+            // ->where('riesgo', '=', "C")
+            // ->get();
+            // $idq = Questionnaire::select()
+            // $idSuc = Sucursal::where();
+            // $C = DB::table('Questionnaire')->get();
+            // $users = Questionnaire::with(['posts' => function ($query) {
+            //     $query->where('title', 'like', '%first%');
+            // }])->get();
+            // return $idSuc;
 
-            $sum = 0;
 
-            foreach($C as $num => $values) {
-                $sum += $values['Value'];
-            }
-            $averageC = $sum*100/count($C);
+            // $sum = 0;
 
-            $RI = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
-            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
-            ->where('riesgo', '=', "RI")
-            ->get()->toArray();
+            // foreach($C as $num => $values) {
+            //     $sum += $values['Value'];
+            // }
+            // $averageC = $sum*100/count($C);
 
-            $sum = 0;
+            // $RI = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
+            // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+            // ->where('riesgo', '=', "RI")
+            // ->get()->toArray();
 
-            foreach($RI as $num => $values) {
-                $sum += $values['Value'];
-            }
-            $average = $sum*100/count($RI);
-            ddd($averageC);
+            // $sum = 0;
+
+            // foreach($RI as $num => $values) {
+            //     $sum += $values['Value'];
+            // }
+            // $average = $sum*100/count($RI);
+            // ddd($averageC);
             // $sucursales = Sucursal::where('marca_id', '=', $marca->id)
             // ->get();
             // // $questions = Questionnaire::all();
