@@ -21,10 +21,16 @@ class Sucursal extends Model
     	return $this->hasMany(Segmento::class);
     }
 
+    public function qresults()
+    {
+        return $this->hasMany(Qresults::class);
+    }
+
     public function questionaries()
     {
         return $this->hasMany(Questionary::class);
     }
+
 
     public function scopeGraphics($query, $graphics)
     {

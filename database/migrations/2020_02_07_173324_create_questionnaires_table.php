@@ -15,11 +15,11 @@ class CreateQuestionnairesTable extends Migration
     {
         Schema::create('questionnaires', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('questionary_id');
-            $table->unsignedInteger('sucursal_id')
-            $table->string('name');
-            $table->string('photo')->nullable();
-            $table->bigInteger('value');
+            $table->unsignedInteger('questionary_id')->nullable();
+            $table->unsignedInteger('sucursal_id')->nullable();
+            $table->string('name')->nullable();
+            $table->binary('Evidencia')->nullable();
+            $table->bigInteger('Value');
             $table->Integer('IdCuestionario');
             $table->Integer('IdUsuario');
             $table->Integer('Division');

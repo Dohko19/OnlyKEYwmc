@@ -88,17 +88,48 @@ class MarcaController extends Controller
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
             $graphics = $request->get('graphics') ?? '';
-            $sucursales = Sucursal::where('marca_id', '=', $marca->id)
+            $sucursales = Sucursal::where('sucursals.marca_id', '=', $marca->id)
             ->graphics($graphics)
             ->orderBy('puntuacion_total', 'DESC')
             ->get();
+
+            $questions = Questionnaire::select('sucursal_id','Value', 'riesgo')
+            ->join('sucursals', 'questionnaires.sucursal_id', '=', 'sucursals.id')
+            ->where('sucursals.id', $marca->id)
+            ->get();
+
+            $promedio = Sucursal::join('qresults', 'qresults.sucursal_id', '=', 'sucursals.id' )
+            ->where('sucursals.id', $marca->id)
+            ->get();
+
+            $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
+            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+            ->where('riesgo', '=', "C")
+            ->get()->toArray();
+
+            $sum = 0;
+
+            foreach($C as $num => $values) {
+                $sum += $values['Value'];
+            }
+            $averageC = $sum*100/count($C);
+
+            $RI = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
+            ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+            ->where('riesgo', '=', "RI")
+            ->get()->toArray();
+
+            $sum = 0;
+
+            foreach($RI as $num => $values) {
+                $sum += $values['Value'];
+            }
+            $average = $sum*100/count($RI);
+            ddd($averageC);
             // $sucursales = Sucursal::where('marca_id', '=', $marca->id)
             // ->get();
-            // $questions = Sucursal::where('questionnaires.riesgo', 'C')
-            // ->where('sucursals.id', $marca->id)
-            // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
-            // ->get();
-            // ddd($questions);
+            // // $questions = Questionnaire::all();
+            // ddd($sucursales);
             // $ss = Sucursal::select('value')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
             // ->orderBy('value', 'DESC')
@@ -112,7 +143,7 @@ class MarcaController extends Controller
             // }
 
             // $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales'));
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'questions', 'promedio'));
             // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 

@@ -33,15 +33,12 @@
 			                </button>
 			              </form>
 			            </div>
-					</div>{{--
+					</div>
           @foreach ($sucursales as $sucursal)
-          {{ $sucursal }}
-          @foreach ($sucursal->questionaries as $questions)
-          {{ $questions }}
+            @foreach ($sucursal->qresults as $result)
+              {{ $result }}
+            @endforeach
           @endforeach
-          @endforeach  <br> --}}
-
-
 					<!--Graficas-->
         <div class="row">
           <div class="col-12">
@@ -155,7 +152,7 @@
         title: 'Sucursales'
       },
        min: 0,
-       max: 100,
+       max: 1,
     },
     legend: {
       enabled: false,
@@ -184,11 +181,14 @@
         colorByPoint: true,
         data: [
         @foreach ($sucursales as $sucursal)
-          {
-            name: "{{ $sucursal->name }} - {{ $sucursal->ciudad }}",
-            y: {{ $sucursal->puntuacion_total }}, //proemdio
-            drilldown: "{{ $sucursal->name }}"
-          },
+          @foreach ($sucursal->qresults as $result)
+
+            {
+              name: "{{ $sucursal->name }} - {{ $sucursal->ciudad }}",
+              y: {{ $result->C }}, //proemdio
+              drilldown: "{{ $sucursal->name }}"
+            },
+          @endforeach
         @endforeach
         ]
       }
@@ -206,14 +206,14 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-           @foreach ($sucursal->questionaries as $questions)
-                @if ($questions->riesgo == "RI")
+          @foreach ($questions as $question)
+          @if ($question->riesgo == "RI")
                   [
-                    "{{ $questions->riesgo }}",
-                    {{ $questions->total }}
+                    "{{ $question->riesgo }}",
+                    {{ $question->Value }},
                   ],
-                @endif
-              @endforeach
+          @endif
+          @endforeach
           ]
         },
          @endforeach
@@ -276,7 +276,7 @@
         title: 'Sucursales'
       },
        min: 0,
-       max: 100,
+       max: 1,
     },
     legend: {
       enabled: false,
@@ -327,13 +327,13 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ($sucursal->questionaries as $questions)
-                @if ($questions->riesgo == "C")
-              [
-                    "{{ $questions->riesgo }}",
-                    {{ $questions->total }}
-                  ],
-                @endif
+              @foreach ($questions as $question)
+              @if ($question->riesgo == "C")
+                      [
+                        "{{ $question->riesgo }}",
+                        {{ $question->Value }},
+                      ],
+              @endif
               @endforeach
           ]
         },
