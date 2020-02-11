@@ -44,6 +44,6 @@ class Sucursal extends Model
         {
             return $query; //Verficacion de si es administrador
         }
-            return $query->where('grupo_marca_id', $this->marcas->grupos->id);
+            return $query->where('marca_id', $this->marcas->grupos->id);
     }
 }

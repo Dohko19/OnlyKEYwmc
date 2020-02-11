@@ -19,7 +19,7 @@ class GruposMarcasController extends Controller
     {
 
         return view('admin.grupomarcas.index', [
-            'grupomarcas' => GrupoMarca::all(),
+            'grupomarcas' => GrupoMarca::allowed()->get(),
         ]);
     }
 
@@ -97,8 +97,9 @@ class GruposMarcasController extends Controller
      * @param  \App\GrupoMarca  $grupoMarca
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GrupoMarca $grupoMarca)
+    public function update(Request $request, $id)
     {
+        $grupoMarca = GrupoMarca::findOrFail($id);
          $this->validate($request, [
             'name' => 'required',
             'user_id' => 'required',
@@ -130,8 +131,9 @@ class GruposMarcasController extends Controller
      * @param  \App\GrupoMarca  $grupoMarca
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GrupoMarca $grupoMarca)
+    public function destroy($id)
     {
+        $grupoMarca = GrupoMarca::findOrFail($id);
         $grupoMarca->delete();
         return back()->with('info', 'Grupo borrado');
     }

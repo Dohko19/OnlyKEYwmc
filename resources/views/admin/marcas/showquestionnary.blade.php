@@ -33,12 +33,12 @@
 			                </button>
 			              </form>
 			            </div>
-					</div>
+					</div>{{--
           @foreach ($sucursales as $sucursal)
             @foreach ($sucursal->qresults as $result)
               {{ $result }}
             @endforeach
-          @endforeach
+          @endforeach --}}
 					<!--Graficas-->
         <div class="row">
           <div class="col-12">
@@ -152,7 +152,7 @@
         title: 'Sucursales'
       },
        min: 0,
-       max: 1,
+       max: 10,
     },
     legend: {
       enabled: false,
@@ -181,14 +181,11 @@
         colorByPoint: true,
         data: [
         @foreach ($sucursales as $sucursal)
-          @foreach ($sucursal->qresults as $result)
-
-            {
-              name: "{{ $sucursal->name }} - {{ $sucursal->ciudad }}",
-              y: {{ $result->C }}, //proemdio
-              drilldown: "{{ $sucursal->name }}"
-            },
-          @endforeach
+          {
+            name: "{{ $sucursal->name }}  / {{ $sucursal->ciudad }}",
+            y: {{ $sucursal->puntuacion_total }}, //proemdio
+            drilldown: "{{ $sucursal->name }}"
+          },
         @endforeach
         ]
       }
@@ -206,14 +203,14 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-          @foreach ($questions as $question)
-          @if ($question->riesgo == "RI")
-                  [
-                    "{{ $question->riesgo }}",
-                    {{ $question->Value }},
-                  ],
-          @endif
-          @endforeach
+              @foreach ($questions as $question)
+              @if ($question->riesgo == "RI")
+                      [
+                        "{{ $question->riesgo }}",
+                        {{ $question->Value }},
+                      ],
+              @endif
+              @endforeach
           ]
         },
          @endforeach
@@ -276,7 +273,7 @@
         title: 'Sucursales'
       },
        min: 0,
-       max: 1,
+       max: 10,
     },
     legend: {
       enabled: false,
@@ -306,7 +303,7 @@
         data: [
         @foreach ($sucursales as $sucursal)
           {
-            name: "{{ $sucursal->name }} - {{ $sucursal->ciudad }}",
+            name: "{{ $sucursal->name }} # {{ $sucursal->ciudad }}",
             y: {{ $sucursal->puntuacion_total }}, //proemdio
             drilldown: "{{ $sucursal->name }}"
           },

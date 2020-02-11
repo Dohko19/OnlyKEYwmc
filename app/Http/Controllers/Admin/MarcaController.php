@@ -23,9 +23,9 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $grupos = GrupoMarca::where('user_id', auth()->id())->get();
-        // ddd($marcas);
-        return view('admin.marcas.index', compact('grupos'));
+        // $marca = Marca::with('grupos')->get();
+        $marcas = GrupoMarca::allowed()->get();
+        return view('admin.marcas.index', compact('marcas'));
     }
 
     /**
@@ -91,12 +91,13 @@ class MarcaController extends Controller
 
             $sucursales = Sucursal::where('sucursals.marca_id', '=', $marca->id)
             ->graphics($graphics)
+            ->orderBy('puntuacion_total', 'ASC')
+            ->get();
+            // dd($sucursales);
+            $promedio = Sucursal::join('qresults', 'qresults.sucursal_id', '=', 'sucursals.id' )
+            ->where('sucursals.id', $marca->id)
             ->orderBy('puntuacion_total', 'DESC')
             ->get();
-
-            // $promedio = Sucursal::join('qresults', 'qresults.sucursal_id', '=', 'sucursals.id' )
-            // ->where('sucursals.id', $marca->id)
-            // ->get();
 
             // $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
@@ -132,7 +133,8 @@ class MarcaController extends Controller
             // ddd($averageC);
             // $sucursales = Sucursal::where('marca_id', '=', $marca->id)
             // ->get();
-            // // $questions = Questionnaire::all();
+            $questions = Questionnaire::all();
+            $thiis = DB::('questionnaires as q')
             // ddd($sucursales);
             // $ss = Sucursal::select('value')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')

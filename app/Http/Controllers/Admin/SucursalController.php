@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\GrupoMarca;
 use App\Http\Controllers\Controller;
 use App\Sucursal;
 use App\Marca;
@@ -16,8 +17,7 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        $sucursales = Marca::all();
-        // dd($sucursales);
+        $sucursales = GrupoMarca::allowed()->get();
         return view('admin.sucursales.index', compact('sucursales'));
     }
 

@@ -14,7 +14,7 @@
 			@foreach ($grupo->marcas as $marca)
 		      <div class="col-md-3 col-sm-6 col-12">
 		        	<div class="info-box">
-			          <div class="info-box-content">
+			          <div class="info-box-content ">
 			          	@if ($grupo->tipo == 'auditorias')
 			          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
 			          	@else

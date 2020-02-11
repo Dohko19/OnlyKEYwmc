@@ -56,14 +56,14 @@ foreach($datace as $objce){
         echo "CEDULA._.". $IdCedula;
     } else {
     	$ssql = "INSERT INTO cedulas(IdUsuario,IdCte, FechaCaptura,Imagen,geolocation, TipoCed, Mes, Anio,FechaRegistro )
-    			VALUES ($IdUsuario,'$IdCte','$FechaCaptura', '$Imagen', '$geolocation', '1','$mesC', '$anioC', '$FechaRegistro')"; 
-    	//lo inserto en la base de datos 
-    	if (mysqli_query($conn, $ssql)){ 
+    			VALUES ($IdUsuario,'$IdCte','$FechaCaptura', '$Imagen', '$geolocation', '1','$mesC', '$anioC', '$FechaRegistro')";
+    	//lo inserto en la base de datos
+    	if (mysqli_query($conn, $ssql)){
     	//recibo el último id
-        	$IdCedula = mysqli_insert_id($conn); 
+        	$IdCedula = mysqli_insert_id($conn);
         	echo "CEDULA._.". $IdCedula;
         	$exis       = 1;
-    	}else{ 
+    	}else{
         	echo "La inserción no se realizó".mysqli_error($link);
     	}
 	    $ConUCorreo1    = "SELECT Correo, Nombre, Apellidos, Division FROM usuarios WHERE IdUsuario = $IdUsuario";
@@ -126,9 +126,9 @@ if($exis == 1){
                         VALUES ($IdCedula,$IdPrd,'$Cantidad','$Ubicacion','$ImgPrd','$checkBox','$Comentario',$Tickets,'$FechaRegistro')";
         mysqli_query($conn,$InsertEqui);
         if($checkBox == 'Equipo en mal estado'){
-         $Equi=1;   
+         $Equi=1;
         }
-        
+
     }
     //FIN DE EQUIPOS
         //Imagen
@@ -199,7 +199,7 @@ if($exis == 1){
                             VALUES($IdCedula, $IdPrd, '$Uso')";
         mysqli_query($conn,$insertPN);
     }
-   
+
     foreach($dataop as $objop){
         $Observaciones = $objop->Observaciones;
         $InserOp       = "INSERT INTO ObservacionesPedido(IdCedula, Observaciones)
@@ -208,7 +208,7 @@ if($exis == 1){
     }
 
     //entrenamiento
-    foreach($dataen as $objen){ 
+    foreach($dataen as $objen){
         $PersonaCapacitada   = $objen->PersonaCapacitada;
         $TemaCapacitacion    = $objen->TemaCapacitacion;
         $Comentario          = $objen->Comentario;
@@ -216,13 +216,13 @@ if($exis == 1){
         $Puesto              = $objen->Puesto;
         $Tipo                = $objen->TipoT;
 
-        $InsertEntrenamineto = "INSERT INTO Entrenamientos 
+        $InsertEntrenamineto = "INSERT INTO Entrenamientos
       (IdCedula,PersonaCapacitada,Puesto,TemaCapacitacion,Comentario,ImagenFirma)
                             VALUES('$IdCedula','$PersonaCapacitada','$Puesto','$TemaCapacitacion','$Comentario','$ImagenFirma')";
         mysqli_query($conn,$InsertEntrenamineto);
     }
 
-    //Actualizacio  
+    //Actualizacio
     foreach ($dataAct as $objAct) {
         $FechaAct =  $objAct->Fecha;
         $RFCa =  $objAct->RFC;
@@ -251,36 +251,37 @@ if($exis == 1){
         $resSu    = mysqli_query($conn,$sucursal);
         $row      = mysqli_fetch_assoc($resSu);
         $IdCTe    = $row['id'];
-
-
-
-        $longitud = 0;
-        if($NivelRiesgo == "C"){
-            if($Checkbox == "true"){
-                $longitudC += 1;
-                $promedioC = $longitudC * 100 / 15;
-                echo "-1->".$promedioC;
-            }
-            
-        }
-        if($NivelRiesgo == "RI"){
-            if($Checkbox == "true"){
-                $longitudRI += 1;
-                $promedioRI = $longitudRI * 100 / 3;
-                echo"-2->". $promedioRI;
-            }
-        }
-
-        /*$porcentajes = "";
         if($IdCTe > 0){
-            echo $InsertCues ="INSERT INTO questionnaires (sucursal_id,IdCuestionario,IdPregunta,Value,Recomendacion,Riesgo,created_at,IdCedula,Division,Evidencia) 
+
+            $InsertCues ="INSERT INTO questionnaires (sucursal_id,IdCuestionario,IdPregunta,Value,Recomendacion,Riesgo,created_at,IdCedula,Division,Evidencia)
                                 VALUES($IdCTe,$IdCuestionario,$IdPregunta,$CB,'$Recomendacion','$NivelRiesgo','$FechaRegistro','$IdCedula',$Division,'$Evidencia')";
             mysqli_query($conn,$InsertCues);
+
+             $InsertCues2 = "INSERT INTO questionaries (sucursal_id,Value,comments,riesgo,created_at)
+                                VALUES($IdCTe,$CB,'$Recomendacion','$NivelRiesgo','$FechaRegistro')";
+            mysqli_query($conn,$InsertCues2);
+            $InsertPorce = "SELECT
+                            sucursal_id,
+                            COUNT(riesgo) AS riesgot,
+                            riesgo,
+                        IF(riesgo = 'C', (COUNT(riesgo) * 100 / 15), (COUNT(riesgo) * 100 / 3)) as promedio,
+                            s.marca_id
+
+                        FROM
+                            questionnaires q
+                        INNER JOIN sucursals s ON s.id = q.sucursal_id
+                        WHERE
+                            s.marca_id = 1
+                        AND `Value` = 1
+                        GROUP BY
+                            sucursal_id,
+                            riesgo"
+
+
         }else{
 
-        }*/
+        }
 
-        
     }
 
      //Inicio resumen
@@ -292,7 +293,7 @@ $filaCedulasT= mysqli_fetch_array($ResultCedulasT);
 $NoVisitasRealizadas = $filaCedulasT['total'];
 if ($NoVisitasRealizadas > 0) {
     $RevisarResumen = "SELECT IdResumen
-    FROM ResumenVisitas 
+    FROM ResumenVisitas
     WHERE IdUsuario = $IdUsuario AND c.Anio = $anioC AND c.Mes = $mesC AND c.IdCte = '$IdCte'";
     $ResultadoResumen = mysqli_query($conn,$RevisarResumen);
      $filaResumen= mysqli_fetch_array($ResultadoResumen);
@@ -302,12 +303,12 @@ if ($NoVisitasRealizadas > 0) {
         $updateRes = "UPDATE ResumenVisitas SET VisitasRealizadas = $NoVisitasRealizadas WHERE IdResumen = $IdResumen";
         mysqli_query($conn,$updateRes);
     }else{
-        
+
         $ConVProgramadas = "SELECT v.NoVisitasProgramadas FROM ValoresExcel  as v
         INNER JOIN usuarios as u
         ON u.NombreExcel = v.Responsable AND u.IdUsuario = $IdUsuario
         WHERE v.NumeroCliente = '$IdCte' AND v.Mes = $mesC AND Anio = $anioC";
-       
+
         $ResultVProgramadas = mysqli_query($conn,$ConVProgramadas);
         $filaVProgramadas= mysqli_fetch_array($ResultVProgramadas);
         if($filaVProgramadas['NoVisitasProgramadas'] == ''){
@@ -317,12 +318,12 @@ if ($NoVisitasRealizadas > 0) {
         }
     $insertRes = "INSERT INTO ResumenVisitas (IdUsuario,IdCte,Cliente,VisitasProgramadas,VisitasRealizadas,Mes,Anio)
         VALUES($IdUsuario,'$IdCte','$Cliente',$NoVisitasProgramadas,$NoVisitasRealizadas,$mesC,$anioC)";
-    mysqli_query($conn,$insertRes); 
+    mysqli_query($conn,$insertRes);
     }
 
 }
 
- //FIN de Resumen 
+ //FIN de Resumen
 
  //Consultar la division del Usuario para saber en que tablas de clientes se deben modificar
     $ConUCorreo    = "SELECT Correo, Nombre, Apellidos, Division FROM usuarios WHERE IdUsuario = $IdUsuario";
@@ -340,7 +341,7 @@ if ($NoVisitasRealizadas > 0) {
     $IdCed =$IdCedula;
     $usuario = $fila['IdUsuario'];
     $email   = $fila['Correo'];
-   
+
 
 
 
@@ -375,13 +376,13 @@ if ($NoVisitasRealizadas > 0) {
     }
     if($DivisionV == 3){
 
-        $mail->AddAddress('laura.solano@bennetts.com.mx','Laura Solano');   
+        $mail->AddAddress('laura.solano@bennetts.com.mx','Laura Solano');
         //if($IdUsuario == 44 OR $IdUsuario == 42 OR $IdUsuario == 43 OR $IdUsuario == 51 OR $IdUsuario = 39){
             $mail->AddAddress('fernando.solorzano@bennetts.com.mx','Fernando Solorzano');
         //} else {
             $mail->AddAddress('abraham.cordova@bennetts.com.mx','Abraham Cordova');
         //}
-        
+
     }*/
     $mail->Subject = "VIC:    ".$Cliente;
     $mail->AltBody = "VIC:    ".$Cliente;
@@ -566,7 +567,7 @@ if ($NoVisitasRealizadas > 0) {
             $mailCalifMala->AddAddress('abraham.cordova@bennetts.com.mx', 'Abraham Cordova');
             if($IdUsuario == 44 OR $IdUsuario == 42 OR $IdUsuario == 43 OR $IdUsuario == 51 OR $IdUsuario = 39){
                 $mail->AddAddress('fernando.solorzano@bennetts.com.mx','Fernando Solorzano');
-            } 
+            }
             $mailCalifMala->AddAddress('laura.solano@bennetts.com.mx','Laura Solano');
             $mailCalifMala->AddAddress('daniel.fabian@bennetts.com.mx','Daniel Fabian');
             $mailCalifMala->AddAddress('milton.gonzalez@bennetts.com.mx','Milton Gonzalez');
@@ -648,10 +649,10 @@ if ($NoVisitasRealizadas > 0) {
         $mailCalifMala->MsgHTML($msgCalifMala);
         $mailCalifMala->send();
     }
-    
+
 
     //EQUIPOS
-    if($Equi>=1){ 
+    if($Equi>=1){
 
             $mailEquipo = new PHPMailer();
             $mailEquipo->IsSMTP();
@@ -723,12 +724,12 @@ if ($NoVisitasRealizadas > 0) {
                   $NT = "Equipo dañado por descuido";
               }
               if($Tickets ==  3){
-                  $NT = "Mantenimiento correctivo"; 
+                  $NT = "Mantenimiento correctivo";
               }
 
-            
-              
-            if($DivisionV == 3){ 
+
+
+            if($DivisionV == 3){
                 $ConDDivi = "SELECT Descripcion FROM Productos WHERE IdPrd = $IdPrd";
                 $resultDDivi = mysqli_query($conn,$ConDDivi);
                 $resDDivi = mysqli_fetch_array($resultDDivi);
@@ -739,7 +740,7 @@ if ($NoVisitasRealizadas > 0) {
                 $resDDivi = mysqli_fetch_array($resultDDivi);
                 $Descripcion = $resDDivi['Descripcion'];
             }
-                $msgEquipo.= " 
+                $msgEquipo.= "
                       <tr>
                         <td align='center'><span style='font-size:14px;'>".$IdPrd."</span></td>
                         <td align='center'><span style='font-size:14px;'>".$Descripcion."</span></td>
@@ -748,10 +749,10 @@ if ($NoVisitasRealizadas > 0) {
                         <td align='center'><span style='font-size:14px;'>".$NT."</span></td>
                         <td align='center'><span style='font-size:14px;'>".$Comentario."</span></td>
                       </tr>";
-            
+
             }//Mal estado
         }//foreach
-        
+
           //  } while ($resEquipo = mysql_fetch_array($resultsoloequipo));
                 $msgEquipo.="</table><br><br>";
 

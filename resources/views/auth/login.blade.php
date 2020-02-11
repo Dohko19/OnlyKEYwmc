@@ -1,7 +1,8 @@
 @extends('layouts.auth')
 @section('content')
 <div class="card">
-    <div class="card-body login-card-body">
+    <div class="card-body login-card-body text-center">
+        <img class="img-fluid" src="{{ url('images/logowmc.png') }}" width="200px" alt="">
       <p class="login-box-msg">Inicia Sesion con tus Credenciales</p>
 
       <form method="POST" action="{{ route('login') }}">

@@ -19,9 +19,9 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
+<div class="login-box">{{-- <img src="{{ url('images/key.png') }}" alt="User Image"> --}}
   <div class="login-logo">
-    <a href="{{ url('images/logowmc.png') }}"><b>KEY</b></a>
+    <img src="{{ url('images/key.png') }}" width="100px" height="50px" alt="">
   </div>
   <!-- /.login-logo -->
   @yield('content')

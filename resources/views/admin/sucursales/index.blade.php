@@ -33,7 +33,8 @@
                 </thead>
                 <tbody>
                 	@foreach ($sucursales as $sucursale)
-                	@foreach ($sucursale->sucursales as $suc)
+                	@foreach ($sucursale->marcas as $marcas)
+                	@foreach($marcas->sucursales as $suc)
                 		<tr>
 		                  <td>{{ $suc->id }}</td>
 		                  <td>{{ $suc->name ?? 'Sin datos diposnibles'}}</td>
@@ -61,6 +62,7 @@
 	                        </form>
 		                  </td>
                 		</tr>
+                	@endforeach
                 	@endforeach
                 	@endforeach
                 </tbody>

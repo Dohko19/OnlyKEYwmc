@@ -1,6 +1,6 @@
 <?php
 Auth::routes(['register' => false]);
-Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('/', 'Admin\AdminController@index')->name('home.index');
 Route::group([
 	'prefix' => 'admin',
 	'namespace' => 'Admin',

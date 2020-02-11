@@ -27,7 +27,7 @@
 					</h3>
 				</div>
 			<div class="card-body">
-				<form method="POST" action="{{ route('admin.gruposm.update',  $gruposMarca) }}" enctype="multipart/form-data" class="form-horizontal">
+				<form method="POST" action="{{ route('admin.gruposm.update',  $gruposMarca->id) }}" enctype="multipart/form-data" class="form-horizontal">
 					@csrf
           @method('PUT')
                 <div class="card-body">
@@ -85,7 +85,7 @@
                     <select name="user_id" class="form-control select2" style="width: 100%;" required>
                       @foreach ($users as $user)
                         <option value="{{ $user->id }}"
-                          {{ old('user_id', $gruposMarca->marca_id) == $user->id ? 'selected' : ''}}>{{ $user->name }}</option>
+                          {{ old('user_id', $gruposMarca->user_id) == $user->id ? 'selected' : ''}}>{{ $user->name }}</option>
                       @endforeach
                     </select>
                         @error('user_id')
@@ -100,6 +100,7 @@
                         <option value="auditorias">Auditorias</option>
                         <option value="cuestionarios">Cuestionarios</option>
                     </select>
+                    <small>*Verificar este campo</small>
                         @error('user_id')
                           <div class="help-block">
                             <strong>{{ $message }}</strong>
