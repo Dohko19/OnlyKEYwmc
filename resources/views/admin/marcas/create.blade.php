@@ -89,6 +89,19 @@
                         @enderror
                     <small class="text-muted">Necesitas agregar una marca para poder completar esta informacion</small>
                   </div>
+                  <div class="form-group">
+                    <label>Pertece al usurio</label>
+                    <select name="user_id" class="form-control select2" style="width: 100%;" required>
+                      @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                      @endforeach
+                    </select>
+                        @error('user_id')
+                          <div class="help-block">
+                            <strong>{{ $message }}</strong>
+                          </div>
+                        @enderror
+                  </div>
                   </div>
                 </div>
                 <!-- /.card-body -->

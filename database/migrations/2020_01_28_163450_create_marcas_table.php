@@ -16,6 +16,7 @@ class CreateMarcasTable extends Migration
         Schema::create('marcas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('grupo_marca_id');
+            $table->unsignedInteger('user_id');
             $table->string('name');
             $table->text('description');
             $table->string('photo')->nullable();

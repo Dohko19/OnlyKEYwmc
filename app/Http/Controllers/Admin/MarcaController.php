@@ -9,6 +9,7 @@ use App\InspeccionSanitaria;
 use App\Marca;
 use App\Questionnaire;
 use App\Sucursal;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,8 @@ class MarcaController extends Controller
     {
         // $marca = Marca::with('grupos')->get();
         $marcas = GrupoMarca::allowed()->get();
-        return view('admin.marcas.index', compact('marcas'));
+        $users = User::all();
+        return view('admin.marcas.index', compact('marcas', 'users'));
     }
 
     /**
@@ -37,6 +39,7 @@ class MarcaController extends Controller
     {
         return view('admin.marcas.create',[
             'grupos' => GrupoMarca::all(),
+            'users' = User::all(),
         ]);
     }
 
