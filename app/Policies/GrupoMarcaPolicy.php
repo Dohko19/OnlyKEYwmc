@@ -39,7 +39,7 @@ class GrupoMarcaPolicy
      */
     public function view(User $user, GrupoMarca $grupoMarca)
     {
-        //
+        return $user->id === $grupoMarca->user_id;
     }
 
     /**
@@ -50,7 +50,7 @@ class GrupoMarcaPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -74,7 +74,7 @@ class GrupoMarcaPolicy
      */
     public function delete(User $user, GrupoMarca $grupoMarca)
     {
-        //
+        return $user->isAdmin();
     }
 
     /**

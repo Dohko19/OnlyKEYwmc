@@ -80,8 +80,9 @@
                         @enderror
                     </div>
                   </div>
+                  @if (auth()->user()->isAdmin())
                   <div class="form-group">
-                   <label>Marca a la que pertenece</label>
+                   <label>Permisos de Usuario</label>
                     <select name="roles[]" class="form-control select2bs4" multiple="multiple" data-placeholder="Selecciona un Rol" style="width: 100%;" required>
                       @foreach ($roles as $id => $name)
                         <option
@@ -96,10 +97,11 @@
                         @enderror
                     <small class="text-muted">Permisos de usuario</small>
                 </div>
+                @endif
                 </div>
                 <!-- /.card-body -->
                 <div class="">
-                  <button type="submit" class="btn btn-info btn-block">Crear</button>
+                  <button type="submit" class="btn btn-info btn-block">Actualizar</button>
                 </div>
                 <!-- /.card-footer -->
               </form>

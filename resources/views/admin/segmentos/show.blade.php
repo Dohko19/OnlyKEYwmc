@@ -68,8 +68,8 @@
                                 </button>
                             </td>
                             <td class="align-content-center">
-                               @if (auth()->user()->isAdmin())
-                                <form action="{{ route('admin.questions.approved', $question) }}" method="POST" style="display: inline;">
+                               {{-- @if (auth()->user()->isAdmin()) --}}
+                                <form action="{{ route('admin.questions.approved', $question) }}" method="POST" ">
                                   @csrf
                                   @method('PUT')
                                   <div class="row">
@@ -84,7 +84,7 @@
                                     </div>
                                   </div>
                                   </form>
-                              @endif
+                              {{-- @endif --}}
                             </td>
                         </tr>
                       @endif

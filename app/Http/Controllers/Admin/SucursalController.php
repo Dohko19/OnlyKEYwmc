@@ -28,6 +28,8 @@ class SucursalController extends Controller
      */
     public function create()
     {
+        $sucursale = new Sucursal;
+        $this->authorize('create', $sucursale);
         $marcas = Marca::all();
 
         // ddd($marcas);
@@ -47,7 +49,7 @@ class SucursalController extends Controller
             'ciudad' => 'min:1|string',
             'IdCte' => 'min:1'
         ]);
-
+        $this->authorize('create', new Sucursal);
         $sucursal = Sucursal::create($request->all());
         return redirect()->route('admin.sucursales.index', compact('sucursal'))->with('info', 'Agregado Correctamente');
     }
@@ -71,6 +73,7 @@ class SucursalController extends Controller
      */
     public function edit(Sucursal $sucursale)
     {
+        $this->authorize('update', $sucursale);
         $marcas = Marca::allowed()->get();
         return view('admin.sucursales.edit', compact('sucursale', 'marcas'));
     }

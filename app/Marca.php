@@ -47,7 +47,7 @@ class Marca extends Model
 
     public function scopeExiste($query)
     {
-        return $query->where('grupo_marca_id', $this->id);
+        return $query->where('grupo_marca_id', $this);
     }
 
     public function scopeGraphics($query, $graphics)

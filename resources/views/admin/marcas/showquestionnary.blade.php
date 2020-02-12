@@ -100,8 +100,13 @@
 <script>
   Highcharts.chart('critico', {
     chart: {
-      type: 'column',
-      events: {
+        zoomType: 'x',
+        panning: true,
+        type: 'column',
+         animation: {
+         duration: 1000
+        },
+        events: {
               load: function () {
                   var label = this.renderer.label("*Click en el nombre para ver detalladamente")
                   .css({
@@ -125,7 +130,7 @@
 
               }
           },
-          marginBottom: 120,
+        marginBottom: 120,
           inverted: false,
           scrollablePlotArea: {
               minWidth: 700,
@@ -154,6 +159,10 @@
        min: 0,
        max: 10,
     },
+    scrollbar: {
+        enabled: true,
+        liveRedraw: false
+    },
     legend: {
       enabled: false,
     },
@@ -165,7 +174,7 @@
         borderWidth: 0,
         dataLabels: {
           enabled: true,
-          format: '{point.y:.1f}%'
+          format: '{point.y:.1f}%',
         }
       }
     },
@@ -221,7 +230,13 @@
 <script>
   Highcharts.chart('ri', {
     chart: {
-      type: 'column',
+       zoomType: 'x',
+        panning: true,
+        type: 'column',
+        pinchType: 'x',
+         animation: {
+         duration: 1000
+        },
       events: {
               load: function () {
                   var label = this.renderer.label("*Click en el nombre para ver detalladamente")
@@ -265,7 +280,7 @@
           }
       },
     xAxis: {
-      type: 'category'
+      type: 'category',
     },
     yAxis: {
       title: {
@@ -274,6 +289,10 @@
       },
        min: 0,
        max: 10,
+    },
+    scrollbar: {
+      enabled: true,
+      liveRedraw: false
     },
     legend: {
       enabled: false,

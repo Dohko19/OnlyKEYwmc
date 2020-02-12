@@ -92,6 +92,7 @@ class MarcaController extends Controller
             $sucursales = Sucursal::where('sucursals.marca_id', '=', $marca->id)
             ->graphics($graphics)
             ->orderBy('puntuacion_total', 'ASC')
+            ->where('puntuacion_total', '<=', 2)
             ->get();
             // dd($sucursales);
             $promedio = Sucursal::join('qresults', 'qresults.sucursal_id', '=', 'sucursals.id' )
@@ -134,7 +135,15 @@ class MarcaController extends Controller
             // $sucursales = Sucursal::where('marca_id', '=', $marca->id)
             // ->get();
             $questions = Questionnaire::all();
-            $thiis = DB::('questionnaires as q')
+            // $thiis = DB::table('questionnaires as q')
+            //         ->select('sucursal_id', DB::raw('COUNT(riesgo) AS riesgot, riesgo,'))
+            //         ->whereRaw('IF(riesgo = '.'C'.', (COUNT(riesgo) * 100 / 15), (COUNT(riesgo) * 100 / 3)) as promedio, s.marca_id')
+            //         ->join('sucursals as s', 's.id', '=', 'q.sucursal_id')
+            //         ->where('s.marca_id', '=', $marca->id)
+            //         ->where('Value', '=', '1')
+            //         ->groupBy('sucursal_id', 'riesgo')
+            //         ->get();
+            //         ddd($thiis);
             // ddd($sucursales);
             // $ss = Sucursal::select('value')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')

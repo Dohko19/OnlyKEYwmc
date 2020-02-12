@@ -82,7 +82,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-info btn-block">Crear</button>
+                  <button type="submit" class="btn btn-info btn-block">Actualizar</button>
                 </div>
                 <!-- /.card-footer -->
               </form>

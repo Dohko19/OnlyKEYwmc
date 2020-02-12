@@ -5,7 +5,7 @@
       <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="{{ route('admin.index') }}" class="nav-link">Inicio</a>
+      <a href="{{ route('admin.index') }}" class="nav-link">WMC</a>
     </li>
   </ul>
   <!-- Right navbar links -->
@@ -14,7 +14,8 @@
     <!-- Notifications Dropdown Menu -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
-        {{ Auth::user()->name }} <i class="nav-icon far fa-user"></i>
+        <i class="nav-icon far fa-user"></i>
+        {{ Auth::user()->name }}
         <span class="badge badge-warning navbar-badge"></span>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

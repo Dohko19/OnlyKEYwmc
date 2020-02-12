@@ -51,7 +51,7 @@ class MarcaPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -63,7 +63,7 @@ class MarcaPolicy
      */
     public function update(User $user, Marca $marca)
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -75,7 +75,7 @@ class MarcaPolicy
      */
     public function delete(User $user, Marca $marca)
     {
-        //
+        return $user->isAdmin();
     }
 
     /**

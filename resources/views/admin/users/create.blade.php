@@ -106,21 +106,23 @@
                     </div>
                   </div>
                   <div class="col-md-12">
-                <div class="form-group">
-                   <label>Marca a la que pertenece</label>
-                    <select name="roles[]" class="form-control select2bs4" multiple="multiple" data-placeholder="Selecciona un Rol" style="width: 100%;" required>
-                      @foreach ($roles as $id => $name)
-                        <option value="{{ $id }}" {{ $roles->pluck('id')->contains($id) ? 'select' : '' }}>{{ $name }}</option>
-                      @endforeach
-                    </select>
-                        @error('category_id')
-                          <div class="help-block">
-                            <strong>{{ $message }}</strong>
-                          </div>
-                        @enderror
-                    <small class="text-muted">Permisos de usuario</small>
-                    {!! $errors->first('roles','<span class=error>:message</span>')  !!}
-                </div>
+                    @if (auth()->user()->isAdmin())
+                      <div class="form-group">
+                         <label>Permisos de Usuario</label>
+                          <select name="roles[]" class="form-control select2bs4" multiple="multiple" data-placeholder="Selecciona un Rol" style="width: 100%;" required>
+                            @foreach ($roles as $id => $name)
+                              <option value="{{ $id }}" {{ $roles->pluck('id')->contains($id) ? 'select' : '' }}>{{ $name }}</option>
+                            @endforeach
+                          </select>
+                              @error('category_id')
+                                <div class="help-block">
+                                  <strong>{{ $message }}</strong>
+                                </div>
+                              @enderror
+                          <small class="text-muted">Permisos de usuario</small>
+                          {!! $errors->first('roles','<span class=error>:message</span>')  !!}
+                      </div>
+                    @endif
               </div>
                 </div>
                 <!-- /.card-body -->
