@@ -96,11 +96,9 @@ class MarcaController extends Controller
             $sucursales = Sucursal::where('sucursals.marca_id', '=', $marca->id)
             ->graphics($graphics)
             ->dm($dm)
-            ->leftJoin('qresults', 'qresults.sucursal_id', '=', 'sucursals.id')
-            ->orderBy('qresults.RI', 'ASC')
-            // ->joinleft('qresults', 'qresults.sucursal_id', '=', 'sucursals.id')
-            // ->orderBy('')
             ->get();
+
+            $ri =
             ddd($sucursales);
             // $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
