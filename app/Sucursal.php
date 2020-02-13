@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sucursal extends Model
 {
 	protected $fillable = [
-		'name', 'marca_id', 'ciudad', 'IdCte'
+		'name', 'marca_id', 'ciudad', 'IdCte', 'delegacion_municipio'
 	];
 
     public function marcas()
@@ -28,7 +28,7 @@ class Sucursal extends Model
 
     public function questionaries()
     {
-        return $this->hasMany(Questionary::class);
+        return $this->hasMany(Questionnaire::class);
     }
 
 
@@ -36,6 +36,12 @@ class Sucursal extends Model
     {
         if($graphics)
             return $query->where('created_at', 'LIkE', "%$graphics%");
+    }
+
+    public function scopeDm($query, $dm)
+    {
+        if($dm)
+            return $query->where('delegacion_municipio', 'LIkE', "%$dm%");
     }
 
     public function scopeAllowed($query)

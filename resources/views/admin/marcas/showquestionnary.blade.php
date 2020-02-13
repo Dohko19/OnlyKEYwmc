@@ -2,7 +2,6 @@
 @section('content')
 @section('headertitle', '')
 @section('title', 'Key | Mis Sucursales')
-
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -13,6 +12,9 @@
 						Resumen
 					</h3>
 				</div>
+        @foreach ($sucursales as $sucursal)
+          {{ $sucursal->sucursal_id }}
+        @endforeach
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-3">
@@ -28,6 +30,40 @@
 			                <label for="graphic">Filtro por Fecha</label>
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
 			                <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off">
+                      <select name="delegacion_municipio" class="form-control" data-placeholder="Selecciona un Rol" style="width: 70%;">
+                      <option value="" selected></option>
+                      <option value="Alvaro Obregon" >Alvaro Obregon</option>
+                      <option value="Atizapan De Zaragoza" >Atizapan De Zaragoza</option>
+                      <option value="Azcapotzalco" >Azcapotzalco</option>
+                      <option value="Benito Juarez" >Benito Juarez</option>
+                      <option value="Coacalco De Berriozabal" >Coacalco De Berriozabal</option>
+                      <option value="Coyoacan" >Coyoacan</option>
+                      <option value="Cuajimalpa" >Cuajimalpa</option>
+                      <option value="Cuauhtemoc" >Cuauhtemoc</option>
+                      <option value="Cuautitlan Izcalli" >Cuautitlan Izcalli</option>
+                      <option value="Cuernavaca" >Cuernavaca</option>
+                      <option value="Ecatepec De Morelos" >Ecatepec De Morelos</option>
+                      <option value="Gustavo A. Madero" >Gustavo A. Madero</option>
+                      <option value="Huixquilucan" >Huixquilucan</option>
+                      <option value="dixqIxtapaluca" >dixqIxtapaluca</option>
+                      <option value="Miguel Hidalgo" >Miguel Hidalgo</option>
+                      <option value="Naucalpan" >Naucalpan</option>
+                      <option value="Nezahualcoyotl" >Nezahualcoyotl</option>
+                      <option value="Puebla" >Puebla</option>
+                      <option value="Saltillo" >Saltillo</option>
+                      <option value="SD" >Sin Delegacion</option>
+                      <option value="Tecamac" >Tecamac</option>
+                      <option value="Tlahuac" >Tlahuac</option>
+                      <option value="Tlalnepantla" >Tlalnepantla</option>
+                      <option value="Tlalpan" >Tlalpan</option>
+                      <option value="Tultitlan" >Tultitlan</option>
+                      <option value="Venustiano Carranza" >Venustiano Carranza</option>
+                      <option value="Veracruz" >Veracruz</option>
+                      <option value="Villa Nicolas Romero" >Villa Nicolas Romero</option>
+                      <option value="XochimilcoXalapa<" >XochimilcoXalapa</option>
+                      <option value="Xalapa" >Xalapa</option>
+                      <option value="Zumpango" >Zumpango</option>
+                    </select>
 			                <button type="submit" class="btn btn-default">
 			                    <i class="fas fa-search"></i>
 			                </button>
@@ -40,6 +76,49 @@
             @endforeach
           @endforeach --}}
 					<!--Graficas-->
+          {{-- <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline align-items-center">
+                  <select name="delegacion_municipio" class="form-control" data-placeholder="Selecciona un Rol" style="width: 100%;">
+                      <option value="Alvaro Obregon" >Alvaro Obregon</option>
+                      <option value="Atizapan De Zaragoza" >Atizapan De Zaragoza</option>
+                      <option value="Azcapotzalco" >Azcapotzalco</option>
+                      <option value="Benito Juarez" >Benito Juarez</option>
+                      <option value="Coacalco De Berriozabal" >Coacalco De Berriozabal</option>
+                      <option value="Coyoacan" >Coyoacan</option>
+                      <option value="Cuajimalpa" >Cuajimalpa</option>
+                      <option value="Cuauhtemoc" >Cuauhtemoc</option>
+                      <option value="Cuautitlan Izcalli" >Cuautitlan Izcalli</option>
+                      <option value="Cuernavaca" >Cuernavaca</option>
+                      <option value="Ecatepec De Morelos" >Ecatepec De Morelos</option>
+                      <option value="Gustavo A. Madero" >Gustavo A. Madero</option>
+                      <option value="Huixquilucan" >Huixquilucan</option>
+                      <option value="dixqIxtapaluca" >dixqIxtapaluca</option>
+                      <option value="Miguel Hidalgo" >Miguel Hidalgo</option>
+                      <option value="Naucalpan" >Naucalpan</option>
+                      <option value="Nezahualcoyotl" >Nezahualcoyotl</option>
+                      <option value="Puebla" >Puebla</option>
+                      <option value="Saltillo" >Saltillo</option>
+                      <option value="SD" >Sin Delegacion</option>
+                      <option value="Tecamac" >Tecamac</option>
+                      <option value="Tlahuac" >Tlahuac</option>
+                      <option value="Tlalnepantla" >Tlalnepantla</option>
+                      <option value="Tlalpan" >Tlalpan</option>
+                      <option value="Tultitlan" >Tultitlan</option>
+                      <option value="Venustiano Carranza" >Venustiano Carranza</option>
+                      <option value="Veracruz" >Veracruz</option>
+                      <option value="Villa Nicolas Romero" >Villa Nicolas Romero</option>
+                      <option value="XochimilcoXalapa<" >XochimilcoXalapa</option>
+                      <option value="Xalapa" >Xalapa</option>
+                      <option value="Zumpango" >Zumpango</option>
+                    </select>
+                <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                </button>
+              </form>
+            </div>
+          </div> --}}
         <div class="row">
           <div class="col-12">
             <!-- Custom Tabs -->
@@ -88,9 +167,6 @@
   <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datepicker/datepicker3.css') }}">
 @endpush
 @push('scripts')
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-  	<script src="https://code.highcharts.com/modules/data.js"></script>
- 	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
  	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/data.js"></script>
 	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
@@ -127,8 +203,7 @@
                       verticalAlign: 'bottom',
                       y: 0 // offset
                   }), null, 'spacingBox');
-
-              }
+              },
           },
         marginBottom: 120,
           inverted: false,
@@ -141,7 +216,7 @@
       text: ''
     },
     subtitle: {
-      text: 'Click en las columnas para ver la calificacion por sucursal.'
+      text: 'Click en las columnas para ver la calificacion por sucursal Riesgos Inminentes.'
     },
     accessibility: {
           announceNewData: {
@@ -149,6 +224,10 @@
           }
       },
     xAxis: {
+       title: {
+        text: 'Preguntas',
+        title: 'Sucursales'
+      },
       type: 'category'
     },
     yAxis: {
@@ -156,8 +235,6 @@
         text: 'Calificaciones',
         title: 'Sucursales'
       },
-       min: 0,
-       max: 10,
     },
     scrollbar: {
         enabled: true,
@@ -190,11 +267,13 @@
         colorByPoint: true,
         data: [
         @foreach ($sucursales as $sucursal)
-          {
-            name: "{{ $sucursal->name }}  / {{ $sucursal->ciudad }}",
-            y: {{ $sucursal->puntuacion_total }}, //proemdio
-            drilldown: "{{ $sucursal->name }}"
-          },
+            {
+              name: "{{ $sucursal->name }}  / {{ $sucursal->ciudad }}",
+            @foreach ($sucursal->qresults->sortByDesc('RI') as $res)
+                y: {{ $res->RI }}, //proemdio
+            @endforeach
+              drilldown: "{{ $sucursal->name }}"
+            },
         @endforeach
         ]
       }
@@ -212,13 +291,20 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ($questions as $question)
-              @if ($question->riesgo == "RI")
-                      [
-                        "{{ $question->riesgo }}",
-                        {{ $question->Value }},
-                      ],
-              @endif
+              @foreach ( $sucursal->questionaries  as $q)
+                @if($q->riesgo == 'RI')
+                @if ($q->Value == '1')
+                  [
+                    "{{ $q->IdPregunta }}",
+                      33.3,
+                  ],
+                @else
+                  [
+                    "{{ $q->IdPregunta }}",
+                      0,
+                  ],
+                @endif
+                @endif
               @endforeach
           ]
         },
@@ -230,16 +316,18 @@
 <script>
   Highcharts.chart('ri', {
     chart: {
-       zoomType: 'x',
-        panning: true,
-        type: 'column',
-        pinchType: 'x',
+         zoomType: 'x',
+         panning: true,
+         type: 'column',
+         animation: {
+         duration: 1000
+        },
          animation: {
          duration: 1000
         },
       events: {
               load: function () {
-                  var label = this.renderer.label("*Click en el nombre para ver detalladamente")
+                  var label = this.renderer.label("*Click en el nombre para ver detalladamente Criticos")
                   .css({
                       width: '400px',
                       fontSize: '13px'
@@ -272,7 +360,7 @@
       text: ''
     },
     subtitle: {
-      text: 'Click en las columnas para ver la calificacion por sucursal.'
+      text: 'Click en las columnas para ver la calificacion por sucursal Criticos.'
     },
     accessibility: {
           announceNewData: {
@@ -280,6 +368,10 @@
           }
       },
     xAxis: {
+      title: {
+        text: 'Preguntas',
+        title: 'Sucursales'
+      },
       type: 'category',
     },
     yAxis: {
@@ -287,8 +379,6 @@
         text: 'Calificaciones',
         title: 'Sucursales'
       },
-       min: 0,
-       max: 10,
     },
     scrollbar: {
       enabled: true,
@@ -321,11 +411,17 @@
         colorByPoint: true,
         data: [
         @foreach ($sucursales as $sucursal)
-          {
-            name: "{{ $sucursal->name }} # {{ $sucursal->ciudad }}",
-            y: {{ $sucursal->puntuacion_total }}, //proemdio
-            drilldown: "{{ $sucursal->name }}"
-          },
+            {
+              name: "{{ $sucursal->name }} # {{ $sucursal->ciudad }}",
+          @foreach ($sucursal->qresults->sortByDesc('C') as $res)
+          @if ($res->C == '0')
+            y: 0,
+          @else
+              y: {{ $res->C }}, //proemdio
+          @endif
+          @endforeach
+              drilldown: "{{ $sucursal->name }}"
+            },
         @endforeach
         ]
       }
@@ -339,17 +435,25 @@
     },
       series: [
           @foreach ($sucursales as $sucursal)
+          //Para otro nivel de filtro
         {
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ($questions as $question)
-              @if ($question->riesgo == "C")
-                      [
-                        "{{ $question->riesgo }}",
-                        {{ $question->Value }},
-                      ],
-              @endif
+              @foreach ( $sucursal->questionaries  as $q)
+                @if($q->riesgo == 'C')
+                @if ($q->Value == '1')
+                  [
+                    "{{ $q->IdPregunta }}",
+                      6.6,
+                  ],
+                @else
+                  [
+                    "{{ $q->IdPregunta }}",
+                      0,
+                  ],
+                @endif
+                @endif
               @endforeach
           ]
         },

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Marca extends Model
 {
     protected $fillable = [
-    	'grupo_marca_id', 'name', 'description', 'photo',
+    	'grupo_marca_id', 'user_id' ,'name', 'description', 'photo',
     ];
 
     // public static function create(array $attributes = [])

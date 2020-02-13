@@ -27,6 +27,8 @@
               <p>Dashboard</p>
             </a>
           </li>
+          @if (auth()->user()->isAsesor() || auth()->user()->isAdmin())
+
         <li class="nav-item">
           <a href="{{ route('admin.segmentos.index') }}" class="nav-link {{ setActiveRoute('admin.segmentos.index') }}">
             <i class="nav-icon far fa-clipboard"></i>
@@ -43,6 +45,7 @@
             </p>
           </a>
         </li>
+        @endif
         @if(auth()->user()->isAdmin())
         <li class="nav-item">
           <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">

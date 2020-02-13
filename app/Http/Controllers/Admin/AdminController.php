@@ -16,13 +16,17 @@ class AdminController extends Controller
 
     public function index()
     {
-    	if (auth()->user()->isDral()) {
+        if (auth()->user()->isAdmin()) {
+            $grupos = GrupoMarca::all();
+                return view('admin.dashboard', compact('grupos'));
+        }
+    	elseif (auth()->user()->isDral()) {
 	    	$grupos = GrupoMarca::allowed()->get();
 	    		return view('admin.dashboard', compact('grupos'));
     	}
     	elseif(auth()->user()->isDmarca())
     	{
-    		return 'hi';
+    		return 'director de marca';
     	}
     }
 }

@@ -91,6 +91,7 @@ class UsersController extends Controller
     {
         $this->authorize('update', $user);
         $user->update( $request->validated() );
+        $this->authorize('update', $user->roles);
         $user->roles()->sync($request->roles);
         return back()->with('info','Usuario Actualizado');
     }

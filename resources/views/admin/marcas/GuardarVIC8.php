@@ -264,16 +264,15 @@ if($exis == 1){
                             sucursal_id,
                             COUNT(riesgo) AS riesgot,
                             riesgo,
-                        IF(riesgo = 'C', (COUNT(riesgo) * 100 / 15), (COUNT(riesgo) * 100 / 3)) as promedio,
+                            IF(riesgo = 'C', (COUNT(riesgo) * 100 / 15), (COUNT(riesgo) * 100 / 3)) as promedio,
                             s.marca_id
-
-                        FROM
-                            questionnaires q
-                        INNER JOIN sucursals s ON s.id = q.sucursal_id
-                        WHERE
-                            s.marca_id = 1
-                        AND `Value` = 1
-                        GROUP BY
+                            FROM
+                                questionnaires q
+                            INNER JOIN sucursals s ON s.id = q.sucursal_id
+                            WHERE
+                                s.marca_id = $IdCTe
+                            AND `Value` = 1
+                            GROUP BY
                             sucursal_id,
                             riesgo"
 

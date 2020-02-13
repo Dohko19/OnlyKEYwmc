@@ -109,7 +109,7 @@
                     @if (auth()->user()->isAdmin())
                       <div class="form-group">
                          <label>Permisos de Usuario</label>
-                          <select name="roles[]" class="form-control select2bs4" multiple="multiple" data-placeholder="Selecciona un Rol" style="width: 100%;" required>
+                          <select name="roles[]" class="form-control" data-placeholder="Selecciona un Rol" style="width: 100%;" required>
                             @foreach ($roles as $id => $name)
                               <option value="{{ $id }}" {{ $roles->pluck('id')->contains($id) ? 'select' : '' }}>{{ $name }}</option>
                             @endforeach

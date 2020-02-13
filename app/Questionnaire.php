@@ -10,8 +10,8 @@ class Questionnaire extends Model
     	'marca_id','name','photo','value','recommendation',
     ];
 
-    public function cuestionario()
+    public function sucursal()
     {
-    	return $this->belongsTo(Questionary::class, 'questionary_id');
+    	return $this->belongsTo(Sucursal::class, 'sucursal_id');
     }
 }

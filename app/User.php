@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->hasRoles(['dmarca']);
     }
 
+    public function isAsesor()
+    {
+        return $this->hasRoles(['asesor']);
+    }
+
     public function marcas()
     {
         return $this->hasMany(Marca::class);

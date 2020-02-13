@@ -80,10 +80,10 @@
                         @enderror
                     </div>
                   </div>
-                  @if (auth()->user()->isAdmin())
+                  @can('edit', $user)
                   <div class="form-group">
                    <label>Permisos de Usuario</label>
-                    <select name="roles[]" class="form-control select2bs4" multiple="multiple" data-placeholder="Selecciona un Rol" style="width: 100%;" required>
+                    <select name="roles[]" class="form-control select2bs4" multiple="multiple" data-placeholder="Selecciona un Rol" style="width: 100%;" disabled>
                       @foreach ($roles as $id => $name)
                         <option
                         {{ $user->roles->pluck('id')->contains($id) ? 'selected' : '' }}
@@ -96,8 +96,8 @@
                           </div>
                         @enderror
                     <small class="text-muted">Permisos de usuario</small>
-                </div>
-                @endif
+                  </div>
+                  @endcan
                 </div>
                 <!-- /.card-body -->
                 <div class="">
