@@ -1,9 +1,11 @@
 select
-  *
+  `sucursals`.`id`,
+  `sucursals`.`name`,
+  `q`.`RI`
 from
   `sucursals`
+  left join `qresults` as `q` on `q`.`sucursal_id` = `sucursals`.`id`
 where
-  `marca_id` = 2
-  and `puntuacion_total` <= 2
+  `sucursals`.`marca_id` = 2
 order by
-  `puntuacion_total` asc
+  `RI` ASC

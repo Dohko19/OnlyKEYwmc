@@ -42,7 +42,7 @@ class Marca extends Model
         {
             return $query; //Verficacion de si es administrador
         }
-            return $query->where('grupo_marca_id', auth()->id());
+            return $query->where('user_id', auth()->id());
     }
 
     public function scopeExiste($query)

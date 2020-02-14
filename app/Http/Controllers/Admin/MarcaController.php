@@ -93,13 +93,25 @@ class MarcaController extends Controller
         }
             $graphics = $request->get('graphics') ?? '';
             $dm = $request->get('delegacion_municipio') ?? '';
-            $sucursales = Sucursal::where('sucursals.marca_id', '=', $marca->id)
+            $sucursales = Sucursal::with('qresults')
+            ->where('sucursals.marca_id', '=', $marca->id)
             ->graphics($graphics)
             ->dm($dm)
             ->get();
+            // ddd($sucursales);
+            $ri = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
+            ->select('sucursals.id', 'sucursals.name', 'q.RI')
+            ->where('sucursals.marca_id', $marca->id)
+            ->orderBy('q.RI', 'ASC')
+            ->get()->toArray();
 
-            $ri =
-            ddd($sucursales);
+            $c = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
+            ->select('sucursals.id', 'sucursals.name', 'q.C')
+            ->where('sucursals.marca_id', $marca->id)
+            ->orderBy('q.C', 'ASC')
+            ->get()->toArray();
+
+            // ddd(count($c));
             // $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
             // ->where('riesgo', '=', "C")
@@ -154,12 +166,12 @@ class MarcaController extends Controller
             // $f = 100;
             // $sum = 0;
 
-            // foreach($ss as $num => $values) {
-            //     $sum += $values['value'];
+            // foreach($ri as $num => $values) {
+            //     $sum = $values['RI'];
             // }
-
+            // return $sum;
             // $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales'));
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c'));
             // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 
