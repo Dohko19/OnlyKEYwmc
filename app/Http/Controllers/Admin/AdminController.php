@@ -18,15 +18,17 @@ class AdminController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $grupos = GrupoMarca::all();
-                return view('admin.dashboard', compact('grupos'));
+            $marcas = Marca::allowed()->get();
+                return view('admin.dashboard', compact('grupos', 'marcas'));
         }
     	elseif (auth()->user()->isDral()) {
 	    	$grupos = GrupoMarca::allowed()->get();
 	    		return view('admin.dashboard', compact('grupos'));
     	}
-    	elseif(auth()->user()->isDmarca())
+    	elseif(auth()->user()->isDmarca() || auth()->user()->isAdmin())
     	{
-    		return 'director de marca';
+    		$marcas = Marca::allowed()->get();
+            return view('admin.dashboard', compact('marcas'));
     	}
     }
 }

@@ -12,133 +12,91 @@
 						Resumen
 					</h3>
 				</div>
-        @foreach ($sucursales as $sucursal)
-          {{ $sucursal->sucursal_id }}
-        @endforeach
 				<div class="card-body">
 					<div class="row">
-						<div class="col-md-3">
-							<img src="{{ url('marcas/'.$marca->photo) }}" alt="" width="100px" height="100px">
+						<div class="col-md-2">
+							<img src="{{ url('marcas/'.$marca->photo) }}" alt="" width="150px" height="100px">
 						</div>
-						<div class="col-md-6">
-							<h2 class="text-center">
-                			{{ $marca->name }}
-              				</h2>
-              					<p class="text-center">Calificación por sucursal</p>
+						<div class="col-md-6 text-center">
+              <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-7">
+    							<h3 class="text-center">
+            			 {{ $marca->name }}
+          				</h3>
+                  <small class="text-justify">Calificacion por Sucursales</small>
+                </div>
+                <div class="col-md-2"></div>
+              </div>
 						</div>
-			            <div class="col-md-3">
-			                <label for="graphic">Filtro por Fecha</label>
-			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
-			                <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off">
-                      <select name="delegacion_municipio" class="form-control" data-placeholder="Selecciona un Rol" style="width: 70%;">
-                      <option value="" selected></option>
-                      <option value="Alvaro Obregon" >Alvaro Obregon</option>
-                      <option value="Atizapan De Zaragoza" >Atizapan De Zaragoza</option>
-                      <option value="Azcapotzalco" >Azcapotzalco</option>
-                      <option value="Benito Juarez" >Benito Juarez</option>
-                      <option value="Coacalco De Berriozabal" >Coacalco De Berriozabal</option>
-                      <option value="Coyoacan" >Coyoacan</option>
-                      <option value="Cuajimalpa" >Cuajimalpa</option>
-                      <option value="Cuauhtemoc" >Cuauhtemoc</option>
-                      <option value="Cuautitlan Izcalli" >Cuautitlan Izcalli</option>
-                      <option value="Cuernavaca" >Cuernavaca</option>
-                      <option value="Ecatepec De Morelos" >Ecatepec De Morelos</option>
-                      <option value="Gustavo A. Madero" >Gustavo A. Madero</option>
-                      <option value="Huixquilucan" >Huixquilucan</option>
-                      <option value="dixqIxtapaluca" >dixqIxtapaluca</option>
-                      <option value="Miguel Hidalgo" >Miguel Hidalgo</option>
-                      <option value="Naucalpan" >Naucalpan</option>
-                      <option value="Nezahualcoyotl" >Nezahualcoyotl</option>
-                      <option value="Puebla" >Puebla</option>
-                      <option value="Saltillo" >Saltillo</option>
-                      <option value="SD" >Sin Delegacion</option>
-                      <option value="Tecamac" >Tecamac</option>
-                      <option value="Tlahuac" >Tlahuac</option>
-                      <option value="Tlalnepantla" >Tlalnepantla</option>
-                      <option value="Tlalpan" >Tlalpan</option>
-                      <option value="Tultitlan" >Tultitlan</option>
-                      <option value="Venustiano Carranza" >Venustiano Carranza</option>
-                      <option value="Veracruz" >Veracruz</option>
-                      <option value="Villa Nicolas Romero" >Villa Nicolas Romero</option>
-                      <option value="XochimilcoXalapa<" >XochimilcoXalapa</option>
-                      <option value="Xalapa" >Xalapa</option>
-                      <option value="Zumpango" >Zumpango</option>
-                    </select>
+			            <div class="col-md-4 col-sm-4">
+			                <label for="graphic" class="float-right">Filtro por Fecha y/o Delegación</label>
+			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline float-right">
+                      <div class="form-group">
+  			                <input name="graphics" type="text" class="form-control" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" size="10">
+                        <select name="delegacion_municipio" class="form-control" style="width: 100px">
+                          <option value="" selected>Delegacion...</option>
+                          <option value="Alvaro Obregon" >Alvaro Obregon</option>
+                          <option value="Atizapan De Zaragoza" >Atizapan De Zaragoza</option>
+                          <option value="Azcapotzalco" >Azcapotzalco</option>
+                          <option value="Benito Juarez" >Benito Juarez</option>
+                          <option value="Coacalco De Berriozabal" >Coacalco De Berriozabal</option>
+                          <option value="Coyoacan" >Coyoacan</option>
+                          <option value="Cuajimalpa" >Cuajimalpa</option>
+                          <option value="Cuauhtemoc" >Cuauhtemoc</option>
+                          <option value="Cuautitlan Izcalli" >Cuautitlan Izcalli</option>
+                          <option value="Cuernavaca" >Cuernavaca</option>
+                          <option value="Ecatepec De Morelos" >Ecatepec De Morelos</option>
+                          <option value="Gustavo A. Madero" >Gustavo A. Madero</option>
+                          <option value="Huixquilucan" >Huixquilucan</option>
+                          <option value="dixqIxtapaluca" >dixqIxtapaluca</option>
+                          <option value="Miguel Hidalgo" >Miguel Hidalgo</option>
+                          <option value="Naucalpan" >Naucalpan</option>
+                          <option value="Nezahualcoyotl" >Nezahualcoyotl</option>
+                          <option value="Puebla" >Puebla</option>
+                          <option value="Saltillo" >Saltillo</option>
+                          <option value="SD" >Sin Delegacion</option>
+                          <option value="Tecamac" >Tecamac</option>
+                          <option value="Tlahuac" >Tlahuac</option>
+                          <option value="Tlalnepantla" >Tlalnepantla</option>
+                          <option value="Tlalpan" >Tlalpan</option>
+                          <option value="Tultitlan" >Tultitlan</option>
+                          <option value="Venustiano Carranza" >Venustiano Carranza</option>
+                          <option value="Veracruz" >Veracruz</option>
+                          <option value="Villa Nicolas Romero" >Villa Nicolas Romero</option>
+                          <option value="XochimilcoXalapa<" >XochimilcoXalapa</option>
+                          <option value="Xalapa" >Xalapa</option>
+                          <option value="Zumpango" >Zumpango</option>
+                        </select>
+
 			                <button type="submit" class="btn btn-default">
 			                    <i class="fas fa-search"></i>
 			                </button>
+                      </div>
 			              </form>
 			            </div>
-					</div>{{--
-          @foreach ($sucursales as $sucursal)
-            @foreach ($sucursal->qresults as $result)
-              {{ $result }}
-            @endforeach
-          @endforeach --}}
-					<!--Graficas-->
-          {{-- <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline align-items-center">
-                  <select name="delegacion_municipio" class="form-control" data-placeholder="Selecciona un Rol" style="width: 100%;">
-                      <option value="Alvaro Obregon" >Alvaro Obregon</option>
-                      <option value="Atizapan De Zaragoza" >Atizapan De Zaragoza</option>
-                      <option value="Azcapotzalco" >Azcapotzalco</option>
-                      <option value="Benito Juarez" >Benito Juarez</option>
-                      <option value="Coacalco De Berriozabal" >Coacalco De Berriozabal</option>
-                      <option value="Coyoacan" >Coyoacan</option>
-                      <option value="Cuajimalpa" >Cuajimalpa</option>
-                      <option value="Cuauhtemoc" >Cuauhtemoc</option>
-                      <option value="Cuautitlan Izcalli" >Cuautitlan Izcalli</option>
-                      <option value="Cuernavaca" >Cuernavaca</option>
-                      <option value="Ecatepec De Morelos" >Ecatepec De Morelos</option>
-                      <option value="Gustavo A. Madero" >Gustavo A. Madero</option>
-                      <option value="Huixquilucan" >Huixquilucan</option>
-                      <option value="dixqIxtapaluca" >dixqIxtapaluca</option>
-                      <option value="Miguel Hidalgo" >Miguel Hidalgo</option>
-                      <option value="Naucalpan" >Naucalpan</option>
-                      <option value="Nezahualcoyotl" >Nezahualcoyotl</option>
-                      <option value="Puebla" >Puebla</option>
-                      <option value="Saltillo" >Saltillo</option>
-                      <option value="SD" >Sin Delegacion</option>
-                      <option value="Tecamac" >Tecamac</option>
-                      <option value="Tlahuac" >Tlahuac</option>
-                      <option value="Tlalnepantla" >Tlalnepantla</option>
-                      <option value="Tlalpan" >Tlalpan</option>
-                      <option value="Tultitlan" >Tultitlan</option>
-                      <option value="Venustiano Carranza" >Venustiano Carranza</option>
-                      <option value="Veracruz" >Veracruz</option>
-                      <option value="Villa Nicolas Romero" >Villa Nicolas Romero</option>
-                      <option value="XochimilcoXalapa<" >XochimilcoXalapa</option>
-                      <option value="Xalapa" >Xalapa</option>
-                      <option value="Zumpango" >Zumpango</option>
-                    </select>
-                <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                </button>
-              </form>
-            </div>
-          </div> --}}
+					</div>
+          <br>
         <div class="row">
           <div class="col-12">
             <!-- Custom Tabs -->
               <div class="card-header d-flex p-0">
-                <h3 class="card-title p-3">Navegacion</h3>
+                <h3 class="card-title p-3">Nivel de Riesgo  </h3>
                 <ul class="nav nav-pills ml-auto p-2">
-                  <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Criticos</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Riesgos Inminentes</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="#tab_2" data-toggle="tab">Riesgos Inminentes</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#tab_1" data-toggle="tab">Criticos</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1">
+                  <div class="tab-pane " id="tab_1">
           					<div class="text-center">
           						<div id="ri" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                   				<small class="text-muted"></small>
           					</div>
                   </div>
                   <!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2">
+                  <div class="tab-pane active" id="tab_2">
           					<div class="text-center">
           						<div id="critico" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                   				<small class="text-muted"></small>
@@ -171,12 +129,33 @@
 	<script src="https://code.highcharts.com/modules/data.js"></script>
 	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
   <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  {{-- Herramienta para exportar en CSV XLS excel
+    <script src="https://code.highcharts.com/modules/export-data.js"></script> --}}
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <script>
+  Highcharts.setOptions({
+  lang: {
+    resetZoom: 'Alejar',
+    viewFullscreen: 'Ver en pantalla completa',
+    downloadJPEG: 'Descargar en JPEG',
+    downloadPNG: 'Descargar en PNG',
+    downloadSVG: 'Descargar en SVG imagen de vectores',
+    downloadPDF: 'Descargar en documento PDF',
+  }
+});
+
   Highcharts.chart('critico', {
     chart: {
         zoomType: 'x',
+        resetZoomButton: {
+            position: {
+                // align: 'right', // by default
+                // verticalAlign: 'top', // by default
+                x: -120,
+                y: -40
+            }
+          },
         panning: true,
         type: 'column',
          animation: {
@@ -184,7 +163,7 @@
         },
         events: {
               load: function () {
-                  var label = this.renderer.label("*Click en el nombre para ver detalladamente")
+                  var label = this.renderer.label("")
                   .css({
                       width: '400px',
                       fontSize: '13px'
@@ -201,7 +180,7 @@
                       align: 'center',
                       x: 20, // offset
                       verticalAlign: 'bottom',
-                      y: 0 // offset
+                      y: 30 // offset
                   }), null, 'spacingBox');
               },
           },
@@ -226,14 +205,17 @@
     xAxis: {
        title: {
         text: 'Preguntas',
-        title: 'Sucursales'
+        title: 'Sucursales',
+         align: 'high'
       },
       type: 'category'
     },
     yAxis: {
+      min: 0,
       title: {
         text: 'Calificaciones',
-        title: 'Sucursales'
+        title: 'Sucursales',
+         align: 'high'
       },
     },
     scrollbar: {
@@ -263,18 +245,16 @@
 
     series: [ //datos generales como el nombre de la marca
       {
-        name: "SUCURSALES",
+        name: "Sucursales",
         colorByPoint: true,
         data: [
-        @foreach ($sucursales as $sucursal)
+        @for ($i = 0; $i < count($c)-1 ; $i++)
             {
-              name: "{{ $sucursal->name }}  / {{ $sucursal->ciudad }}",
-            @foreach ($sucursal->qresults->sortByDesc('RI') as $res)
-                y: {{ $res->RI }}, //proemdio
-            @endforeach
-              drilldown: "{{ $sucursal->name }}"
+              name: "{{ $c[$i]['name'] }}",
+                y: {{ $c[$i]['C'] }}, //proemdio
+              drilldown: "{{ $c[$i]['name'] }}"
             },
-        @endforeach
+        @endfor
         ]
       }
     ],
@@ -291,19 +271,19 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ( $sucursal->questionaries  as $q)
+              @foreach ( $sucursal->questionaries->sortBy('Value')  as $q)
                 @if($q->riesgo == 'RI')
-                @if ($q->Value == '1')
-                  [
-                    "{{ $q->IdPregunta }}",
-                      33.3,
-                  ],
-                @else
-                  [
-                    "{{ $q->IdPregunta }}",
-                      0,
-                  ],
-                @endif
+                  @if ($q->Value == '1')
+                      [
+                        "{{ $q->IdPregunta }}",
+                          33.3,
+                      ],
+                    @else
+                      [
+                        "{{ $q->IdPregunta }}",
+                          0,
+                      ],
+                  @endif
                 @endif
               @endforeach
           ]
@@ -317,6 +297,14 @@
   Highcharts.chart('ri', {
     chart: {
          zoomType: 'x',
+         resetZoomButton: {
+            position: {
+                // align: 'right', // by default
+                // verticalAlign: 'top', // by default
+                x: -120,
+                y: -40
+            }
+          },
          panning: true,
          type: 'column',
          animation: {
@@ -327,7 +315,7 @@
         },
       events: {
               load: function () {
-                  var label = this.renderer.label("*Click en el nombre para ver detalladamente Criticos")
+                  var label = this.renderer.label("")
                   .css({
                       width: '400px',
                       fontSize: '13px'
@@ -350,8 +338,8 @@
               }
           },
           marginBottom: 120,
-      inverted: false,
-      scrollablePlotArea: {
+          inverted: false,
+          scrollablePlotArea: {
               minWidth: 700,
               scrollPositionX: 1
           },
@@ -407,22 +395,16 @@
 
     series: [ //datos generales como el nombre de la marca
       {
-        name: "SUCURSALES",
+        name: "Sucursales",
         colorByPoint: true,
         data: [
-        @foreach ($sucursales as $sucursal)
+        @for ($i = 0; $i < count($ri)-1 ; $i++)
             {
-              name: "{{ $sucursal->name }} # {{ $sucursal->ciudad }}",
-          @foreach ($sucursal->qresults->sortByDesc('C') as $res)
-          @if ($res->C == '0')
-            y: 0,
-          @else
-              y: {{ $res->C }}, //proemdio
-          @endif
-          @endforeach
-              drilldown: "{{ $sucursal->name }}"
+              name: "{{ $ri[$i]['name'] }}",
+                y: {{ $ri[$i]['RI'] }}, //proemdio
+              drilldown: "{{ $ri[$i]['name'] }}"
             },
-        @endforeach
+        @endfor
         ]
       }
     ],
@@ -435,12 +417,11 @@
     },
       series: [
           @foreach ($sucursales as $sucursal)
-          //Para otro nivel de filtro
         {
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ( $sucursal->questionaries  as $q)
+              @foreach ( $sucursal->questionaries->sortBy('Value')  as $q)
                 @if($q->riesgo == 'C')
                 @if ($q->Value == '1')
                   [
@@ -450,7 +431,7 @@
                 @else
                   [
                     "{{ $q->IdPregunta }}",
-                      0,
+                      0.0,
                   ],
                 @endif
                 @endif
