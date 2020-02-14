@@ -98,8 +98,8 @@ class MarcaController extends Controller
             ->dm($dm)
             ->get();
 
-            $ri =
-            ddd($sucursales);
+            // $ri =
+            // ddd($sucursales);
             // $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
             // ->where('riesgo', '=', "C")
