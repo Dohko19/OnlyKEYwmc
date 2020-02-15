@@ -18,7 +18,15 @@
 					          <div class="info-box-content ">
 					          	@if ($grupo->tipo == 'auditorias')
 					          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
-					          		@if ($marca->puntuacion_general >= 90)
+						          	@else
+						          		<a href="{{ route('admin.marcas.show', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
+						          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
+						          		</a>
+						          	@endif
+					          </div>
+				        	</div>
+					          @if ($grupo->tipo == 'auditorias')
+					          @if ($marca->puntuacion_general >= 90)
 							          	<a href="{{ route('admin.marcas.show', $marca) }}"
 							          	class="btn btn-sm btn-success small-box-footer">
 							          		<i class="fas fa-star"></i> Calificacion de Limpieza:
@@ -43,13 +51,7 @@
 							          	 </u>
 							          	</a>
 						        	@endif
-						          	@else
-						          		<a href="{{ route('admin.marcas.show', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
-						          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
-						          		</a>
-						          	@endif
-					          </div>
-				        	</div>
+						        	@endif
 
 				        	<!-- /.info-box -->
 				      </div>
