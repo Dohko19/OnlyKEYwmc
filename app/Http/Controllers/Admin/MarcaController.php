@@ -104,15 +104,15 @@ class MarcaController extends Controller
             ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at')
             ->where('sucursals.marca_id', $marca->id)
             ->orderBy('q.RI', 'ASC')
-            ->where('sucursals.created_at', 'LIkE', "%$graphics%")
-            ->where('sucursals.delegacion_municipio', 'LIkE', "%$dm%")
+            ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
+            ->orWhere('sucursals.delegacion_municipio', 'LIkE', "%$dm%")
             ->get()->toArray();
             // ddd($ri);
             $c = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.C')
             ->where('sucursals.marca_id', $marca->id)
-            ->where('sucursals.created_at', 'LIkE', "%$graphics%")
-            ->where('sucursals.delegacion_municipio', 'LIkE', "%$dm%")
+            ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
+            ->orWhere('sucursals.delegacion_municipio', 'LIkE', "%$dm%")
             ->orderBy('q.C', 'ASC')
             ->get()->toArray();
             $preguntas = PreguntasCuestionario::all();

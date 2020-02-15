@@ -32,8 +32,9 @@
 			            <div class="col-md-4 col-sm-4">
 			                <label for="graphic" class="float-right">Filtro por Fecha y/o Delegación</label>
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline float-right">
+                      @csrf
                       <div class="form-group">
-  			                <input name="graphics" type="text" class="form-control" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" size="10" value="{{ old('graphics', '2020-02') }}">
+  			                <input name="graphics" type="text" class="form-control" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" size="10" value="{{ old('graphics') }}">
                         <select name="delegacion_municipio" class="form-control" style="width: 100px">
                           <option value="" selected>Delegacion...</option>
                           <option value="Alvaro Obregon" >Alvaro Obregon</option>
