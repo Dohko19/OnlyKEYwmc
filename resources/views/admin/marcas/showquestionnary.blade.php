@@ -33,7 +33,7 @@
 			                <label for="graphic" class="float-right">Filtro por Fecha y/o Delegación</label>
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline float-right">
                       <div class="form-group">
-  			                <input name="graphics" type="text" class="form-control" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" size="10">
+  			                <input name="graphics" type="text" class="form-control" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" size="10" value="{{ old('graphics', '2020-02') }}">
                         <select name="delegacion_municipio" class="form-control" style="width: 100px">
                           <option value="" selected>Delegacion...</option>
                           <option value="Alvaro Obregon" >Alvaro Obregon</option>
@@ -106,6 +106,27 @@
                   <!-- /.tab-pane -->
                 </div>
                 <!-- /.tab-content -->
+                <div class="col-md-6">
+                 <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th style="width: 1%">#</th>
+                      <th style="width: 33%" >Pregunta</th>
+                      <th style="width: 2%">Riesgo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($preguntas as $pregunta)
+                      <tr>
+                        <td>{{ $pregunta->IdPregunta }}</td>
+                        <td>{{ $pregunta->Pregunta }}</td>
+                        <td>{{ $pregunta->NivelRiesgo }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                 </table>
+                </div>
+
               </div><!-- /.card-body -->
 
             <!-- ./card -->
@@ -133,6 +154,7 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script> --}}
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+
 <script>
   Highcharts.setOptions({
   lang: {
@@ -271,12 +293,12 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ( $sucursal->questionaries->sortBy('Value')  as $q)
+              @foreach ( $sucursal->questionaries->sortBy('IdPregunta')  as $q)
                 @if($q->riesgo == 'RI')
                   @if ($q->Value == '1')
                       [
                         "{{ $q->IdPregunta }}",
-                          33.3,
+                          100,
                       ],
                     @else
                       [
@@ -421,12 +443,12 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ( $sucursal->questionaries->sortBy('Value')  as $q)
+              @foreach ( $sucursal->questionaries->sortBy('IdPregunta')  as $q)
                 @if($q->riesgo == 'C')
                 @if ($q->Value == '1')
                   [
                     "{{ $q->IdPregunta }}",
-                      6.6,
+                      100,
                   ],
                 @else
                   [

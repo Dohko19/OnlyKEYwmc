@@ -17,17 +17,9 @@ class SegmentosController extends Controller
      */
     public function index(Request $request)
     {
-        // $marca = Marca::existe()->count();
-        $segmentos = Segmento::existe()->count();
-        // if($marca)
-            if($segmentos)
-            {
-        //         {
                     return view('admin.segmentos.index',[
-                        'segmentos' => Segmento::allowed()->get(),
+                        'segmentos' => Segmento::all(),
                     ]);
-            //     }
-            }
             return redirect()->route('admin.index')->withInfo('Debes pertencer a un grupo de marca o una marca para poder ver esta seccion');
     }
 

@@ -114,12 +114,27 @@
                               <option value="{{ $id }}" {{ $roles->pluck('id')->contains($id) ? 'select' : '' }}>{{ $name }}</option>
                             @endforeach
                           </select>
-                              @error('category_id')
+                              @error('roles')
                                 <div class="help-block">
                                   <strong>{{ $message }}</strong>
                                 </div>
                               @enderror
                           <small class="text-muted">Permisos de usuario</small>
+                          {!! $errors->first('roles','<span class=error>:message</span>')  !!}
+                      </div>
+                      <div class="form-group">
+                         <label>Auditorias</label>
+                          <select name="auditorias[]" class="form-control" data-placeholder="Selecciona un Rol" style="width: 100%;">
+                            @foreach ($auditorias as $auditoria)
+                              <option value="{{ $auditoria->IdAuditoria }}" >{{ $auditoria->NombreAuditoria }}</option>
+                            @endforeach
+                          </select>
+                              @error('auditorias')
+                                <div class="help-block">
+                                  <strong>{{ $message }}</strong>
+                                </div>
+                              @enderror
+                          <small class="text-muted">Que auditoria le pertenece</small>
                           {!! $errors->first('roles','<span class=error>:message</span>')  !!}
                       </div>
                     @endif

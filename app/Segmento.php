@@ -6,7 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Segmento extends Model
 {
-	protected $fillable = ['comments', 'puntuacion', 'sucursal_id', 'approved'];
+	// protected $fillable = ['comments', 'puntuacion', 'sucursal_id', 'approved'];
+
+    protected $table = 'SegmentosAuditoria';
+
+    protected $primaryKey = 'IdSegmentoAuditoria';
+
+    public $timestamps = false;
+
+    public function auditorias()
+    {
+        return $this->belongsTo(Auditoria::class, 'IdAuditoria');
+    }
+
+    public function questions()
+    {
+    	return $this->hasMany(Question::class, 'IdPreguntaSegmentoAuditoria');
+    }
 
 	public function sucursals()
 	{
@@ -16,11 +32,6 @@ class Segmento extends Model
     public function users()
     {
         return $this->belongsTo(User::class,'user_id');
-    }
-
-    public function questions()
-    {
-    	return $this->hasMany(Question::class);
     }
 
     public function scopeAllowed($query)

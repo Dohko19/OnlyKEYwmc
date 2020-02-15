@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
         // app()->bind('path.public', function() {
         //     return base_path().'/../public_html';
         // });
-        App::bind('path.public', function() {
-            return base_path().'/public_html';
-        });
+        // App::bind('path.public', function() {
+        //     return base_path().'/public_html';
+        // });
     }
 }
