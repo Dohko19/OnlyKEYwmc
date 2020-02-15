@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['segmento_id', 'question', 'photo', 'comments', 'approved'];
+    // protected $fillable = ['segmento_id', 'question', 'photo', 'comments', 'approved'];
 
-    public function answers()
-    {
-    	return $this->belongstoMany(Answer::class);
-    }
+	protected $table = 'PreguntasAuditoria';
+
+    protected $primaryKey = 'IdPreguntaSegmentoAuditoria';
+
+    public $timestamps = false;
 
     public function segmentos()
     {
-    	return $this->belongsTo(Segmento::class);
+    	return $this->belongsTo(Segmento::class, 'IdSegmento');
     }
 }

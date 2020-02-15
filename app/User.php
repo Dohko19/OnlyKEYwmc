@@ -95,4 +95,17 @@ class User extends Authenticatable
         }
             return $query->where('id', auth()->id());
     }
+
+    public function auditorias()
+    {
+        return $this->belongsToMany(Auditoria::class, 'auditoria_user', 'auditoria_id', 'user_id');
+    }
+
+    // public function syncAuditors($tags)
+    // {
+    //     $tagIds = collect($tags)->map(function($tag){
+    //         return Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
+    //     });
+    //     return $this->tags()->sync($tagIds);
+    // }
 }

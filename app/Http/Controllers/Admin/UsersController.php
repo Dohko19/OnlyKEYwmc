@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Auditoria;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
@@ -19,7 +20,8 @@ class UsersController extends Controller
     {
 
         $users = User::all();
-        return view('admin.users.index', compact('users'));
+
+        return view('admin.users.index', compact('users', 'auditorias'));
     }
 
     /**
@@ -32,7 +34,8 @@ class UsersController extends Controller
         $user = new User;
         $this->authorize('create', $user);
         $roles = Role::pluck('display_name', 'id');
-        return view('admin.users.create', compact('roles'));
+        $auditorias = Auditoria::all();
+        return view('admin.users.create', compact('roles', 'auditorias'));
     }
 
     /**
@@ -43,6 +46,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->auditorias;
         $this->authorize('create', new User);
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
@@ -52,6 +56,8 @@ class UsersController extends Controller
         $user = User::create($request->all());
 
         $user->roles()->attach($request->roles);
+
+        $user->auditorias()->attach($request->get('auditorias'));
 
         return redirect()->back()->with('info', 'Usuario Creado Correctamente');
     }

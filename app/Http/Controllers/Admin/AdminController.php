@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Auditoria;
 use App\GrupoMarca;
 use App\Http\Controllers\Controller;
 use App\Marca;
+use App\Question;
+use App\Segmento;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller

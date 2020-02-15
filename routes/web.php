@@ -13,6 +13,7 @@ function (){
 	Route::resource('questions', 'QuestionsController', ['as' => 'admin']);
 	Route::resource('segmentos', 'SegmentosController', ['as' => 'admin']);
 	Route::resource('gruposm', 'GruposMarcasController', ['as' => 'admin']);
+	Route::resource('auditorias', 'AuditoriasController', ['as' => 'admin']);
 	Route::get('/status', 'SegmentosController@status', ['as' => 'admin'])->name('admin.segmentos.status');
 	Route::put('approved/{question}', 'QuestionsController@approved', ['as' => 'admin'])
 	->name('admin.questions.approved');

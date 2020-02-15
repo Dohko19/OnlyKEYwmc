@@ -19,7 +19,7 @@
 					          	@if ($grupo->tipo == 'auditorias')
 					          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
 					          	@else
-					          		<a href="{{ route('admin.marcas.show', $marca) }}">
+					          		<a href="{{ route('admin.marcas.show', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
 					          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
 					          		</a>
 					          	@endif
