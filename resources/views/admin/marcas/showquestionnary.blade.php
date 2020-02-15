@@ -24,7 +24,7 @@
     							<h3 class="text-center">
             			 {{ $marca->name }}
           				</h3>
-                  <small class="text-justify">Calificacion por delegacion: </small>
+                  <small class="text-justify">Calificacion por delegacion</small>
                 </div>
                 <div class="col-md-2"></div>
               </div>
@@ -34,39 +34,11 @@
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline float-right">
                       <div class="form-group">
   			                <input name="graphics" type="text" class="form-control" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" size="10" value="{{ old('graphics') }}">
-                        <select name="delegacion_municipio" class="form-control" style="width: 100px">
-                          <option value="" selected>Delegacion...</option>
-                          <option value="Alvaro Obregon" >Alvaro Obregon</option>
-                          <option value="Atizapan De Zaragoza" >Atizapan De Zaragoza</option>
-                          <option value="Azcapotzalco" >Azcapotzalco</option>
-                          <option value="Benito Juarez" >Benito Juarez</option>
-                          <option value="Coacalco De Berriozabal" >Coacalco De Berriozabal</option>
-                          <option value="Coyoacan" >Coyoacan</option>
-                          <option value="Cuajimalpa" >Cuajimalpa</option>
-                          <option value="Cuauhtemoc" >Cuauhtemoc</option>
-                          <option value="Cuautitlan Izcalli" >Cuautitlan Izcalli</option>
-                          <option value="Cuernavaca" >Cuernavaca</option>
-                          <option value="Ecatepec De Morelos" >Ecatepec De Morelos</option>
-                          <option value="Gustavo A. Madero" >Gustavo A. Madero</option>
-                          <option value="Huixquilucan" >Huixquilucan</option>
-                          <option value="dixqIxtapaluca" >dixqIxtapaluca</option>
-                          <option value="Miguel Hidalgo" >Miguel Hidalgo</option>
-                          <option value="Naucalpan" >Naucalpan</option>
-                          <option value="Nezahualcoyotl" >Nezahualcoyotl</option>
-                          <option value="Puebla" >Puebla</option>
-                          <option value="Saltillo" >Saltillo</option>
-                          <option value="SD" >Sin Delegacion</option>
-                          <option value="Tecamac" >Tecamac</option>
-                          <option value="Tlahuac" >Tlahuac</option>
-                          <option value="Tlalnepantla" >Tlalnepantla</option>
-                          <option value="Tlalpan" >Tlalpan</option>
-                          <option value="Tultitlan" >Tultitlan</option>
-                          <option value="Venustiano Carranza" >Venustiano Carranza</option>
-                          <option value="Veracruz" >Veracruz</option>
-                          <option value="Villa Nicolas Romero" >Villa Nicolas Romero</option>
-                          <option value="XochimilcoXalapa<" >XochimilcoXalapa</option>
-                          <option value="Xalapa" >Xalapa</option>
-                          <option value="Zumpango" >Zumpango</option>
+                        <select name="dm" class="form-control" style="width: 100px">
+                          <option value="">Seleccione una opcion</option>
+                          @foreach ($dm as $d)
+                            <option value="{{ $d->name }}">{{ $d->name }}</option>
+                          @endforeach
                         </select>
 			                <button type="submit" class="btn btn-default">
 			                    <i class="fas fa-search"></i>

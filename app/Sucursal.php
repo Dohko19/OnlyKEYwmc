@@ -52,4 +52,9 @@ class Sucursal extends Model
         }
             return $query->where('marca_id', $this->marcas->grupos->id);
     }
+
+    public function dm()
+    {
+        return $this->hasOne(Dm::class, 'dm_id');
+    }
 }

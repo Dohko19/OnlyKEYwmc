@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Alert;
+use App\Dm;
 use App\GrupoMarca;
 use App\Http\Controllers\Controller;
 use App\InspeccionSanitaria;
@@ -93,7 +94,7 @@ class MarcaController extends Controller
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
             $graphics = $request->get('graphics') ?? Carbon::now();
-            $dm = $request->get('delegacion_municipio') ?? '';
+            $dm = $request->get('dm') ?? '';
             $sucursales = Sucursal::with('qresults')
             ->where('sucursals.marca_id', '=', $marca->id)
             ->get();
@@ -113,7 +114,10 @@ class MarcaController extends Controller
             ->orWhere('delegacion_municipio', 'LIkE', "%$dm%")
             ->orderBy('q.C', 'ASC')
             ->get()->toArray();
+
             $preguntas = PreguntasCuestionario::select('IdPregunta','NivelRiesgo','Pregunta')->get();
+            $dm = Dm::select('name')->get();
+
             $preguntasLeft = collect();
             $preguntasRigth = collect();
             foreach ($preguntas as $key => $pregunta) {
@@ -187,7 +191,7 @@ class MarcaController extends Controller
             // }
             // return $sum;
             // $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntas', 'preguntasLeft', 'preguntasRigth'));
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntas', 'preguntasLeft', 'preguntasRigth', 'dm'));
             // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 
