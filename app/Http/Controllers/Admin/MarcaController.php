@@ -101,15 +101,32 @@ class MarcaController extends Controller
             $ri = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at')
             ->where('sucursals.marca_id', $marca->id)
+            ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
+            ->orWhere('delegacion_municipio', 'LIkE', "%$dm%")
             ->orderBy('q.RI', 'ASC')
             ->get()->toArray();
             // ddd($ri);
             $c = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.C')
             ->where('sucursals.marca_id', $marca->id)
+            ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
+            ->orWhere('delegacion_municipio', 'LIkE', "%$dm%")
             ->orderBy('q.C', 'ASC')
             ->get()->toArray();
-            $preguntas = PreguntasCuestionario::all();
+            $preguntas = PreguntasCuestionario::select('IdPregunta','NivelRiesgo','Pregunta')->get();
+            $preguntasLeft = collect();
+            $preguntasRigth = collect();
+            foreach ($preguntas as $key => $pregunta) {
+                if ($key%2 == 0)
+                {
+                    $preguntasLeft->push($pregunta);
+
+                }
+                else
+                {
+                    $preguntasRigth->push($pregunta);
+                }
+            }
             // ddd(count($c));
             // $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
@@ -170,7 +187,7 @@ class MarcaController extends Controller
             // }
             // return $sum;
             // $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntas'));
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntas', 'preguntasLeft', 'preguntasRigth'));
             // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 

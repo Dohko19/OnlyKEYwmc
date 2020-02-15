@@ -1,5 +1,6 @@
 <?php
 Auth::routes(['register' => false]);
+Route::get('planes', 'HomeController@planes')->name('pages.planes');
 Route::get('/', 'Admin\AdminController@index')->name('home.index');
 Route::group([
 	'prefix' => 'admin',

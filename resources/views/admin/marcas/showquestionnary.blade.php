@@ -24,7 +24,7 @@
     							<h3 class="text-center">
             			 {{ $marca->name }}
           				</h3>
-                  <small class="text-justify">Calificacion por Sucursales</small>
+                  <small class="text-justify">Calificacion por delegacion: </small>
                 </div>
                 <div class="col-md-2"></div>
               </div>
@@ -32,7 +32,6 @@
 			            <div class="col-md-4 col-sm-4">
 			                <label for="graphic" class="float-right">Filtro por Fecha y/o Delegación</label>
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline float-right">
-                      @csrf
                       <div class="form-group">
   			                <input name="graphics" type="text" class="form-control" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" size="10" value="{{ old('graphics') }}">
                         <select name="delegacion_municipio" class="form-control" style="width: 100px">
@@ -69,7 +68,6 @@
                           <option value="Xalapa" >Xalapa</option>
                           <option value="Zumpango" >Zumpango</option>
                         </select>
-
 			                <button type="submit" class="btn btn-default">
 			                    <i class="fas fa-search"></i>
 			                </button>
@@ -107,27 +105,18 @@
                   <!-- /.tab-pane -->
                 </div>
                 <!-- /.tab-content -->
-                <div class="col-md-6">
-                 <table class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th style="width: 1%">#</th>
-                      <th style="width: 33%" >Pregunta</th>
-                      <th style="width: 2%">Riesgo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($preguntas as $pregunta)
-                      <tr>
-                        <td>{{ $pregunta->IdPregunta }}</td>
-                        <td>{{ $pregunta->Pregunta }}</td>
-                        <td>{{ $pregunta->NivelRiesgo }}</td>
-                      </tr>
+                <div class="row">
+                  <div class="col-md-6 ml-auto">
+                    @foreach($preguntasLeft as $il)
+                    <p>{{ $il->IdPregunta }}.- {{ $il->Pregunta }}</p>
                     @endforeach
-                  </tbody>
-                 </table>
+                  </div>
+                  <div class="col-md-6 mr-auto">
+                    @foreach($preguntasRigth as $ir)
+                    <p>{{ $ir->IdPregunta }}.- {{ $ir->Pregunta }}</p>
+                    @endforeach
+                  </div>
                 </div>
-
               </div><!-- /.card-body -->
 
             <!-- ./card -->

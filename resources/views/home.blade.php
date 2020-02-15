@@ -1,65 +1,100 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Lockscreen</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.admin')
+@section('content')
+<section class="content">
+  <!-- Default box -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Planes de Accion para la sucursal de La Cerveceria del Barrio</h3>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="adminLTE/plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="adminLTE/css/adminlte.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body class="hold-transition lockscreen" style="background-color: #add8e6">
-<!-- Automatic element centering -->
-<div class="lockscreen-wrapper">
-  <div class="lockscreen-logo">
-    <a href="{{ route('admin.users.index') }}">
-        <img src="{{ url('images/logowmc.png') }}" width="200px" alt=""></a>
-  </div>
-  <!-- User name -->
-  <div class="lockscreen-name">KEY</div>
-
-  <!-- START LOCK SCREEN ITEM -->
-  <div class="lockscreen-item">
-    <!-- lockscreen image -->
-    <div class="lockscreen-image">
-      <img src="{{ url('images/key.png') }}" alt="User Image">
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+          <i class="fas fa-minus"></i></button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fas fa-times"></i></button>
+      </div>
     </div>
-    <!-- /.lockscreen-image -->
-
-    <!-- lockscreen credentials (contains the form) -->
-    <form method="GET" action="{{ route('admin.index') }}" class="lockscreen-credentials">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Presiona para entrar" disabled>
-
-        <div class="input-group-append">
-          <button type="submit" class="btn"><i class="fas fa-arrow-right text-muted"></i></button>
+    <div class="card-body">
+      <div class="row">
+        <div class="container-fluid">
+          <br>
+          <table class="talbe">
+            <tr>
+              <th>Camapana Sucia</th>
+              <td><input class="form-control" type="text" placeholder="Plan de accion"></td>
+              <td class="pull-right"><button class="btn btn-info"><i class="far fa-save"></i> Guardar</button></td>
+              <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                  Ver Imagen...
+                </button></td>
+            </tr>
+            <tr>
+              <th>Area de Cochambre no desinfecatada</th>
+              <td><input class="form-control" type="text" placeholder="Plan de accion"></td>
+              <td class="pull-right"><button class="btn btn-info"><i class="far fa-save"></i> Guardar</button></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                  Ver Imagen...
+                </button></td>
+            </tr>
+            <tr>
+              <th>Personal no bien uniformado</th>
+              <td><input class="form-control" type="text" placeholder="Plan de accion"></td>
+              <td class="pull-right"><button class="btn btn-info"><i class="far fa-save"></i> Guardar</button></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                  Ver Imagen...
+                </button></td>
+            </tr>
+            <tr>
+              <th>Desconocimineto del proceso de desinfeccion</th>
+              <td><input class="form-control" type="text" placeholder="Plan de accion"></td>
+              <td class="pull-right"><button class="btn btn-info"><i class="far fa-save"></i> Guardar</button></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                  Ver Imagen...
+                </button></td>
+            </tr>
+            <tr>
+              <th>Equipos en mal estado</th>
+              <td><input class="form-control" type="text" placeholder="Plan de accion"></td>
+              <td class="pull-right"><button class="btn btn-info"><i class="far fa-save"></i> Guardar</button></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                  Ver Imagen...
+                </button></td>
+            </tr>
+            <tr>
+              <th>Falta de producto quimico</th>
+              <td><input class="form-control" type="text" placeholder="Plan de accion"></td>
+              <td class="pull-right"><button class="btn btn-info"><i class="far fa-save"></i> Guardar</button></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                  Ver Imagen...
+                </button></td>
+            </tr>
+          </table>
         </div>
       </div>
-    </form>
-    <!-- /.lockscreen credentials -->
-
+    </div>
+    <!-- /.card-body -->
+    <!-- /.card-footer-->
   </div>
-  <!-- /.lockscreen-item -->
-  <div class="help-block text-center">
-    Bienvenido a KEY WMC
+  <!-- /.card -->
+</section>
+@endsection
+<div class="modal fade" id="modal-primary">
+    <div class="modal-dialog">
+      <div class="modal-content bg-primary">
+        <div class="modal-header">
+          <h4 class="modal-title">Evidencia de Auditoria</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+              <img src="{{ url('imagen/campana-sucia.jpg') }}" width="350px" alt="">
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
   </div>
-  <div class="lockscreen-footer text-center">
-    Copyright &copy; 2020 <b>
-  </div>
-</div>
-<!-- /.center -->
-
-<!-- jQuery -->
-<script src="adminLTE/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
