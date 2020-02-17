@@ -85,15 +85,15 @@ class MarcaController extends Controller
     {
         if($marca->grupos->tipo == 'auditorias')
         {
-            $graphics = $request->get('graphics') ?? Carbon::now();
+            $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m-d');
             $sucursales = Sucursal::whereNotNull('created_at')
             ->graphics($graphics)
-            ->Where('marca_id', '=', $marca->id)
+            ->where('marca_id', '=', $marca->id)
             ->orderBy('puntuacion_total', 'DESC')
             ->get();
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
-            $graphics = $request->get('graphics') ?? Carbon::now();
+            $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m-d');
             $dm = $request->get('dm') ?? '';
             $sucursales = Sucursal::with('qresults')
             ->where('sucursals.marca_id', '=', $marca->id)
@@ -102,16 +102,16 @@ class MarcaController extends Controller
             $ri = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at')
             ->where('sucursals.marca_id', $marca->id)
-            ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
-            ->orWhere('delegacion_municipio', 'LIkE', "%$dm%")
+            // ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
+            ->where('delegacion_municipio', 'LIkE', "%$dm%")
             ->orderBy('q.RI', 'ASC')
             ->get()->toArray();
             // ddd($ri);
             $c = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.C')
             ->where('sucursals.marca_id', $marca->id)
-            ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
-            ->orWhere('delegacion_municipio', 'LIkE', "%$dm%")
+            // ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
+            ->where('delegacion_municipio', 'LIkE', "%$dm%")
             ->orderBy('q.C', 'ASC')
             ->get()->toArray();
 
