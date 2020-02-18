@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Key | Planes de Accion')
+@section('headertitle', 'Listado de Segmentos')
 @section('header')
-@endsection
 @section('content')
 <!-- Default box -->
 <div class="card">
@@ -12,32 +12,31 @@
       <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"> <i class="fas fa-minus"></i></button>
     </div>
   </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-        <div class="row">
-          <div class="col-6"></div>
-          <div class="col-6">
-            <h4>Auditorias por Segmento</h4>
-            @foreach ($auditoria->segmentos as $segmento)
-              <div class="post">
-                <div class="user-block">
-                  <span class="username">
-                    <a href="#">{{ $segmento->NombreSegmento }}</a>
-                  </span>
-                  <span class="description">Fecha</span>
-                </div>
-                <!-- /.user-block -->
-                <p>
-                  <a href="#">Ver detalles de la auditoria por preguntas...</a>
-                </p>
-              </div>
-            @endforeach
+  <div class="row">
+    @foreach ($auditoria->segmentos as $segmento)
+      <div class="col-md-4">
+        <div class="card card-outline card-primary">
+          <div class="card-header">
+            <h3 class="card-title">{{ $segmento->NombreSegmento }}</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+            </div>
+            <!-- /.card-tools -->
           </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <a href="{{ route('admin.segmentos.show', $segmento) }}">Mas Informacion...</a>
+          </div>
+          <!-- /.card-body -->
         </div>
+        <!-- /.card -->
       </div>
-    </div>
+    @endforeach
+    <!-- /.col -->
   </div>
+        <!-- /.row -->
   <!-- /.card-body -->
 </div>
 <!-- /.card -->

@@ -41,7 +41,7 @@
 		                  <td>{{ $suc->ciudad }}</td>
 		                  <td>{{ $suc->puntuacion_total }}</td>
 		                  <td>{{ $sucursale->name }}</td>
-		                  <td>{{ $suc->created_at->format('d/m/Y') }}</td>
+		                  <td>{{ $suc->created_at }}</td>
 		                  <td>
 			                  	<button
 			                  	data-toggle="modal"

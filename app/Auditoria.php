@@ -14,7 +14,7 @@ class Auditoria extends Model
 
     public function segmentos()
     {
-    	return $this->hasMany(Segmento::class, 'IdSegmentoAuditoria');
+    	return $this->hasMany(Segmento::class, 'IdAuditoria');
     }
 
     public function users()

@@ -102,7 +102,7 @@ class MarcaController extends Controller
             $ri = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at')
             ->where('sucursals.marca_id', $marca->id)
-            // ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
+            ->where('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%")
             ->where('delegacion_municipio', 'LIkE', "%$dm%")
             ->orderBy('q.RI', 'ASC')
             ->get()->toArray();
@@ -110,7 +110,7 @@ class MarcaController extends Controller
             $c = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.C')
             ->where('sucursals.marca_id', $marca->id)
-            // ->orWhere('sucursals.created_at', 'LIkE', "%$graphics%")
+            ->where('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%")
             ->where('delegacion_municipio', 'LIkE', "%$dm%")
             ->orderBy('q.C', 'ASC')
             ->get()->toArray();

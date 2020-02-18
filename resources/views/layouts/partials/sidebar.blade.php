@@ -46,7 +46,7 @@
           </a>
         </li>
         @endif
-        @if(auth()->user()->isAdmin())
+        @if(auth()->user()->isAdmin() || auth()->user()->isAsesor() )
         <li class="nav-header">Root</li>
         <li class="nav-item">
           <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">

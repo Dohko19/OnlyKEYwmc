@@ -21,7 +21,7 @@ class Segmento extends Model
 
     public function questions()
     {
-    	return $this->hasMany(Question::class, 'IdPreguntaSegmentoAuditoria');
+    	return $this->hasMany(Question::class, 'IdSegmento');
     }
 
 	public function sucursals()
@@ -51,7 +51,7 @@ class Segmento extends Model
     public function scopeSegmento($query, $segmento)
     {
         if($segmento)
-            return $query->where('segmento', 'LIkE', "%$segmento%");
+            return $query->where('segmento', 'LIkE', "%".Carbon::parse($segmento)->format('Y-m')."%");
     }
 
 }

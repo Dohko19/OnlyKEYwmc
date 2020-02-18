@@ -140,8 +140,8 @@
                 y: -40
             }
           },
-        panning: true,
-        type: 'column',
+         panning: true,
+         type: 'column',
          animation: {
          duration: 1000
         },

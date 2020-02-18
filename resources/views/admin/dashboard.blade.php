@@ -59,10 +59,7 @@
 		      		@endforeach
 				@endforeach
     	@endif
-		@if (Auth::user()->isDmarca() || Auth::user()->isAdmin())
-			{{ $marcas }}
-
-		@endif
+		{{--  --}}
     </div>
     <!-- /.row -->
 </section>

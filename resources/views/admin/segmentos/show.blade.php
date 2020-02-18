@@ -1,9 +1,5 @@
 @extends('layouts.admin')
 @section('title', 'Key | Planes de Accion')
-@section('headertitle', $segmento->sucursals->marcas->name )
-@section('header')
-  <img class="float-right" width="70px" height="70px" src="{{ url('marcas/'.$segmento->sucursals->marcas->photo) }}" alt="">
-@endsection
 @section('content')
 
   <section class="content">
@@ -11,7 +7,7 @@
   <div class="card">
     <div class="card-header">
       <h3 class="card-title"><b>
-        Plan de Accion: {{ $segmento->segmento }}</b></h3>
+        Segmento: {{ $segmento->NombreSegmento }}</b></h3>
 
       <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -49,7 +45,7 @@
                       @if (!$question->approved == 1)
                         <tr>
                           <td>
-                            {{ $question->question }}
+                            {{ $question->Pregunta }}
                           </td>
                           <td>
                             <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
@@ -69,7 +65,7 @@
                             </td>
                             <td class="align-content-center">
                                {{-- @if (auth()->user()->isAdmin()) --}}
-                                <form action="{{ route('admin.questions.approved', $question) }}" method="POST" ">
+                                <form action="{{ route('admin.questions.approved', $question) }}" method="POST">
                                   @csrf
                                   @method('PUT')
                                   <div class="row">

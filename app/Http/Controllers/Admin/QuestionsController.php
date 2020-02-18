@@ -18,6 +18,7 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, Question $question)
     {
+        return $request;
         $question->update($request->all());
         return back()->withInfo('Informacion Actualizada');
     }
