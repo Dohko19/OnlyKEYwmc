@@ -12,10 +12,7 @@ class SucursalPolicy
 
     public function before($user)
     {
-        if ( $user->isAdmin() )
-        {
             return true;
-        }
     }
 
     /**
@@ -49,7 +46,6 @@ class SucursalPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin();
     }
 
     /**
@@ -61,7 +57,6 @@ class SucursalPolicy
      */
     public function update(User $user, Sucursal $sucursal)
     {
-        return $user->isAdmin();
     }
 
     /**
@@ -73,7 +68,6 @@ class SucursalPolicy
      */
     public function delete(User $user, Sucursal $sucursal)
     {
-        return $user->isAdmin();
     }
 
     /**

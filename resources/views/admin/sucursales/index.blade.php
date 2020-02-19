@@ -38,17 +38,11 @@
                 		<tr>
 		                  <td>{{ $suc->id }}</td>
 		                  <td>{{ $suc->name ?? 'Sin datos diposnibles'}}</td>
-		                  <td>{{ $suc->ciudad }}</td>
+		                  <td>{{ $suc->ciudad }} - {{ $suc->zone }} - {{ $suc->region }}</td>
 		                  <td>{{ $suc->puntuacion_total }}</td>
 		                  <td>{{ $sucursale->name }}</td>
-		                  <td>{{ $suc->created_at }}</td>
+		                  <td>{{ optional($suc->created_at)->format('Y-m-d') }}</td>
 		                  <td>
-			                  	<button
-			                  	data-toggle="modal"
-			                  	data-target="#modal-primary"
-			                  	class="btn" href="#">
-			                  	<i class="fas fa-eye" style="color: gray;"></i>
-			                  	</button>
 		                  	<form
 			                  	action="{{ route('admin.sucursales.destroy', $suc) }}"
 			                  	method="POST"

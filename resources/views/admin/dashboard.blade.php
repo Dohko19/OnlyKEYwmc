@@ -10,7 +10,6 @@
   <div class="container-fluid">
     <h5 class="mb-2">Bienvenido {{ Auth::user()->name }} | WMC</h5>
     <div class="row justify-content-center align-items-center minh-100" >
-    	@if (Auth::user()->isDral() || Auth::user()->isAdmin())
 	    	@foreach ($grupos as $grupo)
 					@foreach ($grupo->marcas as $marca)
 				      <div class="col-md-3 col-sm-6 col-12">
@@ -58,7 +57,6 @@
 		      		<!-- /.col -->
 		      		@endforeach
 				@endforeach
-    	@endif
 		{{--  --}}
     </div>
     <!-- /.row -->

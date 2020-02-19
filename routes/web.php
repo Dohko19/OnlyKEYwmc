@@ -15,7 +15,19 @@ function (){
 	Route::resource('segmentos', 'SegmentosController', ['as' => 'admin']);
 	Route::resource('gruposm', 'GruposMarcasController', ['as' => 'admin']);
 	Route::resource('auditorias', 'AuditoriasController', ['as' => 'admin']);
+	Route::resource('roles', 'RolesController', ['except' => 'show', 'as' => 'admin']);
+	Route::resource('permissions', 'PermissionsController', ['only' => ['index', 'edit', 'update'], 'as' => 'admin']);
+
 	Route::get('/status', 'SegmentosController@status', ['as' => 'admin'])->name('admin.segmentos.status');
+
+	Route::middleware('role:Admin')
+		->put('users/{user}/roles', 'UsersRolesController@update')
+		->name('admin.users.roles.update');
+
+
 	Route::put('approved/{question}', 'QuestionsController@approved', ['as' => 'admin'])
 	->name('admin.questions.approved');
+
+	Route::middleware('role:Admin')
+		->put('users/{user}/permissions', 'UsersPermissionsController@update')->name('admin.users.permissions.update');
 });

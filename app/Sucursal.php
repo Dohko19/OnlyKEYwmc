@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sucursal extends Model
 {
 	protected $fillable = [
-		'name', 'marca_id', 'ciudad', 'IdCte', 'delegacion_municipio'
+		'name', 'marca_id', 'ciudad', 'IdCte', 'delegacion_municipio', 'phone', 'zone', 'region'
 	];
 
     public function marcas()
@@ -56,5 +56,10 @@ class Sucursal extends Model
     public function dm()
     {
         return $this->hasOne(Dm::class, 'dm_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

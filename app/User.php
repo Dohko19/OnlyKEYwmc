@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -40,36 +41,6 @@ class User extends Authenticatable
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'assigned_roles');
-    }
-
-    public function hasRoles(array $roles)
-    {
-            return $this->roles->pluck('name')->intersect($roles)->count();
-    }
-
-    public function isAdmin()
-    {
-        return $this->hasRoles(['admin']);
-    }
-
-    public function isDral()
-    {
-        return $this->hasRoles(['dgral']);
-    }
-
-    public function isDmarca()
-    {
-        return $this->hasRoles(['dmarca']);
-    }
-
-    public function isAsesor()
-    {
-        return $this->hasRoles(['asesor']);
     }
 
     public function marcas()
@@ -108,4 +79,13 @@ class User extends Authenticatable
     //     });
     //     return $this->tags()->sync($tagIds);
     // }
+    public function getRoleDisplayNames()
+    {
+        return $this->roles->pluck('display_name')->implode(', ');
+    }
+
+    public function sucursals()
+    {
+        return $this->belongsToMany(Sucursal::class);
+    }
 }

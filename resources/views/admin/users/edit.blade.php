@@ -9,11 +9,10 @@
 @endsection
 <div class="container-fluid">
 	<div class="row">
-    <div class="col-md-4"></div>
-		<div class="col-md-4 col-lg-4">
-			<div class="card card-primary card-outline">
-				<div class="card-header">
-						@if ($errors->any())
+    <div class="col-md-6">
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+            @if ($errors->any())
               <ul class="list-group">
                 @foreach ($errors->all() as $error)
                   <li class="list-group-item list-group-item-danger">
@@ -21,15 +20,15 @@
                   </li>
                 @endforeach
               </ul>
-        	 @endif
-					<h3 class="card-title">
-						<i class="fas fa-user"></i>
-						Editar Usuario
-					</h3>
-				</div>
-			<div class="card-body">
-				<form method="POST" action="{{ route('admin.users.update', $user) }}" class="form-horizontal">
-					@csrf
+           @endif
+          <h3 class="card-title">
+            <i class="fas fa-user"></i>
+            Editar Usuario
+          </h3>
+        </div>
+      <div class="card-body">
+        <form method="POST" action="{{ route('admin.users.update', $user) }}" class="form-horizontal">
+          @csrf
           @method('PUT')
                 <div class="card-body">
                   <div class="form-group">
@@ -37,13 +36,13 @@
                     <small>*</small>
                     <div class="">
                       <input type="text"
-                      	class="form-control @error('name') is-invalid @else @enderror"
-                      	placeholder="Nombre de usuario..." name="name" value="{{ $user->name }}">
-                      	@error('name')
-	                        <span class="invalid-feedback" role="alert">
-	                            <strong>{{ $message }}</strong>
-	                        </span>
-	                    @enderror
+                        class="form-control @error('name') is-invalid @else @enderror"
+                        placeholder="Nombre de usuario..." name="name" value="{{ $user->name }}">
+                        @error('name')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
                     </div>
                   </div>
                   <div class="form-group ">
@@ -107,7 +106,55 @@
               </form>
             </div>
             <!-- /.card-body -->
-			</div>
+      </div>
+    </div>
+		<div class="col-md-6 col-lg-6">
+        <div class="card card-primary card-outline">
+          <div class="card-header">
+            <h3 class="card-title">Roles</h3>
+          </div>
+          <div class="card-body">
+            @role('Admin')
+            <form method="POST" action="{{ route('admin.users.roles.update', $user) }}">
+              @csrf
+              @method('PUT')
+
+              @include('admin.roles.checkboxes')
+              <button class="btn btn-primary btn-block">Actualizar Roles</button>
+            </form>
+            @else
+            <ul class="list-group">
+              @forelse ($user->roles as $role)
+                <li class="list-group-item">{{ $role->name }}</li>
+              @empty
+                <li class="list-group-item">No tiene roles</li>
+              @endforelse
+            </ul>
+            @endrole
+          </div>
+        </div>
+    <div class="card card-primary card-outline">
+      <div class="card-header">
+        <h3 class="card-title">Permisos</h3>
+      </div>
+      <div class="card-body">
+        @role('Admin')
+        <form method="POST" action="{{ route('admin.users.permissions.update', $user) }}">
+          @csrf
+          @method('PUT')
+          @include('admin.permissions.checkboxes', ['model' => $user])
+          <button class="btn btn-primary btn-block">Actualizar permisos</button>
+        </form>
+        @else
+          <ul class="list-group">
+            @forelse ($user->permissions as $permission)
+              <li class="list-group-item">{{ $permission->name }}</li>
+            @empty
+              <li class="list-group-item">No Tiene permisos</li>
+            @endforelse
+          </ul>
+        @endrole
+      </div>
 		</div>
 	</div>
 </div>

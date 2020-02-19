@@ -27,26 +27,22 @@
               <p>Dashboard</p>
             </a>
           </li>
-          @if (auth()->user()->isAsesor() || auth()->user()->isAdmin())
-
-        <li class="nav-item">
-          <a href="{{ route('admin.auditorias.index') }}" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
-            <i class="nav-icon far fa-clipboard"></i>
-            <p>
-              Planes de Accion
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('admin.segmentos.status') }}" class="nav-link {{ setActiveRoute('admin.segmentos.status') }}">
-            <i class="nav-icon fas fa-check-circle"></i>
-            <p>
-              Estatus de Acciones
-            </p>
-          </a>
-        </li>
-        @endif
-        @if(auth()->user()->isAdmin() || auth()->user()->isAsesor() )
+          <li class="nav-item">
+            <a href="{{ route('admin.auditorias.index') }}" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
+              <i class="nav-icon far fa-clipboard"></i>
+              <p>
+                Planes de Accion
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.segmentos.status') }}" class="nav-link {{ setActiveRoute('admin.segmentos.status') }}">
+              <i class="nav-icon fas fa-check-circle"></i>
+              <p>
+                Estatus de Acciones
+              </p>
+            </a>
+          </li>
         <li class="nav-header">Root</li>
         <li class="nav-item">
           <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">
@@ -83,7 +79,25 @@
             </p>
           </a>
         </li>
-        @endif
+        <li class="nav-header">Roles y Permisos</li>
+        <li class="nav-item">
+          <a href="{{ route('admin.roles.index') }}" class="nav-link {{ setActiveRoute('admin.roles.index') }}">
+            <i class="nav-icon fas fa-user-tag"></i>
+            <p>
+              Roles
+              <span class="badge badge-danger right"></span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ setActiveRoute('admin.permissions.index') }}">
+            <i class="nav-icon fas fa-balance-scale-left"></i>
+            <p>
+              Permisos
+              <span class="badge badge-danger right"></span>
+            </p>
+          </a>
+        </li>
       </ul>
         </li>
       </ul>

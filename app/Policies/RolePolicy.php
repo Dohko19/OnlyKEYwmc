@@ -2,21 +2,13 @@
 
 namespace App\Policies;
 
-use App\Role;
 use App\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RolePolicy
 {
     use HandlesAuthorization;
-
-    public function before($user)
-    {
-        if ( $user->isAdmin() )
-        {
-            return true;
-        }
-    }
 
     /**
      * Determine whether the user can view any roles.
@@ -38,7 +30,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role)
     {
-        return false;
+        return $user->hasRole('Admin');
     }
 
     /**
@@ -49,7 +41,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        return false;
+        return $user->hasRole('Admin');
     }
 
     /**
@@ -61,7 +53,10 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        return false;
+        if( $user->hasRole('Admin') || $user->hasPermissionTo('Update roles') )
+        {
+            $this->deny('No puedes actualizar este rol');
+        }
     }
 
     /**
@@ -73,7 +68,15 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        return false;
+        if ($role->id === 1) {
+        // if ($role->id === 1) {
+        //     throw new \Illuminate\Auth\Access\AuthorizationException();
+        // }
+            // return false;
+            $this->deny('No se puede eliminar este role');
+        }
+
+        return $user->hasRole('Admin') || $user->hasPermissionTo('Delete roles');
     }
 
     /**
@@ -85,7 +88,7 @@ class RolePolicy
      */
     public function restore(User $user, Role $role)
     {
-        return false;
+        //
     }
 
     /**
@@ -97,6 +100,6 @@ class RolePolicy
      */
     public function forceDelete(User $user, Role $role)
     {
-        return false;
+        //
     }
 }

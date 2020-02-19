@@ -13,10 +13,7 @@ class GrupoMarcaPolicy
 
     public function before($user)
     {
-        if ( $user->isAdmin() )
-        {
             return true;
-        }
     }
 
     /**
@@ -50,7 +47,6 @@ class GrupoMarcaPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin();
     }
 
     /**
@@ -74,7 +70,6 @@ class GrupoMarcaPolicy
      */
     public function delete(User $user, GrupoMarca $grupoMarca)
     {
-        return $user->isAdmin();
     }
 
     /**

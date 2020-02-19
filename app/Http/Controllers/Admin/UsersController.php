@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Auditoria;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateUserRequest;
-use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Permission;
+use App\Http\Requests\UpdateUserRequest;
 
 class UsersController extends Controller
 {
@@ -33,9 +33,9 @@ class UsersController extends Controller
     {
         $user = new User;
         $this->authorize('create', $user);
-        $roles = Role::pluck('display_name', 'id');
-        $auditorias = Auditoria::all();
-        return view('admin.users.create', compact('roles', 'auditorias'));
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::pluck('name', 'id');
+        return view('admin.users.create', compact('roles', 'permissions', 'user'));
     }
 
     /**
@@ -58,7 +58,9 @@ class UsersController extends Controller
         $user->roles()->attach($request->roles);
 
         $user->auditorias()->attach($request->get('auditorias'));
-
+        // $email = new Email;
+        // $email->correo = $request->get('email');
+        // $email->save();
         return redirect()->back()->with('info', 'Usuario Creado Correctamente');
     }
 
@@ -82,8 +84,9 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', $user);
-        $roles = Role::pluck('display_name', 'id');
-        return view('admin.users.edit', compact('user', 'roles'));
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::pluck('name','id');
+        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 
     /**
