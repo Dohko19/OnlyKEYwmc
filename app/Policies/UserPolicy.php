@@ -18,6 +18,7 @@ class UserPolicy
         }
     }
 
+
     /**
      * Determine whether the user can view any models.
      *
@@ -38,7 +39,8 @@ class UserPolicy
      */
     public function view(User $authUser, User $user)
     {
-        return $authUser->id === $user->id;
+        return $authUser->id === $user->id
+        || $user->hasPermissionTo('View users');
     }
 
     /**
@@ -49,7 +51,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-
+        return $user->hasPermissionTo('Create users');
     }
 
     /**
@@ -61,7 +63,7 @@ class UserPolicy
      */
     public function update(User $authUser, User $user)
     {
-
+        return $authUser->id === $user->id || $user->hasPermissionTo('Update users');
     }
 
     /**
@@ -73,7 +75,7 @@ class UserPolicy
      */
     public function delete(User $authUser, User $user)
     {
-
+        return $user->hasPermissionTo('Delete users');
     }
 
     /**

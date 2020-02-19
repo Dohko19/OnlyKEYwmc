@@ -33,8 +33,8 @@
 			                <label for="graphic" class="float-right">Filtro por Zona y/o Region</label>
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline float-right">
                       <div class="form-group">
-  			                <input name="graphics" type="text" class="form-control" autocomplete="off" size="10" value="{{ old('graphics') }}" placeholder="Zona">
-                        <input name="dm" type="text" class="form-control" autocomplete="off" size="10" value="{{ old('dm') }}" placeholder="Region">
+  			                <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off">
+                        <input name="dm" type="text" class="form-control" autocomplete="off" size="10" value="{{ old('dm') }}" placeholder="Region/Zona">
 			                <button type="submit" class="btn btn-default">
 			                    <i class="fas fa-search"></i>
 			                </button>

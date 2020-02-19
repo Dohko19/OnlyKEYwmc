@@ -9,7 +9,9 @@
 						<i class="fas fa-users-cog"></i>
 						Grupos de Marca
 					</h3>
+					@can('create', $grupomarcas->first())
 						<a href="{{ route('admin.gruposm.create') }}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Crear Grupo de Marca</a>
+					@endcan
 				</div>
 			<div class="card-body">
 	            <table id="example2" class="table table-bordered table-hover">
@@ -25,6 +27,7 @@
 	                </thead>
 	                <tbody>
 	                	@foreach ($grupomarcas as $grupoMarca)
+
 	                		<tr>
 			                  <td>{{ $grupoMarca->id }}</td>
 			                  <td>{{ $grupoMarca->name }}</td>
@@ -32,17 +35,21 @@
 			                  <td><img src="{{ url('grupomarcas/'.$grupoMarca->logo) }}" alt="" width="100px" height="100px"></td>
 			                  <td>{{ $grupoMarca->created_at->format('d/m/Y') }}</td>
 			                  <td>
-			                  	<form action="{{ route('admin.gruposm.destroy', $grupoMarca) }}" method="POST">
-	                        		@csrf
-	                        		@method('DELETE')
-				                  	<a class="btn" href="#"><i class="fas fa-eye" style="color: gray;"></i></a>
-				                  	<a class="btn" href="{{ route('admin.gruposm.edit', $grupoMarca) }}" style="color: #add8e6;"><i class="far fa-edit"></i></a>
-				                  	<button class="btn "
-				                  	onclick="return confirm('Estas seguro de Eliminar este grupo de marca?')"
-				                  	><i class="fas fa-trash" style="color: red"></i></button>
-		                        </form>
+			                  	@can('update', $grupoMarca)
+				                 <a class="btn" href="{{ route('admin.gruposm.edit', $grupoMarca) }}" style="color: blue;"><i class="far fa-edit"></i></a>
+			                  	@endcan
+			                  	@can('delete', $grupoMarca)
+				                  	<form action="{{ route('admin.gruposm.destroy', $grupoMarca) }}" method="POST" style="display: inline;">
+		                        		@csrf
+		                        		@method('DELETE')
+					                  	<button class="btn "
+					                  	onclick="return confirm('Estas seguro de Eliminar este grupo de marca?')"
+					                  	><i class="fas fa-trash" style="color: red"></i></button>
+			                        </form>
+		                        @endcan
 			                  </td>
 	                		</tr>
+
 	                	@endforeach
 	                </tbody>
 	            </table>

@@ -14,11 +14,11 @@ class Auditoria extends Model
 
     public function segmentos()
     {
-    	return $this->hasMany(Segmento::class, 'IdAuditoria');
+    	return $this->belongsToMany(Segmento::class, 'ResultadoAuditoria');
     }
 
-    public function users()
+    public function questions()
     {
-        return $this->belongsToMany(User::class, 'auditoria_user', 'auditoria_id', 'user_id');
+        return $this->belongsToMany(Question::class, 'ResultadoAuditoria');
     }
 }

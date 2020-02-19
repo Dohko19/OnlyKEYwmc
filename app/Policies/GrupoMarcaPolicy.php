@@ -10,10 +10,12 @@ class GrupoMarcaPolicy
 {
     use HandlesAuthorization;
 
-
     public function before($user)
     {
+        if ( $user->hasRole('Admin') )
+        {
             return true;
+        }
     }
 
     /**
@@ -36,7 +38,8 @@ class GrupoMarcaPolicy
      */
     public function view(User $user, GrupoMarca $grupoMarca)
     {
-        return $user->id === $grupoMarca->user_id;
+        return $user->id === $grupoMarca->user_id
+        || $user->hasPermissionTo('View grupomarcas');
     }
 
     /**
@@ -47,6 +50,7 @@ class GrupoMarcaPolicy
      */
     public function create(User $user)
     {
+        return $user->hasPermissionTo('Create grupomarcas');
     }
 
     /**
@@ -58,7 +62,7 @@ class GrupoMarcaPolicy
      */
     public function update(User $user, GrupoMarca $grupoMarca)
     {
-        //
+        return $user->id === $grupoMarca->user_id || $user->hasPermissionTo('Update grupomarcas');
     }
 
     /**
@@ -70,6 +74,7 @@ class GrupoMarcaPolicy
      */
     public function delete(User $user, GrupoMarca $grupoMarca)
     {
+        return $user->id === $grupoMarca->user_id || $user->hasPermissionTo('Delete grupomarcas');
     }
 
     /**

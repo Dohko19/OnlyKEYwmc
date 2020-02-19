@@ -125,7 +125,7 @@
             @else
             <ul class="list-group">
               @forelse ($user->roles as $role)
-                <li class="list-group-item">{{ $role->name }}</li>
+                <li class="list-group-item">{{ $role->display_name }}</li>
               @empty
                 <li class="list-group-item">No tiene roles</li>
               @endforelse
@@ -148,7 +148,7 @@
         @else
           <ul class="list-group">
             @forelse ($user->permissions as $permission)
-              <li class="list-group-item">{{ $permission->name }}</li>
+              <li class="list-group-item">{{ $permission->display_name }}</li>
             @empty
               <li class="list-group-item">No Tiene permisos</li>
             @endforelse

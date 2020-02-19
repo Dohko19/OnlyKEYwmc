@@ -15,7 +15,9 @@
 						<i class="fas fa-marcas"></i>
 							Marcas
 					</h3>
+					@can('create', $marcas->first())
 						<a href="{{ route('admin.marcas.create') }}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Crear Marca</a>
+					@endcan
 				</div>
 			<div class="card-body">
               <table id="example2" class="table table-bordered table-hover">
@@ -31,7 +33,6 @@
                 </thead>
                 <tbody>
                 	@foreach($marcas as $marca)
-                	@foreach($marca->marcas as $marca)
                 		<tr>
 		                  <td>{{ $marca->id }}</td>
 		                  <td>{{ $marca->name ?? 'Sin datos diposnibles'}}</td>
@@ -39,26 +40,23 @@
 		                  <td><img src="{{ url('/marcas/'.$marca->photo) }}" alt="{{ $marca->id .'-'. $marca->name }}" width="100px"></td>
 		                  <td>{{ $marca->created_at->format('Y-m-d') }}</td>
 		                  <td>
-			                  	<button
-			                  	data-toggle="modal"
-			                  	data-target="#modal-primary"
-			                  	class="btn" href="#">
-			                  	<i class="fas fa-eye" style="color: gray;"></i>
-			                  	</button>
+		                  	@can('update', $marca)
+			                  	<a class="btn" href="{{ route('admin.marcas.edit', $marca) }}" style="color: blue;"><i class="far fa-edit"></i></a>
+		                  	@endcan
+		                  	@can('delete', $marca)
 		                  	<form
 			                  	action="{{ route('admin.marcas.destroy', $marca) }}"
 			                  	method="POST"
 			                  	style="display: inline;">
                         		@csrf
                         		@method('DELETE')
-			                  	<a class="btn" href="{{ route('admin.marcas.edit', $marca) }}" style="color: blue;"><i class="far fa-edit"></i></a>
 			                  	<button class="btn "
 			                  	onclick="return confirm('Estas seguro de Eliminar esta Marca?')"
 			                  	><i class="fas fa-trash" style="color: red"></i></button>
 	                        </form>
+		                  	@endcan
 		                  </td>
                 		</tr>
-                	@endforeach
                 	@endforeach
                 </tbody>
               </table>

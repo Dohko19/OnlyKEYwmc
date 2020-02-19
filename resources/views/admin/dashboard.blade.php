@@ -56,8 +56,8 @@
 				      </div>
 		      		<!-- /.col -->
 		      		@endforeach
-				@endforeach
-		{{--  --}}
+			@endforeach
+			{{-- {{ $sucursales->sucursals }} --}}
     </div>
     <!-- /.row -->
 </section>

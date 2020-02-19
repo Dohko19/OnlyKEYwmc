@@ -21,11 +21,13 @@ class AdminController extends Controller
 
     public function index()
     {
-
+        if (auth()->user()->hasRole('dgral')) {
+            $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
+            // ddd($sucursales);
+            return view('admin.pages.dashboardsucursales', compact('sucursales'));
+        }
             $grupos = GrupoMarca::all();
             $marcas = Marca::allowed()->get();
-            // $sucursales = Sucursal::allowed()->get();
-            // ddd($sucursales);
                 return view('admin.dashboard', compact('grupos', 'marcas'));
 	    	// $grupos = GrupoMarca::allowed()->get();
 	    	// 	return view('admin.dashboard', compact('grupos'));

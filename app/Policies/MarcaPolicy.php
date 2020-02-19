@@ -10,15 +10,13 @@ class MarcaPolicy
 {
     use HandlesAuthorization;
 
-
     public function before($user)
     {
-        if ($user->hasRole('Admin'))
+        if ( $user->hasRole('Admin') )
         {
             return true;
         }
     }
-
 
     /**
      * Determine whether the user can view any marcas.
@@ -40,7 +38,7 @@ class MarcaPolicy
      */
     public function view(User $user, Marca $marca)
     {
-        return false;
+        return $user->id === $marca->user_id || $user->hasPermissionTo('View marcas');
     }
 
     /**
@@ -51,6 +49,7 @@ class MarcaPolicy
      */
     public function create(User $user)
     {
+        return $user->hasPermissionTo('Create marcas');
     }
 
     /**
@@ -62,6 +61,7 @@ class MarcaPolicy
      */
     public function update(User $user, Marca $marca)
     {
+        return $user->id === $marca->user_id || $user->hasPermissionTo('Update marcas');
     }
 
     /**
@@ -72,8 +72,8 @@ class MarcaPolicy
      * @return mixed
      */
     public function delete(User $user, Marca $marca)
-    {
-        return $user->isAdmin();
+    {   //$user->id === $marca->user_id
+        return $user->hasPermissionTo('Delete marcas');
     }
 
     /**

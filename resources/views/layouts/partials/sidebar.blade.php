@@ -43,61 +43,81 @@
               </p>
             </a>
           </li>
-        <li class="nav-header">Root</li>
-        <li class="nav-item">
-          <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">
-            <i class="nav-icon fas fa-users"></i>
-            <p>
-              Usuarios
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('admin.gruposm.index') }}" class="nav-link {{ setActiveRoute('admin.gruposm.index') }}">
-            <i class="nav-icon fas fa-users-cog"></i>
-            <p>
-              Grupos de Marcas
-              <span class="badge badge-danger right"></span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('admin.marcas.index') }}" class="nav-link {{ setActiveRoute('admin.marcas.index') }}">
-            <i class="nav-icon fab fa-bandcamp"></i>
-            <p>
-              Marcas
-              <span class="badge badge-danger right">new</span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('admin.sucursales.index') }}" class="nav-link {{ setActiveRoute('admin.sucursales.index') }}">
-            <i class="nav-icon fas far fa-building"></i>
-            <p>
-              Sucursales
-              <span class="badge badge-danger right"></span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-header">Roles y Permisos</li>
-        <li class="nav-item">
-          <a href="{{ route('admin.roles.index') }}" class="nav-link {{ setActiveRoute('admin.roles.index') }}">
-            <i class="nav-icon fas fa-user-tag"></i>
-            <p>
-              Roles
-              <span class="badge badge-danger right"></span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ setActiveRoute('admin.permissions.index') }}">
-            <i class="nav-icon fas fa-balance-scale-left"></i>
-            <p>
-              Permisos
-              <span class="badge badge-danger right"></span>
-            </p>
-          </a>
-        </li>
+        <li class="nav-header">Panel Avanzado</li>
+        @can('view', new App\User)
+          <li class="nav-item">
+            <a href="{{ route('admin.users.index') }}" class="nav-link {{ setActiveRoute('admin.users.index') }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Usuarios
+              </p>
+            </a>
+          </li>
+        @else
+          <li class=" nav-item ">
+            <a class="nav-link {{ setActiveRoute(['admin.users.edit', 'admin.users.show']) }}" href="{{ route('admin.users.edit', auth()->user()) }}">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Perfil
+              </p>
+            </a>
+          </li>
+        @endcan
+        @can('view', new App\GrupoMarca)
+          <li class="nav-item">
+            <a href="{{ route('admin.gruposm.index') }}" class="nav-link {{ setActiveRoute(['admin.gruposm.index', 'admin.gruposm.edit', 'admin.gruposm.create']) }}">
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>
+                Grupos de Marcas
+                <span class="badge badge-danger right"></span>
+              </p>
+            </a>
+          </li>
+        @endcan
+        @can('view', new App\Marca)
+          <li class="nav-item">
+            <a href="{{ route('admin.marcas.index') }}" class="nav-link {{ setActiveRoute('admin.marcas.index') }}">
+              <i class="nav-icon fab fa-bandcamp"></i>
+              <p>
+                Marcas
+              </p>
+            </a>
+          </li>
+        @endcan
+        @can('view', new App\Sucursal)
+          <li class="nav-item">
+            <a href="{{ route('admin.sucursales.index') }}" class="nav-link {{ setActiveRoute('admin.sucursales.index') }}">
+              <i class="nav-icon fas far fa-building"></i>
+              <p>
+                Sucursales
+                <span class="badge badge-danger right"></span>
+              </p>
+            </a>
+          </li>
+        @endcan
+        @can('view', new \Spatie\Permission\Models\Role)
+            <li class="nav-header">Roles y Permisos</li>
+            <li class="nav-item">
+              <a href="{{ route('admin.roles.index') }}" class="nav-link {{ setActiveRoute('admin.roles.index') }}">
+                <i class="nav-icon fas fa-user-tag"></i>
+                <p>
+                  Roles
+                  <span class="badge badge-danger right"></span>
+                </p>
+              </a>
+            </li>
+        @endcan
+        @can('view', new \Spatie\Permission\Models\Permission)
+            <li class="nav-item">
+              <a href="{{ route('admin.permissions.index') }}" class="nav-link {{ setActiveRoute('admin.permissions.index') }}">
+                <i class="nav-icon fas fa-balance-scale-left"></i>
+                <p>
+                  Permisos
+                  <span class="badge badge-danger right"></span>
+                </p>
+              </a>
+            </li>
+        @endcan
       </ul>
         </li>
       </ul>

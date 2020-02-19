@@ -17,10 +17,14 @@ class GruposMarcasController extends Controller
      */
     public function index()
     {
-
-        return view('admin.grupomarcas.index', [
-            'grupomarcas' => GrupoMarca::allowed()->get(),
-        ]);
+        if(auth()->user()->hasRole('Admin'))
+        {
+            $grupomarcas = GrupoMarca::get();
+                return view('admin.grupomarcas.index', compact('grupomarcas'));
+        }
+        $grupomarcas = GrupoMarca::where('user_id', auth()->user()->id)->get();
+        // $this->authorize('view', new GrupoMarca);
+        return view('admin.grupomarcas.index', compact('grupomarcas'));
     }
 
     /**
@@ -30,8 +34,10 @@ class GruposMarcasController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', $grupoMarca = new GrupoMarca);
         return view('admin.grupomarcas.create', [
             'users' => User::all(),
+            'grupoMarca' => $grupoMarca
         ]);
     }
 
@@ -43,6 +49,7 @@ class GruposMarcasController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', new GrupoMarca);
        $this->validate($request, [
             'name' => 'required',
             'user_id' => 'required',
@@ -74,7 +81,7 @@ class GruposMarcasController extends Controller
      */
     public function show(GrupoMarca $grupoMarca)
     {
-        //
+        $this->authorize('view', $grupoMarca);
     }
 
     /**
@@ -86,6 +93,7 @@ class GruposMarcasController extends Controller
     public function edit($id)
     {
         $gruposMarca = GrupoMarca::findOrFail($id);
+        $this->authorize('update', $gruposMarca);
         $users = User::all();
         return view('admin.grupomarcas.edit', compact('gruposMarca', 'users'));
     }
@@ -100,6 +108,7 @@ class GruposMarcasController extends Controller
     public function update(Request $request, $id)
     {
         $grupoMarca = GrupoMarca::findOrFail($id);
+        $this->authorize('update', $grupoMarca);
          $this->validate($request, [
             'name' => 'required',
             'user_id' => 'required',
@@ -134,6 +143,7 @@ class GruposMarcasController extends Controller
     public function destroy($id)
     {
         $grupoMarca = GrupoMarca::findOrFail($id);
+        $this->authorize('update', $grupoMarca);
         $grupoMarca->delete();
         return back()->with('info', 'Grupo borrado');
     }

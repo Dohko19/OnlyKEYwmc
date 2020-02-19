@@ -18,8 +18,13 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        $sucursales = GrupoMarca::allowed()->get();
-        return view('admin.sucursales.index', compact('sucursales'));
+        if(auth()->user()->hasRole('Admin'))
+        {
+            $sucursales = User::with('sucursals')->get();
+            return view('admin.sucursales.index', compact('sucursales'));
+        }
+        $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
+        return view('admin.pages.dashboardsucursales', compact('sucursales'));
     }
 
     /**
@@ -69,9 +74,10 @@ class SucursalController extends Controller
      * @param  \App\Sucursal  $sucursal
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Sucursal $sucursale)
     {
-        //
+        $this->authorize('view', $sucursale);
+        return view('admin.sucursales.show', compact('sucursale'));
     }
 
     /**

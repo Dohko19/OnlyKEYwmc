@@ -26,10 +26,15 @@ class MarcaController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', new Marca);
         // $marca = Marca::with('grupos')->get();
-        $marcas = GrupoMarca::allowed()->get();
-        $users = User::all();
-        return view('admin.marcas.index', compact('marcas', 'users'));
+        if (auth()->user()->hasRole('Admin'))
+        {
+                $marcas = Marca::all();
+                return view('admin.marcas.index', compact('marcas'));
+        }
+        $marcas = Marca::where('user_id', auth()->user()->id)->get();
+        return view('admin.marcas.index', compact('marcas'));
     }
 
     /**
@@ -39,6 +44,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
+        $this->authorize('view', new Marca);
         return view('admin.marcas.create',[
             'grupos' => GrupoMarca::all(),
             'users' => User::all(),
@@ -53,6 +59,7 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('view', new Marca);
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255',],
             'photo' => ['image'],
@@ -82,6 +89,7 @@ class MarcaController extends Controller
      */
     public function show(Request $request, Marca $marca)
     {
+        $this->authorize('view', $marca);
         if($marca->grupos->tipo == 'auditorias')
         {
             $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m-d');
@@ -98,11 +106,13 @@ class MarcaController extends Controller
             ->where('sucursals.marca_id', '=', $marca->id)
             ->paginate();
             // ddd($sucursales);
+
             $ri = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
-            ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at')
+            ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at', 'sucursals.zone', 'sucursals.region')
             ->where('sucursals.marca_id', $marca->id)
-            ->where('sucursals.zone', 'LIkE', "%$graphics%")
-            ->where('sucursals.region', 'LIkE', "%$dm%")
+            ->whereDate('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%")
+            ->orWhere('sucursals.region', 'LIkE', "%$dm%")
+            ->where('sucursals.zone', 'LIkE', "%$dm%")
             ->orderBy('q.RI', 'ASC')
             ->get()->toArray();
             // ddd($ri);
@@ -197,6 +207,7 @@ class MarcaController extends Controller
      */
     public function edit(Marca $marca)
     {
+        $this->authorize('view', $marca);
         return view('admin.marcas.edit', compact('marca'));
     }
 

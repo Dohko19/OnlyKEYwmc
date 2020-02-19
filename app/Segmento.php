@@ -16,23 +16,18 @@ class Segmento extends Model
 
     public function auditorias()
     {
-        return $this->belongsTo(Auditoria::class, 'IdAuditoria');
+        return $this->belongsToMany(Auditoria::class, 'ResultadoAuditoria');
     }
 
     public function questions()
     {
-    	return $this->hasMany(Question::class, 'IdSegmento');
+    	return $this->belongsToMany(Question::class, 'ResultadoAuditoria');
     }
 
 	public function sucursals()
 	{
 		return $this->belongsTo(Sucursal::class, 'sucursal_id');
 	}
-
-    public function users()
-    {
-        return $this->belongsTo(User::class,'user_id');
-    }
 
     public function scopeAllowed($query)
     {

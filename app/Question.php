@@ -16,6 +16,11 @@ class Question extends Model
 
     public function segmentos()
     {
-    	return $this->belongsTo(Segmento::class, 'IdSegmento');
+    	return $this->belongsToMany(Segmento::class, 'ResultadoAuditoria');
+    }
+
+    public function auditorias()
+    {
+    	return $this->belongsToMany(Auditoria::class, 'ResultadoAuditoria');
     }
 }

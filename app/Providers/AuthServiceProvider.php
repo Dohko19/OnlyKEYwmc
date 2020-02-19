@@ -17,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Sucursal' => 'App\Policies\SucursalPolicy',
         'App\Marca' => 'App\Policies\MarcaPolicy',
         'App\GrupoMarca' => 'App\Policies\GrupoMarcaPolicy',
-        'Spatie\Permission\Models\Role' => 'App\Policies\RolePolicy'
+        'Spatie\Permission\Models\Role' => 'App\Policies\RolePolicy',
+        'Spatie\Permission\Models\Permission' => 'App\Policies\PermissionPolicy'
     ];
 
     /**

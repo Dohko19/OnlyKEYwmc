@@ -42,6 +42,7 @@
                   </thead>
                   <tbody>
                     @foreach ($segmento->questions as $question)
+                    {{ $question }}
                       @if (!$question->approved == 1)
                         <tr>
                           <td>
