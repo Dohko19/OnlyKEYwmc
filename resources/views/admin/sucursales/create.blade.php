@@ -55,6 +55,32 @@
                      @enderror
                     </div>
                   </div>
+                   <div class="form-group">
+                    <label for="" class="col-form-label">Región</label>
+                    <small>*</small>
+                    <div class="">
+                      <input type="text"
+                        class="form-control @error('region') is-invalid @else @enderror"
+                        placeholder="Region..." name="region" value="{{ old('region') }}">
+                        @error('region')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                    <label for="" class="col-form-label">Zona</label>
+                    <small>*</small>
+                    <div class="">
+                      <input type="text"
+                        class="form-control @error('zone') is-invalid @else @enderror"
+                        placeholder="Zona..." name="zone" value="{{ old('zone') }}">
+                        @error('zone')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                  </div>
                   <div class="form-group ">
                     <label for="" class="col-form-label">Ingresa el id del cliente</label>
                     <div class="">
@@ -67,9 +93,21 @@
                      @enderror
                     </div>
                   </div>
+                  <div class="form-group ">
+                    <label for="" class="col-form-label">Ingresa el Telefono de la sucursal</label>
+                    <div class="">
+                      <input required type="text" class="form-control @error('phone') is-invalid @else border-1 @enderror"
+                      name="phone" placeholder="Telefono de la Empresa" value="{{ old('phone') }}">
+                      @error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                     @enderror
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label>Marca a la que pertenece</label>
-                    <select name="marca_id" class="form-control select2" style="width: 100%;" required>
+                    <select name="marca_id" class="form-control select2" style="height: 100%;" required>
                       @foreach ($marcas as $marca)
                         <option value="{{ $marca->id }}">{{ $marca->name }}</option>
                       @endforeach
@@ -81,6 +119,17 @@
                         @enderror
                         <small class="text-muted">Necesitas agregar una marca para poder completar esta informacion</small>
                   </div>
+                  <div class="form-group">
+                        <div class="form-group">
+                          <label>Selecciona a los usuarios quienes pueden ver esta sucursal</label>
+                          <select name="users[]" class="duallistbox" multiple="multiple">
+                            @foreach ($users as $user)
+                              <option value="{{ $user->id }}">{{ $user->name }}/ {{ $user->email }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -100,13 +149,17 @@
   <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('adminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
+<link rel="stylesheet" href="{{ asset('adminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
+
 @endpush
 @push('scripts')
   <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
-
+   <script src="{{ asset('adminLTE/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
 <script type="text/javascript">
  $(function () {
   $('.select2').select2()
-}
+
+  $('.duallistbox').bootstrapDualListbox()
+})
 </script>
 @endpush

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\GrupoMarca;
 use App\Http\Controllers\Controller;
-use App\Sucursal;
 use App\Marca;
+use App\Sucursal;
+use App\User;
 use Illuminate\Http\Request;
 
 class SucursalController extends Controller
@@ -28,12 +29,14 @@ class SucursalController extends Controller
      */
     public function create()
     {
-        $sucursale = new Sucursal;
-        $this->authorize('create', $sucursale);
-        $marcas = Marca::all();
+        $this->authorize('create', $sucursale = new Sucursal);
 
         // ddd($marcas);
-        return view('admin.sucursales.create', compact('marcas'));
+        return view('admin.sucursales.create',[
+            'marcas' => Marca::all(),
+            'users' => User::all(),
+            'sucursale' => $sucursale,
+        ]);
     }
 
     /**
@@ -47,10 +50,16 @@ class SucursalController extends Controller
         $this->validate($request, [
             'name' => 'min:3|string',
             'ciudad' => 'min:1|string',
-            'IdCte' => 'min:1'
+            'IdCte' => 'min:1|numeric',
+            'users' => 'required',
+            'zone' => 'required|min:3',
+            'phone' => 'numeric',
+            'region' => 'required|min:3',
+            'marca_id' => 'required',
         ]);
         $this->authorize('create', new Sucursal);
-        $sucursal = Sucursal::create($request->all());
+        $sucursal = Sucursal::create($request->except('users'));
+        $sucursal->users()->attach($request->get('users'));
         return redirect()->route('admin.sucursales.index', compact('sucursal'))->with('info', 'Agregado Correctamente');
     }
 

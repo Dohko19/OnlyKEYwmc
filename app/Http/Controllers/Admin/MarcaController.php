@@ -6,7 +6,6 @@ use Alert;
 use App\Dm;
 use App\GrupoMarca;
 use App\Http\Controllers\Controller;
-use App\InspeccionSanitaria;
 use App\Marca;
 use App\PreguntasCuestionario;
 use App\Qresults;
@@ -97,13 +96,13 @@ class MarcaController extends Controller
             $dm = $request->get('dm') ?? '';
             $sucursales = Sucursal::with('qresults')
             ->where('sucursals.marca_id', '=', $marca->id)
-            ->get();
+            ->paginate();
             // ddd($sucursales);
             $ri = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at')
             ->where('sucursals.marca_id', $marca->id)
-            ->where('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%")
-            ->where('delegacion_municipio', 'LIkE', "%$dm%")
+            ->where('sucursals.zone', 'LIkE', "%$graphics%")
+            ->where('sucursals.region', 'LIkE', "%$dm%")
             ->orderBy('q.RI', 'ASC')
             ->get()->toArray();
             // ddd($ri);
@@ -115,23 +114,18 @@ class MarcaController extends Controller
             ->orderBy('q.C', 'ASC')
             ->get()->toArray();
 
-            $preguntas = PreguntasCuestionario::select('IdPregunta','NivelRiesgo','Pregunta')->get();
+            $preguntas = PreguntasCuestionario::select('IdPregunta','Pregunta')->get();
             $dm = Dm::select('name')->get();
 
-            $preguntasLeft = collect();
-            $preguntasRigth = collect();
-            foreach ($preguntas as $key => $pregunta) {
-                if ($key%2 == 0)
-                {
-                    $preguntasLeft->push($pregunta);
+            // $preguntasLeft = collect();
+            // // $preguntasRigth = collect();
+            // foreach ($preguntas as $key => $pregunta) {
+            //     if ($key>=15)
+            //     {
+            //         $preguntasLeft->push($pregunta);
+            //     }
+            // }
 
-                }
-                else
-                {
-                    $preguntasRigth->push($pregunta);
-                }
-            }
-            // ddd(count($c));
             // $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
             // ->where('riesgo', '=', "C")
@@ -191,7 +185,7 @@ class MarcaController extends Controller
             // }
             // return $sum;
             // $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntas', 'preguntasLeft', 'preguntasRigth', 'dm'));
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntas', 'dm'));
             // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 

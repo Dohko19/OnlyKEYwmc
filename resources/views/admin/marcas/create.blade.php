@@ -96,11 +96,11 @@
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                       @endforeach
                     </select>
-                        @error('user_id')
-                          <div class="help-block">
-                            <strong>{{ $message }}</strong>
-                          </div>
-                        @enderror
+                    @error('user_id')
+                      <div class="help-block">
+                        <strong>{{ $message }}</strong>
+                      </div>
+                    @enderror
                   </div>
                   </div>
                 </div>

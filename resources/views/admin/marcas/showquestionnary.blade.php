@@ -30,16 +30,11 @@
               </div>
 						</div>
 			            <div class="col-md-4 col-sm-4">
-			                <label for="graphic" class="float-right">Filtro por Fecha y/o Delegación</label>
+			                <label for="graphic" class="float-right">Filtro por Zona y/o Region</label>
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline float-right">
                       <div class="form-group">
-  			                <input name="graphics" type="text" class="form-control" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" size="10" value="{{ old('graphics') }}">
-                        <select name="dm" class="form-control" style="width: 100px">
-                          <option value="">Seleccione una opcion</option>
-                          @foreach ($dm as $d)
-                            <option value="{{ $d->name }}">{{ $d->name }}</option>
-                          @endforeach
-                        </select>
+  			                <input name="graphics" type="text" class="form-control" autocomplete="off" size="10" value="{{ old('graphics') }}" placeholder="Zona">
+                        <input name="dm" type="text" class="form-control" autocomplete="off" size="10" value="{{ old('dm') }}" placeholder="Region">
 			                <button type="submit" class="btn btn-default">
 			                    <i class="fas fa-search"></i>
 			                </button>
@@ -63,7 +58,6 @@
                   <div class="tab-pane " id="tab_1">
           					<div class="text-center">
           						<div id="ri" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                  				<small class="text-muted"></small>
           					</div>
                   </div>
                   <!-- /.tab-pane -->
@@ -74,21 +68,17 @@
           					</div>
                   </div>
                   <!-- /.tab-pane -->
+                  <div class="row">
+                  @foreach ($preguntas as $p)
+                    <div class="col-md-11">
+                      <small>{{ $p->IdPregunta }}.- {{ $p->Pregunta }} </small> <br>
+                    </div>
+                    <div class="col-md-1"></div>
+                  @endforeach
+                  </div>
                   <!-- /.tab-pane -->
                 </div>
                 <!-- /.tab-content -->
-                <div class="row">
-                  <div class="col-md-6 ml-auto">
-                    @foreach($preguntasLeft as $il)
-                    <p>{{ $il->IdPregunta }}.- {{ $il->Pregunta }}</p>
-                    @endforeach
-                  </div>
-                  <div class="col-md-6 mr-auto">
-                    @foreach($preguntasRigth as $ir)
-                    <p>{{ $ir->IdPregunta }}.- {{ $ir->Pregunta }}</p>
-                    @endforeach
-                  </div>
-                </div>
               </div><!-- /.card-body -->
 
             <!-- ./card -->
@@ -134,14 +124,16 @@
         zoomType: 'x',
         resetZoomButton: {
             position: {
-                // align: 'right', // by default
-                // verticalAlign: 'top', // by default
                 x: -120,
                 y: -40
             }
           },
          panning: true,
          type: 'column',
+         scrollablePlotArea: {
+            minWidth: 700,
+            scrollPositionX: 1
+          },
          animation: {
          duration: 1000
         },
@@ -213,6 +205,19 @@
       enabled: false
   },
     plotOptions: {
+       spline: {
+            lineWidth: 4,
+            states: {
+                hover: {
+                    lineWidth: 5
+                }
+            },
+            marker: {
+                enabled: false
+            },
+            pointInterval: 100, // one hour
+            pointStart: Date.UTC(2015, 4, 31, 0, 0, 0)
+        },
       series: {
         borderWidth: 0,
         dataLabels: {

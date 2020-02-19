@@ -12,7 +12,7 @@ class UserPolicy
 
     public function before($user)
     {
-        if ( $user->isAdmin() )
+        if ( $user->hasRole('Admin') )
         {
             return true;
         }
@@ -49,7 +49,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin();
+
     }
 
     /**
@@ -61,7 +61,7 @@ class UserPolicy
      */
     public function update(User $authUser, User $user)
     {
-         return $authUser->id === $user->id;
+
     }
 
     /**
@@ -73,7 +73,7 @@ class UserPolicy
      */
     public function delete(User $authUser, User $user)
     {
-        return $authUser->id === $user->isAdmin();
+
     }
 
     /**

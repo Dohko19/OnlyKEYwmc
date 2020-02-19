@@ -13,7 +13,7 @@ class MarcaPolicy
 
     public function before($user)
     {
-        if ( $user->isAdmin() )
+        if ($user->hasRole('Admin'))
         {
             return true;
         }
@@ -40,7 +40,7 @@ class MarcaPolicy
      */
     public function view(User $user, Marca $marca)
     {
-        //
+        return false;
     }
 
     /**
@@ -51,7 +51,6 @@ class MarcaPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin();
     }
 
     /**
@@ -63,7 +62,6 @@ class MarcaPolicy
      */
     public function update(User $user, Marca $marca)
     {
-        return $user->isAdmin();
     }
 
     /**

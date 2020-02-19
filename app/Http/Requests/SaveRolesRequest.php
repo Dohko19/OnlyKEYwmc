@@ -11,9 +11,10 @@ class SaveRolesRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+     public function authorize()
     {
-        return false;
+        // return \Gate::authorize('update', $this->route('role'))
+        return true;
     }
 
     /**
@@ -23,8 +24,25 @@ class SaveRolesRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'display_name' => 'required',
         ];
+
+        if($this->method() !== 'PUT')
+        {
+            $rules['name'] = 'required|unique:roles';
+        }
+
+        return $rules;
+
+    }
+
+    public function messages()
+    {
+        return [
+                'name.required' => 'El identificador del role es obligatorio',
+                'name.unique' => 'Este identificador ya a sido registrado',
+                'display_name.required' => 'El nombre del role es obligatorio'
+            ];
     }
 }
