@@ -90,7 +90,8 @@ class SucursalController extends Controller
     {
         $this->authorize('update', $sucursale);
         $marcas = Marca::allowed()->get();
-        return view('admin.sucursales.edit', compact('sucursale', 'marcas'));
+        $users = User::all();
+        return view('admin.sucursales.edit', compact('sucursale', 'marcas', 'users'));
     }
 
     /**
@@ -102,12 +103,20 @@ class SucursalController extends Controller
      */
     public function update(Request $request, Sucursal $sucursale)
     {
+        $this->authorize('update', $sucursale);
         $this->validate($request, [
             'name' => 'min:3|string',
-            'ciudad' => 'min:1|string'
+            'ciudad' => 'min:1|string',
+            'IdCte' => 'min:1|numeric',
+            'users' => 'required',
+            'zone' => 'required|min:3',
+            'phone' => 'numeric',
+            'region' => 'required|min:3',
+            'marca_id' => 'required',
         ]);
 
-        $sucursal = Sucursal::update($request->all());
+        $sucursal = Sucursal::update($request->except('users'));
+        $sucursal->users()->sync($request->get('users'));
         return redirect()->route('admin.sucursales.index')->with('info', 'Agregado Correctamente');
     }
 
@@ -119,7 +128,9 @@ class SucursalController extends Controller
      */
     public function destroy(Sucursal $sucursale)
     {
+        $this->authorize('delete', $sucursale);
         $sucursale->delete();
+        $sucursal->users()->sync([]);
         return back()->with('info', 'Eliminado Correctamente');
     }
 }

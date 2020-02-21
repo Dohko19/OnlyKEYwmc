@@ -2,6 +2,7 @@
 Auth::routes(['register' => false]);
 Route::get('planes', 'HomeController@planes')->name('pages.planes');
 Route::get('/', 'Admin\AdminController@index')->name('home.index');
+Route::get('/regino/{id}', 'Admin\AdminController@region')->name('home.region');
 Route::group([
 	'prefix' => 'admin',
 	'namespace' => 'Admin',

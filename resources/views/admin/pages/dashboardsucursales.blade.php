@@ -59,9 +59,28 @@
 	                </tbody>
 	            </table>
             </div>
-
     </div>
     <!-- /.row -->
 </section>
 
 @endsection
+@push('styles')
+	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+@endpush
+@push('scripts')
+<script src="{{ asset('adminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('adminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+
+<script>
+	$(function () {
+		    $('#example2').DataTable({
+		      "paging": true,
+		      "lengthChange": true,
+		      "searching": true,
+		      "ordering": true,
+		      "info": true,
+		      "autoWidth": true,
+		    });
+		});
+</script>
+@endpush

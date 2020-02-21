@@ -9,6 +9,9 @@
 <section class="content text-center" >
   <div class="container-fluid">
     <h5 class="mb-2">Bienvenido {{ Auth::user()->name }} | WMC</h5>
+    @if (auth()->user()->hasRole('dmarca'))
+
+    @else
     <div class="row justify-content-center align-items-center minh-100" >
 	    	@foreach ($grupos as $grupo)
 					@foreach ($grupo->marcas as $marca)
@@ -18,7 +21,7 @@
 					          	@if ($grupo->tipo == 'auditorias')
 					          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
 						          	@else
-						          		<a href="{{ route('admin.marcas.show', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
+						          		<a href="{{ route('home.region', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
 						          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
 						          		</a>
 						          	@endif
@@ -59,6 +62,7 @@
 			@endforeach
 			{{-- {{ $sucursales->sucursals }} --}}
     </div>
+    @endif
     <!-- /.row -->
 </section>
 

@@ -36,7 +36,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.segmentos.status') }}" class="nav-link {{ setActiveRoute('admin.segmentos.status') }}">
+            <a href="#" class="nav-link {{ setActiveRoute('admin.segmentos.status') }}">
               <i class="nav-icon fas fa-check-circle"></i>
               <p>
                 Estatus de Acciones

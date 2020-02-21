@@ -24,18 +24,27 @@
     							<h3 class="text-center">
             			 {{ $marca->name }}
           				</h3>
-                  <small class="text-justify">Calificacion por delegacion</small>
+                  <small class="text-justify"><b>Calificacion por Delegacion:</small>
+                  {{ request('dm') }}</b>
                 </div>
                 <div class="col-md-2"></div>
               </div>
 						</div>
 			            <div class="col-md-4 col-sm-4">
-			                <label for="graphic" class="float-right">Filtro por Zona y/o Region</label>
-			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline float-right">
+			                <label for="graphic" class="float-right">Filtro por Delegación</label>
+			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
                       <div class="form-group">
-  			                <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off">
-                        <input name="dm" type="text" class="form-control" autocomplete="off" size="10" value="{{ old('dm') }}" placeholder="Region/Zona">
-			                <button type="submit" class="btn btn-default">
+                        <input type="hidden" name="zona" value="{{ $zona }}">
+  			                <input size="5" name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="mes y año" autocomplete="off"><br>
+                        <select class="form-control" name="dm" id="dm">
+                          <option value="" selected>--Delegacion--</option>
+                          @foreach ($delegaciones as $d)
+                            <option  value="{{ $d->dm }}">{{ $d->dm }}</option>
+                          @endforeach
+                        </select>
+                        {{-- <input name="dm" type="text" class="form-control" autocomplete="off" size="6" value="{{ old('dm') }}" placeholder="Delegación..."> --}}
+
+			                <button type="submit" class="btn btn-default float-right">
 			                    <i class="fas fa-search"></i>
 			                </button>
                       </div>
@@ -56,26 +65,33 @@
               <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane " id="tab_1">
-          					<div class="text-center">
+          					<div class="">
           						<div id="ri" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                      <div class="row">
+                        <div class="col-md-11">
+                        @foreach ($preguntasLeft as $pl)
+                            <small>{{ $pl->IdPregunta }}.- {{ $pl->Pregunta }} </small> <br>
+                        @endforeach
+                        </div>
+                        <div class="col-md-1"></div>
+                      </div>
           					</div>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane active" id="tab_2">
-          					<div class="text-center">
+          					<div class="justify-content-start">
           						<div id="critico" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                  				<small class="text-muted"></small>
+                      <div class="row">
+                        <div class="col-md-11">
+                        @foreach ($preguntasRigth as $pr)
+                            <small>{{ $pr->IdPregunta }}.- {{ $pr->Pregunta }}</small> <br>
+                        @endforeach
+                      </div>
+                      <div class="col-md-1"></div>
           					</div>
                   </div>
                   <!-- /.tab-pane -->
-                  <div class="row">
-                  @foreach ($preguntas as $p)
-                    <div class="col-md-11">
-                      <small>{{ $p->IdPregunta }}.- {{ $p->Pregunta }} </small> <br>
-                    </div>
-                    <div class="col-md-1"></div>
-                  @endforeach
-                  </div>
+
                   <!-- /.tab-pane -->
                 </div>
                 <!-- /.tab-content -->
@@ -130,10 +146,6 @@
           },
          panning: true,
          type: 'column',
-         scrollablePlotArea: {
-            minWidth: 700,
-            scrollPositionX: 1
-          },
          animation: {
          duration: 1000
         },
@@ -214,9 +226,7 @@
             },
             marker: {
                 enabled: false
-            },
-            pointInterval: 100, // one hour
-            pointStart: Date.UTC(2015, 4, 31, 0, 0, 0)
+            }
         },
       series: {
         borderWidth: 0,
@@ -237,11 +247,11 @@
         name: "Sucursales",
         colorByPoint: true,
         data: [
-        @for ($i = 0; $i < count($c)-1 ; $i++)
+        @for ($i = 0; $i < count($ri) ; $i++)
             {
-              name: "{{ $c[$i]['name'] }}",
-                y: {{ $c[$i]['C'] }}, //proemdio
-              drilldown: "{{ $c[$i]['name'] }}"
+              name: "{{ $ri[$i]['name'] }}",
+                y: {{ $ri[$i]['RI'] ?? 0}}, //proemdio RI
+              drilldown: "{{ $ri[$i]['name'] }}"
             },
         @endfor
         ]
@@ -255,7 +265,7 @@
         }
     },
       series: [
-          @foreach ($sucursales as $sucursal)
+          @foreach($sucursales as $sucursal)
         {
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
@@ -387,11 +397,11 @@
         name: "Sucursales",
         colorByPoint: true,
         data: [
-        @for ($i = 0; $i < count($ri)-1 ; $i++)
+        @for ($i = 0; $i < count($c) ; $i++)
             {
-              name: "{{ $ri[$i]['name'] }}",
-                y: {{ $ri[$i]['RI'] }}, //proemdio
-              drilldown: "{{ $ri[$i]['name'] }}"
+              name: "{{ $c[$i]['name'] }}",
+                y: {{ $c[$i]['C'] ?? 0}}, //proemdio
+              drilldown: "{{ $c[$i]['name'] }}"
             },
         @endfor
         ]

@@ -98,11 +98,9 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $this->authorize('update', $user);
+         $this->authorize('update', $user);
         $user->update( $request->validated() );
-        $this->authorize('update', $user->roles);
-        $user->roles()->sync($request->roles);
-        return back()->with('info','Usuario Actualizado');
+        return redirect()->route('admin.users.edit', $user)->withSuccess('Usuario Actualizado');
     }
 
     /**
@@ -115,7 +113,7 @@ class UsersController extends Controller
     {
         $this->authorize('delete', $user);
         $user->delete();
-        $user->roles()->sync([]);
+
         return back()->with('info', 'Usuario Eliminado Correctamente');
     }
 }

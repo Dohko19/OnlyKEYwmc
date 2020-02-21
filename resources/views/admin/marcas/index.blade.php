@@ -15,9 +15,9 @@
 						<i class="fas fa-marcas"></i>
 							Marcas
 					</h3>
-					@can('create', $marcas->first())
+					@role('Admin')
 						<a href="{{ route('admin.marcas.create') }}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Crear Marca</a>
-					@endcan
+					@endrole
 				</div>
 			<div class="card-body">
               <table id="example2" class="table table-bordered table-hover">

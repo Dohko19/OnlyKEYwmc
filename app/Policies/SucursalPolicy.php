@@ -46,7 +46,7 @@ class SucursalPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('Admin');
+        return $user->hasRole('Admin') || $user->hasPermissionTo('Create sucursals');
     }
 
     /**
@@ -58,7 +58,7 @@ class SucursalPolicy
      */
     public function update(User $user, Sucursal $sucursal)
     {
-        return $user->hasRole('Admin');
+        return $user->hasRole('Admin') || $user->hasPermissionTo('Update sucursals');
     }
 
     /**
@@ -70,7 +70,7 @@ class SucursalPolicy
      */
     public function delete(User $user, Sucursal $sucursal)
     {
-        return $user->hasRole('Admin');
+        return $user->hasRole('Admin') || $user->hasPermissionTo('Delete sucursals');
     }
 
     /**

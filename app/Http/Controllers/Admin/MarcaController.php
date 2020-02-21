@@ -100,42 +100,58 @@ class MarcaController extends Controller
             ->get();
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
-            $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m-d');
-            $dm = $request->get('dm') ?? '';
+        $graphics = $request->get('graphics') ? $request->get('graphics') : Carbon::now()->format('Y-m-d');
+        $dm = $request->get('delegacion_municipio') ? $request->get('delegacion_municipio') : request('dm') ;
+
+        $zona = request('zone') ? request('zone') : $request->get('zona');
+        // return request('dm');
             $sucursales = Sucursal::with('qresults')
             ->where('sucursals.marca_id', '=', $marca->id)
+            ->where('sucursals.delegacion_municipio', 'LIKE', "%".$dm."%")
+            ->where('sucursals.region', 'LIKE', "%".$zona."%")
             ->paginate();
             // ddd($sucursales);
 
             $ri = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at', 'sucursals.zone', 'sucursals.region')
             ->where('sucursals.marca_id', $marca->id)
-            ->whereDate('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%")
-            ->orWhere('sucursals.region', 'LIkE', "%$dm%")
-            ->where('sucursals.zone', 'LIkE', "%$dm%")
+            ->whereDate('sucursals.created_at', 'LIkE', "%".Carbon::now()->format('Y-m')."%")
+            ->where('sucursals.delegacion_municipio', 'LIKE', "%$dm%")
+            ->where('sucursals.region', 'LIKE', "%".$zona."%")
             ->orderBy('q.RI', 'ASC')
             ->get()->toArray();
             // ddd($ri);
             $c = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.C')
             ->where('sucursals.marca_id', $marca->id)
-            ->where('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%")
-            ->where('delegacion_municipio', 'LIkE', "%$dm%")
+            ->whereDate('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%")
+            ->where('sucursals.delegacion_municipio', 'LIkE', "%$dm%")
+            ->where('sucursals.region', 'LIKE', "%".$zona."%")
             ->orderBy('q.C', 'ASC')
             ->get()->toArray();
 
             $preguntas = PreguntasCuestionario::select('IdPregunta','Pregunta')->get();
-            $dm = Dm::select('name')->get();
 
-            // $preguntasLeft = collect();
-            // // $preguntasRigth = collect();
-            // foreach ($preguntas as $key => $pregunta) {
-            //     if ($key>=15)
-            //     {
-            //         $preguntasLeft->push($pregunta);
-            //     }
-            // }
+            $preguntasLeft = collect();
+            $preguntasRigth = collect();
+            foreach ($preguntas as $key => $pregunta) {
+                if ($key < 15)
+                {
+                    $preguntasLeft->push($pregunta);
+                }
+                else
+                {
+                    $preguntasRigth->push($pregunta);
+                }
+            }
 
+             $delegaciones =Sucursal::with(['users', 'marcas'])
+                ->findOrFail(auth()->user()->id)
+                ->selectRaw('delegacion_municipio dm')
+                ->whereRaw('marca_id = '. $marca->id )
+                ->groupBy('dm')
+                ->orderBy('dm')
+                ->get();
             // $C = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
             // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
             // ->where('riesgo', '=', "C")
@@ -149,54 +165,54 @@ class MarcaController extends Controller
             // return $idSuc;
 
 
-            // $sum = 0;
+        //     // $sum = 0;
 
-            // foreach($C as $num => $values) {
-            //     $sum += $values['Value'];
-            // }
-            // $averageC = $sum*100/count($C);
+        //     // foreach($C as $num => $values) {
+        //     //     $sum += $values['Value'];
+        //     // }
+        //     // $averageC = $sum*100/count($C);
 
-            // $RI = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
-            // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
-            // ->where('riesgo', '=', "RI")
-            // ->get()->toArray();
+        //     // $RI = Sucursal::select('Value', 'riesgo')->where('sucursals.id', $marca->id)
+        //     // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+        //     // ->where('riesgo', '=', "RI")
+        //     // ->get()->toArray();
 
-            // $sum = 0;
+        //     // $sum = 0;
 
-            // foreach($RI as $num => $values) {
-            //     $sum += $values['Value'];
-            // }
-            // $average = $sum*100/count($RI);
-            // ddd($averageC);
-            // $sucursales = Sucursal::where('marca_id', '=', $marca->id)
-            // // ->get();
-            // $questions = Questionnaire::all();
-            // ddd($questions);
-            // $thiis = DB::table('questionnaires as q')
-            //         ->select('sucursal_id', DB::raw('COUNT(riesgo) AS riesgot, riesgo,'))
-            //         ->whereRaw('IF(riesgo = '.'C'.', (COUNT(riesgo) * 100 / 15), (COUNT(riesgo) * 100 / 3)) as promedio, s.marca_id')
-            //         ->join('sucursals as s', 's.id', '=', 'q.sucursal_id')
-            //         ->where('s.marca_id', '=', $marca->id)
-            //         ->where('Value', '=', '1')
-            //         ->groupBy('sucursal_id', 'riesgo')
-            //         ->get();
-            //         ddd($thiis);
-            // ddd($sucursales);
-            // $ss = Sucursal::select('value')->where('sucursals.id', $marca->id)
-            // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
-            // ->orderBy('value', 'DESC')
-            // ->get()->toArray();
-            // $ss = array_filter($ss);
-            // $f = 100;
-            // $sum = 0;
+        //     // foreach($RI as $num => $values) {
+        //     //     $sum += $values['Value'];
+        //     // }
+        //     // $average = $sum*100/count($RI);
+        //     // ddd($averageC);
+        //     // $sucursales = Sucursal::where('marca_id', '=', $marca->id)
+        //     // // ->get();
+        //     // $questions = Questionnaire::all();
+        //     // ddd($questions);
+        //     // $thiis = DB::table('questionnaires as q')
+        //     //         ->select('sucursal_id', DB::raw('COUNT(riesgo) AS riesgot, riesgo,'))
+        //     //         ->whereRaw('IF(riesgo = '.'C'.', (COUNT(riesgo) * 100 / 15), (COUNT(riesgo) * 100 / 3)) as promedio, s.marca_id')
+        //     //         ->join('sucursals as s', 's.id', '=', 'q.sucursal_id')
+        //     //         ->where('s.marca_id', '=', $marca->id)
+        //     //         ->where('Value', '=', '1')
+        //     //         ->groupBy('sucursal_id', 'riesgo')
+        //     //         ->get();
+        //     //         ddd($thiis);
+        //     // ddd($sucursales);
+        //     // $ss = Sucursal::select('value')->where('sucursals.id', $marca->id)
+        //     // ->join('questionnaires', 'sucursals.id', '=', 'questionnaires.sucursal_id')
+        //     // ->orderBy('value', 'DESC')
+        //     // ->get()->toArray();
+        //     // $ss = array_filter($ss);
+        //     // $f = 100;
+        //     // $sum = 0;
 
-            // foreach($ri as $num => $values) {
-            //     $sum = $values['RI'];
-            // }
-            // return $sum;
-            // $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntas', 'dm'));
-            // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
+        //     // foreach($ri as $num => $values) {
+        //     //     $sum = $values['RI'];
+        //     // }
+        //     // return $sum;
+        //     // $average = $sum*$f/count($ss);
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona'));
+        //     // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 
     /**

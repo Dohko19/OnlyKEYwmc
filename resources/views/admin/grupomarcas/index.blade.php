@@ -9,9 +9,9 @@
 						<i class="fas fa-users-cog"></i>
 						Grupos de Marca
 					</h3>
-					@can('create', $grupomarcas->first())
+					{{-- @can('create', $grupomarcas->first()) --}}
 						<a href="{{ route('admin.gruposm.create') }}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Crear Grupo de Marca</a>
-					@endcan
+					{{-- @endcan --}}
 				</div>
 			<div class="card-body">
 	            <table id="example2" class="table table-bordered table-hover">

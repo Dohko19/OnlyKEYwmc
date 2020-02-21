@@ -56,31 +56,32 @@
                     </div>
                   </div>
                    <div class="form-group">
-                    <label for="" class="col-form-label">Región</label>
-                    <small>*</small>
-                    <div class="">
-                      <input type="text"
-                        class="form-control @error('region') is-invalid @else @enderror"
-                        placeholder="Region..." name="region" value="{{ old('region') }}">
-                        @error('region')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror
+                      <label for="" class="col-form-label">Región</label>
+                      <small>*</small>
+                      <div class="">
+                        <input type="text"
+                          class="form-control @error('region') is-invalid @else @enderror"
+                          placeholder="Region..." name="region" value="{{ old('region') }}">
+                          @error('region')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                   </div>
+                    <div class="form-group">
+                      <label for="" class="col-form-label">Zona</label>
+                      <small>*</small>
+                      <div class="">
+                        <input type="text"
+                          class="form-control @error('zone') is-invalid @else @enderror"
+                          placeholder="Zona..." name="zone" value="{{ old('zone') }}">
+                          @error('zone')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                      </div>
                     </div>
-                    <label for="" class="col-form-label">Zona</label>
-                    <small>*</small>
-                    <div class="">
-                      <input type="text"
-                        class="form-control @error('zone') is-invalid @else @enderror"
-                        placeholder="Zona..." name="zone" value="{{ old('zone') }}">
-                        @error('zone')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror
-                    </div>
-                  </div>
                   <div class="form-group ">
                     <label for="" class="col-form-label">Ingresa el id del cliente</label>
                     <div class="">
@@ -129,7 +130,7 @@
                           </select>
                         </div>
                         <!-- /.form-group -->
-                    </div>
+                  </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
