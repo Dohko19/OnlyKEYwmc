@@ -27,14 +27,17 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{ route('admin.auditorias.index') }}" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
-              <i class="nav-icon far fa-clipboard"></i>
-              <p>
-                Planes de Accion
-              </p>
-            </a>
-          </li>
+          @can('view', new App\Segmento)
+            <li class="nav-item">
+              <a href="{{ route('admin.auditorias.index') }}" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
+                <i class="nav-icon far fa-clipboard"></i>
+                <p>
+                  Planes de Accion
+                </p>
+              </a>
+            </li>
+          @endcan
+          {{--
           <li class="nav-item">
             <a href="#" class="nav-link {{ setActiveRoute('admin.segmentos.status') }}">
               <i class="nav-icon fas fa-check-circle"></i>
@@ -42,7 +45,7 @@
                 Estatus de Acciones
               </p>
             </a>
-          </li>
+          </li> --}}
         <li class="nav-header">Panel Avanzado</li>
         @can('view', new App\User)
           <li class="nav-item">

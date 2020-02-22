@@ -7,6 +7,9 @@
     <li class="nav-item d-none d-sm-inline-block">
       <a href="{{ route('admin.index') }}" class="nav-link">WMC</a>
     </li>
+    <li class="nav-item d-none d-sm-inline-block">
+      <a href="{{ route('exports.home') }}" class="nav-link"><i class="fas fa-file-export"></i></a>
+    </li>
   </ul>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">

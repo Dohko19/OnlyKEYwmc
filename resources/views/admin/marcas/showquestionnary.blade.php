@@ -35,6 +35,7 @@
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
                       <div class="form-group">
                         <input type="hidden" name="zona" value="{{ $zona }}">
+                        <input type="hidden" name="zonaf" value="{{ $delegacion }}">
   			                <input size="5" name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="mes y año" autocomplete="off"><br>
                         <select class="form-control" name="dm" id="dm">
                           <option value="" selected>--Delegacion--</option>
@@ -122,6 +123,7 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script> --}}
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+  <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
 
 <script>
   Highcharts.setOptions({
@@ -133,7 +135,7 @@
     downloadSVG: 'Descargar en SVG imagen de vectores',
     downloadPDF: 'Descargar en documento PDF',
   }
-});
+  });
 
   Highcharts.chart('critico', {
     chart: {
@@ -450,6 +452,9 @@
         viewMode: "months",
         minViewMode: "months"
     });
-
+ $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+  })
 </script>
 @endpush

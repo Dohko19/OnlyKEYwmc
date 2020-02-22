@@ -2,7 +2,13 @@
 Auth::routes(['register' => false]);
 Route::get('planes', 'HomeController@planes')->name('pages.planes');
 Route::get('/', 'Admin\AdminController@index')->name('home.index');
-Route::get('/regino/{id}', 'Admin\AdminController@region')->name('home.region');
+Route::get('/region/{id}', 'Admin\AdminController@region')->name('home.region');
+
+// Exports
+Route::get('exports', 'ExportsViewsController@index')->name('exports.home');
+Route::get('exports/download', 'ExportsViewsController@export')->name('exports.export');
+//endExports
+
 Route::group([
 	'prefix' => 'admin',
 	'namespace' => 'Admin',

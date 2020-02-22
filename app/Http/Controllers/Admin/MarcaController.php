@@ -144,11 +144,15 @@ class MarcaController extends Controller
                     $preguntasRigth->push($pregunta);
                 }
             }
+                $delegacion = request('zonaf');
 
-             $delegaciones =Sucursal::with(['users', 'marcas'])
+              $delegaciones =Sucursal::with(['users', 'marcas'])
                 ->findOrFail(auth()->user()->id)
                 ->selectRaw('delegacion_municipio dm')
+                ->selectRaw('delegacion_municipio del')
                 ->whereRaw('marca_id = '. $marca->id )
+                ->whereRaw('region = '."'".$delegacion."'")
+                ->selectRaw('count(*) del')
                 ->groupBy('dm')
                 ->orderBy('dm')
                 ->get();
@@ -211,7 +215,7 @@ class MarcaController extends Controller
         //     // }
         //     // return $sum;
         //     // $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona'));
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'c', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona', 'delegacion'));
         //     // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 
