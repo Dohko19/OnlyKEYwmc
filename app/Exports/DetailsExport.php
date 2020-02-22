@@ -18,8 +18,10 @@ class DetailsExport implements FromView, ShouldAutoSize
 
 	public function view(): View
 	{
-		$to = Carbon::parse(request('to'))->format('Y-m-d');
 		$from = Carbon::parse(request('from'))->format('Y-m-d');
+		$to = Carbon::parse(request('to'))->endOfMonth();
+		// $to = Carbon::parse($to)->format('Y-m-d');
+		// ddd($to);
 		$dates = Sucursal::with(['marcas', 'qresults'])
 				->where('region', request('zr'))
 				->where(function ($query) use ($from, $to){

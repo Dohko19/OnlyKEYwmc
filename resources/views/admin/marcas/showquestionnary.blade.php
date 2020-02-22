@@ -36,11 +36,11 @@
                       <div class="form-group">
                         <input type="hidden" name="zona" value="{{ $zona }}">
                         <input type="hidden" name="zonaf" value="{{ $delegacion }}">
-  			                <input size="5" name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="mes y año" autocomplete="off"><br>
+  			                <input size="5" name="graphics" type="text" class="form-control pull-right" id="datepicker" value="{{ old('graphics', request('graphics')) }}" placeholder="mes y año" autocomplete="off"><br>
                         <select class="form-control" name="dm" id="dm">
                           <option value="" selected>--Delegacion--</option>
                           @foreach ($delegaciones as $d)
-                            <option  value="{{ $d->dm }}">{{ $d->dm }}</option>
+                            <option {{ old('marca_id', request('dm')) == $d->dm ? 'selected' : ''}}  value="{{ $d->dm }}">{{ $d->dm }}</option>
                           @endforeach
                         </select>
                         {{-- <input name="dm" type="text" class="form-control" autocomplete="off" size="6" value="{{ old('dm') }}" placeholder="Delegación..."> --}}

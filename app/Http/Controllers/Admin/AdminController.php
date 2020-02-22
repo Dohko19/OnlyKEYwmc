@@ -57,6 +57,7 @@ class AdminController extends Controller
         {
             $marca = Marca::findOrFail($id);
             $sucursales = User::with(['sucursals' => function($query){
+                // $query->selectRaw();
                 $query->groupBy('region');
                 $query->orderBy('region');
             }, 'grupos'])
@@ -64,5 +65,10 @@ class AdminController extends Controller
                 return view('admin.pages.region', compact('sucursales', 'marca'));
         }
         return redirect()->route('admin.index')->withInfo('No tienes Permisos para ver esta seccion');
+    }
+
+    public function consultareporte(Request $request)
+    {
+        //
     }
 }

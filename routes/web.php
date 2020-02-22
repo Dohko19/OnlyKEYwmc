@@ -2,6 +2,8 @@
 Auth::routes(['register' => false]);
 Route::get('planes', 'HomeController@planes')->name('pages.planes');
 Route::get('/', 'Admin\AdminController@index')->name('home.index');
+Route::get('consultareporte', 'Admin\AdminController@index')->name('reporte');
+
 Route::get('/region/{id}', 'Admin\AdminController@region')->name('home.region');
 
 // Exports

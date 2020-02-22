@@ -27,6 +27,12 @@
               <p>Dashboard</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">
+              <i class="fas fa-file-export nav-icon"></i>
+              <p>Reporte</p>
+            </a>
+          </li>
           @can('view', new App\Segmento)
             <li class="nav-item">
               <a href="{{ route('admin.auditorias.index') }}" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">

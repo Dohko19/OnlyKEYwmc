@@ -85,7 +85,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="loader-page"></div>
 <body class="hold-transition layout-fixed">
-<div class="wrapper" id="app">
+<div class="wrapper">
 
   <!-- Navbar -->
   @include('layouts.partials.nav')
@@ -138,9 +138,7 @@
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
+<script src="{{ asset('js/app.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- ChartJS -->
@@ -170,9 +168,10 @@
 @stack('scripts')
 </script>
 <script>
+  //preLoading
   $(window).on('load', function () {
       setTimeout(function () {
-    $(".loader-page").css({visibility:"hidden",opacity:"0"})
+    $(".loader-page").css({visibility:"hidden",opacity:"50"})
   }, 1);
 
 });
