@@ -14,7 +14,12 @@
     @else
     <div class="row justify-content-center align-items-center minh-100" >
       @foreach ($sucursales as $sucursale)
-      <div class="col-md-3">
+      <ul>
+      @foreach ($sucursales->sucursals as $s)
+        <li>{{ $s->region }}</li>
+      @endforeach
+      </ul>
+     {{--  <div class="col-md-3">
             <div class="card card-primary">
               <div class="card-header">
                 Region:
@@ -36,7 +41,7 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-      </div>
+      </div> --}}
       @endforeach
     </div>
     @endif

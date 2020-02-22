@@ -33,10 +33,10 @@ class AdminController extends Controller
             //     ->orderBy('region')
             //     ->get();
             // ddd($sucursales);
-            $grupos = GrupoMarca::with(['marcas'])->where('user_id', auth()->user()->id)->get();
-
+            $marcas = Marca::with(['grupos'])->where('user_id', auth()->user()->id)->get();
+            // ddd($grupos);
             // ddd($sucursales);
-            return view('admin.dashboard', compact('grupos'));
+            return view('admin.dashboard', compact('marcas'));
         }
         // if (auth()->user()->hasRole('dmarca')) {
         //     $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
@@ -56,18 +56,13 @@ class AdminController extends Controller
         if (auth()->user()->hasRole('dgral'))
         {
             $marca = Marca::findOrFail($id);
-            $sucursales = Sucursal::with(['users', 'marcas'])
-                ->findOrFail(auth()->user()->id)
-                ->selectRaw('region r')
-                ->selectRaw('marca_id m')
-                ->selectRaw('id id')
-                ->selectRaw('delegacion_municipio dm')
-                ->selectRaw('count(*) sucursals')
-                ->groupBy('region')
-                ->orderBy('region')
-                ->get();
-
+            $sucursales = User::with(['sucursals' => function($query){
+                $query->groupBy('region');
+                $query->orderBy('region');
+            }, 'grupos'])
+                ->findOrFail(auth()->user()->id);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
         }
+        return redirect()->route('admin.index')->withInfo('No tienes Permisos para ver esta seccion');
     }
 }

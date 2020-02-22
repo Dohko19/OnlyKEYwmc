@@ -13,12 +13,12 @@
 
     @elseif(auth()->user()->hasRole('dgral'))
     <div class="row justify-content-center align-items-center minh-100" >
-	    	@foreach ($grupos as $grupo)
-					@foreach ($grupo->marcas as $marca)
+	    	@foreach ($marcas as $marca)
+
 				      <div class="col-md-3 col-sm-6 col-12">
 				        	<div class="info-box">
 					          <div class="info-box-content ">
-					          	@if ($grupo->tipo == 'auditorias')
+					          	@if ($marca->grupos->tipo == 'auditorias')
 					          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
 						          	@else
 						          		<a href="{{ route('home.region', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
@@ -27,7 +27,7 @@
 						          	@endif
 					          </div>
 				        	</div>
-					          @if ($grupo->tipo == 'auditorias')
+					          @if ($marca->grupos->tipo == 'auditorias')
 					          @if ($marca->puntuacion_general >= 90)
 							          	<a href="{{ route('admin.marcas.show', $marca) }}"
 							          	class="btn btn-sm btn-success small-box-footer">
@@ -58,7 +58,6 @@
 				        	<!-- /.info-box -->
 				      </div>
 		      		<!-- /.col -->
-		      		@endforeach
 			@endforeach
 			{{-- {{ $sucursales->sucursals }} --}}
     </div>
