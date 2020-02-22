@@ -11,7 +11,7 @@
     <h5 class="mb-2">Bienvenido {{ Auth::user()->name }} | WMC</h5>
     @if (auth()->user()->hasRole('dmarca'))
 
-    @else
+    @elseif(auth()->user()->hasRole('dgral'))
     <div class="row justify-content-center align-items-center minh-100" >
 	    	@foreach ($grupos as $grupo)
 					@foreach ($grupo->marcas as $marca)
