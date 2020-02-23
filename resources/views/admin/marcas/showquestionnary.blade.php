@@ -31,7 +31,6 @@
               </div>
 						</div>
 			            <div class="col-md-4 col-sm-4">
-			                <label for="graphic" class="float-right">Filtro por Delegación</label>
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
                       <div class="form-group">
                         <input type="hidden" name="zona" value="{{ $zona }}">

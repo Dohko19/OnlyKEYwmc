@@ -22,12 +22,15 @@ class DetailsExport implements FromView, ShouldAutoSize
 		$to = Carbon::parse(request('to'))->endOfMonth();
 		// $to = Carbon::parse($to)->format('Y-m-d');
 		// ddd($to);
-		$dates = Sucursal::with(['marcas', 'qresults'])
+		 $dates = Sucursal::with(['marcas', 'qresults', 'users' => function($query){
+					$query->findOrFail(auth()->user()->id);
+				}])
 				->where('region', request('zr'))
 				->where(function ($query) use ($from, $to){
 					$query->whereBetween('created_at', [$from, $to]);
 				})
                 ->get();
+                // ddd($dates);
 		return view('exports.details', compact('dates'));
 	}
 
