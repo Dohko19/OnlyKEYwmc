@@ -56,8 +56,11 @@ class AdminController extends Controller
         if (auth()->user()->hasRole('dgral'))
         {
             $marca = Marca::findOrFail($id);
-            $sucursales = User::with(['sucursals' => function($query){
-                // $query->selectRaw();
+             $sucursales = User::with(['sucursals' => function($query){
+                $query->selectRaw('marca_id m');
+                $query->selectRaw('delegacion_municipio dm');
+                $query->selectRaw('region r');
+                $query->selectRaw('count(*) sucursals');
                 $query->groupBy('region');
                 $query->orderBy('region');
             }, 'grupos'])

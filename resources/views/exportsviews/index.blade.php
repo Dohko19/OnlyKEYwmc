@@ -51,14 +51,10 @@
 							<button class="btn btn-primary">Descargar</button> &nbsp;&nbsp;
 					</div>
 				</form>
-				<div class="row">
-					<div class="col-md-7"></div>
-					<div class="col-md-5">
-						<button class="btn btn-danger " id="action-button"><i class="far fa-file-pdf"></i> Visualizar</button>
-					</div>
-				</div>
             </div>
-            <div id="reporte"></div>
+            <div id="reporte">
+            	<reportes></reportes>
+            </div>
             <!-- /.card-body -->
 			</div>
 		</div>
@@ -69,15 +65,11 @@
 	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/datepicker/datepicker3.css') }}">
 	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2/css/select2.min.css') }}">
   	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-  	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/daterangepicker/daterangepicker.css') }}">
 @endpush
 @push('scripts')
 	<script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 	<script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
-	<script src="{{ asset('adminLTE/plugins/daterangepicker/daterangepicker.js') }}"></script>
-
 <script>
-
   $('#datepickerto').datepicker({
         autoclose: true,
         language: 'es',
@@ -85,6 +77,7 @@
         viewMode: "months",
         minViewMode: "months",
     });
+
   $('#datepickerfrom').datepicker({
         autoclose: true,
         language: 'es',
@@ -92,55 +85,6 @@
         viewMode: "months",
         minViewMode: "months"
     });
-
- $(function () {
-    //Initialize Select2 Elements
-    $('.select2bs4').select2to({
-      theme: 'bootstrap4'
-    })
-
-    // $('#reservation').daterangepicker({
-    // 	language: 'es',
-    // 	locale: {
-    //   		format: 'MM-DD ',
-    //   		"applyLabel": "Aplicar",
-	   //      "cancelLabel": "Cancelar",
-	   //      "fromLabel": "Desde",
-	   //      "toLabel": "Hasta",
-	   //      "customRangeLabel": "Personalizado",
-	   //      "daysOfWeek": [
-	   //          "Do",
-	   //          "Lu",
-	   //          "Ma",
-	   //          "Mi",
-	   //          "Ju",
-	   //          "Vi",
-	   //          "Sa"
-	   //      ],
-	   //      "monthNames": [
-	   //          "Enero",
-	   //          "Febrero",
-	   //          "Marzo",
-	   //          "Abril",
-	   //          "Mayo",
-	   //          "Junio",
-	   //          "Julio",
-	   //          "Augosto",
-	   //          "Septiembre",
-	   //          "Octubre",
-	   //          "Noviembre",
-	   //          "Diciembre"
-	   //      ],
-	   //      "firstDay": 1,
-    // 	}
-    // })
-
-  })
 </script>
-<script>
-	$("#action-button").on('click', function() {
-            var myText = $(this).val();
-            console.log(myText);
-         })
-</script>
+
 @endpush

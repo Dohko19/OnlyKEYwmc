@@ -13,13 +13,8 @@
 
     @else
     <div class="row justify-content-center align-items-center minh-100" >
-      @foreach ($sucursales as $sucursale)
-      <ul>
       @foreach ($sucursales->sucursals as $s)
-        <li>{{ $s->region }}</li>
-      @endforeach
-      </ul>
-     {{--  <div class="col-md-3">
+        <div class="col-md-3">
             <div class="card card-primary">
               <div class="card-header">
                 Region:
@@ -31,17 +26,17 @@
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
-              <a href="{{ route('admin.marcas.show', ['marca' => $sucursale->m,'dm' => $sucursale->dm, 'zone' => $sucursale->r, 'zonaf' => $sucursale->r ]) }}">
+              <a href="{{ route('admin.marcas.show', ['marca' => $s->m,'dm' => $s->dm, 'zone' => $s->r, 'zonaf' => $s->r ]) }}">
               <div class="card-body">
-               <b style="color: red;">{{ $sucursale->r }}</b><br>
+               <b style="color: red;">{{ $s->r }}</b><br>
                 <img src="{{ url('/marcas/'.$marca->photo) }}" alt="{{ $marca->id .'-'. $marca->name }}" width="150px">
-              <div class="timeline-footer">({{ $sucursale->sucursals }})</div>
+              <div class="timeline-footer">({{ $s->sucursals }})</div>
               </div>
               </a>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-      </div> --}}
+      </div>
       @endforeach
     </div>
     @endif

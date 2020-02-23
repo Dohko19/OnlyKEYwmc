@@ -138,7 +138,6 @@
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script src="{{ asset('js/app.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- ChartJS -->
@@ -165,6 +164,8 @@
 <script src="{{ asset('adminLTE/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('adminLTE/js/demo.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+
 @stack('scripts')
 </script>
 <script>

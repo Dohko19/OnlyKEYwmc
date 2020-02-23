@@ -28,7 +28,6 @@ class DetailsExport implements FromView, ShouldAutoSize
 					$query->whereBetween('created_at', [$from, $to]);
 				})
                 ->get();
-                // ddd($dates);
 		return view('exports.details', compact('dates'));
 	}
 
