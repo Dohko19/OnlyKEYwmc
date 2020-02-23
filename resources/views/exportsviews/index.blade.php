@@ -11,7 +11,13 @@
 					</h3>
 				</div>
 			<div class="card-body">
-				<form action="{{ route('exports.export') }}" method="GET" role="form" class="form-inline">
+				<form
+				action="{{ route('exports.export') }}"
+				{{-- action="javascript:getexport();" --}}
+				method="GET"
+				id="reportget"
+				role="form"
+				class="form-inline">
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md">
@@ -30,7 +36,7 @@
 							<div class="col-md">
 								<input
 								required
-								id="datepickerfrom"
+								id="from"
 								type="text"
 								name="from"
 								class="form-control"
@@ -40,7 +46,7 @@
 							<div class="col-md">
 								<input
 								required
-								id="datepickerto"
+								id="to"
 								type="text"
 								name="to"
 								class="form-control"
@@ -51,9 +57,6 @@
 							<button class="btn btn-primary">Descargar</button> &nbsp;&nbsp;
 					</div>
 				</form>
-            </div>
-            <div id="reporte">
-            	<reportes></reportes>
             </div>
             <!-- /.card-body -->
 			</div>
@@ -69,8 +72,9 @@
 @push('scripts')
 	<script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 	<script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+
 <script>
-  $('#datepickerto').datepicker({
+  $('#to').datepicker({
         autoclose: true,
         language: 'es',
         format: 'yyyy-mm',
@@ -78,13 +82,26 @@
         minViewMode: "months",
     });
 
-  $('#datepickerfrom').datepicker({
+  $('#from').datepicker({
         autoclose: true,
         language: 'es',
         format: 'yyyy-mm',
         viewMode: "months",
         minViewMode: "months"
     });
+
+  	function getexport(){
+			var form = new FormData(document.getElementById('reportget'));
+			console.log(form);
+			$.ajax({
+				url: '/exports/download',
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				type: 'GET',
+				data: form,
+				processData: false,
+				contentType: false
+			});
+		}
 </script>
 
 @endpush
