@@ -22,26 +22,18 @@ class AdminController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('dgral')) {
-            // $sucursales = Sucursal::with(['users', 'marcas'])
-            //     ->findOrFail(auth()->user()->id)
-            //     ->selectRaw('region r')
-            //     ->selectRaw('marca_id m')
-            //     ->selectRaw('id id')
-            //     ->selectRaw('delegacion_municipio dm')
-            //     ->selectRaw('count(*) sucursals')
-            //     ->groupBy('region')
-            //     ->orderBy('region')
-            //     ->get();
-            // ddd($sucursales);
             $marcas = Marca::with(['grupos'])->where('user_id', auth()->user()->id)->get();
-            // ddd($grupos);
-            // ddd($sucursales);
             return view('admin.dashboard', compact('marcas'));
         }
         // if (auth()->user()->hasRole('dmarca')) {
         //     $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
         //     return view('admin.dashboard', compact('sucursales'));
         // }
+        if (auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal')) {
+            $sucursales = User::with(['sucursals'])
+                ->findOrFail(auth()->user()->id);
+            return view('admin.dashboard', compact('sucursales'));
+        }
         if(auth()->user()->hasRole('Admin'))
         {
             // $sucursales = User::all();
@@ -53,7 +45,7 @@ class AdminController extends Controller
 
     public function region($id)
     {
-        if (auth()->user()->hasRole('dgral'))
+        if (!auth()->user()->hasRole('Admin'))
         {
             $marca = Marca::findOrFail($id);
              $sucursales = User::with(['sucursals' => function($query){
@@ -67,7 +59,7 @@ class AdminController extends Controller
                 ->findOrFail(auth()->user()->id);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
         }
-        return redirect()->route('admin.index')->withInfo('No tienes Permisos para ver esta seccion');
+        return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información');
     }
 
     public function consultareporte(Request $request)

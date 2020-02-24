@@ -55,8 +55,9 @@ class RolePolicy
     {
         if( $user->hasRole('Admin') || $user->hasPermissionTo('Update roles') )
         {
-            $this->deny('No puedes actualizar este rol');
+            return true;
         }
+            $this->deny('No puedes actualizar este rol');
     }
 
     /**
