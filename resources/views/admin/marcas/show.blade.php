@@ -2,7 +2,6 @@
 @section('content')
 @section('headertitle', '')
 @section('title', 'Key | Mis Sucursales')
-
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -23,7 +22,7 @@
                 {{ $marca->name }}
               </h2>
               <p class="text-center">Calificación de auditoria por sucursal <br>
-              <a class="text-center" href="{{ route('pages.planes') }}">Ver Planes de Acción</a></p>
+              <a class="text-center" href="{{ route('admin.auditorias.index') }}">Ver Planes de Acción</a></p>
 						</div>
             <div class="col-md-3">
                 <label for="graphic">Filtro por Fecha</label>
@@ -145,13 +144,13 @@ Highcharts.chart('container', {
         name: "SUCURSALES",
         colorByPoint: true,
         data: [
-        @foreach ($sucursales as $sucursal)
+        @foreach ($sucursales as $sucursale)
           {
-            name: "{{ $sucursal->name }} - {{ $sucursal->ciudad }}",
-            y: {{ $sucursal->puntuacion_total }}, //calificacion en general
-            drilldown: "{{ $sucursal->name }}"
+            name: "{{ $sucursale->name }}",
+            y: 1, //calificacion en general
+            drilldown: "{{ $sucursale->name }}"
           },
-        @endforeach
+          @endforeach
         ]
       }
     ],
@@ -163,20 +162,18 @@ Highcharts.chart('container', {
         }
     },
       series: [
-          @foreach ($sucursales as $sucursal)
+          @foreach ($sucursales as $sucursale)
         {
-          name: "{{ $sucursal->name }}",
-          id: "{{ $sucursal->name }}",
+          name: "{{ $sucursale->name }}",
+          id: "{{ $sucursale->name }}",
           data: [
-          @foreach ($sucursal->segmentos as $segmento)
             [
-              "<a href='{{ route('admin.segmentos.edit', $segmento) }}'><u>{{ $segmento->segmento}}</u></a>",
-              {{ $segmento->puntuacion }}
+              "some",
+              123
             ],
-          @endforeach
           ]
         },
-         @endforeach
+        @endforeach
       ]
     }
   });
@@ -226,756 +223,241 @@ Highcharts.chart('container', {
       colorByPoint: true,
       data: [
         {
-          name: "Centro",
-          y: 99.74,
-          drilldown: "Centro"
+          name: "World Trade Center",
+          y: 87.04,
+          drilldown: "World Trade Center"
         },
         {
-          name: "Insurgentes",
-          y: 81.57,
-          drilldown: "Insurgentes"
+          name: "Taquearte del Valle",
+          y: 83.33,
+          drilldown: "Taquearte del Valle"
         },
         {
-          name: "Condesa",
-          y: 78.23,
-          drilldown: "Condesa"
+          name: "Taquearte Univerdidad",
+          y: 75.93,
+          drilldown: "Taquearte Univerdidad"
         },
         {
-          name: "Lomas de chapultepec",
-          y: 67.58,
-          drilldown: "Lomas de chapultepec"
+          name: "Operadora de Alimentos y Tacos SA de CV",
+          y: 73.04,
+          drilldown: "Operadora de Alimentos y Tacos SA de CV"
         },
         {
-          name: "Palmas",
-          y: 56.02,
-          drilldown: "Palmas"
+          name: "LAF Lerma",
+          y: 70.33,
+          drilldown: "LAF Lerma"
         },
         {
-          name: "Polanco",
-          y: 45.92,
-          drilldown: "Polanco"
+          name: "Operadora de Alimento Nueva York SA de CV",
+          y: 68.93,
+          drilldown: "Operadora de Alimento Nueva York SA de CV"
         },
         {
-          name: "Reforma",
-          y: 42.62,
-          drilldown: "Reforma"
+          name: "Grupo Gastronomico Glotoneri",
+          y: 66.04,
+          drilldown: "Grupo Gastronomico Glotoneri"
         },
         {
-          name: "Roma",
-          y: 38.62,
-          drilldown: "Roma"
+          name: "Operadora de Alimentos y Tacos SAPI de CV",
+          y: 60.33,
+          drilldown: "Operadora de Alimentos y Tacos SAPI de CV"
         },
         {
-          name: "Santa Fe - Arcos",
-          y: 35.62,
-          drilldown: "Santa Fe - Arcos"
+          name: "Grupo Gastronomico FAS SA de CV",
+          y: 55.93,
+          drilldown: "Grupo Gastronomico FAS SA de CV"
         },
         {
-          name: "Coyoacán",
-          y: 10.90,
-          drilldown: "Coyoacán"
+          name: "Central Gastronomica Hercules SAPI de CV",
+          y: 50.04,
+          drilldown: "Central Gastronomica Hercules SAPI de CV"
         },
         {
-          name: "Pedregal",
-          y: 8.60,
-          drilldown: "Pedregal"
-        }
+          name: "Administradora de Restaurantes CAF",
+          y: 45.33,
+          drilldown: "Administradora de Restaurantes CAF"
+        },
+        {
+          name: "Operadora de Alimento Nueva YORK SA de CV (del Valle)",
+          y: 40.93,
+          drilldown: "Operadora de Alimento Nueva YORK SA de CV (del Valle)"
+        },
       ]
     }
   ],
   drilldown: {
     series: [
       {
-        name: "Centro",
-        id: "Centro",
+        name: "World Trade Center",
+        id: "World Trade Center",
         data: [
           [
             "<a href='{{ route('pages.planes') }}'>INSTALACIONES Y ÁREAZA</a>",
-            90.1
+            100
           ],
           [
             "<a href='{{ route('pages.planes') }}'>EQUIPO Y UTENSILIOZA</a>",
-            1.3
+            100
           ],
           [
             " <a href='{{ route('pages.planes') }}'> SERVICIOS</a> ",
-            53.02
+            57
           ],
           [
             "<a href='{{ route('pages.planes') }}'>ALMACENAMIENTZA</a>",
-            1.4
+            75
           ],
           [
             "<a href='{{ route('pages.planes') }}'>CONTROLES DE OPERACIÓZA</a>",
-            0.88
+            75
           ],
           [
-            "<a href='{{ route('pages.planes') }}'>MATERIAS PRIMAZA</a>",
-            0.1
+            "<a href='{{ route('pages.planes') }}'>MATERIAS PRIMAS</a>",
+            100
           ],
           [
             "<a href='{{ route('pages.planes') }}'>ENVASEZA</a>",
-            53.02
+            100
           ],
-      [
+          [
             "<a href='{{ route('pages.planes') }}'>AGUA EN CONTACTO CON LOS ALIMENTOZA</a>",
-            2.6
+            100
           ],
           [
             "<a href='{{ route('pages.planes') }}'>MANTENIMIENTO Y LIMPIEZA</a>",
-            1.3
+            87.66
           ],
           [
             "<a href='{{ route('pages.planes') }}'>MANEJO DE RESIDUOZA</a>",
-            4.3
+            100
           ],
           [
             "<a href='{{ route('pages.planes') }}'>SALUD E HIGUIENE DEL PERSONAZA</a>",
-            4.3
+            100
           ],
           [
             "<a href='{{ route('pages.planes') }}'>TRANSPORTZA</a>",
-            4.3
+            100
           ],
           [
             "<a href='{{ route('pages.planes') }}'>DOCUMENTOS Y CAPACITACIÓZA</a>",
-            4.3
+            86
           ]
         ]
       },
       {
-        name: "Durango",
-        id: "Durango",
+        name: "Taquearte del Valle",
+        id: "Taquearte del Valle",
         data: [
           [
-            "INSTALACIONES Y ÁREAS",
-            1.02
+            "<a href='{{ route('pages.planes') }}'>INSTALACIONES Y ÁREAZA</a>",
+            100
           ],
           [
-            "EQUIPO Y UTENSILIOS",
-            7.36
+            "<a href='{{ route('pages.planes') }}'>EQUIPO Y UTENSILIOZA</a>",
+            100
           ],
           [
-            "SERVICIOS",
-            0.35
+            " <a href='{{ route('pages.planes') }}'> SERVICIOS</a> ",
+            57
           ],
           [
-            "ALMACENAMIENTO",
-            0.11
+            "<a href='{{ route('pages.planes') }}'>ALMACENAMIENTZA</a>",
+            75
           ],
           [
-            "CONTROLES DE OPERACIÓN",
-            0.1
+            "<a href='{{ route('pages.planes') }}'>CONTROLES DE OPERACIÓZA</a>",
+            75
           ],
           [
-            "MATERIAS PRIMAS",
-            0.1
+            "<a href='{{ route('pages.planes') }}'>MATERIAS PRIMAS</a>",
+            100
           ],
           [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
+            "<a href='{{ route('pages.planes') }}'>ENVASEZA</a>",
+            100
           ],
           [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
+            "<a href='{{ route('pages.planes') }}'>AGUA EN CONTACTO CON LOS ALIMENTOZA</a>",
+            100
           ],
           [
-            "MANEJO DE RESIDUOS",
-            4.3
+            "<a href='{{ route('pages.planes') }}'>MANTENIMIENTO Y LIMPIEZA</a>",
+            87.66
           ],
           [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
+            "<a href='{{ route('pages.planes') }}'>MANEJO DE RESIDUOZA</a>",
+            100
           ],
           [
-            "TRANSPORTE",
-            4.3
+            "<a href='{{ route('pages.planes') }}'>SALUD E HIGUIENE DEL PERSONAZA</a>",
+            100
           ],
           [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
+            "<a href='{{ route('pages.planes') }}'>TRANSPORTZA</a>",
+            100
+          ],
+          [
+            "<a href='{{ route('pages.planes') }}'>DOCUMENTOS Y CAPACITACIÓZA</a>",
+            86
           ]
         ]
       },
       {
-        name: "Insurgentes",
-        id: "Insurgentes",
+        name: "Taquearte Univerdidad",
+        id: "Taquearte Univerdidad",
         data: [
           [
             "INSTALACIONES Y ÁREAS",
-            6.2
+            0
           ],
           [
             "EQUIPO Y UTENSILIOS",
-            0.29
+            66.66
           ],
           [
             "SERVICIOS",
-            0.27
+            57.1
           ],
           [
             "ALMACENAMIENTO",
-            0.47
+            75
           ],
           [
             "CONTROLES DE OPERACIÓN",
-            0.47
+            78
           ],
           [
             "MATERIAS PRIMAS",
-            0.1
+            100
           ],
           [
             "ENVASES",
-            53.02
+            100
           ],
-      [
+          [
             "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
+            100
           ],
           [
             "MANTENIMIENTO Y LIMPIEZA",
-            1.3
+           75
           ],
           [
             "MANEJO DE RESIDUOS",
-            4.3
+            100
           ],
           [
             "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
+            100
           ],
           [
             "TRANSPORTE",
-            4.3
+            100
           ],
           [
             "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },
-      {
-        name: "Condesa",
-        id: "Condesa",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            3.39
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.96
-          ],
-          [
-            "SERVICIOS",
-            0.36
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.54
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.13
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },
-      {
-        name: "Lomas de chapultepec",
-        id: "Lomas de chapultepec",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            2.6
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.92
-          ],
-          [
-            "SERVICIOS",
-            0.4
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.1
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.1
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },
-      {
-        name: "Palmas",
-        id: "Palmas",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            0.96
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.82
-          ],
-          [
-            "SERVICIOS",
-            0.14
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.1
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.1
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },
-      {
-        name: "Polanco",
-        id: "Polanco",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            2.6
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.92
-          ],
-          [
-            "SERVICIOS",
-            0.4
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.1
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.1
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },
-      {
-        name: "Reforma",
-        id: "Reforma",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            2.6
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.92
-          ],
-          [
-            "SERVICIOS",
-            0.4
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.1
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.1
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },{
-        name: "Roma",
-        id: "Roma",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            2.6
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.92
-          ],
-          [
-            "SERVICIOS",
-            0.4
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.1
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.1
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },{
-        name: "Santa Fe - Arcos",
-        id: "Santa Fe - Arcos",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            2.6
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.92
-          ],
-          [
-            "SERVICIOS",
-            0.4
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.1
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.1
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },
-      {
-        name: "Coyoacan",
-        id: "Coyoacan",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            2.6
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.92
-          ],
-          [
-            "SERVICIOS",
-            0.4
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.1
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.1
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
-          ]
-        ]
-      },
-      {
-        name: "Pedregal",
-        id: "Pedregal",
-        data: [
-          [
-            "INSTALACIONES Y ÁREAS",
-            2.6
-          ],
-          [
-            "EQUIPO Y UTENSILIOS",
-            0.92
-          ],
-          [
-            "SERVICIOS",
-            0.4
-          ],
-          [
-            "ALMACENAMIENTO",
-            0.1
-          ],
-          [
-            "CONTROLES DE OPERACIÓN",
-            0.1
-          ],
-          [
-            "MATERIAS PRIMAS",
-            0.1
-          ],
-          [
-            "ENVASES",
-            53.02
-          ],
-      [
-            "AGUA EN CONTACTO CON LOS ALIMENTOS",
-            2.6
-          ],
-          [
-            "MANTENIMIENTO Y LIMPIEZA",
-            1.3
-          ],
-          [
-            "MANEJO DE RESIDUOS",
-            4.3
-          ],
-          [
-            "SALUD E HIGUIENE DEL PERSONAL",
-            4.3
-          ],
-          [
-            "TRANSPORTE",
-            4.3
-          ],
-          [
-            "DOCUMENTOS Y CAPACITACIÓN",
-            4.3
+            76
           ]
         ]
       }

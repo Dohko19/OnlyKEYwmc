@@ -56,7 +56,6 @@ class SucursalController extends Controller
             'name' => 'min:3|string',
             'ciudad' => 'min:1|string',
             'IdCte' => 'min:1|numeric',
-            'users' => 'required',
             'zone' => 'required|min:3',
             'phone' => 'numeric',
             'region' => 'required|min:3',
@@ -65,7 +64,7 @@ class SucursalController extends Controller
         $this->authorize('create', new Sucursal);
         $sucursal = Sucursal::create($request->except('users'));
         $sucursal->users()->attach($request->get('users'));
-        return redirect()->route('admin.sucursales.index', compact('sucursal'))->with('info', 'Agregado Correctamente');
+        return redirect()->route('admin.sucursales.index')->with('info', 'Agregado Correctamente');
     }
 
     /**

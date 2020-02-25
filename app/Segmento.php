@@ -16,12 +16,12 @@ class Segmento extends Model
 
     public function auditorias()
     {
-        return $this->belongsToMany(Auditoria::class, 'ResultadoAuditoria');
+        return $this->belongsTo(Auditoria::class, 'IdAuditoria');
     }
 
     public function questions()
     {
-    	return $this->belongsToMany(Question::class, 'ResultadoAuditoria');
+    	return $this->hasMany(Question::class, 'IdSegmento');
     }
 
 	public function sucursals()
@@ -29,9 +29,14 @@ class Segmento extends Model
 		return $this->belongsTo(Sucursal::class, 'sucursal_id');
 	}
 
+    public function resultados()
+    {
+        return $this->belongsToMany(ResultadoAuditoria::class, 'IdSegmento');
+    }
+
     public function scopeAllowed($query)
     {
-        if (auth()->user()->can('view', $this))
+        if (auth()->user()->hasRole('Admin'))
         {
             return $query; //Verficacion de si es administrador
         }

@@ -10,6 +10,7 @@ use App\Marca;
 use App\PreguntasCuestionario;
 use App\Qresults;
 use App\Questionnaire;
+use App\ResultadoAuditoria;
 use App\Sucursal;
 use App\User;
 use Carbon\Carbon;
@@ -93,7 +94,8 @@ class MarcaController extends Controller
         if($marca->grupos->tipo == 'auditorias')
         {
             $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m-d');
-            $sucursales = Sucursal::whereNotNull('created_at')
+            $sucursales = Sucursal::with(['segmentos'])
+            ->whereNotNull('created_at')
             ->graphics($graphics)
             ->where('marca_id', '=', $marca->id)
             ->orderBy('puntuacion_total', 'DESC')

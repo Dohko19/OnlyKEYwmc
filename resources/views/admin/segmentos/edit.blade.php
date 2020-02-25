@@ -40,6 +40,8 @@
                   </thead>
                   <tbody>
                     @foreach ($segmento->questions as $question)
+                    @foreach ($question->resultados as $resultado)
+                    {{ $resultado->Comentario }}
                     <tr>
                       <td style="width: 600px;">
                         {{ $question->Pregunta }}
@@ -66,6 +68,7 @@
                         </form>
                     </tr>
                     @endforeach
+                     @endforeach
                   </tbody>
                 </table>
               </div>
@@ -96,11 +99,9 @@
           <span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-        @if (empty($question->photo))
-        <p>Sin Imagen...</p>
-        @else
-        <p class="text-center"><img src="{{ url('/'.$question->photo) }} " alt="{{ $question->question ?? ''  }}"> </p>
-        @endif
+        @foreach ($question->resultados  as $resultado)
+        <p class="text-center"><img width="250px" src="{{ $resultado->Foto }} " alt="{{ $resultado->question ?? ''  }}"> </p>
+        @endforeach
       </div>
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>

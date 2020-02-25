@@ -59,7 +59,7 @@ class AdminController extends Controller
                 ->findOrFail(auth()->user()->id);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
         }
-        return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información');
+        return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 
     public function consultareporte(Request $request)

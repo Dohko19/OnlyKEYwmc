@@ -22,4 +22,26 @@ class ExportsViewsController extends Controller
     {
     	return (new DetailsExport)->download('ReporteChecklist-'.Carbon::now()->format('d-m-Y').'.xls');
     }
+
+    public function viewpdf(Request $request)
+    {
+        if(request()->ajax()){
+        $from = Carbon::parse(request('desdep'))->format('Y-m-d');
+        $to = Carbon::parse(request('hastap'))->endOfMonth();
+        $zr = request('zrp');
+         $dates = Sucursal::with(['marcas', 'qresults', 'users' => function($query){
+                    $query->findOrFail(auth()->user()->id);
+                }])
+                ->where('region', $zr)
+                ->where(function ($query) use ($from, $to){
+                    $query->whereBetween('created_at', [$from, $to]);
+                })
+                ->get();
+            return response()->json($dates->toArray());
+        }//procesa la peticion ajax
+        else
+        {
+            return 'peticion ajax fails';
+        }
+    }
 }

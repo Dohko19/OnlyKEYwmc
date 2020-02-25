@@ -19,7 +19,7 @@
           <!-- small card -->
           <div class="small-box bg">
             <div class="inner">
-              <h6 class="text-left"><b>{{ $segmento }}</b></h6>
+              <h6 class="text-left"><b>{{ $segmento->NombreSegmento }}</b></h6>
 
               <p>Ultimo cambio el: someFecha</p>
               <p>De la sucursal:</p>

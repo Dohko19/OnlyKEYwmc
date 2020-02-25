@@ -83,7 +83,7 @@
                       </div>
                     </div>
                   <div class="form-group ">
-                    <label for="" class="col-form-label">Ingresa el id del cliente</label>
+                    <label for="" class="col-form-label">Ingresa el No. de cliente</label>
                     <div class="">
                       <input required type="text" class="form-control @error('IdCte') is-invalid @else border-1 @enderror"
                       name="IdCte" placeholder="Cliente id" value="{{ old('IdCte') }}">

@@ -18,7 +18,7 @@ class Sucursal extends Model
 
     public function segmentos()
     {
-    	return $this->hasMany(Segmento::class);
+    	return $this->hasMany(Segmento::class, 'IdSegmentoAuditoria');
     }
 
     public function qresults()
@@ -30,7 +30,6 @@ class Sucursal extends Model
     {
         return $this->hasMany(Questionnaire::class);
     }
-
 
     public function scopeGraphics($query, $graphics)
     {

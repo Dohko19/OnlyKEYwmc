@@ -20,72 +20,55 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Planes de Accion</h3>
-                {{-- <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                    </div>
-                  </div>
-                </div> --}}
               </div>
-              <!-- /.card-header -->
               <div class="card-body">
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th style="width: 33%">Segmento</th>
-                      <th style="width: 4%">Plan de Accion</th>
-                      <th style="width: 15%">Imagen...</th>
-                      <th style="width: 25%">Aprobado</th>
+                      <th style="width: 33%">Preguntas Realizadas</th>
+                      <th style="width: 15%">Comentario</th>
+                      <th style="width: 10%">Imagen...</th>
+                      <th style="width: 10%">Aprobado</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($segmento->questions as $question)
-                    {{ $question }}
-                      @if (!$question->approved == 1)
-                        <tr>
-                          <td>
-                            {{ $question->Pregunta }}
-                          </td>
-                          <td>
-                            <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
-                              <textarea
-                              name="comments"
-                              cols="30"
-                              rows="3"
-                              disabled
-                              placeholder="Plan de accion...">{{ old('comments', $question->comments) }}</textarea>
-                            </div>
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.segmentos.edit', $segmento) }}" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Editar</a>
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-img-segmento">
-                                  Ver Imagen
-                                </button>
-                            </td>
-                            <td class="align-content-center">
-                               {{-- @if (auth()->user()->isAdmin()) --}}
-                                <form action="{{ route('admin.questions.approved', $question) }}" method="POST">
-                                  @csrf
-                                  @method('PUT')
-                                  <div class="row">
-                                    <div class="col-6">
-                                      <select class="form-control" name="approved" id="">
-                                        <option value="0">No</option>
-                                        <option value="1">Si</option>
-                                      </select>
-                                    </div>
-                                    <div class="col-6">
-                                      <button type="submit" class="btn btn-primary">Enviar</button>
-                                    </div>
-                                  </div>
-                                  </form>
-                              {{-- @endif --}}
-                            </td>
-                        </tr>
-                      @endif
+                    @foreach ($question->resultados as $resultado)
+                    <tr>
+                      <td style="width: 600px;">
+                        {{ $question->Pregunta }}
+                      </td>
+                      <td>
+                        <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
+                          <textarea
+                          name="accion"
+                          cols="30"
+                          rows="5"
+                          placeholder="Plan de accion..."
+                          disabled>{{ old('comments', $resultado->Comentario) }}</textarea>
+                        </div>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-img-segmento">
+                                Ver Imagen
+                          </button>
+                        </td>
+                        <td>
+                          <form action="{{ route('admin.resultados.update', $resultado->Id) }}"
+                          method="POST" style="display: inline;">
+                          @csrf
+                          @method('PUT')
+                            <select class="form-control" name="Aprobado" id="Aprobado">
+                              <option value="0">No</option>
+                              <option {{ $resultado->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                            </select>
+                              <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
+
+                          </form>
+                        </td>
+                    </tr>
                     @endforeach
+                     @endforeach
                   </tbody>
                 </table>
               </div>
@@ -94,8 +77,7 @@
             <!-- /.card -->
           </div>
         </div>
-          <a href="{{ route('admin.segmentos.status') }}"
-          class="btn btn-danger float-right">Ver Estado</a>
+
         </div>
       </div>
     </div>
@@ -114,11 +96,9 @@
           <span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-        @if (empty($question->photo))
-        <p>Sin Imagen...</p>
-        @else
-        <p class="text-center"><img src="{{ url('/'.$question->photo) }} " alt="{{ $question->question ?? ''  }}"> </p>
-        @endif
+        @foreach ($question->resultados  as $resultado)
+        <p class="text-center"><img width="250px" src="{{ $resultado->Foto }} " alt="{{ $resultado->question ?? ''  }}"> </p>
+        @endforeach
       </div>
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>

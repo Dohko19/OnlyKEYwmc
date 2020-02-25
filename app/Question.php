@@ -14,13 +14,13 @@ class Question extends Model
 
     public $timestamps = false;
 
-    public function segmentos()
+    public function resultados()
     {
-    	return $this->belongsToMany(Segmento::class, 'ResultadoAuditoria');
+        return $this->hasMany(ResultadoAuditoria::class, 'IdPregunta');
     }
 
-    public function auditorias()
+    public function segmentos()
     {
-    	return $this->belongsToMany(Auditoria::class, 'ResultadoAuditoria');
+    	return $this->belongsTo(Auditoria::class, 'IdSegmentoAuditoria');
     }
 }

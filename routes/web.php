@@ -1,5 +1,8 @@
 <?php
 Auth::routes(['register' => false]);
+
+Route::group(['middleware' => 'auth'], function(){
+
 Route::get('planes', 'HomeController@planes')->name('pages.planes');
 Route::get('/', 'Admin\AdminController@index')->name('home.index');
 Route::get('consultareporte', 'Admin\AdminController@index')->name('reporte');
@@ -9,7 +12,10 @@ Route::get('/region/{id}', 'Admin\AdminController@region')->name('home.region');
 // Exports
 Route::get('exports', 'ExportsViewsController@index')->name('exports.home');
 Route::get('exports/download', 'ExportsViewsController@export')->name('exports.export');
+Route::get('exports/pdf', 'ExportsViewsController@viewpdf')->name('exports.pdf');
 //endExports
+
+});
 
 Route::group([
 	'prefix' => 'admin',
@@ -25,6 +31,7 @@ Route::group([
 		Route::resource('gruposm', 'GruposMarcasController', ['as' => 'admin']);
 		Route::resource('auditorias', 'AuditoriasController', ['as' => 'admin']);
 		Route::resource('roles', 'RolesController', ['except' => 'show', 'as' => 'admin']);
+		Route::resource('resultados', 'ResultadoAuditoriaController', ['except' => 'show', 'index', 'create', 'delete', 'edit', 'as' => 'admin']);
 		Route::resource('permissions', 'PermissionsController', ['only' => ['index', 'edit', 'update'], 'as' => 'admin']);
 
 		Route::get('/status', 'SegmentosController@status', ['as' => 'admin'])->name('admin.segmentos.status');

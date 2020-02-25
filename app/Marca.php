@@ -34,7 +34,6 @@ class Marca extends Model
         return $this->hasMany(Sucursal::class);
     }
 
-
     //query scopes
     public function scopeAllowed($query)
     {
