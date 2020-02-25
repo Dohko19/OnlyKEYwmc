@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
 use App\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Excel;
 use Spatie\Permission\Models\Permission;
-use App\Http\Requests\UpdateUserRequest;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
