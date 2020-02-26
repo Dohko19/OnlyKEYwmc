@@ -25,7 +25,6 @@ class ExportsViewsController extends Controller
 
     public function viewpdf(Request $request)
     {
-        if(request()->ajax()){
         $from = Carbon::parse(request('desdep'))->format('Y-m-d');
         $to = Carbon::parse(request('hastap'))->endOfMonth();
         $zr = request('zrp');
@@ -37,7 +36,8 @@ class ExportsViewsController extends Controller
                     $query->whereBetween('created_at', [$from, $to]);
                 })
                 ->get();
-            return response()->json($dates->toArray());
+        if(request()->ajax()){
+            return response()->json($dates);
         }//procesa la peticion ajax
         else
         {

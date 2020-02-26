@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\User;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class UsersImport implements ToModel
@@ -16,7 +17,17 @@ class UsersImport implements ToModel
     {
         return new User([
             'name' => $row[0],
+            'email' => $row[1],
             'password' => \Hash::make('123123'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => 'string|unique:users'
+        ];
     }
 }

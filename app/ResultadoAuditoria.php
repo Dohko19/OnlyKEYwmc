@@ -19,11 +19,11 @@ class ResultadoAuditoria extends Model
 
     public function segmentos()
     {
-    	return $this->belongsTo(Segmento::class, 'IdSegmentoAuditoria');
+    	return $this->belongsTo(Segmento::class, 'IdSegmento');
     }
 
     public function questions()
     {
-        return $this->belongsTo(Question::class, 'IdPreguntaSegmentoAuditoria');
+        return $this->belongsTo(Question::class, 'IdPregunta');
     }
 }

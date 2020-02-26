@@ -29,7 +29,7 @@ class AdminController extends Controller
         //     $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
         //     return view('admin.dashboard', compact('sucursales'));
         // }
-        if (auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal')) {
+        if (auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional')) {
             $sucursales = User::with(['sucursals'])
                 ->findOrFail(auth()->user()->id);
             return view('admin.dashboard', compact('sucursales'));

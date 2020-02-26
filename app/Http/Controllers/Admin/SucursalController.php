@@ -20,7 +20,7 @@ class SucursalController extends Controller
     {
         if(auth()->user()->hasRole('Admin'))
         {
-            $sucursales = User::with('sucursals')->get();
+            $sucursales = Sucursal::get();
             return view('admin.sucursales.index', compact('sucursales'));
         }
         $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
@@ -57,7 +57,6 @@ class SucursalController extends Controller
             'ciudad' => 'min:1|string',
             'IdCte' => 'min:1|numeric',
             'zone' => 'required|min:3',
-            'phone' => 'numeric',
             'region' => 'required|min:3',
             'marca_id' => 'required',
         ]);
@@ -109,13 +108,12 @@ class SucursalController extends Controller
             'IdCte' => 'min:1|numeric',
             'users' => 'required',
             'zone' => 'required|min:3',
-            'phone' => 'numeric',
             'region' => 'required|min:3',
             'marca_id' => 'required',
         ]);
 
-        $sucursal = Sucursal::update($request->except('users'));
-        $sucursal->users()->sync($request->get('users'));
+        $sucursale->update($request->except('users'));
+        $sucursale->users()->sync($request->get('users'));
         return redirect()->route('admin.sucursales.index')->with('info', 'Agregado Correctamente');
     }
 

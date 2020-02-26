@@ -10,7 +10,7 @@
   <div class="container-fluid">
     <h5 class="mb-2">Bienvenido {{ Auth::user()->name }} | WMC</h5>
     @if (auth()->user()->hasRole('dmarca'))
-	@elseif(auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal'))
+	@elseif(auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional'))
 	@foreach ($sucursales->sucursals as $sucursale)
 		<div class="row justify-content-center align-items-center minh-100" >
 			<div class="col-md-3 col-sm-6 col-12">

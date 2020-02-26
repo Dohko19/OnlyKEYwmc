@@ -129,8 +129,8 @@
                           <label>Selecciona a los usuarios quienes pueden ver esta sucursal</label>
                           <select name="users[]" class="duallistbox" multiple="multiple">
                             @foreach ($users as $user)
-                              <option value="{{ $user->id }}">{{ $user->name }}/ {{ $user->email }}</option>
-                              <option {{ collect(old('users', $sucursale->users->pluck('id')))->contains($user->id) ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option></option>
+                              <option
+                               {{ collect(old('users', $sucursale->users->pluck('id')))->contains($user->id) ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name}}/{{ $user->email ?? 'no email' }} </option></option>
                             @endforeach
                           </select>
                         </div>

@@ -19,8 +19,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        // $this->authorize('view', new User);
-        $users = User::allowed()->get();
+        $this->authorize('view', new User);
+        $users = User::allowed()->paginate();
 
         return view('admin.users.index', compact('users'));
     }
@@ -86,7 +86,7 @@ class UsersController extends Controller
     {
         $this->authorize('update', $user);
         $roles = Role::with('permissions')->get();
-        $permissions = Permission::pluck('name','id');
+        $permissions = Permission::pluck('name','id', 'display_name');
         return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 

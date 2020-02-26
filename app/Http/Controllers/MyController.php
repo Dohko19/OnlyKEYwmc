@@ -29,8 +29,8 @@ class MyController extends Controller
     */
     public function import()
     {
-        Excel::import(new UsersImport,request()->file('file'));
+        Excel::import(new UsersImport, 'zona.xlsx');
 
-        return back();
+         return redirect('/')->with('success', 'File imported successfully!');
     }
 }

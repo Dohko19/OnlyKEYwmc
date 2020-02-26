@@ -1,12 +1,9 @@
 <?php
 Auth::routes(['register' => false]);
 
-
-Route::get('export', 'MyController@export')->name('export');
-Route::get('importExportView', 'MyController@importExportView');
-Route::post('import', 'MyController@import')->name('import');
-
-
+// Route::get('export', 'MyController@export')->name('export');
+// Route::get('importExportView', 'MyController@importExportView');
+// Route::get('import', 'MyController@import')->name('import');
 
 Route::group(['middleware' => 'auth'], function(){
 

@@ -63,7 +63,7 @@
 		</div>
 	</div>
 </div>
-<div class="container-fluid">
+<div id="reporte" class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 col-lg-12">
 			<div class="card card-primary card-outline">
@@ -145,6 +145,7 @@
 		</div>
 	</div>
 </div>
+
 @endsection
 @push('styles')
 	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/datepicker/datepicker3.css') }}">
@@ -152,6 +153,7 @@
   	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 @endpush
 @push('scripts')
+	{{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 	<script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 	<script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
 <script type="text/javascript">
@@ -165,7 +167,7 @@
 		  	 	type: 'GET',
 		  	 	headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		  	 	data: dataString,
-		         success: function(data){
+		        success: function(data){
 		         	var valor = ''
 		         	data.forEach(data => {
 		            valor += '<tr>' +
@@ -189,7 +191,7 @@
 
 		        });
 		  	});
-  	   });
+  	});
 </script>
 
 <script>
