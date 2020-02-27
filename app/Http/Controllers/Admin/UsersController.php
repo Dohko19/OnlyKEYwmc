@@ -20,7 +20,7 @@ class UsersController extends Controller
     public function index()
     {
         $this->authorize('view', new User);
-        $users = User::allowed()->paginate();
+        $users = User::allowed()->get();
 
         return view('admin.users.index', compact('users'));
     }
@@ -99,7 +99,7 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-         $this->authorize('update', $user);
+        $this->authorize('update', $user);
         $user->update( $request->validated() );
         return redirect()->route('admin.users.edit', $user)->withSuccess('Usuario Actualizado');
     }

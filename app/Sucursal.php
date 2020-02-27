@@ -21,6 +21,11 @@ class Sucursal extends Model
     	return $this->hasMany(Segmento::class, 'IdSegmentoAuditoria');
     }
 
+    public function audres()
+    {
+        return $this->hasMany(Aresult::class);
+    }
+
     public function qresults()
     {
         return $this->hasMany(Qresults::class);

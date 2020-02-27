@@ -41,21 +41,20 @@
 			                  <td>{{ $sucursale->region }}</td>
 			                  <td>{{ optional($sucursale)->created_at->format('Y-m-d') }}</td>
 			                  <td>
-			                  	@can('view', $sucursale)
+			                  {{-- 	@can('view', $sucursale)
 				                <a class="btn" href="{{ route('admin.sucursales.show', $sucursale) }}" style="color: blue;"><i class="far fa-eye"></i></a>
-				                @endcan
+				                @endcan --}}
 			                  	@can('update', $sucursale)
 				                <a class="btn" href="{{ route('admin.sucursales.edit', $sucursale) }}" style="color: blue;"><i class="far fa-edit"></i></a>
 				                @endcan
-
 				                @can('delete', $sucursale)
-			                  	<form action="{{ route('admin.sucursales.destroy', $sucursale) }}" method="POST" style="display: inline">
-	                        		@csrf
-	                        		@method('DELETE')
-				                  	<button class="btn "
-				                  	onclick="return confirm('Estas seguro de Eliminar este Usuario?')"
-				                  	><i class="fas fa-trash" style="color: red"></i></button>
-		                        </form>
+				                  	<form action="{{ route('admin.sucursales.destroy', $sucursale) }}" method="POST" style="display: inline">
+		                        		@csrf
+		                        		@method('DELETE')
+					                  	<button class="btn "
+					                  	onclick="return confirm('Estas seguro de Eliminar este Usuario?')"
+					                  	><i class="fas fa-trash" style="color: red"></i></button>
+			                        </form>
 		                        @endcan
 			                  </td>
 	                		</tr>

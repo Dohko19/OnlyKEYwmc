@@ -37,8 +37,36 @@
                     <div class="">
                       <input type="text"
                         class="form-control @error('name') is-invalid @else @enderror"
-                        placeholder="Nombre de usuario..." name="name" value="{{ $user->name }}">
+                        placeholder="Nombre de usuario..." name="name" value="{{ old('name', $user->name) }}">
                         @error('name')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="" class="col-form-label">Apellidos</label>
+                    <small>*</small>
+                    <div class="">
+                      <input type="text"
+                        class="form-control @error('lastname') is-invalid @else @enderror"
+                        placeholder="Apellidos..." name="lastname" value="{{ old('lastname', $user->phone) }}">
+                        @error('lastname')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="" class="col-form-label">Telefono</label>
+                    <small>*</small>
+                    <div class="">
+                      <input type="number"
+                        class="form-control @error('phone') is-invalid @else @enderror"
+                        placeholder="Telefono..." name="phone" value="{{ old('phone', $user->phone) }}">
+                        @error('phone')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
                           </span>
@@ -56,6 +84,7 @@
                      @enderror
                     </div>
                   </div>
+
                   <div class="form-group ">
                     <label for="" class="col-form-label">Contraseña</label>
                     <div class="">

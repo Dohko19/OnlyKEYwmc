@@ -53,7 +53,9 @@
                       id="description"
                       cols="10"
                       rows="5"
-                      class="form-control" >{{ old('description', $gruposMarca->description) }}</textarea>
+                      class="form-control"
+                      placeholder="Esta Parte es opcional">{{ old('description', $gruposMarca->description) }}</textarea>
+                      <small class="text-muted">Opcional</small>
                       @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -81,8 +83,8 @@
                         @enderror
                   </div>
                   <div class="form-group">
-                    <label>Marca a la que pertenece</label>
-                    <select name="user_id" class="form-control select2" style="width: 100%;" required>
+                    <label>Nombre del Gerente General en curso</label>
+                    <select name="user_id" class="form-control select2bs4" style="width: 100%;" required>
                       @foreach ($users as $user)
                         <option value="{{ $user->id }}"
                           {{ old('user_id', $gruposMarca->user_id) == $user->id ? 'selected' : ''}}>{{ $user->name }}</option>
@@ -96,9 +98,9 @@
                   </div>
                   <div class="form-group">
                     <label>En esta Marca se realizara:</label>
-                    <select name="tipo" class="form-control select2" style="width: 100%;" required>
-                        <option value="auditorias">Auditorias</option>
-                        <option value="cuestionarios">Cuestionarios</option>
+                    <select disabled name="tipo" class="form-control select2" style="width: 100%;" required>
+                        <option {{ old('tipo', $gruposMarca->tipo) == 'auditorias' ? 'selected' : ''}} value="auditorias">Auditorias</option>
+                        <option {{ old('tipo', $gruposMarca->tipo) == 'cuestionarios' ? 'selected' : ''}} value="cuestionarios">Cuestionarios</option>
                     </select>
                     <small>*Verificar este campo</small>
                         @error('user_id')

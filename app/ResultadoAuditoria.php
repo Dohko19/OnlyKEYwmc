@@ -19,7 +19,7 @@ class ResultadoAuditoria extends Model
 
     public function segmentos()
     {
-    	return $this->belongsTo(Segmento::class, 'IdSegmento');
+    	return $this->belongsTo(Segmento::class, 'IdSegmentoAuditoria');
     }
 
     public function questions()

@@ -100,14 +100,13 @@ class MarcaController extends Controller
             ->where('marca_id', '=', $marca->id)
             ->orderBy('puntuacion_total', 'DESC')
             ->get();
-            $resultados = ResultadoAuditoria::with(['auditorias', 'segmentos', 'questions'])
-            ->join('sucursals as suc', 'ResultadoAuditoria.IdCte', '=', 'suc.IdCte')
-            ->get();
-            ddd($resultados);
+            // ddd($sucursales);
 
 
             return view('admin.marcas.show', compact('marca', 'sucursales'));
         }
+
+
         $graphics = $request->get('graphics') ? $request->get('graphics') : Carbon::now()->format('Y-m-d');
         $dm = $request->get('delegacion_municipio') ? $request->get('delegacion_municipio') : request('dm') ;
 

@@ -24,14 +24,14 @@ class Segmento extends Model
     	return $this->hasMany(Question::class, 'IdSegmento');
     }
 
-	public function sucursals()
-	{
-		return $this->belongsTo(Sucursal::class, 'sucursal_id');
-	}
+	// public function sucursals()
+	// {
+	// 	return $this->belongsTo(Sucursal::class, 'sucursal_id');
+	// }
 
     public function resultados()
     {
-        return $this->belongsToMany(ResultadoAuditoria::class, 'IdSegmento');
+        return $this->hasMany(ResultadoAuditoria::class, 'IdSegmento');
     }
 
     public function scopeAllowed($query)

@@ -25,9 +25,9 @@
               <a class="text-center" href="{{ route('admin.auditorias.index') }}">Ver Planes de Acción</a></p>
 						</div>
             <div class="col-md-3">
-                <label for="graphic">Filtro por Fecha</label>
+              <label for="graphic">Filtro por Fecha</label>
               <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
-                <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off">
+                <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" value="{{ request('graphics') }}">
                 <button type="submit" class="btn btn-default">
                     <i class="fas fa-search"></i>
                 </button>
@@ -61,7 +61,7 @@
   <script src="http://code.highcharts.com/modules/exporting.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
-{{-- <script>
+<script>
 Highcharts.chart('container', {
   chart: {
     type: 'column',
@@ -147,7 +147,7 @@ Highcharts.chart('container', {
         @foreach ($sucursales as $sucursale)
           {
             name: "{{ $sucursale->name }}",
-            y: 1, //calificacion en general
+            y: 12, //calificacion en general
             drilldown: "{{ $sucursale->name }}"
           },
           @endforeach
@@ -177,8 +177,8 @@ Highcharts.chart('container', {
       ]
     }
   });
-</script> --}}
-<script>
+</script>
+{{-- <script>
   Highcharts.chart('container', {
   chart: {
     type: 'column'
@@ -464,51 +464,7 @@ Highcharts.chart('container', {
     ]
   }
 });
-</script>
-
-<script>
-  $(function () {
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
-
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-
-    var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label               : 'Digital Goods',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
-        },
-        {
-          label               : 'Electronics',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
-        },
-      ]
-    }
-
-</script>
+</script> --}}
 <script>
   $('#datepicker').datepicker({
         autoclose: true,

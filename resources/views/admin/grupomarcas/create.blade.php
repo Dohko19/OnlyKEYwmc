@@ -52,7 +52,8 @@
                       id="description"
                       cols="10"
                       rows="5"
-                      class="form-control" >{{ old('description') }}</textarea>
+                      class="form-control"
+                      placeholder="Campo opcional...">{{ old('description') }}</textarea>
                       @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -80,7 +81,7 @@
                         @enderror
                   </div>
                   <div class="form-group">
-                    <label>Pertece al usurio</label>
+                    <label>Nombre del Gerente General en curso</label>
                     <select name="user_id" class="form-control select2" style="width: 100%;" required>
                       @foreach ($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>

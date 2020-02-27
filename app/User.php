@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'phone', 'lastname', 'email', 'password',
     ];
 
     /**
@@ -67,10 +67,10 @@ class User extends Authenticatable
             return $query->where('id', auth()->id());
     }
 
-    public function auditorias()
-    {
-        return $this->belongsToMany(Auditoria::class, 'auditoria_user', 'auditoria_id', 'user_id');
-    }
+    // public function auditorias()
+    // {
+    //     return $this->belongsToMany(Auditoria::class, 'auditoria_user', 'auditoria_id', 'user_id');
+    // }
 
     // public function syncAuditors($tags)
     // {

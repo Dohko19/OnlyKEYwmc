@@ -49,9 +49,7 @@
                         </div>
                         </td>
                         <td>
-                          <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-img-segmento">
-                                Ver Imagen
-                          </button>
+                          <img src="{{ $resultado->Foto }}" width="150px" alt="">
                         </td>
                         <td>
                           <form action="{{ route('admin.resultados.update', $resultado->Id) }}"
