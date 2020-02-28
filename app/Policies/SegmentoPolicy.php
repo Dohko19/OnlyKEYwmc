@@ -30,7 +30,7 @@ class SegmentoPolicy
      */
     public function view(User $user, Segmento $segmento)
     {
-        return $user->hasRole('Admin') || $user->hasPermissionTo('View segmentos');
+        return $user->hasRole('asesor') || $user->hasPermissionTo('View segmentos') || $user->hasRole('Admin');
     }
 
     /**

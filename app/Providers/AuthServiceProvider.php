@@ -19,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\GrupoMarca' => 'App\Policies\GrupoMarcaPolicy',
         'Spatie\Permission\Models\Role' => 'App\Policies\RolePolicy',
         'Spatie\Permission\Models\Permission' => 'App\Policies\PermissionPolicy',
-        'App\Segmento' => 'App\Policies\SegmentoPolicy'
+        'App\Segmento' => 'App\Policies\SegmentoPolicy',
+        'App\Auditoria' => 'App\Policies\AuditoriaPolicy'
     ];
 
     /**

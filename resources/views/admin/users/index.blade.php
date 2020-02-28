@@ -21,7 +21,6 @@
 		                  <th>Nombre</th>
 		                  <th>Email</th>
 		                  <th>Creado el:</th>
-		                  <th>Auditando:</th>
 		                  <th>Acciones</th>
 		                </tr>
 	                </thead>
@@ -33,11 +32,6 @@
 			                  <td>{{ $user->name }}</td>
 			                  <td>{{ $user->email }}</td>
 			                  <td>{{ $user->created_at->format('d/m/Y') }}</td>
-			                  @forelse ($user->auditorias as $auditoria)
-			                  <td><b>{{ $auditoria->NombreAuditoria }}</b></td>
-			                  @empty
-			                  <td>No Aplica</td>
-			                  @endforelse
 			                  <td>
 			                  	@can('update', $user)
 				                <a class="btn" href="{{ route('admin.users.edit', $user) }}" style="color: blue;"><i class="far fa-edit"></i></a>

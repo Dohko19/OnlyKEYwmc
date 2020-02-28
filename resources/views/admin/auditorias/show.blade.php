@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="row">
-    @foreach ($auditoria->segmentos as $segmento)
+    @foreach ($auditorias as $segmento)
       <div class="col-md-4">
         <div class="card card-outline card-primary">
           <div class="card-header">
@@ -27,7 +27,8 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <a href="{{ route('admin.segmentos.show', $segmento) }}">Mas Informacion...</a>
+            <p>Fecha de Registro: <b>{{ $segmento->FechaRegistro }}</b> </p>
+            <a href="{{ route('admin.segmentos.show', ['segmento' => $segmento->IdSegmentoAuditoria]) }}">Mas Informacion...</a>
           </div>
           <!-- /.card-body -->
         </div>

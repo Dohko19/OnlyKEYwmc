@@ -20,7 +20,6 @@
           <div class="small-box bg">
             <div class="inner">
               <h6 class="text-left"><b>{{ $auditoria->NombreAuditoria }}</b></h6>
-
               <p>Ultimo cambio el: someFecha</p>
               <p>De la sucursal:</p>
             </div>
@@ -28,7 +27,7 @@
               <i class="fas fa-angle-right"></i>
             </div>
             <a style="color: white; background-color: #5882fa" }
-            href="{{ route('admin.auditorias.show', $auditoria) }}" class="small-box-footer">
+            href="{{ route('admin.auditorias.show', $auditoria->IdAuditoria) }}" class="small-box-footer">
               Mas informacion  <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>

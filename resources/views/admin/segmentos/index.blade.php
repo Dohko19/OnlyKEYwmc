@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Key | Panel de Accion')
-@section('headertitle', 'Sin datos')
+@section('headertitle', '')
 @section('content')
 <!-- Default box -->
 <div class="card">

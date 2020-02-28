@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Marca;
 use App\PlanesAccion;
+use App\ResultadoAuditoria;
 use App\Segmento;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SegmentosController extends Controller
@@ -15,46 +18,18 @@ class SegmentosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-                    return view('admin.segmentos.index',[
-                        'segmentos' => Segmento::all(),
-                    ]);
-            return redirect()->route('admin.index')->withInfo('Debes pertencer a un grupo de marca o una marca para poder ver esta seccion');
-    }
+    // public function index(Request $request)
+    // {
+    //     if(auth()->user()->hasRole('Admin'))
+    //     {
+    //                 return view('admin.segmentos.index',[
+    //                     'segmentos' => Segmento::all(),
+    //                 ]);
 
-    public function status()
-    {
-        //  $marca = Marca::existe()->count();
-        // if($marca)
-        // {
-            return view('admin.segmentos.status',[
-                'segmentos' => Segmento::allowed()->get(),
-            ]);
-        // }
-            return redirect()->route('admin.index')->withInfo('Debes pertencer a un grupo de marca o una marca para poder ver esta seccion');
-    }
+    //     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-       //
-    }
+    //         return redirect()->route('admin.index')->withInfo('Debes pertencer a un grupo de marca o una marca para poder ver esta seccion');
+    // }
 
     /**
      * Display the specified resource.
@@ -62,49 +37,23 @@ class SegmentosController extends Controller
      * @param  \App\Segmento  $segmento
      * @return \Illuminate\Http\Response
      */
-    public function show(Segmento $segmento)
+    public function show(Request $request, Segmento $segmento)
     {
-        // $segmento = Segmento::with('questions')->get();
-        return view('admin.segmentos.show', compact('segmento'));
-    }
+        $this->authorize('view', $segmento);
+        $fil = $request->get('FechaRegistro') ? $request->get('FechaRegistro') : request('FechaRegistro');
+        $fil = Carbon::parse($fil)->format('Y-m');
+        $segmento1 = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+        ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
+        ->join('PreguntasAuditoria as p', 'p.IdPreguntaSegmentoAuditoria', '=', 'r.IdPregunta')
+        ->select('p.*', 'r.*')
+        ->where('users.id', '=', auth()->user()->id)
+        ->where('p.IdSegmento', '=', $segmento->IdSegmentoAuditoria)
+        ->where('FechaRegistro', 'LIKE', "%".$fil."%")
+        ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Segmento  $segmento
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Segmento $segmento)
-    {
-        return view('admin.segmentos.edit', compact('segmento'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Segmento  $segmento
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Segmento $segmento)
-    {
-        //
-    }
-
-    public function approved(Request $request, Segmento $segmento)
-    {
-        // return $request;
-        $segmento->update($request->only('approved'));
-        if($request->approved = 1)
-        {
-            $segmento->puntuacion = "100";
-            $segmento->save();
-        }
-        elseif($request->approved = 0)
-        {
-            $segmento->puntuacion = "70";
-            $segmento->save();
-        }
-        return redirect()->back()->withInfo('Cambios realizados');
+        // $segmento1 = Segmento::get();
+            // ddd($segmento1);
+        return view('admin.segmentos.show', compact('segmento', 'segmento1'));
     }
 }

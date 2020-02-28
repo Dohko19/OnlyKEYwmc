@@ -127,7 +127,7 @@ class MarcaController extends Controller
             ->where('sucursals.region', 'LIKE', "%".$zona."%")
             ->orderBy('q.RI', 'ASC')
             ->get()->toArray();
-            // ddd($ri);
+            ddd($ri);
             $c = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.C')
             ->where('sucursals.marca_id', $marca->id)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Auditoria;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 
 class AuditoriasController extends Controller
@@ -15,32 +16,17 @@ class AuditoriasController extends Controller
      */
     public function index()
     {
-        return view('admin.auditorias.index', [
-            'auditorias' => Auditoria::all()
-        ]);
+        $this->authorize('view', new Auditoria);
+        $auditorias = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+        ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
+        ->join('Auditorias as a', 'a.IdAuditoria', '=', 'r.IdAuditoria')
+        ->select('a.*', 'r.*')
+        ->groupBy('a.IdAuditoria')
+        ->where('users.id', '=', auth()->user()->id)
+        ->get();
+        return view('admin.auditorias.index', compact('auditorias'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -49,40 +35,18 @@ class AuditoriasController extends Controller
      */
     public function show(Auditoria $auditoria)
     {
-       return view('admin.auditorias.show', compact('auditoria'));
-    }
+        $this->authorize('view', new Auditoria);
+        $auditorias = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+        ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
+        ->join('SegmentosAuditoria as sa', 'sa.IdAuditoria', '=', 'r.IdSegmento')
+        ->select('sa.*', 'r.*')
+        ->groupBy('sa.IdSegmentoAuditoria')
+        ->where('users.id', '=', auth()->user()->id)
+        ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Auditoria  $auditoria
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Auditoria $auditoria)
-    {
-        //
-    }
+        // ddd($auditorias);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Auditoria  $auditoria
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Auditoria $auditoria)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Auditoria  $auditoria
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Auditoria $auditoria)
-    {
-        //
+       return view('admin.auditorias.show', compact('auditoria', 'auditorias'));
     }
 }

@@ -33,7 +33,7 @@
               <p>Reporte</p>
             </a>
           </li>
-          @can('view', new App\Segmento)
+          @can('view', new App\Auditoria)
             <li class="nav-item">
               <a href="{{ route('admin.auditorias.index') }}" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
                 <i class="nav-icon far fa-clipboard"></i>

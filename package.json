@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@popperjs/core": "^2.0.2"
+        "@popperjs/core": "^2.0.2",
+        "vue-router": "^3.1.6"
     }
 }

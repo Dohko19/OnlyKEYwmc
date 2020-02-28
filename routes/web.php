@@ -36,6 +36,7 @@ Route::group([
 		Route::resource('auditorias', 'AuditoriasController', ['as' => 'admin']);
 		Route::resource('roles', 'RolesController', ['except' => 'show', 'as' => 'admin']);
 		Route::resource('resultados', 'ResultadoAuditoriaController', ['except' => 'show', 'index', 'create', 'delete', 'edit', 'as' => 'admin']);
+
 		Route::resource('permissions', 'PermissionsController', ['only' => ['index', 'edit', 'update'], 'as' => 'admin']);
 
 		Route::get('/status', 'SegmentosController@status', ['as' => 'admin'])->name('admin.segmentos.status');
