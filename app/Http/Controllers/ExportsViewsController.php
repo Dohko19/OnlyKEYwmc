@@ -21,7 +21,7 @@ class ExportsViewsController extends Controller
 
      public function export()
     {
-    	return (new DetailsExport)->download('ReporteChecklist-'.Carbon::now()->format('d-m-Y').'.xls');
+    	return (new DetailsExport)->download('ReporteChecklist-'.Carbon::now()->format('d-m-Y').'.xlsx');
     }
 
     public function viewpdf(Request $request)

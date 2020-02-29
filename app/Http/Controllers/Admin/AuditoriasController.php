@@ -33,15 +33,17 @@ class AuditoriasController extends Controller
      * @param  \App\Auditoria  $auditoria
      * @return \Illuminate\Http\Response
      */
-    public function show(Auditoria $auditoria)
+    public function show(Request $request, Auditoria $auditoria)
     {
         $this->authorize('view', new Auditoria);
+        $fecha = $request->get('FechaRegistro');
         $auditorias = User::join('marcas as m', 'm.user_id', '=', 'users.id')
         ->join('sucursals as s', 's.marca_id', '=', 'm.id')
         ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
         ->join('SegmentosAuditoria as sa', 'sa.IdAuditoria', '=', 'r.IdSegmento')
         ->select('sa.*', 'r.*')
         ->groupBy('sa.IdSegmentoAuditoria')
+        ->where('r.FechaRegistro', 'LIKE', "%".$fecha."%")
         ->where('users.id', '=', auth()->user()->id)
         ->get();
 

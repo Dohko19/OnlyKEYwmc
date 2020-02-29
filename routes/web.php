@@ -12,6 +12,7 @@ Route::get('/', 'Admin\AdminController@index')->name('home.index');
 Route::get('consultareporte', 'Admin\AdminController@index')->name('reporte');
 
 Route::get('/region/{id}', 'Admin\AdminController@region')->name('home.region');
+Route::get('/region/{id}', 'Admin\AdminController@cedula')->name('home.cedula');
 
 // Exports
 Route::get('exports', 'ExportsViewsController@index')->name('exports.home');
@@ -29,6 +30,7 @@ Route::group([
 		Route::get('/', 'AdminController@index')->name('admin.index');
 		Route::resource('users', 'UsersController', ['as' => 'admin']);
 		Route::resource('marcas', 'MarcaController', ['as' => 'admin']);
+		Route::get('marcas/{marca}', 'MarcaController@showcedula', ['as' => 'admin'])->name('admin.marcas.showcedula');
 		Route::resource('sucursales', 'SucursalController', ['as' => 'admin']);
 		Route::resource('questions', 'QuestionsController', ['as' => 'admin']);
 		Route::resource('segmentos', 'SegmentosController', ['as' => 'admin']);

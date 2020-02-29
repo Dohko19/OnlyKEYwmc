@@ -15,6 +15,6 @@ class Aresult extends Model
 
     public function segmentos()
     {
-    	return $this->belongsTo(Segmento::class);
+    	return $this->belongsTo(Segmento::class, 'IdSegmentoAuditoria');
     }
 }

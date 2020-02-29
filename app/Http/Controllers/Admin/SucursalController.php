@@ -56,8 +56,6 @@ class SucursalController extends Controller
             'name' => 'min:3|string',
             'ciudad' => 'min:1|string',
             'IdCte' => 'min:1|numeric',
-            'zone' => 'required|min:3',
-            'region' => 'required|min:3',
             'marca_id' => 'required',
         ]);
         $this->authorize('create', new Sucursal);

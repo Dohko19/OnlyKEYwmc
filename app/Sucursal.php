@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sucursal extends Model
 {
 	protected $fillable = [
-		'name', 'marca_id', 'ciudad', 'IdCte', 'delegacion_municipio', 'phone', 'zone', 'region'
+		'name', 'marca_id', 'ciudad', 'IdCte', 'delegacion_municipio', 'phone', 'zone', 'region', 'cedula'
 	];
 
     public function marcas()

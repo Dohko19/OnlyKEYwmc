@@ -3,8 +3,19 @@
 @section('headertitle', 'Listado de Segmentos')
 @section('header')
 @section('content')
+
 <!-- Default box -->
 <div class="card">
+  <div class="col-md-12">
+    <form action="" method="GET" class="float-right">
+      <div class="form-group">
+        <label for="FechaRegistro">Selecciona Año y Mes</label>
+        <input class="form-control" id="datepicker" type="text" name="FechaRegistro" placeholder="Año y mes (YYY-mm)">
+        <button class="btn btn-info">Consultar</button>
+      </div>
+    </form>
+  </div>
+
   <div class="card-header">
     <h3 class="card-title"><b>{{ $auditoria->NombreAuditoria }}</b></h3>
 
@@ -42,3 +53,18 @@
 </div>
 <!-- /.card -->
 @endsection
+@push('styles')
+  <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datepicker/datepicker3.css') }}">
+@endpush
+@push('scripts')
+<script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+<script>
+  $('#datepicker').datepicker({
+        autoclose: true,
+        language: 'es',
+        format: 'yyyy-mm',
+        viewMode: "months",
+        minViewMode: "months"
+    });
+</script>
+@endpush

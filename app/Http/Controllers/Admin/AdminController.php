@@ -41,17 +41,20 @@ class AdminController extends Controller
 
                 return view('admin.dashboard');
         }
+        // abort(500);
     }
 
     public function region($id)
     {
         if (!auth()->user()->hasRole('Admin'))
         {
+            $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
              $sucursales = User::with(['sucursals' => function($query){
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('delegacion_municipio dm');
                 $query->selectRaw('region r');
+                $query->selectRaw('cedula c');
                 $query->selectRaw('count(*) sucursals');
                 $query->groupBy('region');
                 $query->orderBy('region');
@@ -62,8 +65,22 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 
-    public function consultareporte(Request $request)
+    public function cedula($id)
     {
-        //
+        if (!auth()->user()->hasRole('Admin'))
+        {
+            $this->authorize('view', new Sucursal);
+            $marca = Marca::findOrFail($id);
+             $sucursales = User::with(['sucursals' => function($query){
+                $query->selectRaw('marca_id m');
+                $query->selectRaw('cedula c');
+                $query->selectRaw('count(*) sucursals');
+                $query->groupBy('cedula');
+                $query->orderBy('cedula');
+            }, 'grupos'])
+                ->findOrFail(auth()->user()->id);
+                return view('admin.pages.cedula', compact('sucursales', 'marca'));
+        }
+        return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 }

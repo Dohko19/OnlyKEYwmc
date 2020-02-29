@@ -18,6 +18,7 @@ class CreateAresultsTable extends Migration
             $table->unsignedInteger('sucursal_id');
             $table->Integer('IdCedula');
             $table->Integer('IdSegmentoAuditoria');
+            $table->Integer('Promedio');
             $table->timestamps();
         });
     }

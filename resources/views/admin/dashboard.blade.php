@@ -10,6 +10,7 @@
   <div class="container-fluid">
     <h5 class="mb-2">Bienvenido {{ Auth::user()->name }} | WMC</h5>
     @if (auth()->user()->hasRole('dmarca'))
+    {{--  --}}
 	@elseif(auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional'))
 	@foreach ($sucursales->sucursals as $sucursale)
 		<div class="row justify-content-center align-items-center minh-100" >
@@ -27,7 +28,7 @@
 	        	</div>
 		          @if ($sucursale->marcas->grupos->tipo == 'auditorias')
 		          @if ($sucursale->marcas->puntuacion_general >= 90)
-				          	<a href="{{ route('admin.marcas.show', $sucursale->marcas) }}"
+				          	<a href="{{ route('home.region', $sucursale->marcas) }}"
 				          	class="btn btn-sm btn-success small-box-footer">
 				          		<i class="fas fa-star"></i> Calificacion de Limpieza:
 				          	 <u>
@@ -35,7 +36,7 @@
 				          	 </u>
 				          	</a>
 			          	@elseif($sucursale->marcas->puntuacion_general >= 70)
-				          	<a href="{{ route('admin.marcas.show', $sucursale->marcas) }}"
+				          	<a href="{{ route('home.region', $sucursale->marcas) }}"
 				          	class="btn btn-sm btn-warning small-box-footer">
 				          		<i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
 				          	 <u>
@@ -43,7 +44,7 @@
 				          	 </u>
 				          	</a>
 				        @elseif($sucursale->marcas->puntuacion_general < 70)
-				          	<a href="{{ route('admin.marcas.show', $sucursale->marcas) }}"
+				          	<a href="{{ route('home.region', $sucursale->marcas) }}"
 				          	class="btn btn-sm btn-danger small-box-footer">
 				          		<i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
 				          	 <u>
@@ -74,7 +75,7 @@
 					        	</div>
 						          @if ($marca->grupos->tipo == 'auditorias')
 						          @if ($marca->puntuacion_general >= 90)
-								          	<a href="{{ route('admin.marcas.show', $marca) }}"
+								          	<a href="{{ route('home.cedula', $marca) }}"
 								          	class="btn btn-sm btn-success small-box-footer">
 								          		<i class="fas fa-star"></i> Calificacion de Limpieza:
 								          	 <u>
@@ -82,7 +83,7 @@
 								          	 </u>
 								          	</a>
 							          	@elseif($marca->puntuacion_general >= 70)
-								          	<a href="{{ route('admin.marcas.show', $marca) }}"
+								          	<a href="{{ route('home.cedula', $marca) }}"
 								          	class="btn btn-sm btn-warning small-box-footer">
 								          		<i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
 								          	 <u>
@@ -90,7 +91,7 @@
 								          	 </u>
 								          	</a>
 								        @elseif($marca->puntuacion_general < 70)
-								          	<a href="{{ route('admin.marcas.show', $marca) }}"
+								          	<a href="{{ route('home.cedula', $marca) }}"
 								          	class="btn btn-sm btn-danger small-box-footer">
 								          		<i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
 								          	 <u>

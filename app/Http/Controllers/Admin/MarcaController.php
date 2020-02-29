@@ -127,7 +127,7 @@ class MarcaController extends Controller
             ->where('sucursals.region', 'LIKE', "%".$zona."%")
             ->orderBy('q.RI', 'ASC')
             ->get()->toArray();
-            ddd($ri);
+            // ddd($ri);
             $c = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             ->select('sucursals.id', 'sucursals.name', 'q.C')
             ->where('sucursals.marca_id', $marca->id)
@@ -226,6 +226,18 @@ class MarcaController extends Controller
         //     // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 
+    public function showcedula(Request $request, Marca $marca)
+    {
+        $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
+        $cedula = $request->get('cedula') ? $request->get('cedula') : request('cedula');
+            $sucursales = Sucursal::with(['segmentos', 'audres'])
+            ->where('marca_id', '=', $marca->id)
+            ->where('created_at', 'LIKE', "%".$graphics."%")
+            ->where('cedula', 'LIKE', $cedula)
+            ->orderBy('puntuacion_total', 'DESC')
+            ->get();
+            return view('admin.marcas.showcedula', compact('marca', 'sucursales', 'cedula'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
