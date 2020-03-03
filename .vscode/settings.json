@@ -1,0 +1,7 @@
+{
+    "editor.tabSize": 6,
+    "vetur.format.options.tabSize": 6,
+    "files.autoSave": "onFocusChange",
+"editor.detectIndentation": false,
+"workbench.editor.tabSizing": "shrink"
+}

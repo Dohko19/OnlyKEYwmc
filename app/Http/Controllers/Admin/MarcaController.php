@@ -233,7 +233,7 @@ class MarcaController extends Controller
             $sucursales = Sucursal::with(['segmentos', 'audres'])
             ->where('marca_id', '=', $marca->id)
             ->where('created_at', 'LIKE', "%".$graphics."%")
-            ->where('cedula', 'LIKE', $cedula)
+            ->where('cedula', '=', $cedula)
             ->orderBy('puntuacion_total', 'DESC')
             ->get();
             return view('admin.marcas.showcedula', compact('marca', 'sucursales', 'cedula'));

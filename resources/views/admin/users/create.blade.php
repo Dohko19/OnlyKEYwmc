@@ -31,7 +31,7 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="" class="col-form-label">Nombre de Usuario</label>
-                <small>*</small>
+                <small>El nombre de usuario se usara para iniciar sesion, recuerdalo si piensas cambiarlo.*</small>
                 <div class="">
                   <input type="text"
                     class="form-control @error('name') is-invalid @else @enderror"

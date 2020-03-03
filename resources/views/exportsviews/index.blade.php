@@ -6,11 +6,11 @@
 			<div class="card card-info card-outline">
 				<div class="card-header">
 					<h3 class="card-title">
-					<i class="fas fa-file-download"></i>	Elije una Opcion
+					<i class="fas fa-file-download"></i> Elije una Opcion
 					</h3>
 				</div>
 				<div class="card-body">
-					<select name="select" id="inputSelect" class="form-control" required="required">
+					<select name="select" id="inputSelect" class="form-control" required>
 							<option value="1"><i class="far fa-file-pdf"></i> Reporte Excel</option>
 							<option value="2">PDF</option>
 					</select>
@@ -46,12 +46,13 @@
 									name="zr"
 									id="zr"
 									style="width: 100%;"
-									>
-										<option value="" selected disabled>Zona/Region</option>
+									required>
+										<option selected disabled>Zona/Region</option>
 									@foreach($region as $r)
 										<option value="{{ $r->region }}">{{ $r->region }}</option>
 									@endforeach
 									</select>
+									<small>Selecciona Una region o zona</small>
 								</div>
 								<div class="col-md">
 									<input

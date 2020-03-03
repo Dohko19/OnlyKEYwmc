@@ -50,7 +50,7 @@ class ExportsViewsController extends Controller
         }//procesa la peticion ajax
         else
         {
-            return 'peticion ajax fails';
+            return response()->json( ['error'=>'Fallo al realizar la peticion'], 404 );
         }
     }
 }

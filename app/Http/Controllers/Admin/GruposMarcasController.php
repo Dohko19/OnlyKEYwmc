@@ -21,9 +21,17 @@ class GruposMarcasController extends Controller
         if(auth()->user()->hasRole('Admin'))
         {
             $grupomarcas = GrupoMarca::get();
+            if (request()->wantsJson()) 
+            {
+                  return $grupomarcas;
+            }
                 return view('admin.grupomarcas.index', compact('grupomarcas'));
         }
         $grupomarcas = GrupoMarca::where('user_id', auth()->user()->id)->get();
+        if (request()->wantsJson()) 
+        {
+              return $grupomarcas;
+        }
         // $this->authorize('view', new GrupoMarca);
         return view('admin.grupomarcas.index', compact('grupomarcas'));
     }

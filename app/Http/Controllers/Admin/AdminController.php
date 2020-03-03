@@ -19,8 +19,14 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
+    public function spa()
+    {
+        return view('pages.spa');
+    }
+
     public function index()
     {
+
         if (auth()->user()->hasRole('dgral')) {
             $marcas = Marca::with(['grupos'])->where('user_id', auth()->user()->id)->get();
             return view('admin.dashboard', compact('marcas'));
@@ -36,10 +42,15 @@ class AdminController extends Controller
         }
         if(auth()->user()->hasRole('Admin'))
         {
-            // $sucursales = User::all();
-            // $grupos = GrupoMarca::all();
-
-                return view('admin.dashboard');
+            $users = User::selectRaw('count(*) users')->get();
+            $gmarca = GrupoMarca::selectRaw('count(*) gmarca')->get();
+            $marcas = Marca::selectRaw('count(*) marca')->get();
+            $sucursales = Sucursal::selectRaw('count(*) sucursals')->get();
+            if (request()->wantsJson() )
+            {
+                return [$users, $gmarca, $marcas, $sucursales];
+            }
+                return view('admin.dashboard', compact('users', 'gmarca', 'marcas', 'sucursales'));
         }
         // abort(500);
     }

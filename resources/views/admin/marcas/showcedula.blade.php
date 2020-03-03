@@ -11,35 +11,33 @@
 						<i class="fab fa-buffer"></i>
 						Resumen
 					</h3>
-				</div>
+                        </div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-3">
 							<img src="{{ url('marcas/'.$marca->photo) }}" alt="" width="100px" height="100px">
 						</div>
 						<div class="col-md-6">
-							<h2 class="text-center">
-                {{ $marca->name }}
-              </h2>
-              <p class="text-center">Calificación de auditoria por sucursal <br>
-              <a class="text-center" href="{{ route('admin.auditorias.index') }}">Ver Planes de Acción</a></p>
+							<h2 class="text-center">{{ $marca->name }}</h2>
+                  <p class="text-center">Calificación de auditoria por sucursal <br>
+                  <a class="text-center" href="{{ route('admin.auditorias.index') }}">Ver Planes de Acción</a></p>
 						</div>
-            <div class="col-md-3">
-              <label for="graphic">Filtro por Fecha</label>
-              <form action="{{ route('admin.marcas.showcedula',$marca) }}" method="GET" class="form-inline">
-                <input type="hidden" name='cedula' value="{{ $cedula }}">
-                <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" value="{{ request('graphics') }}">
-                <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                </button>
-              </form>
-            </div>
-					</div>
+                  <div class="col-md-3">
+                        <label for="graphic">Filtro por Fecha</label>
+                        <form action="{{ route('admin.marcas.showcedula',$marca) }}" method="GET" class="form-inline">
+                        <input type="hidden" name='cedula' value="{{ $cedula }}">
+                        <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" value="{{ request('graphics') }}">
+                        <button type="submit" class="btn btn-default">
+                              <i class="fas fa-search"></i>
+                        </button>
+                        </form>
+                  </div>
+                        </div>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="text-center">
 								<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                <small class="text-muted"></small>
+                                                <small class="text-muted"></small>
 							</div>
 						</div>
 					</div>
@@ -53,15 +51,13 @@
   <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datepicker/datepicker3.css') }}">
 @endpush
 @push('scripts')
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/modules/data.js"></script>
- 	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
- 	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/data.js"></script>
-	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
-	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+      <script src="https://code.highcharts.com/modules/data.js"></script>
+      <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+      <script src="https://code.highcharts.com/modules/exporting.js"></script>
+      <script src="https://code.highcharts.com/modules/export-data.js"></script>
+      <script src="https://code.highcharts.com/modules/accessibility.js"></script>  
+      <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <script>
 Highcharts.chart('container', {
   chart: {
@@ -151,7 +147,7 @@ Highcharts.chart('container', {
             y: 12, //calificacion en general
             drilldown: "{{ $sucursale->name }}"
           },
-          @endforeach
+        @endforeach
         ]
       }
     ],

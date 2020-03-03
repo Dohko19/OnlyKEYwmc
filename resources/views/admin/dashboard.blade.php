@@ -9,55 +9,116 @@
 <section class="content text-center" >
   <div class="container-fluid">
     <h5 class="mb-2">Bienvenido {{ Auth::user()->name }} | WMC</h5>
-    @if (auth()->user()->hasRole('dmarca'))
-    {{--  --}}
-	@elseif(auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional'))
-	@foreach ($sucursales->sucursals as $sucursale)
-		<div class="row justify-content-center align-items-center minh-100" >
-			<div class="col-md-3 col-sm-6 col-12">
-	        	<div class="info-box">
-		          <div class="info-box-content ">
-		          	@if ($sucursale->marcas->grupos->tipo == 'auditorias')
-		          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $sucursale->marcas->name .'-'. $sucursale->marcas->id }}" width="300px" height="300" class="img-fluid">
-			          	@else
-			          		<a href="{{ route('home.region', $sucursale->marcas, Carbon\Carbon::now(), $dm ?? '') }}">
-			          		<img src="{{ url('marcas/'.$sucursale->marcas->photo) }}" alt="{{ $sucursale->marcas->name .'-'. $sucursale->marcas->id }}" width="300px" height="300" class="img-fluid">
-			          		</a>
-			          	@endif
-		          </div>
-	        	</div>
-		          @if ($sucursale->marcas->grupos->tipo == 'auditorias')
-		          @if ($sucursale->marcas->puntuacion_general >= 90)
-				          	<a href="{{ route('home.region', $sucursale->marcas) }}"
-				          	class="btn btn-sm btn-success small-box-footer">
-				          		<i class="fas fa-star"></i> Calificacion de Limpieza:
-				          	 <u>
-				          	 	{{ $sucursale->marcas->puntuacion_general }}
-				          	 </u>
-				          	</a>
-			          	@elseif($sucursale->marcas->puntuacion_general >= 70)
-				          	<a href="{{ route('home.region', $sucursale->marcas) }}"
-				          	class="btn btn-sm btn-warning small-box-footer">
-				          		<i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
-				          	 <u>
-				          	 	{{ $sucursale->marcas->puntuacion_general }}
-				          	 </u>
-				          	</a>
-				        @elseif($sucursale->marcas->puntuacion_general < 70)
-				          	<a href="{{ route('home.region', $sucursale->marcas) }}"
-				          	class="btn btn-sm btn-danger small-box-footer">
-				          		<i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
-				          	 <u>
-				          	 	{{ $sucursale->marcas->puntuacion_general }}
-				          	 </u>
-				          	</a>
-			        	@endif
-			        	@endif
-				</div>
-	        	<!-- /.info-box -->
+    @if (auth()->user()->hasRole('Admin'))
+    <div class="row">
+	    <div class="col-lg-3 col-6">
+	        <!-- small box -->
+	        <div class="small-box bg-info">
+	          <div class="inner">
+	          	@foreach ($gmarca as $g)
+	            	<h3>{{ $g->gmarca }}</h3>
+	          	@endforeach
+	            <p>Grupo de Marca</p>
+	          </div>
+	          <div class="icon">
+	            <i class="fas fa-layer-group"></i>
+	          </div>
+	          <a href="#" class="small-box-footer">Mas información<i class="fas fa-arrow-circle-right"></i></a>
 	        </div>
 	    </div>
-	@endforeach
+	    <div class="col-lg-3 col-6">
+	        <!-- small box -->
+	        <div class="small-box bg-primary">
+	          <div class="inner">
+	          	@foreach ($marcas as $m)
+	            	<h3>{{ $m->marca }}</h3>
+	          	@endforeach
+	            <p>Marcas</p>
+	          </div>
+	          <div class="icon">
+	            <i class="fas fa-layer-group"></i>
+	          </div>
+	          <a href="{{ route('admin.marcas.index') }}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+	        </div>
+	    </div>
+	    <div class="col-lg-3 col-6">
+	        <!-- small box -->
+	        <div class="small-box bg-danger">
+	          <div class="inner">
+	          	@foreach ($sucursales as $s)
+	            	<h3>{{ $s->sucursals }}</h3>
+	          	@endforeach
+	            <p>Sucursales</p>
+	          </div>
+	          <div class="icon">
+	            <i class="fas fa-layer-group"></i>
+	          </div>
+	          <a href="{{ route('admin.sucursales.index') }}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+	        </div>
+	    </div>
+	    <div class="col-lg-3 col-6">
+	        <!-- small box -->
+		    <div class="small-box bg-warning">
+		      <div class="inner">
+		      	@foreach ($users as $user)
+		        	<h3>{{ $user->users }}</h3>
+		      	@endforeach
+		        <p>Usuarios registrados</p>
+		      </div>
+		      <div class="icon">
+		        <i class="ion ion-person-add"></i>
+		      </div>
+		      <a href="{{ route('admin.users.index') }}" class="small-box-footer">Mas información <i class="fas fa-arrow-circle-right"></i></a>
+		    </div>
+	  	</div>
+    </div>
+	@elseif(auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional') || auth()->user()->hasRole('dmarca'))
+		@foreach ($sucursales->sucursals as $sucursale)
+			<div class="row justify-content-center align-items-center minh-100" >
+				<div class="col-md-3 col-sm-6 col-12">
+		        	<div class="info-box">
+			          <div class="info-box-content ">
+			          	@if ($sucursale->marcas->grupos->tipo == 'auditorias')
+			          		<img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $sucursale->marcas->name .'-'. $sucursale->marcas->id }}" width="300px" height="300" class="img-fluid">
+				          	@else
+				          		<a href="{{ route('home.region', $sucursale->marcas, Carbon\Carbon::now(), $dm ?? '') }}">
+				          		<img src="{{ url('marcas/'.$sucursale->marcas->photo) }}" alt="{{ $sucursale->marcas->name .'-'. $sucursale->marcas->id }}" width="300px" height="300" class="img-fluid">
+				          		</a>
+				          	@endif
+			          </div>
+		        	</div>
+			          @if ($sucursale->marcas->grupos->tipo == 'auditorias')
+			          @if ($sucursale->marcas->puntuacion_general >= 90)
+					          	<a href="{{ route('home.region', $sucursale->marcas) }}"
+					          	class="btn btn-sm btn-success small-box-footer">
+					          		<i class="fas fa-star"></i> Calificacion de Limpieza:
+					          	 <u>
+					          	 	{{ $sucursale->marcas->puntuacion_general }}
+					          	 </u>
+					          	</a>
+				          	@elseif($sucursale->marcas->puntuacion_general >= 70)
+					          	<a href="{{ route('home.region', $sucursale->marcas) }}"
+					          	class="btn btn-sm btn-warning small-box-footer">
+					          		<i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
+					          	 <u>
+					          	 	{{ $sucursale->marcas->puntuacion_general }}
+					          	 </u>
+					          	</a>
+					        @elseif($sucursale->marcas->puntuacion_general < 70)
+					          	<a href="{{ route('home.region', $sucursale->marcas) }}"
+					          	class="btn btn-sm btn-danger small-box-footer">
+					          		<i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
+					          	 <u>
+					          	 	{{ $sucursale->marcas->puntuacion_general }}
+					          	 </u>
+					          	</a>
+				        	@endif
+				        	@endif
+					</div>
+		        	<!-- /.info-box -->
+		        </div>
+		    </div>
+		@endforeach
     @elseif(auth()->user()->hasRole('dgral'))
 	    <div class="row justify-content-center align-items-center minh-100" >
 		    	@foreach ($marcas as $marca)

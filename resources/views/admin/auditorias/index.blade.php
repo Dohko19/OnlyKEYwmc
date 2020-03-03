@@ -20,8 +20,7 @@
           <div class="small-box bg">
             <div class="inner">
               <h6 class="text-left"><b>{{ $auditoria->NombreAuditoria }}</b></h6>
-              <p>Ultimo cambio el: someFecha</p>
-              <p>De la sucursal:</p>
+              <p>Ultimo cambio el: {{ $auditoria->FechaActualizacion ?? 'Sin cambios todavia' }}</p>
             </div>
             <div class="icon" style="color: #5882fa">
               <i class="fas fa-angle-right"></i>

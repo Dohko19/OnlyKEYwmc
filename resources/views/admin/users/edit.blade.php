@@ -38,6 +38,7 @@
                       <input type="text"
                         class="form-control @error('name') is-invalid @else @enderror"
                         placeholder="Nombre de usuario..." name="name" value="{{ old('name', $user->name) }}">
+                        <small class="text-muted">El nombre de usuario se usara para iniciar sesion, recuerdalo si piensas cambiarlo.</small>
                         @error('name')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -76,7 +77,7 @@
                   <div class="form-group ">
                     <label for="" class="col-form-label">Email</label>
                     <div class="">
-                      <input class="form-control @error('email') is-invalid @else border-1 @enderror" name="email" type="email"  value="{{ $user->email }}" placeholder="E-mail..." />
+                      <input class="form-control @error('email') is-invalid @else border-1 @enderror" name="email" type="email"  value="{{ $user->email }}" placeholder="E-mail..." autocomplete="username"/>
                       @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -88,7 +89,7 @@
                   <div class="form-group ">
                     <label for="" class="col-form-label">Contraseña</label>
                     <div class="">
-                      <input class="form-control @error('password') is-invalid @else border-1 @enderror" name="password" id="registerPassword" type="password" placeholder="Contraseña" />
+                      <input class="form-control @error('password') is-invalid @else border-1 @enderror" name="password" id="registerPassword" type="password" placeholder="Contraseña" autocomplete="new-password"/>
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -100,7 +101,7 @@
                   <div class="form-group ">
                     <label for="" class="col-form-label">Confirmar Contraseña</label>
                     <div class="">
-                      <input class="form-control" name="password_confirmation" id="registerPasswordConfirmation" type="password" equalTo="#registerPassword" placeholder="Confirma tu Contraseña" />
+                      <input class="form-control" name="password_confirmation" id="registerPasswordConfirmation" type="password" equalTo="#registerPassword" placeholder="Confirma tu Contraseña" autocomplete="new-password"/>
                         @error('password_confirmation')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

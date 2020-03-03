@@ -13,14 +13,14 @@
 			<div class="card card-primary card-outline">
 				<div class="card-header">
 						@if ($errors->any())
-                <ul class="list-group">
-                  @foreach ($errors->all() as $error)
-                    <li class="list-group-item list-group-item-danger">
-                      {{ $error }}
-                    </li>
-                  @endforeach
-                </ul>
-          	@endif
+                                          <ul class="list-group">
+                                                @foreach ($errors->all() as $error)
+                                                <li class="list-group-item list-group-item-danger">
+                                                {{ $error }}
+                                                </li>
+                                                @endforeach
+                                          </ul>
+                                    @endif
 					<h3 class="card-title">
 						<i class="fas fa-user"></i>
 						Crear Grupo de la marca

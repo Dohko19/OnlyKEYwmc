@@ -30,7 +30,7 @@
         </a>
         <div class="dropdown-divider"></div>
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item">
-          <i class="fas fa-users mr-2"></i> {{ __('Cerrar Sesion') }}
+          <i class="fas fa-sign-out-alt"></i> {{ __('Cerrar Sesion') }}
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               @csrf
           </form>
