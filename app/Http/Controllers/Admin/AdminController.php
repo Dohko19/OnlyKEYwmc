@@ -35,11 +35,21 @@ class AdminController extends Controller
         //     $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
         //     return view('admin.dashboard', compact('sucursales'));
         // }
-        if (auth()->user()->hasRole('ddistrital') || auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional')) {
+        
+        if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional')) {
             $sucursales = User::with(['sucursals'])
                 ->findOrFail(auth()->user()->id);
             return view('admin.dashboard', compact('sucursales'));
         }
+
+        if(auth()->user()->hasRole('ddistrital'))
+        {
+              $sucursales = User::with(['sucursals'])
+                ->findOrFail(auth()->user()->id);
+            //   ddd($sucursales);
+              return view('admin.dashboard', compact('sucursales'));
+        }
+
         if(auth()->user()->hasRole('Admin'))
         {
             $users = User::selectRaw('count(*) users')->get();

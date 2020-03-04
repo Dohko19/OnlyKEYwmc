@@ -49,16 +49,16 @@ class UsersController extends Controller
     {
         // return $request->auditorias;
         $this->authorize('create', new User);
-        $this->validate($request, [
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'unique:users', 'email', 'string'],
         ]);
 
-        $user = User::create($request->all());
-
-        $user->roles()->attach($request->roles);
-
-        $user->auditorias()->attach($request->get('auditorias'));
+        $user = User::create($data);
+        //Asiganmos los roles
+        $user->assignRole($request->role);
+        //Assigamos los permisos
+        $user->givePermissionTo($request->permissions);
         // $email = new Email;
         // $email->correo = $request->get('email');
         // $email->save();

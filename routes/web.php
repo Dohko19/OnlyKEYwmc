@@ -57,6 +57,6 @@ Route::group([
             ->put('users/{user}/permissions', 'UsersPermissionsController@update')->name('admin.users.permissions.update');
             
             //vuejs Routes
-            // Route::get('datos', 'AdminController@index');
-            // Route::get('gmarca', 'GruposMarcasController@index');
+            Route::get('datos', 'AdminController@index');
+            Route::get('gmarca', 'GruposMarcasController@index');
 });

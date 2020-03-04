@@ -26,9 +26,9 @@ class UpdateUserRequest extends FormRequest
     {
         $rules =[
             'name' => 'required|min:2',
-                        Rule::unique('users')->ignore( $this->route('user')->id )
+                        Rule::unique('users')->ignore( $this->route('user')->id ),
             'email' => [
-                'required|email'
+                'email',
             ]
         ];
 

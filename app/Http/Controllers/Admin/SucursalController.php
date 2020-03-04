@@ -102,17 +102,13 @@ class SucursalController extends Controller
         $this->authorize('update', $sucursale);
         $this->validate($request, [
             'name' => 'min:3|string',
-            'ciudad' => 'min:1|string',
             'IdCte' => 'min:1|numeric',
-            'users' => 'required',
-            'zone' => 'required|min:3',
-            'region' => 'required|min:3',
             'marca_id' => 'required',
         ]);
 
         $sucursale->update($request->except('users'));
         $sucursale->users()->sync($request->get('users'));
-        return redirect()->route('admin.sucursales.index')->with('info', 'Agregado Correctamente');
+        return redirect()->route('admin.sucursales.index')->with('info', 'Actualizado Correctamente');
     }
 
     /**

@@ -46,7 +46,7 @@ class SegmentosController extends Controller
         ->join('sucursals as s', 's.marca_id', '=', 'm.id')
         ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
         ->join('PreguntasAuditoria as p', 'p.IdPreguntaSegmentoAuditoria', '=', 'r.IdPregunta')
-        ->select('p.*', 'r.*')
+        ->select('p.*', 'r.*', 's.*')
         ->where('users.id', '=', auth()->user()->id)
         ->where('p.IdSegmento', '=', $segmento->IdSegmentoAuditoria)
         ->where('FechaRegistro', 'LIKE', "%".$fil."%")

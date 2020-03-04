@@ -72,21 +72,20 @@
                       <label for="" class="col-form-label">Cedula a la que pertenece</label>
                       <small>*</small>
                       <div class="">
-                        <input type="text"
-                          class="form-control @error('cedula') is-invalid @else @enderror"
-                          placeholder="Cedula..." name="cedula" value="{{ old('cedula') }}">
-                            <select name="cedula">
+                            <select class="form-control" name="cedula">
                               <option value="Federal">Cedula Federal</option>
                               <option value="Valle">Cedula Valle</option>
                               <option value="OAT">Cedula OAT</option>
                               <option value="Roma">Cedula Roma</option>
-                              <option value="Federal">Cedula Polanco</option>
+                              <option value="Polanco">Cedula Polanco</option>
                             </select>
+                            <small>En caso de taquearte</small>
                           @error('cedula')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                        </div>
                    </div>
                     <div class="form-group">
                       <label for="" class="col-form-label">Zona</label>

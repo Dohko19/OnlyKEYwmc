@@ -9,7 +9,7 @@
 <section class="content text-center" >
   <div class="container-fluid">
     <h5 class="mb-2">Listado de mis sucursales por zona </h5><br>
-    @if (auth()->user()->hasRole('dmarca'))
+    @if ( auth()->user()->hasRole('dmarca') )
 
     @else
     <div class="row justify-content-center align-items-center minh-100" >

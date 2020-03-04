@@ -7,13 +7,25 @@
 <!-- Default box -->
 <div class="card">
   <div class="col-md-12">
-    <form action="" method="GET" class="float-right">
-      <div class="form-group">
-        <label for="FechaRegistro">Selecciona Año y Mes</label>
-        <input class="form-control" id="datepicker" type="text" name="FechaRegistro" placeholder="Año y mes (YYY-mm)">
-        <button class="btn btn-info">Consultar</button>
-      </div>
-    </form>
+        <div class="row">
+              <div class="col-md-6"></div>
+            <div class="col-md-6">
+                  <form action="" method="GET">
+                        <h4>Filtros de busqueda</h4>
+                        <div class="input-group">
+                        <input class="form-control" id="datepicker" type="text" name="FechaRegistro" placeholder="Año y mes (YYY-mm)" autocomplete="off">
+                              <select class="form-control" name="sucursal" id="">
+                                    @foreach ($sucursales->sucursals as $sucursal)
+                                          <option  {{ old('sucursal', request('sucursal')) == $sucursal->name ? 'selected' : ''}} value="{{ $sucursal->name }}">{{ $sucursal->name }}</option>
+                                          
+                                    @endforeach
+                              </select>
+                        <button class="btn btn-info">Consultar</button>
+                        </div>
+                  </form>
+            </div>
+        </div>
+    
   </div>
 
   <div class="card-header">

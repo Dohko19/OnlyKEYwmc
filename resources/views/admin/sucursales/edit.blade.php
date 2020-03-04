@@ -47,8 +47,8 @@
                   <div class="form-group ">
                     <label for="" class="col-form-label">Ciudad</label>
                     <div class="">
-                      <input required type="text" class="form-control @error('ciudad') is-invalid @else border-1 @enderror"
-                      name="ciudad" placeholder="Ciudad" value="{{ $sucursale->name }}">
+                      <input type="text" class="form-control @error('ciudad') is-invalid @else border-1 @enderror"
+                      name="ciudad" placeholder="Ciudad" value="{{ $sucursale->ciudad }}">
                       @error('ciudad')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -69,9 +69,28 @@
                             </span>
                         @enderror
                    </div>
+                   <div class="form-group">
+                      <label for="" class="col-form-label">Cedula a la que pertenece</label>
+                      <small>*</small>
+                      <div class="">
+                            <select class="form-control" name="cedula">
+                              <option {{ old('cedula', $sucursale->cedula) == "Federal" ? 'selected' : ''}} value="Federal">Cedula Federal</option>
+                              <option {{ old('cedula', $sucursale->cedula) == "Valle" ? 'selected' : ''}} value="Valle">Cedula Valle</option>
+                              <option {{ old('cedula', $sucursale->cedula) == "OAT" ? 'selected' : ''}} value="OAT">Cedula OAT</option>
+                              <option {{ old('cedula', $sucursale->cedula) == "Roma" ? 'selected' : ''}} value="Roma">Cedula Roma</option>
+                              <option {{ old('cedula', $sucursale->cedula) == "Polanco" ? 'selected' : ''}} value="Polanco">Cedula Polanco</option>
+                            </select>
+                            <small>En caso de taquearte</small>
+                          @error('cedula')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        </div>
+                   </div>
                     <div class="form-group">
                       <label for="" class="col-form-label">Zona</label>
-                      <small>*</small>
+                      <small></small>
                       <div class="">
                         <input type="text"
                           class="form-control @error('zone') is-invalid @else @enderror"
@@ -99,7 +118,7 @@
                     <div class="form-group ">
                       <label for="" class="col-form-label">Ingresa el Telefono de la sucursal</label>
                       <div class="">
-                        <input required type="text" class="form-control @error('phone') is-invalid @else border-1 @enderror"
+                        <input type="text" class="form-control @error('phone') is-invalid @else border-1 @enderror"
                         name="phone" placeholder="Telefono de la Empresa" value="{{ old('phone', $sucursale->phone) }}">
                         @error('phone')
                           <span class="invalid-feedback" role="alert">
