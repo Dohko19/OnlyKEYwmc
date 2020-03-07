@@ -74,12 +74,12 @@
 	  	</div>
       </div>
 	@elseif(auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dmarca'))
-		<div class="row" >
+		<div class="row justify-content-center align-items-center minh-100" >
                   @foreach ($sucursales->sucursals as $sucursale)
 				<div class="col-md-3 col-sm-6 col-6">
 		        	<div class="info-box">
 			          <div class="info-box-content ">
-			          	@if ($sucursale->marcas->grupos->tipo == 'cuestionarios')
+			          	@if ($sucursale->marcas->grupos->tipo == 'auditorias')
 			          		<img src="{{ url('marcas/'.$sucursale->marcas->photo) }}" alt="{{ $sucursale->marcas->name .'-'. $sucursale->marcas->id }}" width="300px" height="300" class="img-fluid">
 				      @else
                                     <a href="{{ route('home.region', $sucursale->marcas, Carbon\Carbon::now(), $dm ?? '') }}">

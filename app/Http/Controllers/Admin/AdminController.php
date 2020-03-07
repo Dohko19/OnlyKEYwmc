@@ -71,6 +71,7 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
+              
              $sucursales = User::with(['sucursals' => function($query){
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('delegacion_municipio dm');
@@ -81,6 +82,7 @@ class AdminController extends Controller
                 $query->orderBy('region');
             }, 'grupos'])
                 ->findOrFail(auth()->user()->id);
+            //     ddd($sucursales);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
         }
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
@@ -92,6 +94,7 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
+          
              $sucursales = User::with(['sucursals' => function($query){
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('cedula c');

@@ -42,18 +42,9 @@ class SegmentosController extends Controller
         $this->authorize('view', $segmento);
         $fil = $request->get('FechaRegistro') ? $request->get('FechaRegistro') : request('FechaRegistro');
         $fil = Carbon::parse($fil)->format('Y-m');
-        $segmento1 = User::join('marcas as m', 'm.user_id', '=', 'users.id')
-        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
-        ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
-        ->join('PreguntasAuditoria as p', 'p.IdPreguntaSegmentoAuditoria', '=', 'r.IdPregunta')
-        ->select('p.*', 'r.*', 's.*')
-        ->where('users.id', '=', auth()->user()->id)
-        ->where('p.IdSegmento', '=', $segmento->IdSegmentoAuditoria)
-        ->where('FechaRegistro', 'LIKE', "%".$fil."%")
-        ->get();
 
-        // $segmento1 = Segmento::get();
-            // ddd($segmento1);
+      //   $segmento1 = ResultadoAuditoria::with(['questions']);
+
         return view('admin.segmentos.show', compact('segmento', 'segmento1'));
     }
 }

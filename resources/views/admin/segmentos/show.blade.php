@@ -48,7 +48,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                     @foreach ($segmento1 as $segmento)
+                        <ul>
+                              
+                        @foreach ($segmento1 as $segmento)
+                              @foreach ($segmento->resultados as $res)
+                              <li>{{ $res->questions->Pregunta }}</li>
+                              @endforeach
+                        @endforeach
+                        
+                        </ul>
+                     {{-- @foreach ($segmento1 as $segmento)
                      @if ($segmento->Aprobado != 1)
                         <tr>
                               <td style="width: 600px;">
@@ -69,7 +78,7 @@
                               <td>
                                     @if ($segmento->Foto)
                                     <img id="myImg{{ $segmento->Id }}" src="{{ $segmento->Foto }}" width="150px" class="zoom" alt="">
-                                    {{-- <button type="button" class="btn btn-info openBtn">Open Modal</button> --}}
+                                    <button type="button" class="btn btn-info openBtn">Open Modal</button>
                                     @else
                                     <p>Sin Imagen</p>
                                     @endif
@@ -91,7 +100,7 @@
                               </td>
                         </tr>
                      @endif
-                     @endforeach
+                     @endforeach --}}
                   </tbody>
                 </table>
               </div>
@@ -115,7 +124,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($segmento1 as $segmento)
+                        {{-- @foreach ($segmento1 as $segmento)
                         @if ($segmento->Aprobado == 1)
                               <tr>
                                     <td style="width: 600px;">
@@ -136,7 +145,7 @@
                                     <td>
                                           @if ($segmento->Foto)
                                           <img id="myImg{{ $segmento->Id }}" src="{{ $segmento->Foto }}" width="150px" class="zoom" alt="">
-                                          {{-- <button type="button" class="btn btn-info openBtn">Open Modal</button> --}}
+                                          <button type="button" class="btn btn-info openBtn">Open Modal</button>
                                           @else
                                           <p>Sin Imagen</p>
                                           @endif
@@ -151,14 +160,14 @@
                                                       <option value="0">No</option>
                                                       <option {{ $segmento->Id == 1 ? 'selected' : '' }} value="1">Si</option>
                                                 </select>
-                                                      {{-- <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br> --}}
+                                                      <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
 
                                                 </form>
                                           </div>      
                                     </td>
                               </tr>
                         @endif
-                        @endforeach
+                        @endforeach --}}
                         </tbody>
                   </table>
                   </div>

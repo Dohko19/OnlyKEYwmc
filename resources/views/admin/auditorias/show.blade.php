@@ -17,7 +17,6 @@
                               <select class="form-control" name="sucursal" id="">
                                     @foreach ($sucursales->sucursals as $sucursal)
                                           <option  {{ old('sucursal', request('sucursal')) == $sucursal->name ? 'selected' : ''}} value="{{ $sucursal->name }}">{{ $sucursal->name }}</option>
-                                          
                                     @endforeach
                               </select>
                         <button class="btn btn-info">Consultar</button>
@@ -36,11 +35,12 @@
     </div>
   </div>
   <div class="row">
-    @foreach ($auditorias as $segmento)
+        
+    @foreach ($auditoria->segmentos as $segmento)
       <div class="col-md-4">
         <div class="card card-outline card-primary">
           <div class="card-header">
-          <h3 class="card-title">{{ $segmento->NombreSegmento }} | Calif. <b>{{ $segmento->Promedio}}</b></h3>
+          <h3 class="card-title">{{ $segmento->NombreSegmento }}</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -50,9 +50,6 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <p>Nombre de Sucursal: <b>{{ $segmento->name }}</b> </p>
-            <p>Cedula: <b>{{ $segmento->cedula }}</b> </p>
-            <p>Fecha de Registro: <b>{{ $segmento->FechaRegistro }}</b> </p>
             <a href="{{ route('admin.segmentos.show', ['segmento' => $segmento->IdSegmentoAuditoria]) }}">Mas Informacion...</a>
           </div>
           <!-- /.card-body -->

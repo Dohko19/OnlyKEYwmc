@@ -19,7 +19,11 @@
 						</div>
 						<div class="col-md-6 text-center">
               <div class="row">
-                <div class="col-md-4"></div>
+                  <div class="col-md-4">
+                        {{-- @foreach ($delegaciones->sucursals as $d)
+                        {{ $d->delegacion_municipio }}
+                        @endforeach --}}
+                  </div>
                 <div class="col-md-7">
     							<h3 class="text-center">
             			 {{ $marca->name }}
@@ -37,11 +41,11 @@
                         <input type="hidden" name="zonaf" value="{{ $delegacion }}">
   			                <input size="5" name="graphics" type="text" class="form-control pull-right" id="datepicker" value="{{ old('graphics', request('graphics')) }}" placeholder="mes y año" autocomplete="off"><br>
                         <select class="form-control" name="dm" id="dm">
-                          <option value="" selected>--Delegacion--</option>
-                          @foreach ($delegaciones as $d)
-                            <option {{ old('marca_id', request('dm')) == $d->dm ? 'selected' : ''}}  value="{{ $d->dm }}">{{ $d->dm }}</option>
+                          @foreach ($delegaciones->sucursals as $d)
+                              <option {{ old('dm', request('dm')) == $d->delegacion_municipio ? 'selected' : ''}}  value="{{ $d->delegacion_municipio }}">{{ $d->delegacion_municipio }}</option>
                           @endforeach
                         </select>
+                        {{-- {{ request('dm') }} --}}
                         {{-- <input name="dm" type="text" class="form-control" autocomplete="off" size="6" value="{{ old('dm') }}" placeholder="Delegación..."> --}}
 
 			                <button type="submit" class="btn btn-default float-right">
@@ -117,12 +121,12 @@
  	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/data.js"></script>
 	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
-  {{-- Herramienta para exportar en CSV XLS excel
-    <script src="https://code.highcharts.com/modules/export-data.js"></script> --}}
-	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
-  <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+      <script src="http://code.highcharts.com/modules/exporting.js"></script>
+      {{-- Herramienta para exportar en CSV XLS excel
+      <script src="https://code.highcharts.com/modules/export-data.js"></script> --}}
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+      <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
 
 <script>
   Highcharts.setOptions({
@@ -164,13 +168,6 @@
                       'padding': 5
                   })
                   .add();
-
-                  label.align(Highcharts.extend(label.getBBox(), {
-                      align: 'center',
-                      x: 20, // offset
-                      verticalAlign: 'bottom',
-                      y: 30 // offset
-                  }), null, 'spacingBox');
               },
           },
         marginBottom: 120,
@@ -194,8 +191,7 @@
     xAxis: {
        title: {
         text: 'Preguntas',
-        title: 'Sucursales',
-         align: 'high'
+        title: 'Sucursales'
       },
       type: 'category'
     },
@@ -218,22 +214,11 @@
       enabled: false
   },
     plotOptions: {
-       spline: {
-            lineWidth: 4,
-            states: {
-                hover: {
-                    lineWidth: 5
-                }
-            },
-            marker: {
-                enabled: false
-            }
-        },
       series: {
         borderWidth: 0,
         dataLabels: {
           enabled: true,
-          format: '{point.y:.1f}%',
+          format: '{point.y:.1f}%'
         }
       }
     },
@@ -248,13 +233,15 @@
         name: "Sucursales",
         colorByPoint: true,
         data: [
-        @for ($i = 0; $i < count($ri) ; $i++)
-            {
-              name: "{{ $ri[$i]['name'] }}",
-                y: {{ $ri[$i]['RI'] ?? 0}}, //proemdio RI
-              drilldown: "{{ $ri[$i]['name'] }}"
-            },
-        @endfor
+            @foreach ( $ri->sucursals as $ris)
+                  @foreach ($ris->qresults as $rir)
+                  {
+                        name: "{{ $ris->name }}",
+                        y: {{ $rir->RI ?? 0}}, //proemdio
+                        drilldown: "{{ $ris->name }}"
+                  },
+                  @endforeach
+            @endforeach
         ]
       }
     ],
@@ -266,7 +253,7 @@
         }
     },
       series: [
-          @foreach($sucursales as $sucursal)
+          @foreach($sucursales->sucursals as $sucursal)
         {
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
@@ -281,7 +268,7 @@
                     @else
                       [
                         "{{ $q->IdPregunta }}",
-                          0,
+                          0.0,
                       ],
                   @endif
                 @endif
@@ -327,13 +314,6 @@
                       'padding': 5
                   })
                   .add();
-
-                  label.align(Highcharts.extend(label.getBBox(), {
-                      align: 'center',
-                      x: 20, // offset
-                      verticalAlign: 'bottom',
-                      y: 0 // offset
-                  }), null, 'spacingBox');
 
               }
           },
@@ -398,13 +378,15 @@
         name: "Sucursales",
         colorByPoint: true,
         data: [
-        @for ($i = 0; $i < count($c) ; $i++)
-            {
-              name: "{{ $c[$i]['name'] }}",
-                y: {{ $c[$i]['C'] ?? 0}}, //proemdio
-              drilldown: "{{ $c[$i]['name'] }}"
-            },
-        @endfor
+            @foreach ( $ri->sucursals as $ris)
+                  @foreach ($ris->qresults as $rir)
+                  {
+                        name: "{{ $ris->name }}",
+                        y: {{ $rir->C ?? 0}}, //proemdio
+                        drilldown: "{{ $ris->name }}"
+                  },
+                  @endforeach
+            @endforeach
         ]
       }
     ],
@@ -416,7 +398,7 @@
         }
     },
       series: [
-          @foreach ($sucursales as $sucursal)
+          @foreach ($sucursales->sucursals as $sucursal)
         {
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",

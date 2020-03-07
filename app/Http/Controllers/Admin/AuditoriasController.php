@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Auditoria;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Sucursal;
+use App\ResultadoAuditoria;
 use Illuminate\Http\Request;
 
 class AuditoriasController extends Controller
@@ -33,21 +35,11 @@ class AuditoriasController extends Controller
       $this->authorize('view', new Auditoria);
       $fecha = $request->get('FechaRegistro');
       $sucursal = $request->get('sucursal') ? $request->get('sucursal') : '';
-      // $auditorias = User::join('marcas as m', 'm.user_id', '=', 'users.id')
-      // ->join('sucursals as s', 's.marca_id', '=', 'm.id')
-      // ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
-      // ->join('SegmentosAuditoria as sa', 'sa.IdAuditoria', '=', 'r.IdSegmento')
-      // ->join('aresults as ar', 'ar.IdSegmentoAuditoria', '=', 'sa.IdSegmentoAuditoria')
-      // ->select('sa.*', 'r.*', 's.*', 'ar.*')
-      // ->groupBy('sa.IdSegmentoAuditoria')
-      // ->where('r.FechaRegistro', 'LIKE', "%".$fecha."%")
-      // ->where('s.name', 'LIKE', "%".$sucursal."%")
-      // ->where('users.id', '=', auth()->user()->id)
-      // ->get();
-      $auditorias = Auditoria::find($auditoria);
-      $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
-        ddd($auditorias);
 
-       return view('admin.auditorias.show', compact('auditoria', 'auditorias', 'sucursales'));
+      $sucursales = User::with(['sucursals' => function($query){
+                    $query->orderBy('name');
+              }])
+                ->findOrFail(auth()->user()->id);
+       return view('admin.auditorias.show', compact('auditoria', 'fecha', 'sucursal', 'sucursales'));
     }
 }

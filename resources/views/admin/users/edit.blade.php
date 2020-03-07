@@ -52,7 +52,7 @@
                     <div class="">
                       <input type="text"
                         class="form-control @error('lastname') is-invalid @else @enderror"
-                        placeholder="Apellidos..." name="lastname" value="{{ old('lastname', $user->phone) }}">
+                        placeholder="Apellidos..." name="lastname" value="{{ old('lastname', $user->lastname) }}">
                         @error('lastname')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
