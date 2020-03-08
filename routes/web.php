@@ -18,9 +18,12 @@ Route::get('/region/{id}', 'Admin\AdminController@region')->name('home.region');
 Route::get('/cedula/{id}', 'Admin\AdminController@cedula')->name('home.cedula');
 
 // Exports
-Route::get('exports', 'ExportsViewsController@index')->name('exports.home');
+Route::get('exports/cuestionario', 'ExportsViewsController@index')->name('exports.home');
 Route::get('exports/download', 'ExportsViewsController@export')->name('exports.export');
 Route::get('exports/pdf', 'ExportsViewsController@viewpdf')->name('exports.pdf');
+//endExports// Exports
+Route::get('exports/auditoria', 'ExportsViewsController@auditoria')->name('export.auditoria');
+Route::get('exports/auditoria/download', 'ExportsViewsController@exportauditoria')->name('exports.auditoria');
 //endExports
 
 });
@@ -61,6 +64,6 @@ Route::group([
             ->put('users/{user}/permissions', 'UsersPermissionsController@update')->name('admin.users.permissions.update');
 
             //vuejs Routes
-            // Route::get('datos', 'AdminController@index');
-            // Route::get('gmarca', 'GruposMarcasController@index');
+            Route::get('datos', 'AdminController@index');
+            Route::get('gmarca', 'GruposMarcasController@index');
 });

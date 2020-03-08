@@ -27,11 +27,26 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">
-              <i class="fas fa-file-export nav-icon"></i>
-              <p>Reporte</p>
+          <li class="nav-item has-treeview {{ setActiveCollapse(['exports.home', 'export.auditoria']) }}">
+            <a href="#" class="nav-link {{ setActiveRoute(['exports.home', 'export.auditoria']) }}">
+              <i class="fas fa-ellipsis-h nav-icon"></i>
+              <p>Reportes</p>
+              <i class="right fas fa-angle-left"></i>
             </a>
+            <ul class="nav nav-treeview ">
+              <li class="nav-item ">
+                <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">
+                  <i class="fas fa-file-export nav-icon"></i>
+                  <p>Cuestionarios</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('export.auditoria') }}" class="nav-link {{ setActiveRoute('export.auditoria') }}">
+                  <i class="fas fa-download nav-icon"></i>
+                  <p>Auditorias</p>
+                </a>
+              </li>
+            </ul>
           </li>
           @can('view', new App\Auditoria)
             <li class="nav-item">

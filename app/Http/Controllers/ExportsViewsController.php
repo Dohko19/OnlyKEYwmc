@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AuditoriaExport;
 use App\Exports\DetailsExport;
 use App\Sucursal;
 use App\User;
@@ -52,5 +53,16 @@ class ExportsViewsController extends Controller
         {
             return response()->json( ['error'=>'Fallo al realizar la peticion'], 404 );
         }
+    }
+
+    public function auditoria()
+    {
+        $sucursales = Sucursal::select('cedula')->groupBy('cedula')->get();
+        return view('exportsviews.auditoria', compact('sucursales'));
+    }
+
+    public function exportauditoria()
+    {
+        return (new AuditoriaExport)->download('ReporteAuditoria-'.Carbon::now()->format('d-m-Y').'.xlsx');
     }
 }

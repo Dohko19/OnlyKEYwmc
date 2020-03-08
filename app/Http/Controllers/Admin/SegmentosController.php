@@ -40,11 +40,13 @@ class SegmentosController extends Controller
     public function show(Request $request, Segmento $segmento)
     {
         $this->authorize('view', $segmento);
-        $fil = $request->get('FechaRegistro') ? $request->get('FechaRegistro') : request('FechaRegistro');
-        $fil = Carbon::parse($fil)->format('Y-m');
+        $fil = $request->get('FechaRegistro') ? $request->get('FechaRegistro') : Carbon::now()->format('Y-m');
+        // $fil = Carbon::parse($fil)->format('Y-m');
 
-      //   $segmento1 = ResultadoAuditoria::with(['questions']);
-
+        $segmento1 = ResultadoAuditoria::with(['questions'])
+        ->where('IdSegmento', $segmento->IdSegmentoAuditoria)
+        ->where('FechaRegistro', 'LIKE', "%".$fil."%")
+        ->get();
         return view('admin.segmentos.show', compact('segmento', 'segmento1'));
     }
 }
