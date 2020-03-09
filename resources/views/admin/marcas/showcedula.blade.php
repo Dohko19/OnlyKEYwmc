@@ -11,7 +11,7 @@
 						<i class="fab fa-buffer"></i>
 						Resumen
 					</h3>
-                        </div>
+        </div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-3">
@@ -24,7 +24,7 @@
 						</div>
                   <div class="col-md-3">
                         <label for="graphic">Filtro por Fecha</label>
-                        <form action="{{ route('admin.marcas.showcedula',$marca) }}" method="GET" class="form-inline">
+                        <form action="{{ route('admin.marcas.cedula',$marca) }}" method="GET" class="form-inline">
                         <input type="hidden" name='cedula' value="{{ $cedula }}">
                         <input name="graphics" type="text" class="form-control pull-right" id="datepicker" placeholder="Elige un mes y año" autocomplete="off" value="{{ request('graphics') }}">
                         <button type="submit" class="btn btn-default">
@@ -37,8 +37,8 @@
 						<div class="col-md-12">
 							<div class="text-center">
 								<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                                                <small class="text-muted"></small>
 							</div>
+              <a href="{{ url()->previous() }}" class="btn btn-danger float-right">Volver Atras</a>
 						</div>
 					</div>
 				</div>
@@ -51,12 +51,12 @@
   <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datepicker/datepicker3.css') }}">
 @endpush
 @push('scripts')
-      <script src="https://code.highcharts.com/highcharts.js"></script>
-      <script src="https://code.highcharts.com/modules/data.js"></script>
-      <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-      <script src="https://code.highcharts.com/modules/exporting.js"></script>
-      <script src="https://code.highcharts.com/modules/export-data.js"></script>
-      <script src="https://code.highcharts.com/modules/accessibility.js"></script>  
+      <script src="{{ asset('highcharts/highcharts.js') }} "></script>
+      <script src="{{ asset('highcharts/data.js') }} "></script>
+      <script src="{{ asset('highcharts/drilldown.js') }} "></script>
+      <script src="{{ asset('highcharts/exporting.js') }} "></script>
+      <script src="{{ asset('highcharts/export-data.js') }} "></script>
+      <script src="{{ asset('highcharts/accessibility.js') }} "></script>
       <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <script>
 Highcharts.chart('container', {
@@ -159,7 +159,7 @@ Highcharts.chart('container', {
           data: [
                   @foreach ($sucursale->audres as $ares)
                         [
-                        "<a href='#'> {{ $ares->segmentos->NombreSegmento }}</a>",
+                        "<a href='{{ route('admin.segmentos.show',['segmento' => $ares->segmentos->IdSegmentoAuditoria, 'cedula' => request('cedula'), 'sucursal' => $sucursale->name] ) }}'>{{ $ares->segmentos->NombreSegmento }}</a>",
                         {{ $ares->Promedio }}
                         ],
                   @endforeach

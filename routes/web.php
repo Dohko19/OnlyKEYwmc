@@ -38,7 +38,7 @@ Route::group([
 		Route::resource('users', 'UsersController', ['as' => 'admin']);
             Route::resource('marcas', 'MarcaController', ['as' => 'admin']);
 
-            Route::get('marcas/{marca}', 'MarcaController@showcedula', ['as' => 'admin'])->name('admin.marcas.showcedula');
+            Route::get('marcas/cedulas/{marca}', 'MarcaController@showcedula', ['as' => 'admin'])->name('admin.marcas.cedula');
 
 		Route::resource('sucursales', 'SucursalController', ['as' => 'admin']);
 		Route::resource('questions', 'QuestionsController', ['as' => 'admin']);

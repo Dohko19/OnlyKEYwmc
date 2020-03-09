@@ -2,30 +2,38 @@
 @section('content')
 @section('header')
 <ol class="breadcrumb float-sm-right">
-  <li class="breadcrumb-item">Panel de Control</li>
-  <li class="breadcrumb-item active">Sucursales</li>
+	<li class="breadcrumb-item"><a href="{{ route('admin.sucursales.index') }}">Sucursales</a></li>
+	<li class="breadcrumb-item active">Inicio</li>
 </ol>
 @endsection
-<section class="content text-center" >
-  <div class="container-fluid">
-    <h5 class="mb-2">Mi listado de mis sucursales</h5>
-    <div class="row justify-content-center align-items-center minh-100" >
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12 col-lg-12">
+			<div class="card card-primary card-outline">
+				<div class="card-header">
+					<h3 class="card-title">
+						<i class="fas fa-marcas"></i>
+							Sucursales
+                              </h3>
+                              @can('create', new \App\Sucursal)
+					      <a href="{{ route('admin.sucursales.create') }}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Crear Sucursal</a>
+                              @endcan
+				</div>
 			<div class="card-body">
-	            <table id="example2" class="table table-bordered table-hover">
-	                <thead>
-		                <tr>
-		                  <th>ID</th>
-		                  <th>Nombre</th>
-		                  <th>Ciudad</th>
-		                  <th>Zona</th>
-		                  <th>Region</th>
-		                  <th>Delegacion/Municipio</th>
-		                  <th>Creado el:</th>
-		                  <th>Acciones</th>
-		                </tr>
-	                </thead>
-	                <tbody>
-	                	@foreach ($sucursales->sucursals as $sucursale)
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Ciudad</th>
+                  <th>Puntuacion</th>
+                  <th>De la marca</th>
+                  <th>Creado el:</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                	@foreach($sucursales->sucursals as $sucursale)
 	                	@can('view', $sucursale)
 	                		<tr>
 			                  <td>{{ $sucursale->id }}</td>
@@ -33,36 +41,35 @@
 			                  <td>{{ $sucursale->ciudad }}</td>
 			                  <td>{{ $sucursale->zone }}</td>
 			                  <td>{{ $sucursale->region }}</td>
-			                  <td>{{ $sucursale->delegacion_municipio ?? 'Sin Informacion'}}</td>
 			                  <td>{{ optional($sucursale)->created_at->format('Y-m-d') }}</td>
 			                  <td>
-			                  	@can('view', $sucursale)
+			                  {{-- 	@can('view', $sucursale)
 				                <a class="btn" href="{{ route('admin.sucursales.show', $sucursale) }}" style="color: blue;"><i class="far fa-eye"></i></a>
-				                @endcan
-			                  	@can('update', $sucursale)
+				                @endcan --}}
+			                      @can('update', $sucursale)
 				                <a class="btn" href="{{ route('admin.sucursales.edit', $sucursale) }}" style="color: blue;"><i class="far fa-edit"></i></a>
 				                @endcan
-
 				                @can('delete', $sucursale)
-			                  	<form action="{{ route('admin.sucursales.destroy', $sucursale) }}" method="POST" style="display: inline">
-	                        		@csrf
-	                        		@method('DELETE')
-				                  	<button class="btn "
-				                  	onclick="return confirm('Estas seguro de Eliminar este Usuario?')"
-				                  	><i class="fas fa-trash" style="color: red"></i></button>
-		                        </form>
+				                  	<form action="{{ route('admin.sucursales.destroy', $sucursale) }}" method="POST" style="display: inline">
+		                        		@csrf
+		                        		@method('DELETE')
+					                  	<button class="btn "
+					                  	onclick="return confirm('Estas seguro de Eliminar este Usuario?')"
+					                  	><i class="fas fa-trash" style="color: red"></i></button>
+			                        </form>
 		                        @endcan
 			                  </td>
 	                		</tr>
 	                	@endcan
-	                	@endforeach
-	                </tbody>
-	            </table>
+	                @endforeach
+                </tbody>
+              </table>
             </div>
-    </div>
-    <!-- /.row -->
-</section>
-
+            <!-- /.card-body -->
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 @push('styles')
 	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">

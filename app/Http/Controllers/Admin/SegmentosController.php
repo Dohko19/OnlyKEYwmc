@@ -43,10 +43,25 @@ class SegmentosController extends Controller
         $fil = $request->get('FechaRegistro') ? $request->get('FechaRegistro') : Carbon::now()->format('Y-m');
         // $fil = Carbon::parse($fil)->format('Y-m');
 
-        $segmento1 = ResultadoAuditoria::with(['questions'])
-        ->where('IdSegmento', $segmento->IdSegmentoAuditoria)
-        ->where('FechaRegistro', 'LIKE', "%".$fil."%")
-        ->get();
+      //   $segmento1 = ResultadoAuditoria::with(['questions'])
+      //   ->where('IdSegmento', $segmento->IdSegmentoAuditoria)
+      //   ->where('FechaRegistro', 'LIKE', "%".$fil."%")
+      //   ->get();
+
+      $segmento1 = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+                        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+                        ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
+                        ->join('PreguntasAuditoria as p', 'p.IdSegmento', '=', 'r.IdSegmento')
+                        ->select('r.*', 'p.Pregunta')
+                        ->where('users.id', '=', auth()->user()->id)
+                        ->where('r.IdSegmento', '=', $segmento->IdSegmentoAuditoria)
+                        ->where('r.FechaRegistro', 'LIKE', "%".request('FechaRegistro')."%")
+                        ->where('s.name', 'LIKE', "%".request('sucursal')."%")
+                        ->where('s.name', 'LIKE', "%".request('cedula')."%")
+                        // ->findOrFail(auth()->user()->id);
+                        ->get();
+
+      // ddd($segmento1);
         return view('admin.segmentos.show', compact('segmento', 'segmento1'));
     }
 }

@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class ResultadoAuditoria extends Model
 {
-     protected $table = 'ResultadoAuditoria';
+    protected $table = 'ResultadoAuditoria';
 
     protected $primaryKey = 'Id';
 
-    public $timestamps = false;
+    protected $dates = ['FechaRegistro'];
 
     public function auditorias()
     {

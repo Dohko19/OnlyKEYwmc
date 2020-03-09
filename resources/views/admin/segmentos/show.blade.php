@@ -52,7 +52,7 @@
                      @if ($segmento->Aprobado != 1)
                         <tr>
                               <td style="width: 600px;">
-                                    {{ $segmento->questions->Pregunta }}
+                                    {{ $segmento->Pregunta }}
                                     <br><small><b>Fecha de Registro: {{ $segmento->FechaRegistro }}</b></small>
                                     <br><small><b>Ultima Actualizacion: {{ $segmento->FechaActualizacion ?? 'Sin datos' }}</b></small>
                               </td>
@@ -85,7 +85,6 @@
                                           </select>
                                           <textarea name="action" id="" cols="30" rows="5" placeholder="Plan de Accion"></textarea>
                                                 <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
-
                                           </form>
                                     </div>
                               </td>
@@ -99,69 +98,69 @@
             </div>
             <!-- /.card -->
           </div>
-          <div class="col-12">
-            <div class="card">
-                  <div class="card-header">
-                        <h3 class="card-title">Segmentos Aprobados</h3>
+            <div class="col-12">
+                  <div class="card">
+                        <div class="card-header">
+                              <h3 class="card-title">Segmentos Aprobados</h3>
+                        </div>
+                        <div class="card-body">
+                        <table class="table table-hover">
+                              <thead>
+                              <tr>
+                              <th style="width: 33%">Preguntas Realizadas</th>
+                              <th style="width: 15%">Comentario</th>
+                              <th style="width: 10%">Imagen...</th>
+                              <th style="width: 10%">Aprobado</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              @foreach ($segmento1 as $segmento)
+                              @if ($segmento->Aprobado == 1)
+                                    <tr>
+                                          <td style="width: 600px;">
+                                                {{ $segmento->questions->Pregunta }}
+                                                <br><small><b>Fecha de Registro: {{ $segmento->FechaRegistro }}</b></small>
+                                                <br><small><b>Ultima Actualizacion: {{ $segmento->FechaActualizacion ?? 'Sin datos' }}</b></small>
+                                          </td>
+                                          <td>
+                                                <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
+                                                <textarea
+                                                name="accion"
+                                                cols="30"
+                                                rows="5"
+                                                placeholder="Plan de accion..."
+                                                disabled>{{ old('comments', $segmento->Comentario) }}</textarea>
+                                                </div>
+                                          </td>
+                                          <td>
+                                                @if ($segmento->Foto)
+                                                <img id="myImg{{ $segmento->Id }}" src="{{ $segmento->Foto }}" width="150px" class="zoom" alt="">
+                                                <button type="button" class="btn btn-info openBtn">Open Modal</button>
+                                                @else
+                                                <p>Sin Imagen</p>
+                                                @endif
+                                          </td>
+                                          <td>
+                                                <div class="form-group">
+                                                      <form action="{{ route('admin.resultados.update', $segmento->Id) }}"
+                                                      method="POST" style="display: inline;">
+                                                      @csrf
+                                                      @method('PUT')
+                                                      <select disabled class="form-control">
+                                                            <option value="0">No</option>
+                                                            <option {{ $segmento->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                                                      </select>
+                                                            <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
+                                                      </form>
+                                                </div>
+                                          </td>
+                                    </tr>
+                              @endif
+                              @endforeach
+                              </tbody>
+                        </table>
+                        </div>
                   </div>
-                  <div class="card-body">
-                  <table class="table table-hover">
-                        <thead>
-                        <tr>
-                        <th style="width: 33%">Preguntas Realizadas</th>
-                        <th style="width: 15%">Comentario</th>
-                        <th style="width: 10%">Imagen...</th>
-                        <th style="width: 10%">Aprobado</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($segmento1 as $segmento)
-                          @if ($segmento->Aprobado == 1)
-                                <tr>
-                                      <td style="width: 600px;">
-                                            {{ $segmento->questions->Pregunta }}
-                                            <br><small><b>Fecha de Registro: {{ $segmento->FechaRegistro }}</b></small>
-                                            <br><small><b>Ultima Actualizacion: {{ $segmento->FechaActualizacion ?? 'Sin datos' }}</b></small>
-                                      </td>
-                                      <td>
-                                            <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
-                                            <textarea
-                                            name="accion"
-                                            cols="30"
-                                            rows="5"
-                                            placeholder="Plan de accion..."
-                                            disabled>{{ old('comments', $segmento->Comentario) }}</textarea>
-                                            </div>
-                                      </td>
-                                      <td>
-                                            @if ($segmento->Foto)
-                                            <img id="myImg{{ $segmento->Id }}" src="{{ $segmento->Foto }}" width="150px" class="zoom" alt="">
-                                            <button type="button" class="btn btn-info openBtn">Open Modal</button>
-                                            @else
-                                            <p>Sin Imagen</p>
-                                            @endif
-                                      </td>
-                                      <td>
-                                            <div class="form-group">
-                                                  <form action="{{ route('admin.resultados.update', $segmento->Id) }}"
-                                                  method="POST" style="display: inline;">
-                                                  @csrf
-                                                  @method('PUT')
-                                                  <select disabled class="form-control">
-                                                        <option value="0">No</option>
-                                                        <option {{ $segmento->Id == 1 ? 'selected' : '' }} value="1">Si</option>
-                                                  </select>
-                                                        <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
-                                                  </form>
-                                            </div>
-                                      </td>
-                                </tr>
-                          @endif
-                        @endforeach
-                        </tbody>
-                  </table>
-                  </div>
-            </div>
             </div>
         </div>
         </div>

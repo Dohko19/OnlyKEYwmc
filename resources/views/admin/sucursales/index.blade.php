@@ -44,7 +44,7 @@
 			                  {{-- 	@can('view', $sucursale)
 				                <a class="btn" href="{{ route('admin.sucursales.show', $sucursale) }}" style="color: blue;"><i class="far fa-eye"></i></a>
 				                @endcan --}}
-			                  	@can('update', $sucursale)
+			                      @can('update', $sucursale)
 				                <a class="btn" href="{{ route('admin.sucursales.edit', $sucursale) }}" style="color: blue;"><i class="far fa-edit"></i></a>
 				                @endcan
 				                @can('delete', $sucursale)

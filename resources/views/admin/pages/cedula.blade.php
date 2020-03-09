@@ -21,7 +21,7 @@
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
-              <a href="{{ route('admin.marcas.showcedula', ['marca' => $s->m,'cedula' => $s->c]) }}">
+              <a href="{{ route('admin.marcas.cedula', ['marca' => $s->m,'cedula' => $s->c]) }}">
               <div class="card-body">
                <b style="color: red;"><h4>{{ $s->c }}</h4></b><br>
                 <img src="{{ url('/marcas/'.$marca->photo) }}" alt="{{ $marca->id .'-'. $marca->name }}" width="120px">

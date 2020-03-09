@@ -50,7 +50,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <a href="{{ route('admin.segmentos.show', ['segmento' => $segmento->IdSegmentoAuditoria]) }}">Mas Informacion...</a>
+            <a href="{{ route('admin.segmentos.show', ['segmento' => $segmento->IdSegmentoAuditoria, 'FechaRegistro' => request('FechaRegistro'), 'sucursal' => request('sucursal') ]) }}">Mas Informacion...</a>
           </div>
           <!-- /.card-body -->
         </div>

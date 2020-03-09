@@ -13,7 +13,8 @@ class ResultadoAuditoriaController extends Controller
     {
     	$this->authorize('update', $id);
     	$resultado = ResultadoAuditoria::find($id);
-    	$resultado->Aprobado = $request->get('Aprobado');
+      $resultado->Aprobado = $request->get('Aprobado');
+      $resultado->action = $request->get('action');
     	$resultado->FechaActualizacion = Carbon::now();
     	$resultado->save();
     	return redirect()->back()->withSuccess('Realizado');
