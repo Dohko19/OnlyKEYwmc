@@ -119,7 +119,7 @@
                           <!-- /.info-box -->
                           @endforeach
 		</div>
-      </div>	
+      </div>
       @elseif(auth()->user()->hasRole('dgral'))
             <div class="row justify-content-center align-items-center minh-100" >
             @foreach ($marcas as $marca)

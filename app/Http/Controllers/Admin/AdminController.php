@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Aresult;
 use App\Auditoria;
 use App\GrupoMarca;
 use App\Http\Controllers\Controller;
@@ -26,6 +27,11 @@ class AdminController extends Controller
 
     public function index()
     {
+        // $promedio = Aresult::join('sucursals as s', 's.IdCte', '=', 'aresults.IdCedula')
+        // ->where('s.id', 493)
+        // ->selectRaw('AVG(aresults.Promedio) prom')
+        // ->get();
+        // dd($promedio);
 
         if (auth()->user()->hasRole('dgral')) {
             $marcas = Marca::with(['grupos'])->where('user_id', auth()->user()->id)->get();
@@ -35,7 +41,7 @@ class AdminController extends Controller
         //     $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
         //     return view('admin.dashboard', compact('sucursales'));
         // }
-        
+
         if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional')) {
             $sucursales = User::with(['sucursals'])
                 ->findOrFail(auth()->user()->id);
@@ -71,7 +77,7 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
-              
+
              $sucursales = User::with(['sucursals' => function($query){
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('delegacion_municipio dm');
@@ -94,7 +100,7 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
-          
+
              $sucursales = User::with(['sucursals' => function($query){
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('cedula c');
