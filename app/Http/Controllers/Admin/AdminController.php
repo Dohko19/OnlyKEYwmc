@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Aresult;
+use App\Qresults;
 use App\Auditoria;
 use App\GrupoMarca;
 use App\Http\Controllers\Controller;
@@ -35,25 +36,37 @@ class AdminController extends Controller
 
         if (auth()->user()->hasRole('dgral')) {
             $marcas = Marca::with(['grupos'])->where('user_id', auth()->user()->id)->get();
-            return view('admin.dashboard', compact('marcas'));
+            $sj = Marca::where('user_id', auth()->user()->id )
+            ->selectRaw('id')
+            ->get();
+            return view('admin.dashboard', compact('marcas', 'sj'));
         }
-        // if (auth()->user()->hasRole('dmarca')) {
-        //     $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
-        //     return view('admin.dashboard', compact('sucursales'));
-        // }
+        if (auth()->user()->hasRole('dmarca')) {
+            $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
+            $sj = Marca::where('user_id', auth()->user()->id )
+            ->selectRaw('id')
+            ->get();
+            return view('admin.dashboard', compact('sucursales', 'sj'));
+        }
 
         if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional')) {
             $sucursales = User::with(['sucursals'])
                 ->findOrFail(auth()->user()->id);
-            return view('admin.dashboard', compact('sucursales'));
+            $sj = Marca::where('user_id', auth()->user()->id )
+            ->selectRaw('id')
+            ->get();
+            return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
         if(auth()->user()->hasRole('ddistrital'))
         {
-              $sucursales = User::with(['sucursals'])
-                ->findOrFail(auth()->user()->id);
+            $sucursales = User::with(['sucursals'])
+            ->findOrFail(auth()->user()->id);
+            $sj = Marca::where('user_id', auth()->user()->id )
+            ->selectRaw('id')
+            ->get();
             //   ddd($sucursales);
-              return view('admin.dashboard', compact('sucursales'));
+              return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
         if(auth()->user()->hasRole('Admin'))
@@ -61,14 +74,18 @@ class AdminController extends Controller
             $users = User::selectRaw('count(*) users')->get();
             $gmarca = GrupoMarca::selectRaw('count(*) gmarca')->get();
             $marcas = Marca::selectRaw('count(*) marca')->get();
-            $sucursales = Sucursal::selectRaw('count(*) sucursals')->get();
+            $sucursales = Sucursal::selectRaw('count(*) sucursals')
+            ->get();
+            $sj = Marca::where('user_id', auth()->user()->id )
+            ->selectRaw('id')
+            ->get();
+
             if (request()->wantsJson() )
             {
                 return [$users, $gmarca, $marcas, $sucursales];
             }
-                return view('admin.dashboard', compact('users', 'gmarca', 'marcas', 'sucursales'));
+                return view('admin.dashboard', compact('users', 'gmarca', 'marcas', 'sucursales', 'sj'));
         }
-        // abort(500);
     }
 
     public function region($id)
@@ -112,5 +129,46 @@ class AdminController extends Controller
                 return view('admin.pages.cedula', compact('sucursales', 'marca'));
         }
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
+    }
+
+    public function promedio()
+    {
+        $marca = Marca::findOrFail( request('id') );
+        if ($marca->grupos->tipo == 'auditorias') {
+            $promedio = Aresult::join('sucursals as s', 's.IdCte', '=', 'aresults.IdCedula')
+            ->join('marcas as m', 'm.id', '=', 's.marca_id')
+            ->where('m.id', '=', $marca->id)
+            ->selectRaw('AVG(aresults.Promedio) prom')
+            ->get()->toArray();
+            for($i=0;$i<count($promedio);$i++) {
+                $total = $promedio[$i];
+            }
+            $prom = Marca::find($marca->id);
+            $prom->puntuacion_general = $total['prom'];
+            $prom->save();
+            $success = true;
+        }
+        else
+        {
+            $success = true;
+            $promedio = "Ningun dato a calcular";
+        }
+        // $promedio = Qresults::join('sucursals as s', 's.IdCte', '=', 'qresults.IdCedula')
+        //     ->join('marcas as m', 'm.id', '=', 's.marca_id')
+        //     ->where('m.id', '=', $marca->id)
+        //     ->selectRaw('AVG(qresults.Promedio) prom')
+        //     ->get();
+        //     ddd($promedio);
+        if(request()->ajax()){
+            return response()->json([
+                'promedio' => $promedio,
+                'success' => $success
+            ]);
+        }
+        else
+        {
+            return 'ajax fail';
+        }//procesa la peticion ajax
+
     }
 }

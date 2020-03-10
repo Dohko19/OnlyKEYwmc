@@ -63,6 +63,8 @@ Route::group([
 		Route::middleware('role:Admin')
             ->put('users/{user}/permissions', 'UsersPermissionsController@update')->name('admin.users.permissions.update');
 
+        Route::get('promedio', 'AdminController@promedio')->name('promedio');
+
             //vuejs Routes
             Route::get('datos', 'AdminController@index');
             Route::get('gmarca', 'GruposMarcasController@index');

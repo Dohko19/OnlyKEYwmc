@@ -7,12 +7,26 @@
     <li class="nav-item d-none d-sm-inline-block">
       <a href="{{ route('admin.index') }}" class="nav-link">WMC</a>
     </li>
+      @if (\Request::is('/'))
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="{{ route('exports.home') }}" class="nav-link"><i class="fas fa-file-export"></i></a>
-    </li>
+      @foreach ($sj as $id)
+        <form action="{{ route('promedio') }}" method="GET" id="promedioget">
+          <input type="hidden" id="id" name="id" value="{{ $id->id }}">
+          <button type="submit" id="prom" class=" btn btn-outline nav-link"><i class="fas fa-sync"></i></button>
+      </form>
+      @endforeach
+    <li>
+      @endif
+      @if (\Request::is('admin'))
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="" class="nav-link"><i class="fas fa-sync"></i></a>
-    </li>
+      @foreach ($sj as $id)
+        <form action="{{ route('promedio') }}" method="GET" id="promedioget">
+          <input type="hidden" id="id" name="id" value="{{ $id->id }}">
+          <button type="submit" id="prom" class=" btn btn-outline nav-link"><i class="fas fa-sync"></i></button>
+      </form>
+      @endforeach
+    <li>
+      @endif
   </ul>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
@@ -43,3 +57,29 @@
     </li>
   </ul>
 </nav>
+@push('styles')
+@endpush
+@push('scripts')
+<script>
+  $(document).ready(function() {
+    $('#prom').click(function(event) {
+                event.preventDefault();
+                var dataString = $('#promedioget').serialize();
+              $.ajax({
+          url: '{{ route('promedio') }}',
+          type: 'GET',
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          data: dataString,
+            success: function(response){
+               location.reload(true);
+                }, error:function(jqXHR, textStatus, errorThrown){
+                    console.log('error::'+errorThrown);
+                     console.log('error::'+textStatus);
+                      console.log('error::'+jqXHR);
+                   }
+
+            });
+        });
+    });
+</script>
+@endpush

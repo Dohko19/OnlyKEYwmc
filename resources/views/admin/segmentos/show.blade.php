@@ -59,7 +59,6 @@
                               <td>
                                     <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
                                     <textarea
-                                    name="accion"
                                     cols="20"
                                     rows="5"
                                     placeholder="Plan de accion..."
