@@ -126,6 +126,16 @@ class AdminController extends Controller
                 $query->orderBy('cedula');
             }, 'grupos'])
                 ->findOrFail(auth()->user()->id);
+
+            $promedio = Qresults::with(['sucursales'])
+            ->join('sucursals as s', 's.id', '=', 'qresults.sucursal_id')
+            ->join('marcas as m', 'm.id', '=', 's.marca_id')
+            ->where('qresults.sucursal_id', '=', $marca->id)
+            ->selectRaw('AVG(qresults.RI) prom')
+            ->get();
+            ddd($promedio);
+
+
                 return view('admin.pages.cedula', compact('sucursales', 'marca'));
         }
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
@@ -153,12 +163,7 @@ class AdminController extends Controller
             $success = true;
             $promedio = "Ningun dato a calcular";
         }
-        // $promedio = Qresults::join('sucursals as s', 's.IdCte', '=', 'qresults.IdCedula')
-        //     ->join('marcas as m', 'm.id', '=', 's.marca_id')
-        //     ->where('m.id', '=', $marca->id)
-        //     ->selectRaw('AVG(qresults.Promedio) prom')
-        //     ->get();
-        //     ddd($promedio);
+
         if(request()->ajax()){
             return response()->json([
                 'promedio' => $promedio,

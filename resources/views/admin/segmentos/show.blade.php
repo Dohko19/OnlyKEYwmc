@@ -82,7 +82,11 @@
                                                 <option value="0">No</option>
                                                 <option {{ $segmento->Id == 1 ? 'selected' : '' }} value="1">Si</option>
                                           </select>
-                                          <textarea name="action" id="" cols="30" rows="5" placeholder="Plan de Accion"></textarea>
+                                          @if (Carbon\Carbon::parse($segmento->FechaRegistro)->diffInHours() > 24)
+                                            <textarea id="" cols="30" rows="5" placeholder="Plan de Accion (este es un placeholder)" disabled>{{ old('action') }}</textarea>
+                                          @else
+                                          <textarea name="action" id="" cols="30" rows="5" placeholder="Plan de Accion">{{ old('action') }}</textarea>
+                                          @endif
                                                 <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
                                           </form>
                                     </div>
