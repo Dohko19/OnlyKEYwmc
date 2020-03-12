@@ -36,7 +36,10 @@
 			                  	@can('update', $user)
 				                <a class="btn" href="{{ route('admin.users.edit', $user) }}" style="color: blue;"><i class="far fa-edit"></i></a>
 				                @endcan
-
+								<form action="{{ route('admin.users.userdata', $user) }}" method="POST">
+									@csrf
+									<button class="btn"><i class="fas fa-envelope-square"></i></button>
+								</form>
 				                @can('delete', $user)
 			                  	<form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display: inline">
 	                        		@csrf

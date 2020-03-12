@@ -39,8 +39,8 @@ class DetailsExport implements FromView, ShouldAutoSize
 				->where(function ($query) use ($from, $to){
 					$query->whereBetween('created_at', [$from, $to]);
 				})
-                ->paginate();
-   			//ddd($dates);
+                ->get();
+   			// ddd($dates);
 
 		return view('exports.details', compact('dates'))->withSuccess('Archivo Listo');
 	}

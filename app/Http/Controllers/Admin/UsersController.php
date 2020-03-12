@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
+use App\Mail\ResendAuthDates;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Excel;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -116,5 +118,11 @@ class UsersController extends Controller
         $user->delete();
 
         return back()->with('info', 'Usuario Eliminado Correctamente');
+    }
+
+    public function userdata(User $user)
+    {
+        Mail::to($user->email)->send(new ResendAuthDates($user));
+        return redirect()->back()->withInfo('Correo re-enviado con datos del usuario');
     }
 }

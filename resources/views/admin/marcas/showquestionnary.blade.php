@@ -37,7 +37,7 @@
 			            <div class="col-md-4 col-sm-4">
 			              <form action="{{ route('admin.marcas.show',$marca) }}" method="GET" class="form-inline">
                       <div class="form-group">
-                        <input type="hidden" name="zona" value="{{ $zona }}">
+                        <input type="hidden" name="zone" value="{{ $zona }}">
                         <input type="hidden" name="zonaf" value="{{ $delegacion }}">
   			                <input size="5" name="graphics" type="text" class="form-control pull-right" id="datepicker" value="{{ old('graphics', request('graphics')) }}" placeholder="mes y año" autocomplete="off"><br>
                         <select class="form-control" name="dm" id="dm">
@@ -233,14 +233,16 @@
         name: "Sucursales",
         colorByPoint: true,
         data: [
-            @foreach ( $ri->sucursals as $ris)
-                  @foreach ($ris->qresults as $rir)
+            @foreach ( $sucursales->sucursals as $ris)
                   {
                         name: "{{ $ris->name }}",
-                        y: {{ $rir->RI ?? 0}}, //proemdio
+                  @forelse ($ris->qresults->sortBy('RI') as $rir)
+                        y: {{ $rir->RI }}, //proemdio
+                        @empty
+                        y: 0,
+                  @endforelse
                         drilldown: "{{ $ris->name }}"
                   },
-                  @endforeach
             @endforeach
         ]
       }
@@ -258,12 +260,17 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ( $sucursal->questionaries->sortBy('IdPregunta')  as $q)
+              @forelse ( $sucursal->questionaries->sortBy('IdPregunta')  as $q)
                 @if($q->riesgo == 'RI')
                   @if ($q->Value == '1')
                       [
                         "{{ $q->IdPregunta }}",
                           100,
+                      ],
+                    @elseif($q->Value == NULL)
+                      [
+                        "{{ $q->IdPregunta }}",
+                          0.0,
                       ],
                     @else
                       [
@@ -272,7 +279,12 @@
                       ],
                   @endif
                 @endif
-              @endforeach
+                @empty
+                      [
+                        "Sin datos",
+                          0.0,
+                      ],
+              @endforelse
           ]
         },
          @endforeach
@@ -378,14 +390,16 @@
         name: "Sucursales",
         colorByPoint: true,
         data: [
-            @foreach ( $ri->sucursals as $ris)
-                  @foreach ($ris->qresults as $rir)
+            @foreach ( $sucursales->sucursals as $cs)
                   {
-                        name: "{{ $ris->name }}",
-                        y: {{ $rir->C ?? 0}}, //proemdio
-                        drilldown: "{{ $ris->name }}"
+                        name: "{{ $cs->name }}",
+                  @forelse ($cs->qresults->sortBy('C') as $cr)
+                        y: {{ $cr->C }}, //proemdio
+                        @empty
+                        y: 0,
+                  @endforelse
+                        drilldown: "{{ $cs->name }}"
                   },
-                  @endforeach
             @endforeach
         ]
       }
@@ -403,7 +417,7 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @foreach ( $sucursal->questionaries->sortBy('IdPregunta')  as $q)
+              @forelse ( $sucursal->questionaries->sortBy('IdPregunta')  as $q)
                 @if($q->riesgo == 'C')
                 @if ($q->Value == '1')
                   [
@@ -417,7 +431,12 @@
                   ],
                 @endif
                 @endif
-              @endforeach
+                @empty
+                  [
+                    "Sin datos",
+                      0.0,
+                  ],
+              @endforelse
           ]
         },
          @endforeach

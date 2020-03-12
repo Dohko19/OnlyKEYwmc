@@ -152,7 +152,7 @@
 			                <tr>
 			                  <th>ID</th>
 			                  <th>ID Cliente</th>
-			                  <th>ID region</th>
+			                  <th>Region</th>
 			                  <th>Sucursal</th>
 			                  <th>Delegacion/Municipio</th>
 			                  <th>Ciudad</th>
