@@ -48,18 +48,26 @@ class SegmentosController extends Controller
       //   ->where('FechaRegistro', 'LIKE', "%".$fil."%")
       //   ->get();
 
-      $segmento1 = User::join('marcas as m', 'm.user_id', '=', 'users.id')
-                        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
-                        ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
-                        ->join('PreguntasAuditoria as p', 'p.IdSegmento', '=', 'r.IdSegmento')
-                        ->select('r.*', 'p.Pregunta')
-                        ->where('users.id', '=', auth()->user()->id)
-                        ->where('r.IdSegmento', '=', $segmento->IdSegmentoAuditoria)
-                        ->where('r.FechaRegistro', 'LIKE', "%".request('FechaRegistro')."%")
-                        ->where('s.name', 'LIKE', "%".request('sucursal')."%")
-                        ->where('s.name', 'LIKE', "%".request('cedula')."%")
-                        // ->findOrFail(auth()->user()->id);
-                        ->get();
+      // $segmento1 = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+      //                   ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+      //                   ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
+      //                   ->join('PreguntasAuditoria as p', 'p.IdSegmento', '=', 'r.IdSegmento')
+      //                   ->select('r.*', 'p.Pregunta')
+      //                   ->where('users.id', '=', auth()->user()->id)
+      //                   ->where('r.IdSegmento', '=', $segmento->IdSegmentoAuditoria)
+      //                   ->where('r.FechaRegistro', 'LIKE', "%".request('FechaRegistro')."%")
+      //                   ->where('s.name', 'LIKE', "%".request('sucursal')."%")
+      //                   ->where('s.name', 'LIKE', "%".request('cedula')."%")
+      //                   // ->findOrFail(auth()->user()->id);
+      //                   ->get();
+        $segmento1 = User::with(['sucursals' => function($query){
+                    $query->join('aresults as ar', function($join){
+                      $join->on('ar.sucursal_id', '=', 'sucursals.id')
+                      ->where('sucursals.created_at','like', "%".request('FechaRegistro')."%");
+                      // ->where('sucursals.name','like', "%".request('sucursal')."%");
+                    });
+        }])
+        ->findOrFail(auth()->user()->id);
 
       // ddd($segmento1);
         return view('admin.segmentos.show', compact('segmento', 'segmento1'));

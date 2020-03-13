@@ -2,9 +2,6 @@
 @section('content')
 @section('headertitle', '')
 @section('title', 'Key | Mis Sucursales')
-@foreach ($avg->sucursals as $sucursale)
-{{ $sucursale->segmentos }}
-@endforeach
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -41,7 +38,7 @@
 							<div class="text-center">
 								<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 							</div>
-              <a href="{{ url()->previous() }}" class="btn btn-danger float-right">Volver Atras</a>
+              <a href="{{ route('home.cedula', $marca->id) }}" class="btn btn-danger float-right">Volver Atras</a>
 						</div>
 					</div>
 				</div>
@@ -160,12 +157,12 @@ Highcharts.chart('container', {
           name: "{{ $average->name }}",
           id: "{{ $average->name }}",
           data: [
-                  @foreach ($average->segmentos as $ares)
+                @foreach ($average->audres as $ares)
                         [
-                        "asasdasd",
-                        23,
+                        "{{ $ares->segmentos->NombreSegmento ?? 'Sin datos'}}",
+                        {{ $ares->Promedio ?? 0 }}
                         ],
-                  @endforeach
+                @endforeach
           ]
         },
         @endforeach

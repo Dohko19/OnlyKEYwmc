@@ -13,6 +13,7 @@ use App\PromSuc;
 use App\Qresults;
 use App\Questionnaire;
 use App\ResultadoAuditoria;
+use App\Segmento;
 use App\Sucursal;
 use App\User;
 use Carbon\Carbon;
@@ -263,26 +264,23 @@ class MarcaController extends Controller
 
     public function showcedula(Request $request, Marca $marca)
     {
-        $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
-        $cedula = $request->get('cedula') ? $request->get('cedula') : request('cedula');
+            $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
+            $cedula = $request->get('cedula') ? $request->get('cedula') : request('cedula');
 
              $avg = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
                 $query->leftJoin('prom_sucs as a', function($join) use ($graphics) {
                     $join->on('a.sucursal_id', '=', 'sucursals.id')
                     ->where('a.fecharegistro', 'LIKE', "%".$graphics."%");
                 });
-                $query->leftJoin('aresults as ar', function($join) use ($graphics) {
-                    $join->on( 'ar.sucursal_id', '=', 'sucursals.id' )
-                    ->where('ar.created_at', 'LIKE', "%".$graphics."%");
-                });
                 $query->where('sucursals.cedula', $cedula);
                 $query->where('sucursals.marca_id', '=', $marca->id);
-                $query->select('a.*', 'sucursals.*', 'ar.*');
+                $query->select('a.*', 'sucursals.*');
                 $query->orderBy('a.average');
              }])
              ->findOrFail(auth()->user()->id);
-            // ddd($avg);
-            return view('admin.marcas.showcedula', compact('marca', 'cedula', 'graphics', 'avg' ));
+             // ddd($avg);
+            $segmentos = Segmento::select('NombreSegmento')->get();
+            return view('admin.marcas.showcedula', compact('marca', 'segmentos', 'cedula', 'graphics', 'avg' ));
     }
     /**
      * Show the form for editing the specified resource.

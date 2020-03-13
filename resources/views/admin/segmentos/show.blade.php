@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Key | Planes de Accion')
 @section('content')
-
-  <section class="content">
+<section class="content">
   <!-- Default box -->
   <div class="card">
     <div class="card-header">
@@ -48,8 +47,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                     @foreach ($segmento1 as $segmento)
-                     @if ($segmento->Aprobado != 1)
+                     @foreach ($segmento as $segmento)
                         <tr>
                               <td style="width: 600px;">
                                     {{ $segmento->Pregunta }}
@@ -92,7 +90,6 @@
                                     </div>
                               </td>
                         </tr>
-                     @endif
                      @endforeach
                   </tbody>
                 </table>

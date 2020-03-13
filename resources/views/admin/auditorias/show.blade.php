@@ -24,7 +24,7 @@
                   </form>
             </div>
         </div>
-    
+
   </div>
 
   <div class="card-header">
@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="row">
-        
+
     @foreach ($auditoria->segmentos as $segmento)
       <div class="col-md-4">
         <div class="card card-outline card-primary">

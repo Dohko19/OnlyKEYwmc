@@ -36,10 +36,12 @@ class AuditoriasController extends Controller
       $fecha = $request->get('FechaRegistro');
       $sucursal = $request->get('sucursal') ? $request->get('sucursal') : '';
 
-      $sucursales = User::with(['sucursals' => function($query){
+      $sucursales = User::with(['sucursals' => function($query) use ($sucursal){
+                    $query->where('name', 'LIKE', "%".$sucursal."%");
                     $query->orderBy('name');
               }])
                 ->findOrFail(auth()->user()->id);
+                // ddd($sucursales);
        return view('admin.auditorias.show', compact('auditoria', 'fecha', 'sucursal', 'sucursales'));
     }
 }
