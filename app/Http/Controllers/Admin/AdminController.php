@@ -128,22 +128,22 @@ class AdminController extends Controller
             }, 'grupos'])
                 ->findOrFail(auth()->user()->id);
 
-            $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
-            ->join('marcas as m', 'm.id', '=', 's.marca_id')
-            ->where('m.id', '=', $marca->id)
-            ->select('s.id', 'aresults.created_at')
-            ->selectRaw('AVG(aresults.Promedio) prom')
-            ->groupBy('s.id')
-            ->get()->toArray();
-            // ddd($promedio);
-            for($i=0;$i<count($promedio);$i++) {
-                $total = $promedio[$i];
-                $prom = new PromSuc;
-                $prom->sucursal_id = $total['id'];
-                $prom->average = $total['prom'];
-                $prom->fecharegistro = $total['created_at'];
-                $prom->save();
-            }
+            // $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
+            // ->join('marcas as m', 'm.id', '=', 's.marca_id')
+            // ->where('m.id', '=', $marca->id)
+            // ->select('s.id', 'aresults.created_at')
+            // ->selectRaw('AVG(aresults.Promedio) prom')
+            // ->groupBy('s.id')
+            // ->get()->toArray();
+            // // ddd($promedio);
+            // for($i=0;$i<count($promedio);$i++) {
+            //     $total = $promedio[$i];
+            //     $prom = new PromSuc;
+            //     $prom->sucursal_id = $total['id'];
+            //     $prom->average = $total['prom'];
+            //     $prom->fecharegistro = $total['created_at'];
+            //     $prom->save();
+            // }
             // $promedio = Qresults::with(['sucursales'])
             // ->join('sucursals as s', 's.id', '=', 'qresults.sucursal_id')
             // ->join('marcas as m', 'm.id', '=', 's.marca_id')
@@ -162,7 +162,7 @@ class AdminController extends Controller
     {
         $marca = Marca::findOrFail( request('id') );
         if ($marca->grupos->tipo == 'auditorias') {
-            $promedio = Aresult::join('sucursals as s', 's.IdCte', '=', 'aresults.IdCedula')
+            $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
             ->join('marcas as m', 'm.id', '=', 's.marca_id')
             ->where('m.id', '=', $marca->id)
             ->selectRaw('AVG(aresults.Promedio) prom')

@@ -13,7 +13,7 @@
                   <form action="" method="GET">
                         <h4>Filtros de busqueda</h4>
                         <div class="input-group">
-                        <input class="form-control" id="datepicker" type="text" name="FechaRegistro" placeholder="Año y mes (YYY-mm)" autocomplete="off">
+                        <input class="form-control" id="datepicker" type="text" name="FechaRegistro" placeholder="Fecha Registro" autocomplete="off" value="{{ old('FechaRegistro', request('FechaRegistro')) }}">
                               <select class="form-control" name="sucursal" id="">
                                     @foreach ($sucursales->sucursals as $sucursal)
                                           <option  {{ old('sucursal', request('sucursal')) == $sucursal->name ? 'selected' : ''}} value="{{ $sucursal->name }}">{{ $sucursal->name }}</option>

@@ -71,4 +71,9 @@ class Sucursal extends Model
     {
         return $this->hasMany(PromSuc::class);
     }
+
+    public function rauditoria()
+    {
+        return $this->hasMany(ResultadoAuditoria::class);
+    }
 }

@@ -17,6 +17,7 @@
       <div class="col-md-4">
           <form action="{{ route('admin.segmentos.show', $segmento->IdSegmentoAuditoria) }}" style="display: inline;">
             <div class="form-group">
+              <input type="hidden" name="sucursal" value="{{ request('sucursal') }}">
               <input id="datepicker"
                     type="text"
                     name="FechaRegistro"
@@ -47,12 +48,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                     @foreach ($segmento as $segmento)
+                     @foreach ($segmento1 as $seg)
+                     @foreach ($seg->rauditoria as $s)
+                      @if ($s->Aprobado == 0)
                         <tr>
                               <td style="width: 600px;">
-                                    {{ $segmento->Pregunta }}
-                                    <br><small><b>Fecha de Registro: {{ $segmento->FechaRegistro }}</b></small>
-                                    <br><small><b>Ultima Actualizacion: {{ $segmento->FechaActualizacion ?? 'Sin datos' }}</b></small>
+                                    {{ $s->questions->Pregunta }}
+                                    <br><small><b>Fecha de Registro: {{ $s->FechaRegistro }}</b></small>
+                                    <br><small><b>Ultima Actualizacion: {{ $s->FechaActualizacion ?? 'Sin datos' }}</b></small>
                               </td>
                               <td>
                                     <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
@@ -64,24 +67,24 @@
                                     </div>
                               </td>
                               <td>
-                                    @if ($segmento->Foto)
-                                    <img id="myImg{{ $segmento->Id }}" src="{{ $segmento->Foto }}" width="150px" class="zoom" alt="">
+                                    @if ($s->Foto)
+                                    <img id="myImg{{ $segmento->Id }}" src="{{ $s->Foto }}" width="150px" class="zoom" alt="">
                                     @else
                                     <p>Sin Imagen</p>
                                     @endif
                               </td>
                               <td>
                                     <div class="form-group">
-                                          <form action="{{ route('admin.resultados.update', $segmento->Id) }}"
+                                          <form action="{{ route('admin.resultados.update', $s->Id) }}"
                                           method="POST" style="display: inline;">
                                           @csrf
                                           @method('PUT')
                                           <select class="form-control" name="Aprobado">
                                                 <option value="0">No</option>
-                                                <option {{ $segmento->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                                                <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
                                           </select>
-                                          @if (Carbon\Carbon::parse($segmento->FechaRegistro)->diffInHours() > 24)
-                                            <textarea id="" cols="30" rows="5" placeholder="Plan de Accion (este es un placeholder)" disabled>{{ old('action') }}</textarea>
+                                          @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
+                                            <textarea id="" cols="30" rows="5" placeholder="Plan de Accion (este no es un texto)" disabled>{{ old('action') }}</textarea>
                                           @else
                                           <textarea name="action" id="" cols="30" rows="5" placeholder="Plan de Accion">{{ old('action') }}</textarea>
                                           @endif
@@ -90,6 +93,8 @@
                                     </div>
                               </td>
                         </tr>
+                      @endif
+                     @endforeach
                      @endforeach
                   </tbody>
                 </table>
@@ -114,48 +119,55 @@
                               </tr>
                               </thead>
                               <tbody>
-                              @foreach ($segmento1 as $segmento)
-                              @if ($segmento->Aprobado == 1)
-                                    <tr>
-                                          <td style="width: 600px;">
-                                                {{ $segmento->questions->Pregunta }}
-                                                <br><small><b>Fecha de Registro: {{ $segmento->FechaRegistro }}</b></small>
-                                                <br><small><b>Ultima Actualizacion: {{ $segmento->FechaActualizacion ?? 'Sin datos' }}</b></small>
-                                          </td>
-                                          <td>
-                                                <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
-                                                <textarea
-                                                name="accion"
-                                                cols="30"
-                                                rows="5"
-                                                placeholder="Plan de accion..."
-                                                disabled>{{ old('comments', $segmento->Comentario) }}</textarea>
-                                                </div>
-                                          </td>
-                                          <td>
-                                                @if ($segmento->Foto)
-                                                <img id="myImg{{ $segmento->Id }}" src="{{ $segmento->Foto }}" width="150px" class="zoom" alt="">
-                                                <button type="button" class="btn btn-info openBtn">Open Modal</button>
-                                                @else
-                                                <p>Sin Imagen</p>
-                                                @endif
-                                          </td>
-                                          <td>
-                                                <div class="form-group">
-                                                      <form action="{{ route('admin.resultados.update', $segmento->Id) }}"
+                              @foreach ($segmento1 as $seg)
+                                @foreach ($seg->rauditoria as $sa)
+                                  @if ($sa->Aprobado == 1)
+                                        <tr>
+                                              <td style="width: 600px;">
+                                                    {{ $sa->questions->Pregunta }}
+                                                    <br><small><b>Fecha de Registro: {{ $sa->FechaRegistro }}</b></small>
+                                                    <br><small><b>Ultima Actualizacion: {{ $sa->FechaActualizacion ?? 'Sin datos' }}</b></small>
+                                              </td>
+                                              <td>
+                                                    <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
+                                                    <textarea
+                                                    name="accion"
+                                                    cols="30"
+                                                    rows="5"
+                                                    placeholder="Plan de accion..."
+                                                    disabled>{{ old('comments', $sa->Comentario) }}</textarea>
+                                                    </div>
+                                              </td>
+                                              <td>
+                                                    @if ($sa->Foto)
+                                                    <img id="myImg{{ $sa->Id }}" src="{{ $sa->Foto }}" width="150px" class="zoom" alt="">
+                                                    <button type="button" class="btn btn-info openBtn">Open Modal</button>
+                                                    @else
+                                                    <p>Sin Imagen</p>
+                                                    @endif
+                                              </td>
+                                              <td>
+                                                    <div class="form-group">
+                                                      <form action="{{ route('admin.resultados.update', $s->Id) }}"
                                                       method="POST" style="display: inline;">
                                                       @csrf
                                                       @method('PUT')
-                                                      <select disabled class="form-control">
+                                                      <select class="form-control" name="Aprobado">
                                                             <option value="0">No</option>
-                                                            <option {{ $segmento->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                                                            <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
                                                       </select>
+                                                      @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
+                                                        <textarea id="" cols="30" rows="5" placeholder="Plan de Accion (este no es un texto)" disabled>{{ old('action') }}</textarea>
+                                                      @else
+                                                      <textarea name="action" id="" cols="30" rows="5" placeholder="Plan de Accion">{{ old('action') }}</textarea>
+                                                      @endif
                                                             <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
                                                       </form>
-                                                </div>
-                                          </td>
-                                    </tr>
-                              @endif
+                                                    </div>
+                                              </td>
+                                        </tr>
+                                  @endif
+                                @endforeach
                               @endforeach
                               </tbody>
                         </table>

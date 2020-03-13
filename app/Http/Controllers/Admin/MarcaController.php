@@ -97,6 +97,7 @@ class MarcaController extends Controller
         if($marca->grupos->tipo == 'auditorias')
         {
             $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m-d');
+
             $sucursales = Sucursal::with(['segmentos','PromSuc' => function($query){
                 $query->where('created_at', $graphics);
             }])

@@ -7,6 +7,7 @@ use App\Marca;
 use App\PlanesAccion;
 use App\ResultadoAuditoria;
 use App\Segmento;
+use App\Sucursal;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -40,7 +41,8 @@ class SegmentosController extends Controller
     public function show(Request $request, Segmento $segmento)
     {
         $this->authorize('view', $segmento);
-        $fil = $request->get('FechaRegistro') ? $request->get('FechaRegistro') : Carbon::now()->format('Y-m');
+        $fil = $request->get('FechaRegistro') ? $request->get('FechaRegistro') : request('FechaRegistro');
+
         // $fil = Carbon::parse($fil)->format('Y-m');
 
       //   $segmento1 = ResultadoAuditoria::with(['questions'])
@@ -48,28 +50,27 @@ class SegmentosController extends Controller
       //   ->where('FechaRegistro', 'LIKE', "%".$fil."%")
       //   ->get();
 
-      // $segmento1 = User::join('marcas as m', 'm.user_id', '=', 'users.id')
-      //                   ->join('sucursals as s', 's.marca_id', '=', 'm.id')
-      //                   ->join('ResultadoAuditoria as r', 'r.IdCte', '=', 's.IdCte')
-      //                   ->join('PreguntasAuditoria as p', 'p.IdSegmento', '=', 'r.IdSegmento')
-      //                   ->select('r.*', 'p.Pregunta')
-      //                   ->where('users.id', '=', auth()->user()->id)
-      //                   ->where('r.IdSegmento', '=', $segmento->IdSegmentoAuditoria)
-      //                   ->where('r.FechaRegistro', 'LIKE', "%".request('FechaRegistro')."%")
-      //                   ->where('s.name', 'LIKE', "%".request('sucursal')."%")
-      //                   ->where('s.name', 'LIKE', "%".request('cedula')."%")
-      //                   // ->findOrFail(auth()->user()->id);
-      //                   ->get();
-        $segmento1 = User::with(['sucursals' => function($query){
-                    $query->join('aresults as ar', function($join){
-                      $join->on('ar.sucursal_id', '=', 'sucursals.id')
-                      ->where('sucursals.created_at','like', "%".request('FechaRegistro')."%");
-                      // ->where('sucursals.name','like', "%".request('sucursal')."%");
-                    });
-        }])
-        ->findOrFail(auth()->user()->id);
+      $segmento1 = Sucursal::with(['rauditoria' => function($query) use ($segmento, $fil){
+        $query->where('IdSegmento', $segmento->IdSegmentoAuditoria);
+        $query->where('FechaRegistro', 'like', "%".$fil."%");
+      }])
+      ->where('name', request('sucursal'))
+      ->get();
 
-      // ddd($segmento1);
+      // User::with(['sucursals' => function($query) use ($segmento){
+      //   $query->join('ResultadoAuditoria as ra', function($join) use ($segmento){
+      //     $join->on('ra.sucursal_id', '=', 'sucursals.id')
+      //     ->where('ra.IdSegmento', '=', $segmento->IdSegmentoAuditoria);
+      //   });
+      // }])
+      //   ->findOrFail(auth()->user()->id);
+
+        // $segmento1 = ResultadoAuditoria::join('sucursals as s', function($join) use ($fil, $segmento) {
+        //             $join->on('s.IdCte', '=', 'ResultadoAuditoria.IdCte')
+        //             ->where('ResultadoAuditoria.IdSegmento', '=', $segmento->IdSegmentoAuditoria);
+        //         })
+        //   ->paginate(13);
+            // ddd($segmento1);
         return view('admin.segmentos.show', compact('segmento', 'segmento1'));
     }
 }

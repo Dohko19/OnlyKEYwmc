@@ -159,7 +159,7 @@ Highcharts.chart('container', {
           data: [
                 @foreach ($average->audres as $ares)
                         [
-                        "{{ $ares->segmentos->NombreSegmento ?? 'Sin datos'}}",
+                        "<a href='{{ route('admin.segmentos.show',['sucursal' => $average->name,'segmento' => $ares->segmentos->IdSegmentoAuditoria, 'FechaRegistro' => request('graphics') ,'sucursal' => $average->name] ) }}'>{{ $ares->segmentos->NombreSegmento }}</a>",
                         {{ $ares->Promedio ?? 0 }}
                         ],
                 @endforeach

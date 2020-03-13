@@ -37,7 +37,6 @@ class AuditoriasController extends Controller
       $sucursal = $request->get('sucursal') ? $request->get('sucursal') : '';
 
       $sucursales = User::with(['sucursals' => function($query) use ($sucursal){
-                    $query->where('name', 'LIKE', "%".$sucursal."%");
                     $query->orderBy('name');
               }])
                 ->findOrFail(auth()->user()->id);
