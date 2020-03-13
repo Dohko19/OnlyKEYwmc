@@ -33,7 +33,7 @@ class AuditoriaExport implements FromView, ShouldAutoSize
   //       ->get();
         	// ddd($dates);
 
-		 $dates = Sucursal::with(['marcas', 'audres', 'users' => function($query){
+		 $dates = Sucursal::with(['marcas', 'avg', 'audres', 'users' => function($query){
 					$query->findOrFail(auth()->user()->id);
 				}])
 				->where('cedula', request('zr'))
@@ -41,7 +41,7 @@ class AuditoriaExport implements FromView, ShouldAutoSize
 					$query->whereBetween('created_at', [$from, $to]);
 				})
                 ->get();
-   			// ddd($dates);
+   			// ddd($dates->avg);
 
 		return view('exports.auditoriadetail', compact('dates'))->withSuccess('Archivo Listo');
 	}

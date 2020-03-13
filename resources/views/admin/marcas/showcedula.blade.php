@@ -2,6 +2,9 @@
 @section('content')
 @section('headertitle', '')
 @section('title', 'Key | Mis Sucursales')
+@foreach ($avg->sucursals as $sucursale)
+{{ $sucursale->segmentos }}
+@endforeach
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -134,13 +137,13 @@ Highcharts.chart('container', {
         name: "SUCURSALES",
         colorByPoint: true,
         data: [
-        @foreach ( $sucursales->sucursals as $sucursale )
-          {
-            name: "{{ $sucursale->name }}",
-            y: {{ $sucursale->puntuacion_total }}, //calificacion en general
-            drilldown: "{{ $sucursale->name }}"
-          },
-        @endforeach
+          @foreach ( $avg->sucursals->sortByDesc('average') as $average )
+            {
+              name: "{{ $average->name }}",
+                y: {{ $average->average ?? 0}},  //calificacion en general
+              drilldown: "{{ $average->name }}"
+            },
+          @endforeach
         ]
       }
     ],
@@ -152,15 +155,15 @@ Highcharts.chart('container', {
         }
     },
       series: [
-          @foreach ($sucursales->sucursals as $sucursale)
+          @foreach ($avg->sucursals as $average)
         {
-          name: "{{ $sucursale->name }}",
-          id: "{{ $sucursale->name }}",
+          name: "{{ $average->name }}",
+          id: "{{ $average->name }}",
           data: [
-                  @foreach ($sucursale->audres as $ares)
+                  @foreach ($average->segmentos as $ares)
                         [
-                        "<a href='{{ route('admin.segmentos.show',['segmento' => $ares->segmentos->IdSegmentoAuditoria, 'cedula' => request('cedula'), 'sucursal' => $sucursale->name] ) }}'>{{ $ares->segmentos->NombreSegmento }}</a>",
-                        {{ $ares->Promedio }}
+                        "asasdasd",
+                        23,
                         ],
                   @endforeach
           ]

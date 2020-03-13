@@ -3,10 +3,9 @@
 		<tr>
 			<th>Marca</th>
 			<th>Cedula</th>
-			<th>Puntuacion Total</th>
-                  <th>Nombre de la Sucursal</th>
-                  <th>Segmento</th>
-			<th>Promedio de Cada Sucursal</th>
+            <th>Nombre de la Sucursal</th>
+            <th>Segmento</th>
+			<th>Promedio de Cada Segmento</th>
 			<th>Fecha de Auditoria</th>
 		</tr>
 	</thead>
@@ -16,8 +15,7 @@
 		<tr>
 			<td>{{ $date->marcas->name ?? 'Sin datos' }}</td>
 			<td>{{ $date->cedula ?? 'Sin datos' }}</td>
-			<td>{{ $date->puntuacion_total ?? 'Sin datos' }}</td>
-                  <td>{{ $date->name ?? 'Sin datos' }}</td>
+            <td>{{ $date->name ?? 'Sin datos' }}</td>
 			<td>{{ $result->segmentos->NombreSegmento ?? 'Sin datos' }}</td>
 			<td>{{ $result->Promedio ?? 'Sin datos' }}</td>
 			<td>{{ $result->created_at ?? 'Sin datos' }}</td>

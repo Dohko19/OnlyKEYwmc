@@ -9,6 +9,7 @@ use App\GrupoMarca;
 use App\Http\Controllers\Controller;
 use App\Marca;
 use App\PreguntasCuestionario;
+use App\PromSuc;
 use App\Qresults;
 use App\Questionnaire;
 use App\ResultadoAuditoria;
@@ -95,13 +96,15 @@ class MarcaController extends Controller
         if($marca->grupos->tipo == 'auditorias')
         {
             $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m-d');
-            $sucursales = Sucursal::with(['segmentos'])
+            $sucursales = Sucursal::with(['segmentos','PromSuc' => function($query){
+                $query->where('created_at', $graphics);
+            }])
             ->whereNotNull('created_at')
             ->graphics($graphics)
             ->where('marca_id', '=', $marca->id)
             ->orderBy('puntuacion_total', 'DESC')
             ->get();
-            // ddd($sucursales);
+            ddd($sucursales);
 
 
             return view('admin.marcas.show', compact('marca', 'sucursales'));
@@ -118,13 +121,31 @@ class MarcaController extends Controller
             // ->where('sucursals.delegacion_municipio', 'LIKE', "%".$dm."%")
             // ->where('sucursals.region', 'LIKE', "%".$zona."%")
             // ->get();
-            $sucursales = User::with(['sucursals' => function($query) use ($marca, $dm, $zona){
+            $sucursales = User::with(['sucursals' => function($query) use ($marca, $dm, $zona, $graphics){
+                $query->leftJoin('qresults as q', function($join) use ($graphics) {
+                    $join->on('q.sucursal_id', '=', 'sucursals.id')
+                    ->where('q.created_at', 'LIKE', "%".$graphics."%");
+                });
                 $query->where('marca_id', $marca->id);
                 $query->where('sucursals.delegacion_municipio', 'LIKE', "%".$dm."%");
                 $query->where('sucursals.region', 'LIKE', "%".$zona."%");
+                $query->select('q.*', 'sucursals.*');
             }])
-            ->findOrFail(auth()->user()->id);;
-// ddd($sucursales);
+            ->findOrFail(auth()->user()->id);
+            // ddd($sucursales);
+            // $avg = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
+            //     $query->leftJoin('prom_sucs as a', function($join) use ($graphics) {
+            //         $join->on('a.sucursal_id', '=', 'sucursals.id')
+            //         ->where('a.created_at', 'LIKE', "%".$graphics."%");
+            //     });
+            //     $query->where('sucursals.cedula', $cedula);
+            //     $query->where('sucursals.marca_id', '=', $marca->id);
+            //     $query->select('a.*', 'sucursals.*');
+            //     $query->orderBy('a.average');
+            //  }])
+            //  ->findOrFail(auth()->user()->id);
+            // ddd($avg);
+            // ddd($sucursales);
             // $ri = Sucursal::leftJoin('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
             // ->select('sucursals.id', 'sucursals.name', 'q.RI', 'sucursals.created_at', 'sucursals.zone', 'sucursals.region')
             // ->where('sucursals.marca_id', $marca->id)
@@ -133,25 +154,25 @@ class MarcaController extends Controller
             // ->where('sucursals.region', 'LIKE', "%".$zona."%")
             // ->orderBy('q.RI', 'ASC')
             // ->get()->toArray();
-            $ri = User::with(['sucursals' => function($query) use ($marca, $dm, $graphics, $zona){
-                $query->join('qresults as q', 'q.sucursal_id', '=', 'sucursals.id');
-                $query->where('sucursals.marca_id', $marca->id);
-                $query->where('sucursals.delegacion_municipio', 'LIKE', "%".$dm."%");
-                $query->where('sucursals.region', '=', $zona);
-                $query->where('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%");
-                $query->orderBy('q.RI');
-              }])
-                ->findOrFail(auth()->user()->id);
+           //  $ri = User::with(['sucursals' => function($query) use ($marca, $dm, $graphics, $zona){
+           //      $query->join('qresults as q', 'q.sucursal_id', '=', 'sucursals.id');
+           //      $query->where('sucursals.marca_id', $marca->id);
+           //      $query->where('sucursals.delegacion_municipio', 'LIKE', "%".$dm."%");
+           //      $query->where('sucursals.region', '=', $zona);
+           //      $query->where('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%");
+           //      $query->orderBy('q.RI');
+           //    }])
+           //      ->findOrFail(auth()->user()->id);
 
-           $c = User::with(['sucursals' => function($query) use ($marca, $dm, $graphics, $zona){
-                $query->join('qresults as q', 'q.sucursal_id', '=', 'sucursals.id');
-                $query->where('sucursals.marca_id', $marca->id);
-                $query->where('sucursals.delegacion_municipio', 'LIKE', "%".$dm."%");
-                $query->where('sucursals.region', '=', $zona);
-                $query->where('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%");
-                $query->orderBy('q.C');
-              }])
-                ->findOrFail(auth()->user()->id);
+           // $c = User::with(['sucursals' => function($query) use ($marca, $dm, $graphics, $zona){
+           //      $query->join('qresults as q', 'q.sucursal_id', '=', 'sucursals.id');
+           //      $query->where('sucursals.marca_id', $marca->id);
+           //      $query->where('sucursals.delegacion_municipio', 'LIKE', "%".$dm."%");
+           //      $query->where('sucursals.region', '=', $zona);
+           //      $query->where('sucursals.created_at', 'LIkE', "%".Carbon::parse($graphics)->format('Y-m')."%");
+           //      $query->orderBy('q.C');
+           //    }])
+           //      ->findOrFail(auth()->user()->id);
                 // ddd($ri);
 
             $preguntas = PreguntasCuestionario::select('IdPregunta','Pregunta')->get();
@@ -245,15 +266,23 @@ class MarcaController extends Controller
         $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
         $cedula = $request->get('cedula') ? $request->get('cedula') : request('cedula');
 
-            $sucursales = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
-                  $query->where('marca_id', '=', $marca->id);
-                  $query->where('created_at', 'LIKE', "%".$graphics."%");
-                  $query->where('cedula', '=', $cedula);
-                  $query->orderBy('puntuacion_total', 'DESC');
-            }])
+             $avg = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
+                $query->leftJoin('prom_sucs as a', function($join) use ($graphics) {
+                    $join->on('a.sucursal_id', '=', 'sucursals.id')
+                    ->where('a.fecharegistro', 'LIKE', "%".$graphics."%");
+                });
+                $query->leftJoin('aresults as ar', function($join) use ($graphics) {
+                    $join->on( 'ar.sucursal_id', '=', 'sucursals.id' )
+                    ->where('ar.created_at', 'LIKE', "%".$graphics."%");
+                });
+                $query->where('sucursals.cedula', $cedula);
+                $query->where('sucursals.marca_id', '=', $marca->id);
+                $query->select('a.*', 'sucursals.*', 'ar.*');
+                $query->orderBy('a.average');
+             }])
              ->findOrFail(auth()->user()->id);
-
-            return view('admin.marcas.showcedula', compact('marca', 'sucursales', 'cedula', 'graphics'));
+            // ddd($avg);
+            return view('admin.marcas.showcedula', compact('marca', 'cedula', 'graphics', 'avg' ));
     }
     /**
      * Show the form for editing the specified resource.

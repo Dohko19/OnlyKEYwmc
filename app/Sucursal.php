@@ -66,4 +66,9 @@ class Sucursal extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function avg()
+    {
+        return $this->hasMany(PromSuc::class);
+    }
 }

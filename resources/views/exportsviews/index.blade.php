@@ -11,7 +11,7 @@
 				</div>
 				<div class="card-body">
 					<select name="select" id="inputSelect" class="form-control" required>
-							<option value="1"><i class="far fa-file-pdf"></i> Reporte Excel</option>
+							<option selected value="1"><i class="far fa-file-pdf"></i> Reporte Excel</option>
 							<option value="2">PDF</option>
 					</select>
 				</div>

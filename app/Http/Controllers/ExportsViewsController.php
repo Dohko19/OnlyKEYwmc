@@ -65,4 +65,36 @@ class ExportsViewsController extends Controller
     {
         return (new AuditoriaExport)->download('ReporteAuditoria-'.Carbon::now()->format('d-m-Y').'.xlsx');
     }
+
+    public function exportauditoriapdf(Request $request)
+    {
+       $from = Carbon::parse(request('desdep'))->format('Y-m-d');
+        $to = Carbon::parse(request('hastap'))->endOfMonth();
+        $zr = request('zrp');
+        $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+        ->join('aresults as a', 'a.sucursal_id', '=', 's.id')
+        ->select('s.*', 'm.*', 'a.*')
+        ->where('users.id', auth()->user()->id)
+        ->where('s.cedula', request('zrp'))
+        ->whereBetween('a.created_at', [$from, $to])
+        ->groupBy('IdCte')
+        ->get();
+        // ddd($dates);
+         // $dates = Sucursal::with(['marcas', 'qresults', 'users' => function($query){
+         //            $query->findOrFail(auth()->user()->id);
+         //        }])
+         //        ->where('region', $zr)
+         //        ->where(function ($query) use ($from, $to){
+         //            $query->whereBetween('created_at', [$from, $to]);
+         //        })
+         //        ->get();
+        if(request()->ajax()){
+            return response()->json($dates);
+        }//procesa la peticion ajax
+        else
+        {
+            return response()->json( ['error'=>'Fallo al realizar la peticion'], 404 );
+        }
+    }
 }

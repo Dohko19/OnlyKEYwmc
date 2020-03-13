@@ -236,11 +236,7 @@
             @foreach ( $sucursales->sucursals as $ris)
                   {
                         name: "{{ $ris->name }}",
-                  @forelse ($ris->qresults->sortBy('RI') as $rir)
-                        y: {{ $rir->RI }}, //proemdio
-                        @empty
-                        y: 0,
-                  @endforelse
+                        y: {{ $ris->RI ?? 0 }}, //proemdio
                         drilldown: "{{ $ris->name }}"
                   },
             @endforeach
@@ -390,15 +386,11 @@
         name: "Sucursales",
         colorByPoint: true,
         data: [
-            @foreach ( $sucursales->sucursals as $cs)
+            @foreach ( $sucursales->sucursals as $ris)
                   {
-                        name: "{{ $cs->name }}",
-                  @forelse ($cs->qresults->sortBy('C') as $cr)
-                        y: {{ $cr->C }}, //proemdio
-                        @empty
-                        y: 0,
-                  @endforelse
-                        drilldown: "{{ $cs->name }}"
+                        name: "{{ $ris->name }}",
+                        y: {{ $ris->C ?? 0 }}, //proemdio
+                        drilldown: "{{ $ris->name }}"
                   },
             @endforeach
         ]

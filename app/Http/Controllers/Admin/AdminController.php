@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Aresult;
-use App\Qresults;
 use App\Auditoria;
 use App\GrupoMarca;
 use App\Http\Controllers\Controller;
 use App\Marca;
+use App\PromSuc;
+use App\Qresults;
 use App\Question;
 use App\Segmento;
 use App\Sucursal;
@@ -127,18 +128,20 @@ class AdminController extends Controller
             }, 'grupos'])
                 ->findOrFail(auth()->user()->id);
 
-            $promedio = Aresult::join('sucursals as s', 's.IdCte', '=', 'aresults.IdCedula')
+            $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
             ->join('marcas as m', 'm.id', '=', 's.marca_id')
             ->where('m.id', '=', $marca->id)
-            ->select('s.id')
+            ->select('s.id', 'aresults.created_at')
             ->selectRaw('AVG(aresults.Promedio) prom')
             ->groupBy('s.id')
             ->get()->toArray();
-            // dd($promedio);
+            // ddd($promedio);
             for($i=0;$i<count($promedio);$i++) {
                 $total = $promedio[$i];
-                $prom = Sucursal::findOrFail($total['id']);
-                $prom->puntuacion_total = $total['prom'];
+                $prom = new PromSuc;
+                $prom->sucursal_id = $total['id'];
+                $prom->average = $total['prom'];
+                $prom->fecharegistro = $total['created_at'];
                 $prom->save();
             }
             // $promedio = Qresults::with(['sucursales'])

@@ -34,18 +34,36 @@
               <i class="right fas fa-angle-left"></i>
             </a>
             <ul class="nav nav-treeview ">
-              <li class="nav-item ">
-                <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">
-                  <i class="fas fa-file-export nav-icon"></i>
-                  <p>Cuestionarios</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('export.auditoria') }}" class="nav-link {{ setActiveRoute('export.auditoria') }}">
-                  <i class="fas fa-download nav-icon"></i>
-                  <p>Auditorias</p>
-                </a>
-              </li>
+              @if( auth()->user()->hasPermissionTo('View reporte auditoria') )
+                <li class="nav-item ">
+                  <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">
+                    <i class="fas fa-file-export nav-icon"></i>
+                    <p>Cuestionarios</p>
+                  </a>
+                </li>
+              @endif
+              @if( auth()->user()->can('View reporte cuestionarios') )
+                <li class="nav-item">
+                  <a href="{{ route('export.auditoria') }}" class="nav-link {{ setActiveRoute('export.auditoria') }}">
+                    <i class="fas fa-download nav-icon"></i>
+                    <p>Auditorias</p>
+                  </a>
+                </li>
+              @endif
+              @role('Admin')
+                <li class="nav-item ">
+                  <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">
+                    <i class="fas fa-file-export nav-icon"></i>
+                    <p>Cuestionarios</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('export.auditoria') }}" class="nav-link {{ setActiveRoute('export.auditoria') }}">
+                      <i class="fas fa-download nav-icon"></i>
+                      <p>Auditorias</p>
+                    </a>
+                  </li>
+              @endrole
             </ul>
           </li>
           @can('view', new App\Auditoria)
