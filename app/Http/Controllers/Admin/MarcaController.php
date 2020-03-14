@@ -269,23 +269,25 @@ class MarcaController extends Controller
             $cedula = $request->get('cedula') ? $request->get('cedula') : request('cedula');
 
 
-            $proms = User::with(['sucursals' => function($query) use ($marca, $graphics, $cedula){
-              $query->leftJoin('aresults as a', function($join) use ($graphics) {
-                    $join->on('a.sucursal_id', '=', 'sucursals.id')
-                    ->where('a.created_at', 'LIKE', "%".$graphics."%")
-                    ->orderBy('a.IdCte');
-                });
-              $query->where('sucursals.marca_id', $marca->id );
-              $query->where('sucursals.cedula', 'LIKE', "%".$cedula."%" );
-            }])
-            ->findOrFail(auth()->user()->id);
-            ddd($proms);
+            // $proms = User::with(['sucursals' => function($query) use ($marca, $graphics, $cedula){
+            //   $query->leftJoin('aresults as a', function($join) use ($graphics) {
+            //         $join->on('a.sucursal_id', '=', 'sucursals.id')
+            //         ->where('a.created_at', 'LIKE', "%".$graphics."%")
+            //         ->orderBy('a.IdCte');
+            //     });
+            //   $query->where('sucursals.marca_id', $marca->id );
+            //   $query->where('sucursals.cedula', 'LIKE', "%".$cedula."%" );
+            // }])
+            // ->findOrFail(auth()->user()->id);
+            // ddd($proms);
 
-            $avg = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
-                $query->leftJoin('prom_sucs as ps', function($join) use ($graphics){
-                  $join->on('ps.sucursal_id', '=', 'sucursals.id')
-                  ->where('ps.fecharegistro', 'LIKE', "%".$graphics."%");
-                });
+            $avg = User::with(['sucursals.audres' => function($query) use ($marca, $cedula, $graphics){
+                // $query->join('');
+                $query->where('created_at', 'LIKE', "%".$graphics."%");
+                // $query->leftJoin('prom_sucs as ps', function($join) use ($graphics){
+                //   $join->on('ps.sucursal_id', '=', 'sucursals.id')
+                //   ->where('ps.fecharegistro', 'LIKE', "%".$graphics."%");
+                // });
                 // $query->leftJoin('aresults as a', function($join) use ($graphics) {
                 //     $join->on('a.sucursal_id', '=', 'sucursals.id')
                 //     ->where('a.created_at', 'LIKE', "%".$graphics."%")
@@ -294,9 +296,14 @@ class MarcaController extends Controller
                 // $query->leftJoin('SegmentosAuditoria as seg', function($join){
                 //   $join->on('seg.IdSegmentoAuditoria', '=', 'a.IdSegmentoAuditoria');
                 // });
+            }, 'sucursals' => function($query) use ($marca, $cedula, $graphics){
+                $query->leftJoin('prom_sucs as ps', function($join) use ($graphics){
+                  $join->on('ps.sucursal_id', '=', 'sucursals.id')
+                  ->where('ps.fecharegistro', 'like', "%".$graphics."%");
+                });
                 $query->where('marca_id', $marca->id);
-                $query->where('sucursals.cedula', 'LIKE', "%".$cedula."%");
-                $query->select( 'sucursals.*', 'ps.average');
+                $query->where('cedula', 'LIKE', "%".$cedula."%");
+                $query->select('ps.*', 'sucursals.*');
             }])
             ->findOrFail(auth()->user()->id);
               // ddd($avg);

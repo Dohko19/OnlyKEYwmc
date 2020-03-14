@@ -29,6 +29,11 @@ class Segmento extends Model
         return $this->hasMany(ResultadoAuditoria::class, 'IdSegmento');
     }
 
+    public function aresults()
+    {
+        return $this->hasMany(Aresult::class, 'IdSegmentoAuditoria');
+    }
+
     public function scopeAllowed($query)
     {
         if (auth()->user()->hasRole('Admin'))

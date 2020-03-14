@@ -2,9 +2,6 @@
 @section('content')
 @section('headertitle', '')
 @section('title', 'Key | Mis Sucursales')
-@foreach ($avg->sucursals as $t)
-  {{ $t }}
-@endforeach
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -137,7 +134,7 @@
         name: "SUCURSALES",
         colorByPoint: true,
         data: [
-          @foreach ( $avg->sucursals as $average )
+          @foreach ( $avg->sucursals->sortBy('average') as $average )
             {
               name: "{{ $average->name }}",
                 y: {{ $average->average ?? 0}},  //calificacion en general
@@ -160,13 +157,12 @@
           name: "{{ $average->name }}",
           id: "{{ $average->name }}",
           data: [
-          @foreach ($segmentos->sucursals as $s)
-
-                        [
-                        "{{ $s->NombreSegmento ?? 'S/N' }}",
-                        {{ $s->Promedio }}
-                        ],
-        @endforeach
+          @foreach ($average->audres as $s)
+                [
+                "{{ $s->segmentos->NombreSegmento ?? 'S/N' }}",
+                {{ $s->Promedio }}
+                ],
+          @endforeach
           ]
         },
         @endforeach
