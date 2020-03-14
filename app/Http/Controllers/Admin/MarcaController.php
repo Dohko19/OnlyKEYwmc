@@ -259,7 +259,7 @@ class MarcaController extends Controller
         //     // }
         //     // return $sum;
         //     // $average = $sum*$f/count($ss);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'ri', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona', 'delegacion', 'c') );
+            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona', 'delegacion') );
         //     // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 

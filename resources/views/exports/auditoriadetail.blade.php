@@ -1,7 +1,7 @@
 <table>
 	<thead>
 		<tr>
-			<th>Marca</th>
+			<th style="background-color: #000000;">Marca</th>
 			<th>Cedula</th>
             <th>Nombre de la Sucursal</th>
             <th>Segmento</th>

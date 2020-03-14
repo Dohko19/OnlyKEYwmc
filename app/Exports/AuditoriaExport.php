@@ -41,7 +41,7 @@ class AuditoriaExport implements FromView, ShouldAutoSize
 					$query->whereBetween('created_at', [$from, $to]);
 				})
                 ->get();
-   			// ddd($dates->avg);
+   			// ddd($dates);
 
 		return view('exports.auditoriadetail', compact('dates'))->withSuccess('Archivo Listo');
 	}
