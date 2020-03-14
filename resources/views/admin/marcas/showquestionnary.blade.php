@@ -128,7 +128,7 @@
       <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
       <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
 
-{{-- <script>
+<script>
   Highcharts.setOptions({
   lang: {
     resetZoom: 'Alejar',
@@ -287,7 +287,7 @@
       ]
     }
   });
-</script> --}}
+</script>
 <script>
   Highcharts.chart('ri', {
     chart: {
