@@ -23,7 +23,7 @@ class Sucursal extends Model
 
     public function audres()
     {
-        return $this->hasMany(Aresult::class);
+        return $this->hasMany(Aresult::class, 'sucursal_id');
     }
 
     public function qresults()
@@ -67,13 +67,13 @@ class Sucursal extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function avg()
+    public function promsuc()
     {
         return $this->hasMany(PromSuc::class);
     }
 
     public function rauditoria()
     {
-        return $this->hasMany(ResultadoAuditoria::class);
+        return $this->hasMany(ResultadoAuditoria::class, 'sucursal_id');
     }
 }

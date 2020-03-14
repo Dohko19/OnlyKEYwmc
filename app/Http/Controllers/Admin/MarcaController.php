@@ -268,19 +268,94 @@ class MarcaController extends Controller
             $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
             $cedula = $request->get('cedula') ? $request->get('cedula') : request('cedula');
 
-             $avg = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
-                $query->leftJoin('prom_sucs as a', function($join) use ($graphics) {
+
+            $proms = User::with(['sucursals' => function($query) use ($marca, $graphics, $cedula){
+              $query->leftJoin('aresults as a', function($join) use ($graphics) {
                     $join->on('a.sucursal_id', '=', 'sucursals.id')
-                    ->where('a.fecharegistro', 'LIKE', "%".$graphics."%");
+                    ->where('a.created_at', 'LIKE', "%".$graphics."%")
+                    ->orderBy('a.IdCte');
                 });
-                $query->where('sucursals.cedula', $cedula);
-                $query->where('sucursals.marca_id', '=', $marca->id);
-                $query->select('a.*', 'sucursals.*');
-                $query->orderBy('a.average');
-             }])
-             ->findOrFail(auth()->user()->id);
-             // ddd($avg);
-            $segmentos = Segmento::select('NombreSegmento')->get();
+              $query->where('sucursals.marca_id', $marca->id );
+              $query->where('sucursals.cedula', 'LIKE', "%".$cedula."%" );
+            }])
+            ->findOrFail(auth()->user()->id);
+            ddd($proms);
+
+            $avg = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
+                $query->leftJoin('prom_sucs as ps', function($join) use ($graphics){
+                  $join->on('ps.sucursal_id', '=', 'sucursals.id')
+                  ->where('ps.fecharegistro', 'LIKE', "%".$graphics."%");
+                });
+                // $query->leftJoin('aresults as a', function($join) use ($graphics) {
+                //     $join->on('a.sucursal_id', '=', 'sucursals.id')
+                //     ->where('a.created_at', 'LIKE', "%".$graphics."%")
+                //     ->orderBy('a.IdCte');;
+                // });
+                // $query->leftJoin('SegmentosAuditoria as seg', function($join){
+                //   $join->on('seg.IdSegmentoAuditoria', '=', 'a.IdSegmentoAuditoria');
+                // });
+                $query->where('marca_id', $marca->id);
+                $query->where('sucursals.cedula', 'LIKE', "%".$cedula."%");
+                $query->select( 'sucursals.*', 'ps.average');
+            }])
+            ->findOrFail(auth()->user()->id);
+              // ddd($avg);
+                        //  $avg = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
+            //     $query->leftJoin('prom_sucs as a', function($join) use ($graphics) {
+            //         $join->on('a.sucursal_id', '=', 'sucursals.id')
+            //         ->where('a.fecharegistro', 'LIKE', "%".$graphics."%");
+            //     });
+            //     $query->where('sucursals.cedula', $cedula);
+            //     $query->where('sucursals.marca_id', '=', $marca->id);
+            //     $query->select('sucursals.*', 'a.*');
+            //     $query->orderByDesc('a.average');
+            //  },'sucursals.audres' => function($query) use ($graphics){
+            //   $query->where('aresults.created_at', 'LIKE', "%".$graphics."%");
+            //  }])
+            //  ->findOrFail(auth()->user()->id);
+
+            $segmentos = User::with(['sucursals' => function($query) use ($marca, $cedula, $graphics){
+                $query->leftJoin('aresults as a', function($join) use ($graphics){
+                  $join->on('a.sucursal_id', '=', 'sucursals.id')
+                  ->where('a.created_at', 'LIKE', "%".$graphics."%" );
+                });
+                $query->leftJoin('SegmentosAuditoria as seg', function($join){
+                  $join->on('seg.IdSegmentoAuditoria', '=', 'a.IdSegmentoAuditoria');
+                });
+                // $query->leftJoin('aresults as a', function($join) use ($graphics) {
+                //     $join->on('a.sucursal_id', '=', 'sucursals.id')
+                //     ->where('a.created_at', 'LIKE', "%".$graphics."%")
+                //     ->orderBy('a.IdCte');;
+                // });
+                // $query->leftJoin('SegmentosAuditoria as seg', function($join){
+                //   $join->on('seg.IdSegmentoAuditoria', '=', 'a.IdSegmentoAuditoria');
+                // });
+                $query->where('marca_id', $marca->id);
+                $query->where('sucursals.cedula', 'LIKE', "%".$cedula."%");
+                $query->select( 'sucursals.*', 'seg.NombreSegmento', 'a.*');
+            }])
+            ->findOrFail(auth()->user()->id);
+
+          //   $avg = User::with(['sucursals.rauditoria' => function($query) use ($graphics, $marca){
+          //       $query->join('SegmentosAuditoria as sa', function($join) use ($graphics){
+          //         $join->on('sa.IdSegmentoAuditoria', '=', 'ResultadoAuditoria.IdSegmento')
+          //         ->where('ResultadoAuditoria.fecharegistro', 'LIKE', "%".$graphics."%");
+          //       });
+          //   }, 'sucursals.promsuc' => function($query) use($graphics){
+          //       $query->where('prom_sucs.fecharegistro', 'LIKE', "%".$graphics."%");
+          //       $query->orderBy('prom_sucs.average');
+          //   }, 'sucursals' => function($query) use ($marca, $cedula, $graphics){
+          //     $query->leftJoin('prom_sucs as a', function($join) use ($graphics) {
+          //           $join->on('a.sucursal_id', '=', 'sucursals.id')
+          //           ->where('a.fecharegistro', 'LIKE', "%".$graphics."%");
+          //       });
+          //       $query->where('marca_id', $marca->id);
+          //       $query->where('sucursals.cedula', $cedula);
+          //   }
+          // ])
+          //    ->findOrFail(auth()->user()->id);
+
+            // ddd($segmentos);
             return view('admin.marcas.showcedula', compact('marca', 'segmentos', 'cedula', 'graphics', 'avg' ));
     }
     /**

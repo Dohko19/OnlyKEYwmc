@@ -8,24 +8,24 @@
       <a href="{{ route('admin.index') }}" class="nav-link">WMC</a>
     </li>
       @if (\Request::is('/'))
-    <li class="nav-item d-none d-sm-inline-block">
+    {{-- <li class="nav-item d-none d-sm-inline-block">
       @foreach ($sj as $id)
         <form action="{{ route('promedio') }}" method="GET" id="promedioget">
           <input type="hidden" id="id" name="id" value="{{ $id->id }}">
           <button type="submit" id="prom" class=" btn btn-outline nav-link"><i class="fas fa-sync"></i></button>
       </form>
       @endforeach
-    <li>
+    <li> --}}
       @endif
       @if (\Request::is('admin'))
-    <li class="nav-item d-none d-sm-inline-block">
+  {{--   <li class="nav-item d-none d-sm-inline-block">
       @foreach ($sj as $id)
         <form action="{{ route('promedio') }}" method="GET" id="promedioget">
           <input type="hidden" id="id" name="id" value="{{ $id->id }}">
           <button type="submit" id="prom" class=" btn btn-outline nav-link"><i class="fas fa-sync"></i></button>
       </form>
       @endforeach
-    <li>
+    <li> --}}
       @endif
   </ul>
   <!-- Right navbar links -->

@@ -29,19 +29,35 @@ class AdminController extends Controller
 
     public function index()
     {
-        // $promedio = Aresult::join('sucursals as s', 's.IdCte', '=', 'aresults.IdCedula')
-        // ->where('s.id', 493)
-        // ->selectRaw('AVG(aresults.Promedio) prom')
-        // ->get();
-        // dd($promedio);
-
         if (auth()->user()->hasRole('dgral')) {
             $marcas = Marca::with(['grupos'])->where('user_id', auth()->user()->id)->get();
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
-            ->get();
+            ->get()->toArray();
+
+            for($i=0;$i<count($sj);$i++) {
+                    $id = $sj[$i];
+                }
+                // dd();
+                $marca = Marca::find($id['id']);
+            if ($marca->grupos->tipo == 'auditorias') {
+                $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
+                ->join('marcas as m', 'm.id', '=', 's.marca_id')
+                ->where('m.id', '=', $marca->id)
+                ->selectRaw('AVG(aresults.Promedio) prom')
+                ->get()->toArray();
+                for($i=0;$i<count($promedio);$i++) {
+                    $total = $promedio[$i];
+                }
+                $prom = Marca::find($id['id']);
+                $prom->puntuacion_general = $total['prom'];
+                $prom->save();
+                $success = true;
+            }
+
             return view('admin.dashboard', compact('marcas', 'sj'));
         }
+
         if (auth()->user()->hasRole('dmarca')) {
             $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
             $sj = Marca::where('user_id', auth()->user()->id )
@@ -127,31 +143,6 @@ class AdminController extends Controller
                 $query->orderBy('cedula');
             }, 'grupos'])
                 ->findOrFail(auth()->user()->id);
-
-            // $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
-            // ->join('marcas as m', 'm.id', '=', 's.marca_id')
-            // ->where('m.id', '=', $marca->id)
-            // ->select('s.id', 'aresults.created_at')
-            // ->selectRaw('AVG(aresults.Promedio) prom')
-            // ->groupBy('s.id')
-            // ->get()->toArray();
-            // // ddd($promedio);
-            // for($i=0;$i<count($promedio);$i++) {
-            //     $total = $promedio[$i];
-            //     $prom = new PromSuc;
-            //     $prom->sucursal_id = $total['id'];
-            //     $prom->average = $total['prom'];
-            //     $prom->fecharegistro = $total['created_at'];
-            //     $prom->save();
-            // }
-            // $promedio = Qresults::with(['sucursales'])
-            // ->join('sucursals as s', 's.id', '=', 'qresults.sucursal_id')
-            // ->join('marcas as m', 'm.id', '=', 's.marca_id')
-            // ->where('qresults.sucursal_id', '=', $marca->id)
-            // ->selectRaw('AVG(qresults.RI) prom')
-            // ->get();
-            // ddd($promedio);
-
 
                 return view('admin.pages.cedula', compact('sucursales', 'marca'));
         }

@@ -2,6 +2,9 @@
 @section('content')
 @section('headertitle', '')
 @section('title', 'Key | Mis Sucursales')
+@foreach ($avg->sucursals as $t)
+  {{ $t }}
+@endforeach
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -59,7 +62,7 @@
       <script src="{{ asset('highcharts/accessibility.js') }} "></script>
       <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <script>
-Highcharts.chart('container', {
+  Highcharts.chart('container', {
   chart: {
     type: 'column',
     events: {
@@ -134,7 +137,7 @@ Highcharts.chart('container', {
         name: "SUCURSALES",
         colorByPoint: true,
         data: [
-          @foreach ( $avg->sucursals->sortByDesc('average') as $average )
+          @foreach ( $avg->sucursals as $average )
             {
               name: "{{ $average->name }}",
                 y: {{ $average->average ?? 0}},  //calificacion en general
@@ -157,12 +160,13 @@ Highcharts.chart('container', {
           name: "{{ $average->name }}",
           id: "{{ $average->name }}",
           data: [
-                @foreach ($average->audres as $ares)
+          @foreach ($segmentos->sucursals as $s)
+
                         [
-                        "<a href='{{ route('admin.segmentos.show',['sucursal' => $average->name,'segmento' => $ares->segmentos->IdSegmentoAuditoria, 'FechaRegistro' => request('graphics') ,'sucursal' => $average->name] ) }}'>{{ $ares->segmentos->NombreSegmento }}</a>",
-                        {{ $ares->Promedio ?? 0 }}
+                        "{{ $s->NombreSegmento ?? 'S/N' }}",
+                        {{ $s->Promedio }}
                         ],
-                @endforeach
+        @endforeach
           ]
         },
         @endforeach
