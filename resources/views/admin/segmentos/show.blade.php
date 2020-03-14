@@ -79,10 +79,12 @@
                                           method="POST" style="display: inline;">
                                           @csrf
                                           @method('PUT')
-                                          <select class="form-control" name="Aprobado">
-                                                <option value="0">No</option>
-                                                <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
-                                          </select>
+                                          @can('update', new App\ResultadoAuditoria)
+                                            <select class="form-control" name="Aprobado">
+                                                  <option value="0">No</option>
+                                                  <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                                            </select>
+                                          @endcan
                                           @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
                                             <textarea id="" cols="30" rows="5" placeholder="Plan de Accion (este no es un texto)" disabled>{{ old('action') }}</textarea>
                                           @else

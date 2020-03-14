@@ -53,7 +53,7 @@ class ResultadoAuditoriaPolicy
      */
     public function update(User $user, ResultadoAuditoria $resultadoAuditoria)
     {
-        return $user->hasRole('Admin') || $user->hasPermissionTo('Update resultadosaud')
+        return $user->hasRole('Admin') || $user->hasPermissionTo('Update resultadosaud');
     }
 
     /**
