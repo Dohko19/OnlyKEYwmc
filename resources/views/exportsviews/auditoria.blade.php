@@ -150,7 +150,6 @@
 	             	<table class="table table-bordered table-hover">
 		                <thead>
 			                <tr>
-			                  <th>ID</th>
 			                  <th>Cliente</th>
 			                  <th>Cedula</th>
 			                  <th>Sucursal</th>
@@ -224,12 +223,11 @@
 		         	{
 		         	response.forEach(data => {
 		            valor += '<tr>' +
-				        '<td>' + data.id + '</td>' +
 				        '<td>' + data.IdCte + '</td>' +
 				        '<td>' + data.cedula + '</td>' +
 				        '<td>' + data.name + '</td>' +
-				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC8/ReportePDFCorreo.php?IdCedula="+data.IdCte+"&Division="+data.division+"'>Ver PDF</a></td>"+
-				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC8/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCte+"&Division="+data.division+"'>Descargar PDF</a></td>"+
+				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC8/ReportePDFCorreo.php?IdCedula="+data.IdCte+"&Division="+data.Division+"'>Ver PDF</a></td>"+
+				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC8/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCte+"&Division="+data.Division+"'>Descargar PDF</a></td>"+
 				        '</tr>';
 				    })
 				      $("#DataResult").html(valor);

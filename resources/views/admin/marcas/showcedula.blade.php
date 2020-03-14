@@ -157,12 +157,17 @@
           name: "{{ $average->name }}",
           id: "{{ $average->name }}",
           data: [
-          @foreach ($average->audres as $s)
+          @forelse ($average->audres as $s)
                 [
                 "{{ $s->segmentos->NombreSegmento ?? 'S/N' }}",
-                {{ $s->Promedio }}
+                {{ $s->Promedio ?? 0 }}
                 ],
-          @endforeach
+                @empty
+                [
+                "SIN DATOS",
+                0
+                ],
+          @endforelse
           ]
         },
         @endforeach

@@ -68,7 +68,7 @@
           </li>
           @can('view', new App\Auditoria)
             <li class="nav-item">
-              <a href="{{ route('admin.auditorias.index') }}" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
+              <a href="/admin/auditorias/1" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
                 <i class="nav-icon far fa-clipboard"></i>
                 <p>
                   Planes de Accion

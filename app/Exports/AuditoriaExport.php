@@ -33,7 +33,7 @@ class AuditoriaExport implements FromView, ShouldAutoSize
   //       ->get();
         	// ddd($dates);
 
-		 $dates = Sucursal::with(['marcas', 'avg', 'audres', 'users' => function($query){
+		 $dates = Sucursal::with(['marcas', 'promsuc', 'audres', 'users' => function($query){
 					$query->findOrFail(auth()->user()->id);
 				}])
 				->where('cedula', request('zr'))

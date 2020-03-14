@@ -11,7 +11,7 @@
             Puedes regresar al <a href="{{ route('home.index') }}">Inicio</a>.
           </p>
           <p>Si estas intentando descargar un archivo en formato <b>excel</b> lo mas seguro es que no tengas registros que coincidan con la busqueda, intenta ingresando otra fecha.
-          	<a href="{{ route('exports.home') }}">Intentar Exportar Nuevamente</a></p>
+          	Intentar Exportar Nuevamente</p>
 
         </div>
         <!-- /.error-content -->
