@@ -159,7 +159,7 @@
           data: [
           @forelse ($average->audres as $s)
                 [
-                "{{ $s->segmentos->NombreSegmento ?? 'S/N' }}",
+                "<a href='{{ route('admin.segmentos.show',['sucursal' => $average->name,'segmento' => $s->segmentos->IdSegmentoAuditoria, 'FechaRegistro' => request('graphics') ,'sucursal' => $average->name] ) }}'>{{ $s->segmentos->NombreSegmento }}</a>",
                 {{ $s->Promedio ?? 0 }}
                 ],
                 @empty
