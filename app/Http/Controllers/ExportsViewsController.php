@@ -100,7 +100,7 @@ class ExportsViewsController extends Controller
 
     public function allpdf(Request $request)
     {
-        $year = Carbon::parse(request('year'))->format('Y');
+        $year = request('year');
         $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
         ->join('sucursals as s', 's.marca_id', '=', 'm.id')
         ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
@@ -116,18 +116,21 @@ class ExportsViewsController extends Controller
 
     public function allauditoriapdf(Request $request)
     {
-        $year = Carbon::parse(request('year'))->format('Y');
+        $year = request('year');
         $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
         ->join('sucursals as s', 's.marca_id', '=', 'm.id')
         ->join('aresults as a', 'a.sucursal_id', '=', 's.id')
-        ->select('s.*', 'a.*')
         ->where('users.id', auth()->user()->id)
         ->where('a.created_at', 'LIKE', "%".$year."%")
         ->groupBy('s.name')
+        ->select('s.*', 'a.*')
         ->get();
-        // var_dump(count($dates));
+            // ddd($dates);
       if(request()->ajax()){
             return response()->json($dates);
+        }
+        else{
+            return 'ajax fail';
         }//procesa la peticion ajax
     }
 }
