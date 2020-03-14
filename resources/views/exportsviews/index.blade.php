@@ -11,8 +11,9 @@
 				</div>
 				<div class="card-body">
 					<select name="select" id="inputSelect" class="form-control" required>
-							<option selected value="1"><i class="far fa-file-pdf"></i> Reporte Excel</option>
-							<option value="2">PDF</option>
+							<option value="1"><i class="far fa-file-pdf"></i> Reporte Excel</option>
+							<option selected value="2">PDF</option>
+							<option value="3">Reporte mensual y anual actual</option>
 					</select>
 				</div>
 			</div>
@@ -150,18 +151,76 @@
 	             	<table class="table table-bordered table-hover">
 		                <thead>
 			                <tr>
-			                  <th>ID</th>
-			                  <th>ID Cliente</th>
+			                  <th>Cedula</th>
 			                  <th>Region</th>
 			                  <th>Sucursal</th>
 			                  <th>Delegacion/Municipio</th>
 			                  <th>Ciudad</th>
-			                  <th>Created_at</th>
 			                  <th>Ver PDF</th>
 			                  <th>Descargar</th>
 			                </tr>
 		                </thead>
 		                <tbody id="DataResult">
+		                </tbody>
+		            </table>
+	            </div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="divOculto" id="div3">
+	<div id="reporte" class="container-fluid">
+		<div class="row">
+			<div class="col-md-12 col-lg-12">
+				<div class="card card-primary card-outline">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-download"></i>
+							Reportes PDF
+						</h3>
+					</div>
+				<div class="card-body">
+					<form
+					action="{{ route('exports.all.pdf') }}"
+					method="GET"
+					id="formulario1"
+					role="form"
+					class="form-inline">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md">
+									<div class="col-md">
+										<input
+										required
+										id="year"
+										type="text"
+										name="year"
+										class="form-control"
+										placeholder="Año:"
+										autocomplete="off">
+									</div>
+								</div>
+								<button id="pdf1" class="btn btn-primary">Descargar</button> &nbsp;&nbsp;
+						</div>
+					</form>
+	            </div>
+	            <!-- /.card-body -->
+				</div>
+				<div class="card-body">
+	             	<table class="table table-bordered table-hover">
+		                <thead>
+			                <tr>
+			                  <th>Cedula</th>
+			                  <th>Region</th>
+			                  <th>Sucursal</th>
+			                  <th>Delegacion/Municipio</th>
+			                  <th>Ciudad</th>
+			                  <th>RI/C</th>
+			                  <th>Ver PDF</th>
+			                  <th>Descargar</th>
+			                </tr>
+		                </thead>
+		                <tbody id="DataResult1">
 		                </tbody>
 		            </table>
 	            </div>
@@ -195,11 +254,19 @@
       case "1":
         $("#div1").show();
         $("#div2").hide();
+        $("#div3").hide();
         break;
 
       case "2":
         $("#div1").hide();
         $("#div2").show();
+        $("#div3").hide();
+        break;
+
+      case "3":
+        $("#div1").hide();
+        $("#div2").hide();
+        $("#div3").show();
         break;
     }
 
@@ -232,18 +299,64 @@
 		         	{
 		         	response.forEach(data => {
 		            valor += '<tr>' +
-				        '<td>' + data.id + '</td>' +
 				        '<td>' + data.IdCte + '</td>' +
 				        '<td>' + data.region + '</td>' +
 				        '<td>' + data.name + '</td>' +
 				        '<td>' + data.ciudad + '</td>' +
 				        '<td>' + data.delegacion_municipio + '</td>' +
-				        '<td>' + data.created_at + '</td>' +
 				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC8/ReportePDFCorreo.php?IdCedula="+data.IdCte+"&Division="+data.division+"'>Ver PDF</a></td>"+
 				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC8/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCte+"&Division="+data.division+"'>Descargar PDF</a></td>"+
 				        '</tr>';
 				    })
 				      $("#DataResult").html(valor);
+				    }
+		            }, error:function(jqXHR, textStatus, errorThrown){
+		                console.log('error::'+errorThrown);
+		                 console.log('error::'+textStatus);
+		                  console.log('error::'+jqXHR);
+		               }
+
+		        });
+		  	});
+  	});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function()
+    {
+			$('#pdf1').click(function(event) {
+		            event.preventDefault();
+		            var dataString = $('#formulario1').serialize();
+		  	 $.ajax({
+		  	 	url: '{{ route('exports.all.pdf') }}',
+		  	 	type: 'GET',
+		  	 	headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		  	 	data: dataString,
+		        success: function(response, data){
+		        	console.log(response);
+		         	var valor = ''
+		         	if (response.length == 0)
+		         	{
+		         		valor += "<tr>" +
+		         		"<td colspan='9' style='text-align: center;'> No se encontraron resulados </td>" +
+		         		"</tr>";
+				      $("#DataResult1").html(valor);
+		         	}
+		         	else
+		         	{
+		         	response.forEach(data => {
+		            valor += '<tr>' +
+				        '<td>' + data.IdCte + '</td>' +
+				        '<td>' + data.region + '</td>' +
+				        '<td>' + data.name + '</td>' +
+				        '<td>' + data.ciudad + '</td>' +
+				        '<td>' + data.delegacion_municipio + '</td>' +
+				        '<td>' + data.RI + ' / ' +data.C + '</td>' +
+				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC8/ReportePDFCorreo.php?IdCedula="+data.IdCte+"&Division="+data.division+"'>Ver PDF</a></td>"+
+				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC8/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCte+"&Division="+data.division+"'>Descargar PDF</a></td>"+
+				        '</tr>';
+				    })
+				      $("#DataResult1").html(valor);
 				    }
 		            }, error:function(jqXHR, textStatus, errorThrown){
 		                console.log('error::'+errorThrown);
@@ -270,6 +383,13 @@
         format: 'yyyy-mm',
         viewMode: "months",
         minViewMode: "months",
+    });
+	  $('#year').datepicker({
+        autoclose: true,
+        language: 'es',
+        format: 'yyyy',
+        viewMode: "years",
+        minViewMode: "years",
     });
 
 

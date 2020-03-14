@@ -29,6 +29,9 @@ Route::get('exports/auditoria', 'ExportsViewsController@auditoria')->name('expor
 Route::get('exports/auditoria/download', 'ExportsViewsController@exportauditoria')->name('exports.auditoria');
 Route::get('exports/auditoria/pdf', 'ExportsViewsController@exportauditoriapdf')->name('exports.auditoria.pdf');
 //endExports
+Route::get('exports/all/pdf', 'ExportsViewsController@allpdf')->name('exports.all.pdf');
+Route::get('exports/allauditoria/pdf', 'ExportsViewsController@allauditoriapdf')->name('exports.allauditoria.pdf');
+
 
 });
 
