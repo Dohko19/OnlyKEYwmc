@@ -8,7 +8,7 @@
 @endsection
 <section class="content text-center" >
   <div class="container-fluid">
-    <h5 class="mb-2">Listado de mis sucursales por Cedula </h5><br>
+    <h5 class="mb-2">Listado de mis sucursales por Celula </h5><br>
     @if (auth()->user()->hasRole('dmarca'))
 
     @else

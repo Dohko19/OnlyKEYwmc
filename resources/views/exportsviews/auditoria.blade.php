@@ -48,7 +48,7 @@
 									id="zr"
 									style="width: 100%;"
 									required>
-										<option selected disabled>Elige una Cedula</option>
+										<option selected disabled>Elige una Celula</option>
 										@foreach ($sucursales as $sucursal)
 											<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
 										@endforeach
