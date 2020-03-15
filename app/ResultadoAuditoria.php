@@ -12,6 +12,8 @@ class ResultadoAuditoria extends Model
 
     protected $dates = ['FechaRegistro'];
 
+    public $timestamps = false;
+
     public function auditorias()
     {
         return $this->belongsTo(Auditoria::class, 'IdAuditoria');
