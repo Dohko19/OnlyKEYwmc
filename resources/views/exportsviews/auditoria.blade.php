@@ -115,7 +115,7 @@
 									id="zrp"
 									style="width: 100%;"
 									>
-										<option value="" selected disabled>Elije una Cedula</option>
+										<option value="" selected disabled>Elije una Celula</option>
 										@foreach ($sucursales as $sucursal)
 											<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
 										@endforeach

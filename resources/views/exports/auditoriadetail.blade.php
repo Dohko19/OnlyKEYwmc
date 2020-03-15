@@ -5,12 +5,12 @@
 			<th></th>
 			<th></th>
 			<th></th>
-			<th style="background-color: #444444; color: #c9952d">Marca</th>
-			<th style="background-color: #444444; color: #c9952d">Cedula</th>
-            <th style="background-color: #444444; color: #c9952d">Nombre de la Sucursal</th>
-            <th style="background-color: #444444; color: #c9952d">Segmento</th>
-			<th style="background-color: #444444; color: #c9952d">Promedio de Cada Segmento</th>
-			<th style="background-color: #444444; color: #c9952d">Fecha de Auditoria</th>
+			<th style="background-color: #444444; color: #fff">Marca</th>
+			<th style="background-color: #444444; color: #fff">Celula</th>
+            <th style="background-color: #444444; color: #fff">Nombre de la Sucursal</th>
+            <th style="background-color: #444444; color: #fff">Segmento</th>
+			<th style="background-color: #444444; color: #fff">Promedio de Cada Segmento</th>
+			<th style="background-color: #444444; color: #fff">Fecha de Auditoria</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,7 +21,7 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<td style="background-color: #444444; color: #c9952d">{{ $date->marcas->name ?? 'Sin datos' }}</td>
+			<td style="background-color: #444444; color: #fff">{{ $date->marcas->name ?? 'Sin datos' }}</td>
 			<td>{{ $date->cedula ?? 'Sin datos' }}</td>
             <td>{{ $date->name ?? 'Sin datos' }}</td>
 			<td>{{ $result->segmentos->NombreSegmento ?? 'Sin datos' }}</td>
