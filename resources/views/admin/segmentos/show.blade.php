@@ -94,7 +94,11 @@
                                             </select>
                                           @endif
                                           @endcan
+                                          @role('asesor')
                                           <textarea class="form-control" cols="30" rows="5" placeholder="Plan de Accion de parte del asesor" name="action">{{ old('action') }}</textarea>
+                                          @else
+                                          <textarea class="form-control" cols="30" rows="5" placeholder="Plan de Accion de parte del asesor" disabled>{{ old('action') }}</textarea>
+                                          @endrole
 
                                     </div>
                               </td>
