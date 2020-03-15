@@ -156,6 +156,7 @@
 			                  <th>Cliente</th>
 			                  <th>Cedula</th>
 			                  <th>Sucursal</th>
+			                  <th>Marca</th>
 			                  <th>Ver PDF</th>
 			                  <th>Descargar</th>
 			                </tr>
