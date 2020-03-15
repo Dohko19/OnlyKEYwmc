@@ -11,7 +11,7 @@ class ResultadoAuditoriaController extends Controller
 {
     public function update(Request $request, $id)
     {
-    	$this->authorize('update', $id);
+    	// $this->authorize('update', $id);
     	$resultado = ResultadoAuditoria::find($id);
         $resultado->Aprobado = $request->get('Aprobado');
         $resultado->action = $request->get('action');
