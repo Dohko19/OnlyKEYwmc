@@ -30,14 +30,29 @@ class ExportsViewsController extends Controller
         $from = Carbon::parse(request('desdep'))->format('Y-m-d');
         $to = Carbon::parse(request('hastap'))->endOfMonth();
         $zr = request('zrp');
-        $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
-        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
-        ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
-        ->select('s.*', 'm.*', 'q.*')
-        ->where('users.id', auth()->user()->id)
-        ->where('s.region', request('zrp'))
-        ->whereBetween('q.created_at', [$from, $to])
-        ->get();
+        $zr = request('zrp');
+        if ($zr == 'allcelulas')
+        {
+            User::join('marcas as m', 'm.user_id', '=', 'users.id')
+                    ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+                    ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
+                    ->select('s.*', 'm.*', 'q.*')
+                    ->where('users.id', auth()->user()->id)
+                    ->whereBetween('q.created_at', array($from, $to) )
+                    ->get();
+        }
+        else
+        {
+                $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+                    ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+                    ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
+                    ->select('s.*', 'm.*', 'q.*')
+                    ->where('users.id', auth()->user()->id)
+                    ->where('s.region', request('zrp'))
+                    ->whereBetween('q.created_at', array($from, $to) )
+                    ->get();
+        }
+
          // $dates = Sucursal::with(['marcas', 'qresults', 'users' => function($query){
          //            $query->findOrFail(auth()->user()->id);
          //        }])
@@ -71,15 +86,27 @@ class ExportsViewsController extends Controller
        $from = Carbon::parse(request('desdep'))->format('Y-m-d');
         $to = Carbon::parse(request('hastap'))->endOfMonth();
         $zr = request('zrp');
-        $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
-        ->join('sucursals as s', 's.marca_id', '=', 'm.id')
-        ->join('aresults as a', 'a.sucursal_id', '=', 's.id')
-        ->select('s.*', 'm.*', 'a.*')
-        ->where('users.id', auth()->user()->id)
-        ->where('s.cedula', request('zrp'))
-        ->whereBetween('a.created_at', [$from, $to])
-        ->groupBy('IdCte')
-        ->get();
+        if ($zr == 'allcelulas') {
+            $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+            ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+            ->join('aresults as a', 'a.sucursal_id', '=', 's.id')
+            ->select('s.*', 'm.*', 'a.*')
+            ->where('users.id', auth()->user()->id)
+            ->whereBetween('a.created_at', array($from, $to) )
+            ->groupBy('IdCte')
+            ->get();
+        }
+        else{
+            $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+            ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+            ->join('aresults as a', 'a.sucursal_id', '=', 's.id')
+            ->select('s.*', 'm.*', 'a.*')
+            ->where('users.id', auth()->user()->id)
+            ->where('s.cedula', request('zrp'))
+            ->whereBetween('a.created_at', array($from, $to) )
+            ->groupBy('IdCte')
+            ->get();
+            }
         // ddd($dates);
          // $dates = Sucursal::with(['marcas', 'qresults', 'users' => function($query){
          //            $query->findOrFail(auth()->user()->id);

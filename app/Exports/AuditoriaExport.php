@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Auditoria;
 use App\Sucursal;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -46,16 +47,24 @@ class AuditoriaExport implements FromView, ShouldAutoSize, WithDrawings
   //       ->whereBetween('q.created_at', [$from, $to])
   //       ->get();
         	// ddd($dates);
-
-		 $dates = Sucursal::with(['marcas', 'promsuc', 'audres', 'users' => function($query){
+		if (request('zr') == 'allcelulas') {
+			$dates = Sucursal::with(['marcas', 'promsuc', 'audres' => function($query) use ($from, $to){
+		 			$query->whereBetween('created_at', array($from, $to) );
+		 		}, 'users' => function($query){
+					$query->findOrFail(auth()->user()->id);
+				}])
+                ->get();
+		}
+		else
+		{
+		 $dates = Sucursal::with(['marcas', 'promsuc', 'audres' => function($query) use ($from, $to){
+		 			$query->whereBetween('created_at', array($from, $to) );
+		 		}, 'users' => function($query){
 					$query->findOrFail(auth()->user()->id);
 				}])
 				->where('cedula', request('zr'))
-				->where(function ($query) use ($from, $to){
-					$query->whereBetween('created_at', [$from, $to]);
-				})
                 ->get();
-   			// ddd($dates);
+		}
 
 		return view('exports.auditoriadetail', compact('dates'))->withSuccess('Archivo Listo');
 	}

@@ -17,7 +17,7 @@
         <div class="col-md-3">
             <div class="card card-primary">
               <div class="card-header">
-                Cedula:
+                Celula:
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->

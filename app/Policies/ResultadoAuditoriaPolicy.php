@@ -30,7 +30,8 @@ class ResultadoAuditoriaPolicy
      */
     public function view(User $user, ResultadoAuditoria $resultadoAuditoria)
     {
-        //
+        return $user->hasRole('Admin') || $user->hasPermissionTo('View resultado auditoria');
+
     }
 
     /**

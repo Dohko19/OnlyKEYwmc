@@ -13,7 +13,7 @@
 					<select name="select" id="inputSelect" class="form-control" required>
 							<option value="1"><i class="far fa-file-pdf"></i> Reporte Excel</option>
 							<option selected value="2">PDF</option>
-							<option value="3">Reporte mensual y anual actual</option>
+							{{-- <option value="3">Reporte mensual y anual actual</option> --}}
 					</select>
 				</div>
 			</div>
@@ -48,10 +48,11 @@
 									id="zr"
 									style="width: 100%;"
 									required>
-										<option selected disabled>Elige Cedula</option>
+										<option selected disabled>Elige una Cedula</option>
 										@foreach ($sucursales as $sucursal)
 											<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
 										@endforeach
+											<option value="allcelulas">Todas las Celulas</option>
 									</select>
 									<small>Selecciona Una region o zona</small>
 								</div>
@@ -118,6 +119,7 @@
 										@foreach ($sucursales as $sucursal)
 											<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
 										@endforeach
+											<option value="allcelulas">Todas las Celulas</option>
 									</select>
 								</div>
 								<div class="col-md">
@@ -166,7 +168,7 @@
 		</div>
 	</div>
 </div>
-<div class="divOculto" id="div3">
+{{-- <div class="divOculto" id="div3">
 	<div id="reporte" class="container-fluid">
 		<div class="row">
 			<div class="col-md-12 col-lg-12">
@@ -222,7 +224,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> --}}
 @endsection
 @push('styles')
 	<link rel="stylesheet" href="{{ asset('adminLTE/plugins/datepicker/datepicker3.css') }}">
@@ -290,10 +292,11 @@
 		         	response.forEach(data => {
 		            valor += '<tr>' +
 				        '<td>' + data.IdCte + '</td>' +
+				        '<td>' + data.IdCedula + '</td>' +
 				        '<td>' + data.cedula + '</td>' +
 				        '<td>' + data.name + '</td>' +
-				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC8/ReportePDFCorreo.php?IdCedula="+data.IdCte+"&Division="+data.Division+"'>Ver PDF</a></td>"+
-				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC8/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCte+"&Division="+data.Division+"'>Descargar PDF</a></td>"+
+				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC7/ReportePDFAuditoria.php?IdCedula="+data.IdCedula+"&Division="+data.Division+"'>Ver PDF</a></td>"+
+				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC7/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCedula+"&Division="+data.Division+"'>Descargar PDF</a></td>"+
 				        '</tr>';
 				    })
 				      $("#DataResult").html(valor);
@@ -321,7 +324,7 @@
 		  	 	headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		  	 	data: dataString,
 		        success: function(response, data){
-		        	console.log(response);
+		        	// console.log(response);
 		         	var valor = ''
 		         	if (response.length == 0)
 		         	{
@@ -335,6 +338,7 @@
 		         	response.forEach(data => {
 		            valor += '<tr>' +
 				        '<td>' + data.IdCte + '</td>' +
+				        '<td>' + data.IdCedula + '</td>' +
 				        '<td>' + data.cedula + '</td>' +
 				        '<td>' + data.name + '</td>' +
 				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC8/ReportePDFCorreo.php?IdCedula="+data.IdCte+"&Division="+data.Division+"'>Ver PDF</a></td>"+

@@ -42,9 +42,10 @@
                   <thead>
                     <tr>
                       <th style="width: 33%">Preguntas Realizadas</th>
-                      <th style="width: 3%">Comentario</th>
+                      <th style="width: 20%">Comentario</th>
                       <th style="width: 2%">Imagen...</th>
-                      <th style="width: 1%">Aprobado y plan de acción</th>
+                      <th style="width: 23%">Aprobado y plan de acción</th>
+                      <th style="width: 23%">Comentarios del D. General</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -62,6 +63,7 @@
                                     <textarea
                                     cols="20"
                                     rows="5"
+                                    class="form-control"
                                     placeholder="Plan de accion..."
                                     disabled>{{ old('comments', $segmento->Comentario) }}</textarea>
                                     </div>
@@ -74,25 +76,37 @@
                                     @endif
                               </td>
                               <td>
-                                    <div class="form-group">
                                           <form action="{{ route('admin.resultados.update', $s->Id) }}"
                                           method="POST" style="display: inline;">
+                                    <div class="form-group">
                                           @csrf
                                           @method('PUT')
                                           @can('update', new App\ResultadoAuditoria)
-                                            <select class="form-control" name="Aprobado">
+                                          @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
+                                            <select class="form-control"  disabled>
                                                   <option value="0">No</option>
                                                   <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
                                             </select>
-                                          @endcan
-                                          @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
-                                            <textarea id="" cols="30" rows="5" placeholder="Plan de Accion (este no es un texto)" disabled>{{ old('action') }}</textarea>
                                           @else
-                                          <textarea name="action" id="" cols="30" rows="5" placeholder="Plan de Accion">{{ old('action') }}</textarea>
+                                          <select class="form-control" name="Aprobado">
+                                                  <option value="0">No</option>
+                                                  <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                                            </select>
                                           @endif
-                                                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
-                                          </form>
+                                          @endcan
+                                          <textarea class="form-control" cols="30" rows="5" placeholder="Plan de Accion de parte del asesor" name="action">{{ old('action') }}</textarea>
+
                                     </div>
+                              </td>
+                              <td>
+                                        @can('view', new App\ResultadoAuditoria)
+                                        <textarea class="form-control" cols="30" rows="10" placeholder="Plan de accion de parte del director general" disabled>{{ old('action_dgral') }}</textarea>
+                                        @endcan
+                                        @role('dgral')
+                                        <textarea name="action_dgral" class="form-control" cols="30" rows="5" placeholder="Plan de accion de parte del director general">{{ old('action_dgral') }}</textarea>
+                                        @endrole
+                                        <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
+                                          </form>
                               </td>
                         </tr>
                       @endif
@@ -114,63 +128,77 @@
                         <table class="table table-hover">
                               <thead>
                               <tr>
-                              <th style="width: 33%">Preguntas Realizadas</th>
-                              <th style="width: 15%">Comentario</th>
-                              <th style="width: 10%">Imagen...</th>
-                              <th style="width: 10%">Aprobado</th>
+                                <th style="width: 33%">Preguntas Realizadas</th>
+                                <th style="width: 20%">Comentario</th>
+                                <th style="width: 2%">Imagen...</th>
+                                <th style="width: 23%">Aprobado y plan de acción</th>
+                                <th style="width: 23%">Comentarios del D. General</th>
                               </tr>
                               </thead>
                               <tbody>
-                              @foreach ($segmento1 as $seg)
-                                @foreach ($seg->rauditoria as $sa)
-                                  @if ($sa->Aprobado == 1)
-                                        <tr>
-                                              <td style="width: 600px;">
-                                                    {{ $sa->questions->Pregunta }}
-                                                    <br><small><b>Fecha de Registro: {{ $sa->FechaRegistro }}</b></small>
-                                                    <br><small><b>Ultima Actualizacion: {{ $sa->FechaActualizacion ?? 'Sin datos' }}</b></small>
-                                              </td>
-                                              <td>
-                                                    <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
-                                                    <textarea
-                                                    name="accion"
-                                                    cols="30"
-                                                    rows="5"
-                                                    placeholder="Plan de accion..."
-                                                    disabled>{{ old('comments', $sa->Comentario) }}</textarea>
-                                                    </div>
-                                              </td>
-                                              <td>
-                                                    @if ($sa->Foto)
-                                                    <img id="myImg{{ $sa->Id }}" src="{{ $sa->Foto }}" width="150px" class="zoom" alt="">
-                                                    <button type="button" class="btn btn-info openBtn">Open Modal</button>
-                                                    @else
-                                                    <p>Sin Imagen</p>
-                                                    @endif
-                                              </td>
-                                              <td>
-                                                    <div class="form-group">
-                                                      <form action="{{ route('admin.resultados.update', $s->Id) }}"
-                                                      method="POST" style="display: inline;">
-                                                      @csrf
-                                                      @method('PUT')
-                                                      <select class="form-control" name="Aprobado">
-                                                            <option value="0">No</option>
-                                                            <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
-                                                      </select>
-                                                      @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
-                                                        <textarea id="" cols="30" rows="5" placeholder="Plan de Accion (este no es un texto)" disabled>{{ old('action') }}</textarea>
-                                                      @else
-                                                      <textarea name="action" id="" cols="30" rows="5" placeholder="Plan de Accion">{{ old('action') }}</textarea>
-                                                      @endif
-                                                            <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
-                                                      </form>
-                                                    </div>
-                                              </td>
-                                        </tr>
-                                  @endif
-                                @endforeach
-                              @endforeach
+                                 @foreach ($segmento1 as $seg)
+                                   @foreach ($seg->rauditoria as $s)
+                                    @if ($s->Aprobado == 1)
+                                      <tr>
+                                            <td style="width: 600px;">
+                                                  {{ $s->questions->Pregunta }}
+                                                  <br><small><b>Fecha de Registro: {{ $s->FechaRegistro }}</b></small>
+                                                  <br><small><b>Ultima Actualizacion: {{ $s->FechaActualizacion ?? 'Sin datos' }}</b></small>
+                                            </td>
+                                            <td>
+                                                  <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
+                                                  <textarea
+                                                  cols="20"
+                                                  rows="5"
+                                                  class="form-control"
+                                                  placeholder="Plan de accion..."
+                                                  disabled>{{ old('comments', $segmento->Comentario) }}</textarea>
+                                                  </div>
+                                            </td>
+                                            <td>
+                                                  @if ($s->Foto)
+                                                  <img id="myImg{{ $segmento->Id }}" src="{{ $s->Foto }}" width="150px" class="zoom" alt="">
+                                                  @else
+                                                  <p>Sin Imagen</p>
+                                                  @endif
+                                            </td>
+                                            <td>
+                                                        <form action="{{ route('admin.resultados.update', $s->Id) }}"
+                                                        method="POST" style="display: inline;">
+                                                  <div class="form-group">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        @can('update', new App\ResultadoAuditoria)
+                                                        @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
+                                                          <select class="form-control"  disabled>
+                                                                <option value="0">No</option>
+                                                                <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                                                          </select>
+                                                        @else
+                                                        <select class="form-control" name="Aprobado">
+                                                                <option value="0">No</option>
+                                                                <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                                                          </select>
+                                                        @endif
+                                                        @endcan
+                                                        <textarea class="form-control" cols="30" rows="5" placeholder="Plan de Accion de parte del asesor" name="action">{{ old('action') }}</textarea>
+
+                                                  </div>
+                                            </td>
+                                            <td>
+                                                      @can('view', new App\ResultadoAuditoria)
+                                                      <textarea class="form-control" cols="30" rows="10" placeholder="Plan de accion de parte del director general" disabled>{{ old('action_dgral') }}</textarea>
+                                                      @endcan
+                                                      @role('dgral')
+                                                      <textarea name="action_dgral" class="form-control" cols="30" rows="5" placeholder="Plan de accion de parte del director general">{{ old('action_dgral') }}</textarea>
+                                                      @endrole
+                                                      <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
+                                                        </form>
+                                            </td>
+                                      </tr>
+                                    @endif
+                                   @endforeach
+                                 @endforeach
                               </tbody>
                         </table>
                         </div>
