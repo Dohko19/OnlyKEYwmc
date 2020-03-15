@@ -82,6 +82,7 @@
                                           @csrf
                                           @method('PUT')
                                           @can('update', new App\ResultadoAuditoria)
+                                          @role('gsucursal')
                                           @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
                                             <select class="form-control"  disabled>
                                                   <option value="0">No</option>
@@ -93,6 +94,14 @@
                                                   <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
                                             </select>
                                           @endif
+                                          @else
+                                          @role('asesor')
+                                          <select class="form-control" name="Aprobado">
+                                                  <option value="0">No</option>
+                                                  <option {{ $s->Id == 1 ? 'selected' : '' }} value="1">Si</option>
+                                            </select>
+                                          @endrole
+                                          @endrole
                                           @endcan
                                           @role('asesor')
                                           <textarea class="form-control" cols="30" rows="5" placeholder="Plan de Accion de parte del asesor" name="action">{{ old('action') }}</textarea>
