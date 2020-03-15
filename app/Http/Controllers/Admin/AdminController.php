@@ -66,7 +66,7 @@ class AdminController extends Controller
             return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
-        if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional')) {
+        if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional') || auth()->user()->hasRole('asesor')) {
             $sucursales = User::with(['sucursals'])
                 ->findOrFail(auth()->user()->id);
             $sj = Marca::where('user_id', auth()->user()->id )
