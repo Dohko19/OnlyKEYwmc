@@ -9,12 +9,26 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-class DetailsExport implements FromView, ShouldAutoSize
+class DetailsExport implements FromView, ShouldAutoSize, WithDrawings
 {
 	use Exportable;
 
 	private $date;
+
+	public function drawings()
+    {
+        $drawing = new Drawing();
+        $drawing->setName('Logo');
+        $drawing->setDescription('Dominos Logo');
+        $drawing->setPath( public_path('/marcas/dominos_pizza_logo.png') );
+        $drawing->setHeight(90);
+        $drawing->setCoordinates('A1');
+
+        return $drawing;
+    }
 
 	public function view(): View
 	{
