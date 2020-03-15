@@ -30,7 +30,6 @@ class ExportsViewsController extends Controller
         $from = Carbon::parse(request('desdep'))->format('Y-m-d');
         $to = Carbon::parse(request('hastap'))->endOfMonth();
         $zr = request('zrp');
-        $zr = request('zrp');
         if ($zr == 'allcelulas')
         {
             User::join('marcas as m', 'm.user_id', '=', 'users.id')
