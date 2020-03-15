@@ -32,7 +32,7 @@ class ExportsViewsController extends Controller
         $zr = request('zrp');
         if ($zr == 'allcelulas')
         {
-            User::join('marcas as m', 'm.user_id', '=', 'users.id')
+           $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
                     ->join('sucursals as s', 's.marca_id', '=', 'm.id')
                     ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
                     ->select('s.*', 'm.*', 'q.*')
