@@ -154,6 +154,7 @@
 		                <thead>
 			                <tr>
 			                  <th>Cedula</th>
+			                  <th>Numero de Cliente</th>
 			                  <th>Region</th>
 			                  <th>Sucursal</th>
 			                  <th>Delegacion/Municipio</th>
