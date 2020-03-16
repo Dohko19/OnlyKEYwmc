@@ -20,9 +20,9 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">{{-- <img src="{{ url('images/key.png') }}" alt="User Image"> --}}
-  <div class="login-logo">
+{{--   <div class="login-logo">
     <img src="{{ url('images/key.png') }}" width="100px" height="50px" alt="">
-  </div>
+  </div> --}}
   <!-- /.login-logo -->
   @yield('content')
 </div>

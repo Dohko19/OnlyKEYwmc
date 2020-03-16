@@ -235,9 +235,9 @@
         data: [
             @foreach ( $sucursales->sucursals as $ris)
                   {
-                        name: "{{ $ris->name }}",
-                        y: {{ $ris->RI ?? 0 }}, //proemdio
-                        drilldown: "{{ $ris->name }}"
+                    name: "{{ $ris->name }}",
+                    y: {{ $ris->RI ?? 0 }}, //proemdio
+                    drilldown: "{{ $ris->name }}"
                   },
             @endforeach
         ]

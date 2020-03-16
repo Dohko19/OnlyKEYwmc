@@ -28,4 +28,9 @@ class ResultadoAuditoria extends Model
     {
         return $this->belongsTo(Question::class, 'IdPregunta');
     }
+
+    function sucursals()
+    {
+        return $this->belongsTo(Sucursal::class);
+    }
 }

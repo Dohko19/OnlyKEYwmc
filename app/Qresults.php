@@ -8,6 +8,6 @@ class Qresults extends Model
 {
     public function sucursales()
     {
-    	return $this->belongsTo(Sucursal::class, 'sucursal_id');
+    	return $this->belongsTo(Sucursal::class);
     }
 }

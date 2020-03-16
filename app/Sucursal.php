@@ -28,7 +28,7 @@ class Sucursal extends Model
 
     public function qresults()
     {
-        return $this->hasMany(Qresults::class);
+        return $this->hasMany(Qresults::class, 'sucursal_id');
     }
 
     public function questionaries()
@@ -70,10 +70,5 @@ class Sucursal extends Model
     public function promsuc()
     {
         return $this->hasMany(PromSuc::class);
-    }
-
-    public function rauditoria()
-    {
-        return $this->hasMany(ResultadoAuditoria::class, 'sucursal_id');
     }
 }
