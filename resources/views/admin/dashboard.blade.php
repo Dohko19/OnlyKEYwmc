@@ -123,7 +123,7 @@
       @elseif(auth()->user()->hasRole('dgral'))
             <div class="row justify-content-center align-items-center minh-100" >
             @foreach ($marcas as $marca)
-            @foreach ($marca->average->take(1) as $promedio)
+            @forelse ($marca->average->take(1) as $promedio)
                               <div class="col-md-3 col-sm-6 col-12">
                                     <div class="info-box">
                                     <div class="info-box-content ">
@@ -167,7 +167,18 @@
                                     <!-- /.info-box -->
                               </div>
                               <!-- /.col -->
-                  @endforeach
+                            @empty
+                            <div class="col-md-3 col-sm-6 col-12">
+                                <div class="info-box">
+                                <div class="info-box-content ">
+
+                                                  <a href="{{ route('home.region', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
+                                                  <img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
+                                                  </a>
+                                </div>
+                                </div>
+                            </div>
+                  @endforelse
             @endforeach
                   {{-- {{ $sucursales->sucursals }} --}}
             </div>

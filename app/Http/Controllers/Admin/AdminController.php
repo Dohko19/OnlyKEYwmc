@@ -32,6 +32,7 @@ class AdminController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('dgral')) {
+
             $marcas = Marca::with(['grupos', 'average'])->where('user_id', auth()->user()->id)->get();
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
@@ -85,6 +86,7 @@ class AdminController extends Controller
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get();
+
             return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
@@ -94,13 +96,10 @@ class AdminController extends Controller
                $query->where('created_at', 'like', "%".Carbon::now()->format('Y-m')."%");
            }])->findOrFail(auth()->user()->id);
 
-            $grupos = User::with(['sucursals'])
-                ->findOrFail(auth()->user()->id);
-
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get();
-            return view('admin.dashboard', compact('sucursales', 'sj', 'grupos'));
+            return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
         if(auth()->user()->hasRole('ddistrital'))
