@@ -75,14 +75,12 @@
       </div>
 	@elseif(auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dmarca'))
 		<div class="row justify-content-center align-items-center minh-100" >
-                  @foreach ($sucursales->sucursals as $sucursale)
-                  @foreach ($grupos->sucursals as $grupo)
-                  {{ $sucursale }}
-				{{-- <div class="col-md-3 col-sm-6 col-6">
+            @foreach ($sucursales->sucursals as $sucursale)
+				<div class="col-md-3 col-sm-6 col-6">
 		        	<div class="info-box">
 			          <div class="info-box-content ">
-			          	@if ($grupo->marcas->grupos->tipo == 'auditorias')
-			          		<img src="{{ url('marcas/'.$grupo->marcas->photo) }}" alt="{{ $grupo->marcas->name .'-'. $grupo->marcas->id }}" width="300px" height="300" class="img-fluid">
+			          	@if ($sucursale->marcas->grupos->tipo == 'auditorias')
+			          		<img src="{{ url('marcas/'.$sucursale->marcas->photo) }}" alt="{{ $sucursale->marcas->name .'-'. $sucursale->marcas->id }}" width="300px" height="300" class="img-fluid">
 				      @else
                                     <a href="{{ route('home.cedula', $sucursale->marcas, Carbon\Carbon::now(), $dm ?? '') }}">
                                     <img src="{{ url('marcas/'.$sucursale->marcas->photo) }}" alt="{{ $sucursale->marcas->name .'-'. $sucursale->marcas->id }}" width="300px" height="300" class="img-fluid">
@@ -90,8 +88,8 @@
 				      @endif
 			          </div>
 		        	</div>
-			          @if ($grupo->marcas->grupos->tipo == 'auditorias')
-			          @if ($sucursale->puntuacion_general >= 90)
+			          @if ($sucursale->marcas->grupos->tipo == 'auditorias')
+			          @if ($sucursale->promedio >= 90)
 					          	<a href="{{ route('home.cedula', $sucursale->marcas) }}"
 					          	class="btn btn-sm btn-success small-box-footer">
 					          		<i class="fas fa-star"></i> Calificacion de Limpieza:
@@ -99,7 +97,7 @@
 					          	 	{{ $sucursale->promedio ?? 'S/D' }}
 					          	 </u>
 					          	</a>
-				          	@elseif($sucursale->puntuacion_general >= 70)
+				          	@elseif($sucursale->promedio >= 70)
 					          	<a href="{{ route('home.cedula', $sucursale->marcas) }}"
 					          	class="btn btn-sm btn-warning small-box-footer">
 					          		<i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
@@ -107,7 +105,7 @@
 					          	 	{{ $sucursale->promedio ?? 'S/D' }}
 					          	 </u>
 					          	</a>
-					        @elseif($sucursale->puntuacion_general < 70)
+					        @elseif($sucursale->promedio < 70)
 					          	<a href="{{ route('home.cedula', $sucursale->marcas) }}"
 					          	class="btn btn-sm btn-danger small-box-footer">
 					          		<i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
@@ -117,9 +115,8 @@
 					          	</a>
 				        	@endif
 				        	@endif
-					</div> --}}
+					</div>
                           <!-- /.info-box -->
-                        @endforeach
                         @endforeach
 		</div>
       </div>

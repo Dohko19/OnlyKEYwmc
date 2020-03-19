@@ -89,8 +89,11 @@ class AdminController extends Controller
         }
 
         if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional') || auth()->user()->hasRole('asesor')) {
-           $sucursales = User::with(['sucursals.marcas.average'])->findOrFail(auth()->user()->id);
-            ddd($sucursales);
+
+            $sucursales = User::with(['sucursals.marcas.average' => function($query){
+               $query->where('created_at', 'like', "%".Carbon::now()->format('Y-m')."%");
+           }])->findOrFail(auth()->user()->id);
+
             $grupos = User::with(['sucursals'])
                 ->findOrFail(auth()->user()->id);
 
