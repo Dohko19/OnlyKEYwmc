@@ -11,6 +11,7 @@ class Sucursal extends Model
 		'name', 'marca_id', 'ciudad', 'IdCte', 'delegacion_municipio', 'phone', 'zone', 'region', 'cedula'
 	];
 
+
     public function marcas()
     {
     	return $this->belongsTo(Marca::class, 'marca_id');
@@ -70,5 +71,10 @@ class Sucursal extends Model
     public function promsuc()
     {
         return $this->hasMany(PromSuc::class);
+    }
+
+    public function rauditoria()
+    {
+        return $this->hasMany(ResultadoAuditoria::class, 'sucursal_id');
     }
 }

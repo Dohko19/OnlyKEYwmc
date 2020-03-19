@@ -3,10 +3,10 @@ Auth::routes(['register' => false]);
 // Route::get('export', 'MyController@export')->name('export');
 // Route::get('importExportView', 'MyController@importExportView');
 // Route::get('import', 'MyController@import')->name('import');
-Route::get('mails', function(){
-	$user = App\User::find(1);
-	return view('mails.userdata', compact('user'));
-});
+// Route::get('mails', function(){
+// 	$user = App\User::find(1);
+// 	return view('mails.userdata', compact('user'));
+// });
 
 Route::group(['middleware' => 'auth'], function(){
 

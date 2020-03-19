@@ -43,13 +43,6 @@ class SegmentosController extends Controller
         $this->authorize('view', $segmento);
         $fil = $request->get('FechaRegistro') ? $request->get('FechaRegistro') : request('FechaRegistro');
 
-        // $fil = Carbon::parse($fil)->format('Y-m');
-
-      //   $segmento1 = ResultadoAuditoria::with(['questions'])
-      //   ->where('IdSegmento', $segmento->IdSegmentoAuditoria)
-      //   ->where('FechaRegistro', 'LIKE', "%".$fil."%")
-      //   ->get();
-
       $segmento1 = Sucursal::with(['rauditoria' => function($query) use ($segmento, $fil){
         $query->where('IdSegmento', $segmento->IdSegmentoAuditoria);
         $query->where('FechaRegistro', 'like', "%".$fil."%");
@@ -57,20 +50,6 @@ class SegmentosController extends Controller
       ->where('name', request('sucursal'))
       ->get();
 
-      // User::with(['sucursals' => function($query) use ($segmento){
-      //   $query->join('ResultadoAuditoria as ra', function($join) use ($segmento){
-      //     $join->on('ra.sucursal_id', '=', 'sucursals.id')
-      //     ->where('ra.IdSegmento', '=', $segmento->IdSegmentoAuditoria);
-      //   });
-      // }])
-      //   ->findOrFail(auth()->user()->id);
-
-        // $segmento1 = ResultadoAuditoria::join('sucursals as s', function($join) use ($fil, $segmento) {
-        //             $join->on('s.IdCte', '=', 'ResultadoAuditoria.IdCte')
-        //             ->where('ResultadoAuditoria.IdSegmento', '=', $segmento->IdSegmentoAuditoria);
-        //         })
-        //   ->paginate(13);
-            // ddd($segmento1);
         return view('admin.segmentos.show', compact('segmento', 'segmento1'));
     }
 }

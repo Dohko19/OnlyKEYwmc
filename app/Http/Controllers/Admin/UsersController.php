@@ -49,22 +49,35 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->auditorias;
+        // return $request;
         $this->authorize('create', new User);
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'unique:users', 'email', 'string'],
+            'username' => ['required', 'unique:users', 'string'],
+            'lastname' => ['string'],
+            'phone' => ['numeric'],
         ]);
-
+        if ($request->filled('password'))
+        {
+            $data['password'] = ['confirmed', 'min:6'];
+        }
+        else
+        {
+            $data['password'] = 123123;
+        }
+        // dd( $data );
         $user = User::create($data);
         //Asiganmos los roles
-        $user->assignRole($request->role);
+        $user->assignRole($request->roles);
         //Assigamos los permisos
         $user->givePermissionTo($request->permissions);
         // $email = new Email;
         // $email->correo = $request->get('email');
         // $email->save();
-        return redirect()->back()->with('info', 'Usuario Creado Correctamente');
+        Mail::to($user->email)->send(new ResendAuthDates($user));
+
+        return redirect()->back()->withSuccess('Usuario Creado Correctamente');
     }
 
     /**

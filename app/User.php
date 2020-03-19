@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'lastname', 'email', 'password',
+        'name', 'phone', 'lastname', 'email', 'password', 'username'
     ];
 
     /**
@@ -49,7 +49,6 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
-
 
     public function setPasswordAttribute($password)
     {

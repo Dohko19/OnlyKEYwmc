@@ -7,12 +7,14 @@ use App\Auditoria;
 use App\GrupoMarca;
 use App\Http\Controllers\Controller;
 use App\Marca;
+use App\Marcaprom;
 use App\PromSuc;
 use App\Qresults;
 use App\Question;
 use App\Segmento;
 use App\Sucursal;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -30,7 +32,7 @@ class AdminController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('dgral')) {
-            $marcas = Marca::with(['grupos'])->where('user_id', auth()->user()->id)->get();
+            $marcas = Marca::with(['grupos', 'average'])->where('user_id', auth()->user()->id)->get();
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get()->toArray();
@@ -44,22 +46,42 @@ class AdminController extends Controller
                 $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
                 ->join('marcas as m', 'm.id', '=', 's.marca_id')
                 ->where('m.id', '=', $marca->id)
+                ->where('aresults.created_at', 'LIKE', "%".Carbon::now()->format('Y-m')."%")
                 ->selectRaw('AVG(aresults.Promedio) prom')
                 ->get()->toArray();
+                // ddd($promedio);
                 for($i=0;$i<count($promedio);$i++) {
                     $total = $promedio[$i];
                 }
-                $prom = Marca::find($id['id']);
-                $prom->puntuacion_general = $total['prom'];
-                $prom->save();
-                $success = true;
+                // dd($total['prom']);
+                if($total['prom'] != null)
+                {
+                    $prom = Marcaprom::updateOrCreate(
+                        [
+                            'marca_id' => $marca->id,
+                            'created_at' => Carbon::now()->format('Y-m'),
+                        ],
+                        [
+                            'promedio' => $total['prom'],
+                            'marca_id' => $marca->id,
+                        ]
+                    );
+                }
             }
 
             return view('admin.dashboard', compact('marcas', 'sj'));
         }
 
         if (auth()->user()->hasRole('dmarca')) {
-            $sucursales = User::with('sucursals')->findOrFail(auth()->user()->id);
+            $sucursales = User::with(['sucursals' => function($query){
+                $query->join('marcas as m', 'm.id', '=', 'sucursals.marca_id');
+                $query->join('marcasproms as p', function($join){
+                    $join->on('m.sucursal_id', '=', 'm.id')
+                    ->where('p.created_at', 'like', "%".Carbon::now()->format('Y-m')."%");
+                });
+            }])->findOrFail(auth()->user()->id);
+
+            // ddd($sucursales);
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get();
@@ -67,12 +89,15 @@ class AdminController extends Controller
         }
 
         if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional') || auth()->user()->hasRole('asesor')) {
-            $sucursales = User::with(['sucursals'])
+           $sucursales = User::with(['sucursals.marcas.average'])->findOrFail(auth()->user()->id);
+            ddd($sucursales);
+            $grupos = User::with(['sucursals'])
                 ->findOrFail(auth()->user()->id);
+
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get();
-            return view('admin.dashboard', compact('sucursales', 'sj'));
+            return view('admin.dashboard', compact('sucursales', 'sj', 'grupos'));
         }
 
         if(auth()->user()->hasRole('ddistrital'))
@@ -158,13 +183,23 @@ class AdminController extends Controller
             ->where('m.id', '=', $marca->id)
             ->selectRaw('AVG(aresults.Promedio) prom')
             ->get()->toArray();
+
             for($i=0;$i<count($promedio);$i++) {
                 $total = $promedio[$i];
             }
-            $prom = Marca::find($marca->id);
-            $prom->puntuacion_general = $total['prom'];
-            $prom->save();
-            $success = true;
+            $prom = Marcaprom::updateOrCreate(
+                [
+                    'marca_id' => $marca->id,
+                    'created_at' => Carbon::now()->format('m'),
+                ],
+                [
+                    $prom->promedio = $total['prom'],
+                    $prom->marca_id => $marca->id,
+                ]
+            );
+            // $prom->puntuacion_general = $total['prom'];
+            // $prom->save();
+            // $success = true;
         }
         else
         {

@@ -8,13 +8,13 @@
       <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="input-group mb-3">
-          <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus placeholder="{{ __('Nombre de Usuario') }}">
+          <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" autocomplete="username" autofocus placeholder="{{ __('Nombre de Usuario') }}">
           <div class="input-group-append">
             <div class="input-group-text">
               <span><i class="fas fa-fingerprint"></i></span>
             </div>
           </div>
-            @error('name')
+            @error('username')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>

@@ -2,6 +2,11 @@
 @section('title', 'Key | Planes de Accion')
 @section('headertitle', 'Listado de Segmentos')
 @section('header')
+<ol class="breadcrumb float-sm-right">
+  <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">WMC</a></li>
+  <li class="breadcrumb-item active">Segmentos </li>
+</ol>
+@endsection
 @section('content')
 
 <!-- Default box -->

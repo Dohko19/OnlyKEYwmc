@@ -11,6 +11,9 @@ class Marca extends Model
     	'grupo_marca_id', 'user_id' ,'name', 'description', 'photo',
     ];
 
+    protected $with = ['average'];
+
+
     // public static function create(array $attributes = [])
     // {
     //     $attributes['user_id'] = auth()->id();
@@ -53,6 +56,11 @@ class Marca extends Model
     {
         if($graphics)
             return $query->where('created_at', 'LIkE', "%$graphics%");
+    }
+
+    public function average()
+    {
+        return $this->hasMany(Marcaprom::class);
     }
 
 }

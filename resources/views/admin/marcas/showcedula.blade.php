@@ -1,7 +1,13 @@
 @extends('layouts.admin')
 @section('content')
-@section('headertitle', '')
-@section('title', 'Key | Mis Sucursales')
+@section('header')
+<ol class="breadcrumb float-sm-right">
+  <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">WMC</a></li>
+  <li class="breadcrumb-item active"><a href="{{ route('admin.marcas.cedula', $marca) }}">Cedulas</a></li>
+  <li class="breadcrumb-item active">Detalle de Cedula {{ $cedula }}</li>
+</ol>
+@endsection
+@section('title', 'WMC | Mis Sucursales')
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -38,7 +44,6 @@
 							<div class="text-center">
 								<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 							</div>
-              <a href="{{ route('home.cedula', $marca->id) }}" class="btn btn-danger float-right">Volver Atras</a>
 						</div>
 					</div>
 				</div>

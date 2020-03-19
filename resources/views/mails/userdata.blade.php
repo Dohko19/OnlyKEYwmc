@@ -9,18 +9,18 @@
 	<table style="max-width: 600px; padding: 10px; margin:0 auto; border-collapse: collapse;">
 	<tr>
 		<td style="background-color: ; text-align: left; padding: 0; display: inline;">
-				<img width="20%" style="margin: 1.5% 3%" src="https://i.postimg.cc/k5RQgzJT/logo.png">
+				<img width="20%" style="margin: 1.5% 3%" src="https://i.postimg.cc/kM65TPJW/logo.png">
 				<img width="60%" style="margin: 1.5% 3%" src="https://i.postimg.cc/gj4D9hsR/barraup.png">
 		</td>
 	</tr>
 	<tr>
 		<td style="background-color: ">
-			<div style="color: #34495e; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif; position: relative; display: inline-block; background-image: url(https://i.postimg.cc/Dw9ht488/lavaloza-1.png); background-repeat: no-repeat; background-position: center right;">
+			<div style="color: #34495e; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif; position: relative; display: inline-block; background-image: url(https://i.postimg.cc/Dw9ht488/lavaloza-1.png); background-repeat: no-repeat; background-position: center right; background-size: 40% 50%;" >
 				{{-- <img src="https://i.postimg.cc/Dw9ht488/lavaloza-1.png" width="100" /> --}}
 				<h2 style="color: #000; margin: 0 0 7px">Estimado Cliente</h2>
 				<p style="margin: 2px; font-size: 15px">
 					Te damos la más cordian bienvenida a nuestro WMC de portal de clientes:<br><br>
-					Usuario: <b style="color: #00adef;">{{ $user->name }}</b><br>
+					Usuario: <b style="color: #00adef;">{{ $user->username }}</b><br>
 					Contraseña: <b style="color: #00adef;">123123</b><br><br>
 					<b>Notas Importantes al ingresar al WMC:</b></p>
 				<ul style="font-size: 15px;  margin: 10px 0">

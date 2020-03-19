@@ -50,7 +50,7 @@ class GrupoMarcaPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('Create grupomarcas');
+        return $user->hasRole('Admin') || $user->hasPermissionTo('Create grupomarcas');
     }
 
     /**

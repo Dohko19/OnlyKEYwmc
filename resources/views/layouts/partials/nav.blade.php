@@ -7,17 +7,17 @@
     <li class="nav-item d-none d-sm-inline-block">
       <a href="{{ route('admin.index') }}" class="nav-link">WMC</a>
     </li>
-      @if (\Request::is('/'))
-    {{-- <li class="nav-item d-none d-sm-inline-block">
+     {{--  @if (\Request::is('/'))
+    <li class="nav-item d-none d-sm-inline-block">
       @foreach ($sj as $id)
         <form action="{{ route('promedio') }}" method="GET" id="promedioget">
           <input type="hidden" id="id" name="id" value="{{ $id->id }}">
           <button type="submit" id="prom" class=" btn btn-outline nav-link"><i class="fas fa-sync"></i></button>
       </form>
       @endforeach
-    <li> --}}
-      @endif
-      @if (\Request::is('admin'))
+    <li>
+      @endif --}}
+      {{-- @if (\Request::is('admin')) --}}
   {{--   <li class="nav-item d-none d-sm-inline-block">
       @foreach ($sj as $id)
         <form action="{{ route('promedio') }}" method="GET" id="promedioget">
@@ -26,7 +26,7 @@
       </form>
       @endforeach
     <li> --}}
-      @endif
+      {{-- @endif --}}
   </ul>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
@@ -71,7 +71,6 @@
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           data: dataString,
             success: function(response){
-               location.reload(true);
                 }, error:function(jqXHR, textStatus, errorThrown){
                     console.log('error::'+errorThrown);
                      console.log('error::'+textStatus);
@@ -80,6 +79,7 @@
 
             });
         });
+      setInterval(3000);
     });
 </script>
 @endpush

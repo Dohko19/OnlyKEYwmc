@@ -1,5 +1,12 @@
 @extends('layouts.admin')
 @section('title', 'Key | Planes de Accion')
+@section('header')
+<ol class="breadcrumb float-sm-right">
+  <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">WMC</a></li>
+  <li class="breadcrumb-item active"><a href="{{ route('admin.auditorias.show', ['auditoria' => $segmento->auditorias->IdAuditoria, 'FechaRegistro' => request('FechaRegistro'), 'sucursal' => request('sucursal') ]) }}">Segmentos</a> </li>
+  <li class="breadcrumb-item active">Detalle de: {{ $segmento->NombreSegmento }} </li>
+</ol>
+@endsection
 @section('content')
 <section class="content">
   <!-- Default box -->

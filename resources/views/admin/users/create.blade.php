@@ -34,6 +34,19 @@
                 <small>El nombre de usuario se usara para iniciar sesion, recuerdalo si piensas cambiarlo.*</small>
                 <div class="">
                   <input type="text"
+                    class="form-control @error('username') is-invalid @else @enderror"
+                    placeholder="Nombre de usuario..." name="username" value="{{ old('username') }}">
+                    @error('username')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-form-label">Nombre</label>
+                <div class="">
+                  <input type="text"
                     class="form-control @error('name') is-invalid @else @enderror"
                     placeholder="Nombre de usuario..." name="name" value="{{ old('name') }}">
                     @error('name')

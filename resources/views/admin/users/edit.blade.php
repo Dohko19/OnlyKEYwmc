@@ -3,7 +3,7 @@
 @section('content')
 @section('header')
 <ol class="breadcrumb float-sm-right">
-  <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Usuarios</a></li>
+  <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Regresar al Inicio</a></li>
   <li class="breadcrumb-item active">Editar Usuario</li>
 </ol>
 @endsection
@@ -31,6 +31,21 @@
           @csrf
           @method('PUT')
                 <div class="card-body">
+                  <div class="form-group">
+                    <label for="" class="col-form-label">Nombre de Usuario</label>
+                    <small>*</small>
+                    <div class="">
+                      <input type="text"
+                        class="form-control @error('username') is-invalid @else @enderror"
+                        placeholder="Nombre de usuario..." name="username" value="{{ old('username', $user->username) }}">
+                        <small class="text-muted">El nombre de usuario se usara para iniciar sesion, recuerdalo si piensas cambiarlo.</small>
+                        @error('username')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label for="" class="col-form-label">Nombre de Usuario</label>
                     <small>*</small>

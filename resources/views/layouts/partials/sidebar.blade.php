@@ -34,7 +34,7 @@
               <i class="right fas fa-angle-left"></i>
             </a>
             <ul class="nav nav-treeview ">
-              @if( auth()->user()->hasPermissionTo('View reporte auditoria') )
+              @if( auth()->user()->can('View reporte cuestionarios') )
                 <li class="nav-item ">
                   <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">
                     <i class="fas fa-file-export nav-icon"></i>
@@ -42,7 +42,7 @@
                   </a>
                 </li>
               @endif
-              @if( auth()->user()->can('View reporte cuestionarios') )
+              @if( auth()->user()->hasPermissionTo('View reporte auditoria') )
                 <li class="nav-item">
                   <a href="{{ route('export.auditoria') }}" class="nav-link {{ setActiveRoute('export.auditoria') }}">
                     <i class="fas fa-download nav-icon"></i>
@@ -105,7 +105,7 @@
             </a>
           </li>
         @endcan
-        @can('view', new App\GrupoMarca)
+        @can('create', new App\GrupoMarca)
           <li class="nav-item">
             <a href="{{ route('admin.gruposm.index') }}" class="nav-link {{ setActiveRoute(['admin.gruposm.index', 'admin.gruposm.edit', 'admin.gruposm.create']) }}">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -116,7 +116,7 @@
             </a>
           </li>
         @endcan
-        @can('view', new App\Marca)
+        @can('create', new App\Marca)
           <li class="nav-item">
             <a href="{{ route('admin.marcas.index') }}" class="nav-link {{ setActiveRoute('admin.marcas.index') }}">
               <i class="nav-icon fab fa-bandcamp"></i>
@@ -126,7 +126,7 @@
             </a>
           </li>
         @endcan
-        @can('view', new App\Sucursal)
+        @can('edit', new App\Sucursal)
           <li class="nav-item">
             <a href="{{ route('admin.sucursales.index') }}" class="nav-link {{ setActiveRoute('admin.sucursales.index') }}">
               <i class="nav-icon fas far fa-building"></i>
