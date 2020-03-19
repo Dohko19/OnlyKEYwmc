@@ -34,6 +34,7 @@ class AdminController extends Controller
         if (auth()->user()->hasRole('dgral')) {
 
             $marcas = Marca::with(['grupos', 'average'])->where('user_id', auth()->user()->id)->get();
+
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get()->toArray();
@@ -60,7 +61,7 @@ class AdminController extends Controller
                     $prom = Marcaprom::updateOrCreate(
                         [
                             'marca_id' => $marca->id,
-                            'created_at' => Carbon::now()->format('Y-m'),
+                            'created_at' => Marcaprom::where('created_at', 'like', '%'.Carbon::now()->format('Y-m').'%' )->first()->created_at,
                         ],
                         [
                             'promedio' => $total['prom'],
@@ -120,16 +121,9 @@ class AdminController extends Controller
             $marcas = Marca::selectRaw('count(*) marca')->get();
             $sucursales = Sucursal::selectRaw('count(*) sucursals')
             ->get();
-            $sj = Marca::where('user_id', auth()->user()->id )
-            ->selectRaw('id')
-            ->get();
-
-            if (request()->wantsJson() )
-            {
-                return [$users, $gmarca, $marcas, $sucursales];
-            }
-                return view('admin.dashboard', compact('users', 'gmarca', 'marcas', 'sucursales', 'sj'));
+             return view('admin.dashboard', compact('users', 'gmarca', 'marcas', 'sucursales'));
         }
+        abort(403);
     }
 
     public function region($id)
@@ -176,49 +170,49 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 
-    public function promedio()
-    {
-        $marca = Marca::findOrFail( request('id') );
-        if ($marca->grupos->tipo == 'auditorias') {
-            $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
-            ->join('marcas as m', 'm.id', '=', 's.marca_id')
-            ->where('m.id', '=', $marca->id)
-            ->selectRaw('AVG(aresults.Promedio) prom')
-            ->get()->toArray();
+    // public function promedio()
+    // {
+    //     $marca = Marca::findOrFail( request('id') );
+    //     if ($marca->grupos->tipo == 'auditorias') {
+    //         $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
+    //         ->join('marcas as m', 'm.id', '=', 's.marca_id')
+    //         ->where('m.id', '=', $marca->id)
+    //         ->selectRaw('AVG(aresults.Promedio) prom')
+    //         ->get()->toArray();
 
-            for($i=0;$i<count($promedio);$i++) {
-                $total = $promedio[$i];
-            }
-            $prom = Marcaprom::updateOrCreate(
-                [
-                    'marca_id' => $marca->id,
-                    'created_at' => Carbon::now()->format('m'),
-                ],
-                [
-                    $prom->promedio = $total['prom'],
-                    $prom->marca_id => $marca->id,
-                ]
-            );
-            // $prom->puntuacion_general = $total['prom'];
-            // $prom->save();
-            // $success = true;
-        }
-        else
-        {
-            $success = true;
-            $promedio = "Ningun dato a calcular";
-        }
+    //         for($i=0;$i<count($promedio);$i++) {
+    //             $total = $promedio[$i];
+    //         }
+    //         $prom = Marcaprom::updateOrCreate(
+    //             [
+    //                 'marca_id' => $marca->id,
+    //                 'created_at' => Carbon::now()->format('m'),
+    //             ],
+    //             [
+    //                 $prom->promedio = $total['prom'],
+    //                 $prom->marca_id => $marca->id,
+    //             ]
+    //         );
+    //         // $prom->puntuacion_general = $total['prom'];
+    //         // $prom->save();
+    //         // $success = true;
+    //     }
+    //     else
+    //     {
+    //         $success = true;
+    //         $promedio = "Ningun dato a calcular";
+    //     }
 
-        if(request()->ajax()){
-            return response()->json([
-                'promedio' => $promedio,
-                'success' => $success
-            ]);
-        }
-        else
-        {
-            return 'ajax fail';
-        }//procesa la peticion ajax
+    //     if(request()->ajax()){
+    //         return response()->json([
+    //             'promedio' => $promedio,
+    //             'success' => $success
+    //         ]);
+    //     }
+    //     else
+    //     {
+    //         return 'ajax fail';
+    //     }//procesa la peticion ajax
 
-    }
+    // }
 }
