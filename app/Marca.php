@@ -60,7 +60,7 @@ class Marca extends Model
 
     public function average()
     {
-        return $this->hasMany(Marcaprom::class);
+        return $this->hasOne(Marcaprom::class);
     }
 
 }

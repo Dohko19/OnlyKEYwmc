@@ -33,12 +33,13 @@ class AdminController extends Controller
     {
         if (auth()->user()->hasRole('dgral')) {
 
-            $marcas = Marca::with(['grupos', 'average'])->where('user_id', auth()->user()->id)->get();
+            $marcas = Marca::with(['grupos', 'average' => function($query){
+                $query->where('created_at', 'like', "%".Carbon::now()->format('Y-m')."%");
+            }])->where('user_id', auth()->user()->id)->get();
 
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get()->toArray();
-
             for($i=0;$i<count($sj);$i++) {
                     $id = $sj[$i];
                 }
