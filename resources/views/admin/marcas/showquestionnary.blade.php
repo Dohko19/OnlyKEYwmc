@@ -1,5 +1,12 @@
 @extends('layouts.admin')
 @section('content')
+@section('header')
+<ol class="breadcrumb float-sm-right">
+  <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">WMC</a></li>
+  <li class="breadcrumb-item active"><a href="{{ route('home.region', $marca) }}">Regiones</a></li>
+  <li class="breadcrumb-item active">Detalle de la Delegacion: {{ request('dm') }}</li>
+</ol>
+@endsection
 @section('headertitle', '')
 @section('title', 'Key | Mis Sucursales')
 <div class="container-fluid">
@@ -256,17 +263,12 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @forelse ( $sucursal->questionaries->sortBy('IdPregunta')  as $q)
+              @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)
                 @if($q->riesgo == 'RI')
                   @if ($q->Value == '1')
                       [
                         "{{ $q->IdPregunta }}",
                           100,
-                      ],
-                    @elseif($q->Value == NULL)
-                      [
-                        "{{ $q->IdPregunta }}",
-                          0.0,
                       ],
                     @else
                       [
@@ -409,7 +411,7 @@
           name: "{{ $sucursal->name }}",
           id: "{{ $sucursal->name }}",
           data: [
-              @forelse ( $sucursal->questionaries->sortBy('IdPregunta')  as $q)
+              @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)
                 @if($q->riesgo == 'C')
                 @if ($q->Value == '1')
                   [

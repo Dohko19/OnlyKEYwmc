@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Qresults extends Model
 {
-    public function sucursales()
+    public function sucursals()
     {
     	return $this->belongsTo(Sucursal::class);
     }

@@ -19,7 +19,7 @@
 				{{-- <img src="https://i.postimg.cc/Dw9ht488/lavaloza-1.png" width="100" /> --}}
 				<h2 style="color: #000; margin: 0 0 7px">Estimado Cliente</h2>
 				<p style="margin: 2px; font-size: 15px">
-					Te damos la más cordian bienvenida a nuestro WMC de portal de clientes:<br><br>
+					Te damos la más cordial bienvenida a nuestro WMC de portal de clientes:<br><br>
 					Usuario: <b style="color: #00adef;">{{ $user->username }}</b><br>
 					Contraseña: <b style="color: #00adef;">123123</b><br><br>
 					<b>Notas Importantes al ingresar al WMC:</b></p>

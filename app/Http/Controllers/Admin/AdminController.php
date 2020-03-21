@@ -50,7 +50,7 @@ class AdminController extends Controller
                 ->join('marcas as m', 'm.id', '=', 's.marca_id')
                 ->where('m.id', '=', $marca->id)
                 ->where('aresults.created_at', 'LIKE', "%".Carbon::now()->format('Y-m')."%")
-                ->selectRaw('AVG(aresults.Promedio) prom')
+                ->selectRaw('SUM(aresults.Promedio) prom')
                 ->get()->toArray();
                 // ddd($promedio);
                 for($i=0;$i<count($promedio);$i++) {
@@ -76,18 +76,14 @@ class AdminController extends Controller
         }
 
         if (auth()->user()->hasRole('dmarca')) {
-            $sucursales = User::with(['sucursals' => function($query){
-                $query->join('marcas as m', 'm.id', '=', 'sucursals.marca_id');
-                $query->join('marcasproms as p', function($join){
-                    $join->on('m.sucursal_id', '=', 'm.id')
-                    ->where('p.created_at', 'like', "%".Carbon::now()->format('Y-m')."%");
-                });
-            }])->findOrFail(auth()->user()->id);
+            $sucursales = User::with(['sucursals.marcas.average' => function($query){
+               $query->where('created_at', 'like', "%".Carbon::now()->format('Y-m')."%");
+           }])->findOrFail(auth()->user()->id);
 
-            // ddd($sucursales);
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get();
+            return view('admin.dashboard', compact('sucursales', 'sj'));
 
             return view('admin.dashboard', compact('sucursales', 'sj'));
         }

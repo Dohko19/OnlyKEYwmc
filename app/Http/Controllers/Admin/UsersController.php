@@ -62,10 +62,6 @@ class UsersController extends Controller
         {
             $data['password'] = ['confirmed', 'min:6'];
         }
-        else
-        {
-            $data['password'] = 123123;
-        }
         // dd( $data );
         $user = User::create($data);
         //Asiganmos los roles

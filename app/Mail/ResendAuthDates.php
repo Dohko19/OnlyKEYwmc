@@ -31,6 +31,7 @@ class ResendAuthDates extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.userdata');
+        return $this->subject('Cuenta de usuario | WMC Bennetts')
+                    ->view('mails.userdata');
     }
 }

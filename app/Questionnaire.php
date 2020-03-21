@@ -6,12 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Questionnaire extends Model
 {
-    protected $fillable = [
-    	'marca_id','name','photo','value','recommendation',
-    ];
-
-    public function sucursal()
+	protected $table = 'questionnaires';
+    public function sucursals()
     {
-    	return $this->belongsTo(Sucursal::class, 'sucursal_id');
+    	return $this->belongsTo(Sucursal::class, 'id');
     }
 }

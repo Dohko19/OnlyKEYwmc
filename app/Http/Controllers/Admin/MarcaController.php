@@ -116,27 +116,22 @@ class MarcaController extends Controller
         }
 
 
-        $graphics = $request->get('graphics') ? $request->get('graphics') : Carbon::now()->format('Y-m-d');
+        $graphics = $request->get('graphics') ? $request->get('graphics') : Carbon::now()->format('Y-m');
         $dm = $request->get('delegacion_municipio') ? $request->get('delegacion_municipio') : request('dm') ;
 
         $zona = request('zone') ? request('zone') : $request->get('zone');
-        // return request('dm');
-            // $sucursales = Sucursal::with(['qresults'])
-            // ->where('sucursals.marca_id', '=', $marca->id)
-            // ->where('sucursals.delegacion_municipio', 'LIKE', "%".$dm."%")
-            // ->where('sucursals.region', 'LIKE', "%".$zona."%")
-            // ->get();
-          $sucursales = User::with(['sucursals.questionaries' => function($query) use ($marca, $dm, $zona, $graphics){
-                    $query->where('created_at', 'LIKE', "%".$graphics."%");
-            }, 'sucursals' => function($query) use ($marca,$dm, $zona, $graphics){
-              $query->leftJoin('qresults as qs', function($join) use ($graphics){
-                  $join->on('qs.sucursal_id', '=', 'sucursals.id')
-                  ->where('qs.created_at', 'like', "%".$graphics."%");
+
+          $sucursales = User::with(['sucursals.quest' => function($query) use ($graphics){
+                  $query->where('created_at', 'LIKE', "%".$graphics."%");
+          }, 'sucursals' => function($query) use ($marca,$dm, $zona, $graphics){
+                  $query->leftJoin('qresults as qr', function($join) use ($graphics){
+                  $join->on('qr.sucursal_id', '=', 'sucursals.id')
+                  ->where('qr.created_at', 'like', "%".$graphics."%");
                 });
                   $query->where('marca_id', $marca->id);
                   $query->where('delegacion_municipio', 'LIKE', "%".$dm."%");
                   $query->where('region', 'LIKE', "%".$zona."%");
-                  $query->select('sucursals.*', 'qs.*');
+                  $query->select('qr.*', 'sucursals.*');
             }])
             ->findOrFail(auth()->user()->id);
             $preguntas = PreguntasCuestionario::select('IdPregunta','Pregunta')->get();
@@ -181,7 +176,6 @@ class MarcaController extends Controller
                 $query->select('ps.*', 'sucursals.*');
             }])
             ->findOrFail(auth()->user()->id);
-
             return view('admin.marcas.showcedula', compact('marca', 'cedula', 'graphics', 'avg' ));
     }
     /**

@@ -26,37 +26,17 @@ class Sucursal extends Model
     {
         return $this->hasMany(Aresult::class, 'sucursal_id');
     }
-
+    //
     public function qresults()
     {
         return $this->hasMany(Qresults::class, 'sucursal_id');
     }
 
-    public function questionaries()
+    public function quest()
     {
-        return $this->hasMany(Questionnaire::class);
+        return $this->hasMany(Questionnaire::class, 'sucursal_id');
     }
-
-    public function scopeGraphics($query, $graphics)
-    {
-        if($graphics)
-            return $query->where('created_at', 'LIkE', "%$graphics%");
-    }
-
-    public function scopeDm($query, $dm)
-    {
-        if($dm)
-            return $query->where('delegacion_municipio', 'LIkE', "%$dm%");
-    }
-
-    public function scopeAllowed($query)
-    {
-        if (auth()->user()->can('view', $this))
-        {
-            return $query; //Verficacion de si es administrador
-        }
-            return $query->where('marca_id', $this->marcas->grupos->id);
-    }
+    //
 
     public function dm()
     {
@@ -70,7 +50,7 @@ class Sucursal extends Model
 
     public function promsuc()
     {
-        return $this->hasMany(PromSuc::class);
+        return $this->hasMany(PromSuc::class, 'sucursal_id');
     }
 
     public function rauditoria()

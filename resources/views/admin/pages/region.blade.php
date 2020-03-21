@@ -2,15 +2,14 @@
 @section('content')
 @section('header')
 <ol class="breadcrumb float-sm-right">
-  <li class="breadcrumb-item">Panel de Control</li>
-  <li class="breadcrumb-item active">Inicio</li>
+  <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">WMC</a></li>
+  <li class="breadcrumb-item active">Region</li>
 </ol>
 @endsection
 <section class="content text-center" >
   <div class="container-fluid">
     <h5 class="mb-2">Listado de mis sucursales por zona </h5><br>
-    @if ( auth()->user()->hasRole('dmarca') )
-    @elseif ( auth()->user()->hasRole('gsucursal') )
+    @if ( auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dmarca') )
      <div class="row justify-content-center align-items-center minh-100" >
       @foreach ($sucursales->sucursals as $s)
         <div class="col-md-3">
