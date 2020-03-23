@@ -55,7 +55,7 @@
 									style="width: 100%;"
 									required>
 										<option selected disabled>Elige una Celula</option>
-										@foreach ($sucursales as $sucursal)
+										@foreach ($sucursales->sucursals as $sucursal)
 											<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
 										@endforeach
 											<option value="allcelulas">Todas las Celulas</option>
@@ -122,7 +122,7 @@
 									style="width: 100%;"
 									>
 										<option value="" selected disabled>Elije una Celula</option>
-										@foreach ($sucursales as $sucursal)
+										@foreach ($sucursales->sucursals as $sucursal)
 											<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
 										@endforeach
 											<option value="allcelulas">Todas las Celulas</option>

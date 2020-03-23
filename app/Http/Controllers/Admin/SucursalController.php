@@ -54,9 +54,7 @@ class SucursalController extends Controller
     {
         $this->validate($request, [
             'name' => 'min:3|string',
-            'ciudad' => 'min:1|string',
             'IdCte' => 'min:1|numeric',
-            'marca_id' => 'required',
         ]);
         $this->authorize('create', new Sucursal);
         $sucursal = Sucursal::create($request->except('users'));

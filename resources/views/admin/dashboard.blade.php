@@ -73,7 +73,7 @@
 		    </div>
 	  	</div>
       </div>
-	@elseif(auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dmarca'))
+	 @elseif(auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dmarca'))
 		<div class="row justify-content-center align-items-center minh-100" >
       @foreach ($sucursales->sucursals->take(1) as $sucursale)
 				<div class="col-md-3 col-sm-6 col-6">
@@ -180,8 +180,6 @@
               {{-- {->average->promedio{ $sucursales->sucursals }} --}}
             @endforelse
         </div>
-
-
       @elseif(auth()->user()->hasRole('ddistrital'))
         <div class="row justify-content-center align-items-center minh-100" >
           @forelse ($marcas as $marca)
@@ -242,6 +240,8 @@
               {{-- {->average->promedio{ $sucursales->sucursals }} --}}
             @endforelse
         </div>>
+      @elseif(auth()->user()->hasRole('asesor'))
+
       @endif
     <!-- /.row -->
 </section>

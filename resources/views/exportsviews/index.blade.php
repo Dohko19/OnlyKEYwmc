@@ -19,7 +19,6 @@
 					<select name="select" id="inputSelect" class="form-control" required>
 							<option value="1"><i class="far fa-file-pdf"></i> Reporte Excel</option>
 							<option selected value="2">PDF</option>
-							{{-- <option value="3">Reporte mensual y anual actual</option> --}}
 					</select>
 				</div>
 			</div>
@@ -54,8 +53,9 @@
 									id="zr"
 									style="width: 100%;"
 									required>
-										<option selected disabled>Zona/Region</option>
-									@foreach($region as $r)
+										<option disabled>Zona/Region</option>
+
+									@foreach($region->sucursals as $r)
 										<option value="{{ $r->region }}">{{ $r->region }}</option>
 									@endforeach
 											<option value="allcelulas">Todas las Celulas</option>
@@ -121,8 +121,8 @@
 									id="zrp"
 									style="width: 100%;"
 									>
-										<option value="" selected disabled>Zona/Region</option>
-									@foreach($region as $r)
+										<option disabled>Zona/Region</option>
+									@foreach($region->sucursals as $r)
 										<option value="{{ $r->region }}">{{ $r->region }}</option>
 									@endforeach
 										<option value="allcelulas">Todas las Celulas</option>
@@ -159,12 +159,12 @@
 	             	<table class="table table-bordered table-hover">
 		                <thead>
 			                <tr>
-			                  <th>Cedula</th>
-			                  <th>Numero de Cliente</th>
 			                  <th>Region</th>
+			                  <th>Numero de Cliente</th>
 			                  <th>Sucursal</th>
-			                  <th>Delegacion/Municipio</th>
 			                  <th>Ciudad</th>
+			                  <th>Delegacion/Municipio</th>
+			                  <th>Realizado el:</th>
 			                  <th>Ver PDF</th>
 			                  <th>Descargar</th>
 			                </tr>
@@ -309,14 +309,14 @@
 		         	{
 		         	response.forEach(data => {
 		            valor += '<tr>' +
-				        '<td>' + data.IdCedula + '</td>' +
-				        '<td>' + data.IdCte + '</td>' +
 				        '<td>' + data.region + '</td>' +
+				        '<td>' + data.IdCte + '</td>' +
 				        '<td>' + data.name + '</td>' +
 				        '<td>' + data.ciudad + '</td>' +
 				        '<td>' + data.delegacion_municipio + '</td>' +
-				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC7/ReportePDFCorreo.php?IdCedula="+data.IdCedula+"&Division="+data.Division+"'>Ver PDF</a></td>"+
-				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC7/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCedula+"&Division="+data.Division+"'>Descargar PDF</a></td>"+
+				        '<td>' + data.created_at + '</td>' +
+				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC7/ReportePDFCorreo.php?IdCedula="+data.IdCedula+"&Division="+data.division+"'>Ver PDF</a></td>"+
+				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC7/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCedula+"&Division="+data.division+"'>Descargar PDF</a></td>"+
 				        '</tr>';
 				    })
 				      $("#DataResult").html(valor);
@@ -362,7 +362,6 @@
 				        '<td>' + data.name + '</td>' +
 				        '<td>' + data.ciudad + '</td>' +
 				        '<td>' + data.delegacion_municipio + '</td>' +
-				        '<td>' + data.RI + ' / ' +data.C + '</td>' +
 				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC8/ReportePDFCorreo.php?IdCedula="+data.IdCte+"&Division="+data.division+"'>Ver PDF</a></td>"+
 				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC8/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCte+"&Division="+data.division+"'>Descargar PDF</a></td>"+
 				        '</tr>';

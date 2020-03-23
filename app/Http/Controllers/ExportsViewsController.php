@@ -8,6 +8,7 @@ use App\Sucursal;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 
 class ExportsViewsController extends Controller
@@ -16,7 +17,11 @@ class ExportsViewsController extends Controller
 
     public function index()
     {
-    	$region = Sucursal::select('region')->groupBy('region')->get();
+        $region = User::with(['sucursals' => function($query){
+                $query->select('region');
+                $query->groupBy('region');
+                }])
+                ->findOrFail(auth()->user()->id);
     	return view('exportsviews.index', compact('region'));
     }
 
@@ -32,22 +37,35 @@ class ExportsViewsController extends Controller
         $zr = request('zrp');
         if ($zr == 'allcelulas')
         {
-           $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
-                    ->join('sucursals as s', 's.marca_id', '=', 'm.id')
-                    ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
-                    ->select('s.*', 'm.*', 'q.*')
-                    ->where('users.id', auth()->user()->id)
+           // $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+           //          ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+           //          ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
+           //          ->select('s.*', 'm.*', 'q.*')
+           //          ->where('users.id', auth()->user()->id)
+           //          ->whereBetween('q.created_at', array($from, $to) )
+           //          ->get();
+                $dates = Sucursal::with(['qresults', 'users' => function($query){
+                    $query->findOrFail(auth()->user()->id);
+                    }])
+                    ->join('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
                     ->whereBetween('q.created_at', array($from, $to) )
                     ->get();
         }
         else
         {
-                $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
-                    ->join('sucursals as s', 's.marca_id', '=', 'm.id')
-                    ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
-                    ->select('s.*', 'm.*', 'q.*')
-                    ->where('users.id', auth()->user()->id)
-                    ->where('s.region', request('zrp'))
+                // $dates = User::join('marcas as m', 'm.user_id', '=', 'users.id')
+                //     ->join('sucursals as s', 's.marca_id', '=', 'm.id')
+                //     ->join('qresults as q', 'q.sucursal_id', '=', 's.id')
+                //     ->select('s.*', 'm.*', 'q.*')
+                //     ->where('users.id', auth()->user()->id)
+                //     ->where('s.region', request('zrp'))
+                //     ->whereBetween('q.created_at', array($from, $to) )
+                //     ->get();
+                $dates = Sucursal::with(['qresults', 'users' => function($query){
+                    $query->findOrFail(auth()->user()->id);
+                    }])
+                    ->join('qresults as q', 'q.sucursal_id', '=', 'sucursals.id')
+                    ->where('sucursals.region', request('zrp'))
                     ->whereBetween('q.created_at', array($from, $to) )
                     ->get();
         }
@@ -61,7 +79,7 @@ class ExportsViewsController extends Controller
          //        })
          //        ->get();
         if(request()->ajax()){
-            return response()->json($dates);
+            return $dates;
         }//procesa la peticion ajax
         else
         {
@@ -71,7 +89,11 @@ class ExportsViewsController extends Controller
 
     public function auditoria()
     {
-        $sucursales = Sucursal::select('cedula')->groupBy('cedula')->get();
+        $sucursales =  User::with(['sucursals' => function($query){
+                $query->select('cedula');
+                $query->groupBy('cedula');
+                }])
+                ->findOrFail(auth()->user()->id);
         return view('exportsviews.auditoria', compact('sucursales'));
     }
 

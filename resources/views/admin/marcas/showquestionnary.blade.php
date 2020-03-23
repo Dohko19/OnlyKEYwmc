@@ -268,7 +268,7 @@
                   @if ($q->Value == '1')
                       [
                         "{{ $q->IdPregunta }}",
-                          100,
+                          33.3,
                       ],
                     @else
                       [
@@ -416,7 +416,7 @@
                 @if ($q->Value == '1')
                   [
                     "{{ $q->IdPregunta }}",
-                      100,
+                      6.66,
                   ],
                 @else
                   [
