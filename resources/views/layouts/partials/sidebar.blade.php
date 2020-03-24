@@ -126,7 +126,7 @@
             </a>
           </li>
         @endcan
-        @can('edit', new App\Sucursal)
+        @can('create', new App\Sucursal)
           <li class="nav-item">
             <a href="{{ route('admin.sucursales.index') }}" class="nav-link {{ setActiveRoute('admin.sucursales.index') }}">
               <i class="nav-icon fas far fa-building"></i>

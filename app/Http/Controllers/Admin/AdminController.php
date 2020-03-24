@@ -50,7 +50,7 @@ class AdminController extends Controller
                 ->join('marcas as m', 'm.id', '=', 's.marca_id')
                 ->where('m.id', '=', $marca->id)
                 ->where('aresults.created_at', 'LIKE', "%".Carbon::now()->format('Y-m')."%")
-                ->selectRaw('SUM(aresults.Promedio) prom')
+                ->selectRaw('AVG(aresults.Promedio) prom')
                 ->get()->toArray();
                 // ddd($promedio);
                 for($i=0;$i<count($promedio);$i++) {

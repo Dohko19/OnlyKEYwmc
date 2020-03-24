@@ -160,9 +160,9 @@
 		                <thead>
 			                <tr>
 			                  <th>Cliente</th>
-			                  <th>Cedula</th>
 			                  <th>Sucursal</th>
 			                  <th>Marca</th>
+			                  <th>Cedula</th>
 			                  <th>Ver PDF</th>
 			                  <th>Descargar</th>
 			                </tr>
@@ -345,9 +345,9 @@
 		         	response.forEach(data => {
 		            valor += '<tr>' +
 				        '<td>' + data.IdCte + '</td>' +
-				        '<td>' + data.IdCedula + '</td>' +
 				        '<td>' + data.cedula + '</td>' +
 				        '<td>' + data.name + '</td>' +
+				        '<td>' + data.IdCedula + '</td>' +
 				        "<td><a target='_blank' href='http://appbennetts.com/VIC/ProcesosVIC8/ReportePDFCorreo.php?IdCedula="+data.IdCte+"&Division="+data.Division+"'>Ver PDF</a></td>"+
 				        "<td><a target='_blank' href='http://www.appbennetts.com/VIC/ProcesosVIC8/FlotanteCrearPDFVIC.php?IdCedula="+data.IdCte+"&Division="+data.Division+"'>Descargar PDF</a></td>"+
 				        '</tr>';

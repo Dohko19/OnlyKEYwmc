@@ -58,10 +58,10 @@ class UsersController extends Controller
             'lastname' => ['string'],
             'phone' => ['numeric'],
         ]);
-        if ($request->filled('password'))
-        {
-            $data['password'] = ['confirmed', 'min:6'];
-        }
+        // if ($request->filled('password'))
+        // {
+        //     $data['password'] = ['confirmed', 'min:6'];
+        // }
         // dd( $data );
         $user = User::create($data);
         //Asiganmos los roles
@@ -71,7 +71,7 @@ class UsersController extends Controller
         // $email = new Email;
         // $email->correo = $request->get('email');
         // $email->save();
-        Mail::to($user->email)->send(new ResendAuthDates($user));
+        // Mail::to($user->email)->send(new ResendAuthDates($user));
 
         return redirect()->back()->withSuccess('Usuario Creado Correctamente');
     }

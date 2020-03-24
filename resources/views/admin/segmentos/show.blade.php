@@ -52,7 +52,7 @@
                       <th style="width: 20%">Comentario</th>
                       <th style="width: 2%">Imagen...</th>
                       <th style="width: 23%">Aprobado y plan de acción</th>
-                      <th style="width: 23%">Comentarios del D. General</th>
+                      <th style="width: 23%">Comentarios del G. Sucursal</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -71,8 +71,8 @@
                                     cols="20"
                                     rows="5"
                                     class="form-control"
-                                    placeholder="Plan de accion..."
-                                    disabled>{{ old('comments', $segmento->Comentario) }}</textarea>
+                                    placeholder="Comentario de VIC..."
+                                    disabled>{{ old('comments', $s->Comentario) }}</textarea>
                                     </div>
                               </td>
                               <td>
@@ -89,7 +89,7 @@
                                           @csrf
                                           @method('PUT')
                                           @can('update', new App\ResultadoAuditoria)
-                                          @role('gsucursal')
+                                          @role('asesor')
                                           @if (Carbon\Carbon::parse($s->FechaRegistro)->diffInHours() > 24)
                                             <select class="form-control"  disabled>
                                                   <option value="0">No</option>
@@ -102,7 +102,7 @@
                                             </select>
                                           @endif
                                           @else
-                                          @role('asesor')
+                                          @role('gsucursal')
                                           <select class="form-control" name="Aprobado">
                                                   <option value="0">No</option>
                                                   <option {{ $s->Aprobado == 1 ? 'selected' : '' }} value="1">Si</option>
@@ -111,19 +111,20 @@
                                           @endrole
                                           @endcan
                                           @role('asesor')
-                                          <textarea class="form-control" cols="30" rows="5" placeholder="Plan de Accion de parte del asesor" name="action">{{ old('action', $s->action) }}</textarea>
+                                          <textarea class="form-control" cols="30" rows="5" placeholder="Plan de Accion del gerente de sucursal" name="action">{{ old('action', $s->action) }}</textarea>
                                           @else
                                           <textarea class="form-control" cols="30" rows="5" placeholder="Plan de Accion de parte del asesor" disabled>{{ old('action', $s->action) }}</textarea>
                                           @endrole
-
                                     </div>
                               </td>
                               <td>
-                                        @can('view', new App\ResultadoAuditoria)
-                                        <textarea class="form-control" cols="30" rows="10" placeholder="Plan de accion de parte del director general" disabled>{{ old('action_dgral', $s->action_dgral) }}</textarea>
-                                        @endcan
-                                        @role('dgral')
-                                        <textarea name="action_dgral" class="form-control" cols="30" rows="5" placeholder="Plan de accion de parte del director general">{{ old('action_dgral', $s->action_dgral) }}</textarea>
+                                        {{-- @can('view', new App\ResultadoAuditoria)
+                                        <textarea class="form-control" cols="30" rows="10" placeholder="Plan de accion de parte del gerente general" disabled>{{ old('action_dgral', $s->action_dgral) }}</textarea>
+                                        @endcan --}}
+                                        @role('gsucursal')
+                                        <textarea name="action_dgral" class="form-control" cols="30" rows="5" placeholder="Plan de accion de parte del gerente general">{{ old('action_dgral', $s->action_dgral) }}</textarea>
+                                        @else
+                                        <textarea class="form-control" cols="30" rows="5" placeholder="Plan de accion de parte del gerente general" disabled="">{{ old('action_dgral', $s->action_dgral) }}</textarea>
                                         @endrole
                                         <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
                                           </form>
@@ -152,7 +153,7 @@
                                 <th style="width: 20%">Comentario</th>
                                 <th style="width: 2%">Imagen...</th>
                                 <th style="width: 23%">Aprobado y plan de acción</th>
-                                <th style="width: 23%">Comentarios del D. General</th>
+                                <th style="width: 23%">Comentarios del G. Sucursal</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -172,7 +173,7 @@
                                     rows="5"
                                     class="form-control"
                                     placeholder="Plan de accion..."
-                                    disabled>{{ old('comments', $segmento->Comentario) }}</textarea>
+                                    disabled>{{ old('comments', $sa->Comentario) }}</textarea>
                                     </div>
                               </td>
                               <td>
@@ -189,7 +190,7 @@
                                           @csrf
                                           @method('PUT')
                                           @can('update', new App\ResultadoAuditoria)
-                                          @role('gsucursal')
+                                          @role('asesor')
                                           @if (Carbon\Carbon::parse($sa->FechaRegistro)->diffInHours() > 24)
                                             <select class="form-control"  disabled>
                                                   <option value="0">No</option>
@@ -202,7 +203,7 @@
                                             </select>
                                           @endif
                                           @else
-                                          @role('asesor')
+                                          @role('gsucursal')
                                           <select class="form-control" name="Aprobado">
                                                   <option value="0">No</option>
                                                   <option {{ $sa->Aprobado == 1 ? 'selected' : '' }} value="1">Si</option>
@@ -222,7 +223,7 @@
                                         @can('view', new App\ResultadoAuditoria)
                                         <textarea class="form-control" cols="30" rows="10" placeholder="Plan de accion de parte del director general" disabled>{{ old('action_dgral', $sa->action_dgral) }}</textarea>
                                         @endcan
-                                        @role('dgral')
+                                        @role('gsucursal')
                                         <textarea name="action_dgral" class="form-control" cols="30" rows="5" placeholder="Plan de accion de parte del director general">{{ old('action_dgral', $sa->action_dgral) }}</textarea>
                                         @endrole
                                         <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar</button> <br>
