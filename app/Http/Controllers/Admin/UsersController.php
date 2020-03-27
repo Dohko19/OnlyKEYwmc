@@ -59,7 +59,7 @@ class UsersController extends Controller
             'username' => ['required','string', 'unique:users'],
             'phone' => ['numeric'],
             'lastname' => ['string'],
-            'password' => ['confirmed', 'min:6']
+            'password' => ['requires', 'confirmed', 'min:6']
         ]);
 
         $user = User::create($request->validated());

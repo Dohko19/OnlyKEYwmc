@@ -7,8 +7,6 @@
 [header2]: https://i.postimg.cc/gj4D9hsR/barraup.png
 
 # Tus Credenciales para acceder a {{ config('app.name') }}
-
-En caso contraraio.
 Utiliza estas credenciales para acceder al sistema
 
 @component('mail::table')
@@ -25,7 +23,7 @@ Nota: Te sugerimos Cambiar tu contraseña una vez ingreses al sistema, en la par
 Gracias,<br>
 {{ config('app.name') }}
 
-Nota: En caso de estar conciente de recibir este correo, re-envia este correo a daniel.trejo@bennetts.com.mx ó rosario.sanjuan@bennetts.com.mx
+Nota: En caso de estar no estar seguro haber pedido este correo, re-envia este correo a daniel.trejo@bennetts.com.mx ó rosario.sanjuan@bennetts.com.mxy explicanos el problema.
 
 
 ![alt text][header2]
