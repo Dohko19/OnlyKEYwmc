@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Mail\ResendAuthDates;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Excel;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Events\UserResetPassword;
 
 class UsersController extends Controller
 {
@@ -47,23 +49,20 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         // return $request;
         $this->authorize('create', new User);
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'unique:users', 'email', 'string'],
-            'username' => ['required', 'unique:users', 'string'],
-            'lastname' => ['string'],
+            'name' => 'required|min:2',
+            'email' => ['required', 'email', 'unique:users' ],
+            'username' => ['required','string', 'unique:users'],
             'phone' => ['numeric'],
+            'lastname' => ['string'],
+            'password' => ['confirmed', 'min:6']
         ]);
-        // if ($request->filled('password'))
-        // {
-        //     $data['password'] = ['confirmed', 'min:6'];
-        // }
-        // dd( $data );
-        $user = User::create($data);
+
+        $user = User::create($request->validated());
         //Asiganmos los roles
         $user->assignRole($request->roles);
         //Assigamos los permisos
@@ -72,7 +71,7 @@ class UsersController extends Controller
         // $email->correo = $request->get('email');
         // $email->save();
         // Mail::to($user->email)->send(new ResendAuthDates($user));
-
+        UserResetPassword::dispatch($user, $data['password']);
         return redirect()->back()->withSuccess('Usuario Creado Correctamente');
     }
 
@@ -133,5 +132,16 @@ class UsersController extends Controller
     {
         Mail::to($user->email)->send(new ResendAuthDates($user));
         return redirect()->back()->withInfo('Correo re-enviado con datos del usuario');
+    }
+
+    public function resetpass(User $user)
+    {
+
+        $data['password'] = str_random(8);
+        // dd($data);
+        $user->password = $data['password'];
+        $user->save();
+        UserResetPassword::dispatch($user, $data['password']);
+        return redirect()->back()->withInfo('Contraseña reseteada exitosamente');
     }
 }

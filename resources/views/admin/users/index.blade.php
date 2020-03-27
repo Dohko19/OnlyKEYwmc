@@ -20,7 +20,6 @@
 		                  <th>ID</th>
 		                  <th>Nombre</th>
 		                  <th>Email</th>
-		                  <th>Creado el:</th>
 		                  <th>Acciones</th>
 		                </tr>
 	                </thead>
@@ -31,15 +30,19 @@
 			                  <td>{{ $user->id }}</td>
 			                  <td>{{ $user->name }}</td>
 			                  <td>{{ $user->email }}</td>
-			                  <td>{{ $user->created_at->format('d/m/Y') }}</td>
 			                  <td>
 			                  	@can('update', $user)
 				                <a class="btn" href="{{ route('admin.users.edit', $user) }}" style="color: blue;"><i class="far fa-edit"></i></a>
-				                @endcan
-								<form action="{{ route('admin.users.userdata', $user) }}" method="POST">
+
+								<form action="{{ route('admin.users.userdata', $user) }}" method="POST" style="display: inline;">
 									@csrf
 									<button class="btn"><i class="fas fa-envelope-square"></i></button>
 								</form>
+								<form action="{{ route('admin.users.resetpass', $user) }}" method="POST" style="display: inline;">
+									@csrf
+									<button class="btn"><i class="fas fa-sync-alt"></i></button>
+								</form>
+								@endcan
 				                @can('delete', $user)
 			                  	<form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display: inline">
 	                        		@csrf

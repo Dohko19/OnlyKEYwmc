@@ -35,23 +35,45 @@ class DetailsExport implements FromView, ShouldAutoSize, WithDrawings
 		$from = Carbon::parse(request('from'))->format('Y-m-d');
 		$to = Carbon::parse(request('to'))->endOfMonth();
 		$to = Carbon::parse($to)->format('Y-m-d');
-		if (request('zr') == 'allcelulas')
+
+		if(auth()->user()->hasRole('Admin'))
 		{
+			if (request('zr') == 'allcelulas')
+			{
 			$dates = Sucursal::with(['marcas', 'qresults' => function ($query) use ($from, $to){
 		 			$query->whereBetween('created_at', array($from, $to) );
-		 		}, 'users' => function($query){
-					$query->findOrFail(auth()->user()->id);
-				}])
+		 		}])
                 ->get();
+			}
+			else
+			{
+			 $dates = Sucursal::with(['marcas', 'qresults' => function ($query) use ($from, $to){
+			 			$query->whereBetween('created_at', array($from, $to) );
+			 		}])
+					->where('region', request('zr'))
+	                ->get();
+			}
 		}
-		else{
-		 $dates = Sucursal::with(['marcas', 'qresults' => function ($query) use ($from, $to){
-		 			$query->whereBetween('created_at', array($from, $to) );
-		 		}, 'users' => function($query){
-					$query->findOrFail(auth()->user()->id);
-				}])
-				->where('region', request('zr'))
-                ->get();
+		else
+		{
+			if (request('zr') == 'allcelulas')
+			{
+				$dates = Sucursal::with(['marcas', 'qresults' => function ($query) use ($from, $to){
+			 			$query->whereBetween('created_at', array($from, $to) );
+			 		}, 'users' => function($query){
+						$query->findOrFail(auth()->user()->id);
+					}])
+	                ->get();
+			}
+			else{
+			 $dates = Sucursal::with(['marcas', 'qresults' => function ($query) use ($from, $to){
+			 			$query->whereBetween('created_at', array($from, $to) );
+			 		}, 'users' => function($query){
+						$query->findOrFail(auth()->user()->id);
+					}])
+					->where('region', request('zr'))
+	                ->get();
+			}
 		}
 
 		return view('exports.details', compact('dates'))->withSuccess('Archivo Listo');

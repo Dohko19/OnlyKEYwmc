@@ -1,6 +1,7 @@
 <?php
 Auth::routes(['register' => false]);
 
+
 Route::group(['middleware' => 'auth'], function(){
 
 Route::get('planes', 'HomeController@planes')->name('pages.planes');
@@ -66,6 +67,7 @@ Route::group([
         Route::get('promedio', 'AdminController@promedio')->name('promedio');
 
         Route::post('userdata/{user}', 'UsersController@userdata')->name('admin.users.userdata');
+        Route::post('userreset/{user}', 'UsersController@resetpass')->name('admin.users.resetpass');
             //vuejs Routes
             Route::get('datos', 'AdminController@index');
             Route::get('gmarca', 'GruposMarcasController@index');

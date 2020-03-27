@@ -54,10 +54,15 @@
 									style="width: 100%;"
 									required>
 										<option disabled>Zona/Region</option>
-
-									@foreach($region->sucursals as $r)
-										<option value="{{ $r->region }}">{{ $r->region }}</option>
-									@endforeach
+									@role('Admin')
+										@foreach ($region as $r)
+											<option value="{{ $r->region }}">{{ $r->region }}</option>
+										@endforeach
+									@else
+										@foreach($region->sucursals as $r)
+											<option value="{{ $r->region }}">{{ $r->region }}</option>
+										@endforeach
+									@endrole
 											<option value="allcelulas">Todas las Celulas</option>
 									</select>
 									<small>Selecciona Una region o zona</small>
@@ -121,10 +126,16 @@
 									id="zrp"
 									style="width: 100%;"
 									>
-										<option disabled>Zona/Region</option>
-									@foreach($region->sucursals as $r)
-										<option value="{{ $r->region }}">{{ $r->region }}</option>
-									@endforeach
+										<option selected disabled>Zona/Region</option>
+									@role('Admin')
+										@foreach ($region as $r)
+											<option value="{{ $r->region }}">{{ $r->region }}</option>
+										@endforeach
+									@else
+										@foreach($region->sucursals as $r)
+											<option value="{{ $r->region }}">{{ $r->region }}</option>
+										@endforeach
+									@endrole
 										<option value="allcelulas">Todas las Celulas</option>
 									</select>
 								</div>

@@ -55,9 +55,15 @@
 									style="width: 100%;"
 									required>
 										<option selected disabled>Elige una Celula</option>
-										@foreach ($sucursales->sucursals as $sucursal)
-											<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
-										@endforeach
+										@role('Admin')
+											@foreach ($sucursales as $sucursal)
+												<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
+											@endforeach
+										@else
+											@foreach ($sucursales->sucursals as $sucursal)
+												<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
+											@endforeach
+										@endrole
 											<option value="allcelulas">Todas las Celulas</option>
 									</select>
 									<small>Selecciona Una region o zona</small>
@@ -122,9 +128,15 @@
 									style="width: 100%;"
 									>
 										<option value="" selected disabled>Elije una Celula</option>
-										@foreach ($sucursales->sucursals as $sucursal)
-											<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
-										@endforeach
+										@role('Admin')
+											@foreach ($sucursales as $sucursal)
+												<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
+											@endforeach
+										@else
+											@foreach ($sucursales->sucursals as $sucursal)
+												<option value="{{ $sucursal->cedula }}">{{ $sucursal->cedula }}</option>
+											@endforeach
+										@endrole
 											<option value="allcelulas">Todas las Celulas</option>
 									</select>
 								</div>
