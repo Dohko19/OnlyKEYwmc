@@ -8,6 +8,7 @@ class Marcaprom extends Model
 {
     protected $fillable = ['marca_id', 'promedio'];
 
+
     public function marcas()
     {
     	return $this->belongsTo(Marca::class);

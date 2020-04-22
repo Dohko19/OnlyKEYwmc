@@ -96,6 +96,7 @@ class MarcaController extends Controller
         $this->authorize('view', $marca);
         if($marca->grupos->tipo == 'auditorias')
         {
+
             $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m-d');
             $cedula = $request->get('cedula') ? $request->get('cedula') : request('cedula');
             $sucursales = User::with(['sucursals.audres' => function($query) use ($marca, $cedula, $graphics){
@@ -163,6 +164,23 @@ class MarcaController extends Controller
     {
             $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
             $cedula = $request->get('cedula') ? $request->get('cedula') : request('cedula');
+
+            if (auth()->user()->hasRole('Admin'))
+            {
+                $avg = User::with(['sucursals.audres' => function($query) use ($marca, $cedula, $graphics){
+                    $query->where('created_at', 'LIKE', "%".$graphics."%");
+                }, 'sucursals' => function($query) use ($marca, $cedula, $graphics){
+                    $query->leftJoin('prom_sucs as ps', function($join) use ($graphics){
+                        $join->on('ps.sucursal_id', '=', 'sucursals.id')
+                            ->where('ps.fecharegistro', 'like', "%".$graphics."%");
+                    });
+                    $query->where('marca_id', $marca->id);
+                    $query->where('cedula', 'LIKE', "%".$cedula."%");
+                    $query->select('ps.*', 'sucursals.*');
+                }])
+                    ->get();
+                return view('admin.marcas.showcedula', compact('marca', 'cedula', 'graphics', 'avg' ));
+            }
 
             $avg = User::with(['sucursals.audres' => function($query) use ($marca, $cedula, $graphics){
                 $query->where('created_at', 'LIKE', "%".$graphics."%");

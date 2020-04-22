@@ -14,19 +14,6 @@ class Marca extends Model
     protected $with = ['average'];
 
 
-    // public static function create(array $attributes = [])
-    // {
-    //     $attributes['user_id'] = auth()->id();
-
-    //     $marca = static::query()->create($attributes);
-
-    //     return $marca;
-    // }
-
-    // public function users()
-    // {
-    // 	   return $this->belongsTo(User::class);
-    // }
     public function grupos()
     {
         return $this->belongsTo(GrupoMarca::class, 'grupo_marca_id');

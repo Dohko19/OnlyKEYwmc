@@ -52,7 +52,7 @@ class AdminController extends Controller
                 ->where('aresults.created_at', 'LIKE', "%".Carbon::now()->format('Y-m')."%")
                 ->selectRaw('AVG(aresults.Promedio) prom')
                 ->get()->toArray();
-                // ddd($promedio);
+                 //ddd($promedio);
                 for($i=0;$i<count($promedio);$i++) {
                     $total = $promedio[$i];
                 }
@@ -62,7 +62,7 @@ class AdminController extends Controller
                     $prom = Marcaprom::updateOrCreate(
                         [
                             'marca_id' => $marca->id,
-                            'created_at' => Marcaprom::where('created_at', 'like', '%'.Carbon::now()->format('Y-m').'%' )->first()->created_at,
+                            'created_at' => Marcaprom::where('created_at', 'like', '%'.Carbon::now()->format('Y-m').'%' )->first(),
                         ],
                         [
                             'promedio' => $total['prom'],
@@ -72,7 +72,7 @@ class AdminController extends Controller
                 }
             }
 
-            return view('admin.dashboard', compact('marcas', 'sj'));
+            return view('admin.dashboard', compact('marcas','sj'));
         }
 
         if (auth()->user()->hasRole('dmarca')) {
@@ -102,13 +102,14 @@ class AdminController extends Controller
 
         if(auth()->user()->hasRole('ddistrital'))
         {
-            $sucursales = User::with(['sucursals'])
-            ->findOrFail(auth()->user()->id);
+            $sucursales = User::with(['sucursals.marcas.average' => function($query){
+               $query->where('created_at', 'like', "%".Carbon::now()->format('Y-m')."%");
+           }])->findOrFail(auth()->user()->id);
+
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get();
-            //   ddd($sucursales);
-              return view('admin.dashboard', compact('sucursales', 'sj'));
+            return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
         if(auth()->user()->hasRole('Admin'))
@@ -118,7 +119,8 @@ class AdminController extends Controller
             $marcas = Marca::selectRaw('count(*) marca')->get();
             $sucursales = Sucursal::selectRaw('count(*) sucursals')
             ->get();
-             return view('admin.dashboard', compact('users', 'gmarca', 'marcas', 'sucursales'));
+            $data =  Marca::with(['grupos', 'average'])->get();
+             return view('admin.dashboard', compact('users', 'gmarca', 'marcas', 'sucursales', 'data'));
         }
         abort(403);
     }
@@ -143,6 +145,21 @@ class AdminController extends Controller
             //     ddd($sucursales);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
         }
+        else
+        {
+            $marca = Marca::findOrFail($id);
+            $sucursales = Sucursal::
+                 selectRaw('marca_id m')
+                 ->selectRaw('delegacion_municipio dm')
+                 ->selectRaw('region r')
+                 ->selectRaw('cedula c')
+                 ->selectRaw('count(*) sucursals')
+                 ->whereNotNull('region')
+                 ->groupBy('region')
+                 ->orderBy('region')
+                ->get();
+            return view('admin.pages.region', compact('sucursales', 'marca'));
+        }
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 
@@ -163,6 +180,20 @@ class AdminController extends Controller
                 ->findOrFail(auth()->user()->id);
 
                 return view('admin.pages.cedula', compact('sucursales', 'marca'));
+        }
+        else
+        {
+            $this->authorize('view', new Sucursal);
+            $marca = Marca::findOrFail($id);
+            $sucursales = Sucursal::
+            selectRaw('marca_id m')
+                ->selectRaw('cedula c')
+                ->selectRaw('count(*) sucursals')
+                ->whereNotNull('cedula')
+                ->groupBy('cedula')
+                ->orderBy('cedula')
+                ->get();
+            return view('admin.pages.cedula', compact('sucursales', 'marca'));
         }
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }

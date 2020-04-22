@@ -67,10 +67,7 @@ class UsersController extends Controller
         $user->assignRole($request->roles);
         //Assigamos los permisos
         $user->givePermissionTo($request->permissions);
-        // $email = new Email;
-        // $email->correo = $request->get('email');
-        // $email->save();
-        // Mail::to($user->email)->send(new ResendAuthDates($user));
+
         UserResetPassword::dispatch($user, $data['password']);
         return redirect()->back()->withSuccess('Usuario Creado Correctamente');
     }

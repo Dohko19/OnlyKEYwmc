@@ -58,6 +58,31 @@
       @endforeach
     </div>
     @endif
+      @if (auth()->user()->hasRole('Admin'))
+          <div class="row justify-content-center align-items-center minh-100" >
+              @foreach ($sucursales as $s)
+                  <div class="col-md-3">
+                      <div class="card card-primary">
+                          <div class="card-header">
+                              Region:
+                              <!-- /.card-tools -->
+                          </div>
+                          <!-- /.card-header -->
+                          <a href="{{ route('admin.marcas.show', ['marca' => $s->m,'dm' => $s->dm, 'zone' => $s->r, 'zonaf' => $s->r ]) }}">
+                              {{-- <a href="{{ route('admin.marcas.show') }}"> --}}
+                              <div class="card-body">
+                                  <b style="color: red;">{{ $s->r }}</b><br>
+                                  <img src="{{ url('/marcas/'.$marca->photo) }}" alt="{{ $marca->id .'-'. $marca->name }}" width="150px">
+                                  <div class="timeline-footer">({{ $s->sucursals }})</div>
+                              </div>
+                          </a>
+                          <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                  </div>
+              @endforeach
+          </div>
+      @endif
     <!-- /.row -->
 </section>
 

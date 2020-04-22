@@ -4,12 +4,14 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 
-import router from './routes';
+import router from "./routes";
 
+import Permissions from "./mixins/Permissions";
+Vue.mixin(Permissions);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -31,6 +33,6 @@ import router from './routes';
  */
 
 const app = new Vue({
-    el: '#app',
+    el: "#app",
     router
 });

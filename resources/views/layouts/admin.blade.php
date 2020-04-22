@@ -175,6 +175,13 @@
 
 });
 </script>
+<script>
+  @auth
+    window.Permissions = {!! json_encode(Auth::user()->allPermissions, true) !!};
+  @else
+    window.Permissions = [];
+  @endauth
+</script>
  {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 </body>
 </html>
