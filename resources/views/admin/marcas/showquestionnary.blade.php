@@ -8,7 +8,7 @@
 </ol>
 @endsection
 @section('headertitle', '')
-@section('title', 'Key | Mis Sucursales')
+@section('title', 'Key | Mis Sucursales')z
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
