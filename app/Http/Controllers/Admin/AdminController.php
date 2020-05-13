@@ -71,8 +71,8 @@ class AdminController extends Controller
                     );
                 }
             }
-
-            return view('admin.dashboard', compact('marcas','sj'));
+                ;
+            return view('admin.dashboard', compact('marcas'));
         }
 
         if (auth()->user()->hasRole('dmarca')) {
@@ -136,7 +136,7 @@ class AdminController extends Controller
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('delegacion_municipio dm');
                 $query->selectRaw('region r');
-                $query->selectRaw('cedula c');
+                $query->whereNotNull('region');
                 $query->selectRaw('count(*) sucursals');
                 $query->groupBy('region');
                 $query->orderBy('region');
@@ -152,13 +152,13 @@ class AdminController extends Controller
                  selectRaw('marca_id m')
                  ->selectRaw('delegacion_municipio dm')
                  ->selectRaw('region r')
-                 ->selectRaw('cedula c')
                  ->selectRaw('count(*) sucursals')
                  ->whereNotNull('region')
                  ->groupBy('region')
                  ->orderBy('region')
                 ->get();
-            return view('admin.pages.region', compact('sucursales', 'marca'));
+            $mil = Sucursal::where('IdCte', '=', 10000)->get();
+            return view('admin.pages.region', compact('sucursales', 'marca', 'mil'));
         }
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
@@ -173,6 +173,7 @@ class AdminController extends Controller
              $sucursales = User::with(['sucursals' => function($query){
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('cedula c');
+                $query->whereNotNull('cedula');
                 $query->selectRaw('count(*) sucursals');
                 $query->groupBy('cedula');
                 $query->orderBy('cedula');
@@ -185,8 +186,7 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
-            $sucursales = Sucursal::
-            selectRaw('marca_id m')
+            $sucursales = Sucursal::selectRaw('marca_id m')
                 ->selectRaw('cedula c')
                 ->selectRaw('count(*) sucursals')
                 ->whereNotNull('cedula')

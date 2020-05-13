@@ -154,53 +154,44 @@
                           <div class="col-md-3 col-sm-6 col-12">
                                 <div class="info-box">
                                 <div class="info-box-content ">
-                                  @if ($marca->grupos->tipo == 'auditorias')
-                                        <img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
+                                  @if ($marca->grupos->tipo == 'cuestionarios')
+                                        <a href="{{ route('home.region', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
+                                            <img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
+                                        </a>
                                         @else
-                                          <a href="{{ route('home.region', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
-                                          <img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
-                                          </a>
+                                            <img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
                                   @endif
                                 </div>
                                 </div>
                                 @if ($marca->grupos->tipo == 'auditorias')
-                                @if ($marca->average->promedio >= 90)
-                                                  <a href="{{ route('home.cedula', $marca) }}"
-                                                  class="btn btn-sm btn-success small-box-footer">
-                                                        <i class="fas fa-star"></i> Calificacion de Limpieza:
-                                                  <u>
-                                                        {{ $marca->average->promedio ?? 'S/D' }}
-                                                  </u>
-                                                  </a>
-                                      @elseif($marca->average->promedio >= 70)
-                                            <a href="{{ route('home.cedula', $marca) }}"
-                                            class="btn btn-sm btn-warning small-box-footer">
-                                                  <i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
-                                            <u>
-                                                  {{ $marca->average->promedio ?? 'S/D' }}
-                                            </u>
-                                            </a>
-                                      @elseif($marca->average->promedio < 70)
-                                            <a href="{{ route('home.cedula', $marca) }}"
-                                            class="btn btn-sm btn-danger small-box-footer">
-                                                  <i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
-                                            <u>
-                                                  {{ $marca->average->promedio ?? 'S/D' }}
-                                            </u>
-                                            </a>
-                                      @endif
-                                      @else
-                                          <a href="{{ route('home.cedula', $marca) }}"
-                                             class="btn btn-sm btn-danger small-box-footer">
-                                              <i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
-                                              <u>
-                                                  Calculando...
-                                              </u>
-                                          </a>
+                                    @if ($marca->average->promedio >= 90)
+                                                      <a href="{{ route('home.cedula', $marca) }}"
+                                                      class="btn btn-sm btn-success small-box-footer">
+                                                            <i class="fas fa-star"></i> Calificacion de Limpieza:
+                                                      <u>
+                                                            {{ $marca->average->promedio ?? 'S/D' }}
+                                                      </u>
+                                                      </a>
+                                          @elseif($marca->average->promedio >= 70)
+                                                <a href="{{ route('home.cedula', $marca) }}"
+                                                class="btn btn-sm btn-warning small-box-footer">
+                                                      <i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
+                                                <u>
+                                                      {{ $marca->average->promedio ?? 'S/D' }}
+                                                </u>
+                                                </a>
+                                          @elseif($marca->average->promedio < 70)
+                                                <a href="{{ route('home.cedula', $marca) }}"
+                                                class="btn btn-sm btn-danger small-box-footer">
+                                                      <i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
+                                                <u>
+                                                      {{ $marca->average->promedio ?? 'S/D' }}
+                                                </u>
+                                                </a>
+                                          @endif
+                                          @else
 
-                                @endif
-
-                                <!-- /.info-box -->
+                                    @endif
                           </div>
                           <!-- /.col -->
                         @empty

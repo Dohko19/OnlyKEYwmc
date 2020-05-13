@@ -32587,6 +32587,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/AdminLTE.scss":
+/*!**************************************!*\
+  !*** ./resources/sass/AdminLTE.scss ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\n\r\n    min-height: calc(100vh - #{$main-header-height} - #{$main-footer-height});\r\n                              ^\r\n      Undefined variable.\n   ╷\n19 │     min-height: calc(100vh - #{$main-header-height} - #{$main-footer-height});\n   │                                ^^^^^^^^^^^^^^^^^^^\n   ╵\n  resources\\sass\\_layout.scss 19:32    @import\n  resources\\sass\\parts\\_core.scss 5:9  @import\n  stdin 18:9                           root stylesheet\r\n      in C:\\laragon\\www\\key\\resources\\sass\\_layout.scss (line 19, column 32)\n    at C:\\laragon\\www\\key\\node_modules\\webpack\\lib\\NormalModule.js:316:20\n    at C:\\laragon\\www\\key\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\laragon\\www\\key\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (C:\\laragon\\www\\key\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at C:\\laragon\\www\\key\\node_modules\\sass-loader\\dist\\index.js:89:7\n    at Function.call$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:87584:16)\n    at _render_closure1.call$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:77359:12)\n    at _RootZone.runBinary$3$3 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:25587:18)\n    at _RootZone.runBinary$3 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:25591:19)\n    at _FutureListener.handleError$1 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:24041:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:24337:40)\n    at Object._Future__propagateToListeners (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:3497:88)\n    at _Future._completeError$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:24165:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:23557:12)\n    at Object._asyncRethrow (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:3253:17)\n    at C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:13333:20\n    at _wrapJsFunctionForAsync_closure.$protected (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:3276:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:23578:12)\n    at _awaitOnObject_closure0.call$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:23570:25)\n    at _RootZone.runBinary$3$3 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:25587:18)\n    at _RootZone.runBinary$3 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:25591:19)\n    at _FutureListener.handleError$1 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:24041:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:24337:40)\n    at Object._Future__propagateToListeners (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:3497:88)\n    at _Future._completeError$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:24165:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:23557:12)\n    at Object._asyncRethrow (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:3253:17)\n    at C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:15991:20\n    at _wrapJsFunctionForAsync_closure.$protected (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:3276:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:23578:12)\n    at _awaitOnObject_closure0.call$2 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:23570:25)\n    at _RootZone.runBinary$3$3 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:25587:18)\n    at _RootZone.runBinary$3 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:25591:19)\n    at _FutureListener.handleError$1 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:24041:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:24337:40)\n    at Object._Future__propagateToListeners (C:\\laragon\\www\\key\\node_modules\\sass\\sass.dart.js:3497:88)");
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -32599,14 +32610,15 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!********************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/AdminLTE.scss ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\laragon\www\key\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\key\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\key\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\laragon\www\key\resources\sass\AdminLTE.scss */"./resources/sass/AdminLTE.scss");
 
 
 /***/ })

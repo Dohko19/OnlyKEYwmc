@@ -44,12 +44,13 @@ class MarcaController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
         $this->authorize('view', new Marca);
-        return view('admin.marcas.create',[
+        return view('admin.marcas.create',
+            [
             'grupos' => GrupoMarca::all(),
             'users' => User::all(),
         ]);
@@ -102,20 +103,22 @@ class MarcaController extends Controller
 
             $zona = request('zone') ? request('zone') : $request->get('zone');
 
-            $preguntas = PreguntasCuestionario::select('IdPregunta','Pregunta')->get();
-
-            $preguntasLeft = collect();
-            $preguntasRigth = collect();
-            foreach ($preguntas as $key => $pregunta) {
-                if ($key < 15)
-                {
-                    $preguntasLeft->push($pregunta);
-                }
-                else
-                {
-                    $preguntasRigth->push($pregunta);
-                }
-            }
+            $preguntasri = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                                                    ->where('NivelRiesgo', 'RI')
+                                                    ->orderBy('Orden')
+                                                    ->get();
+            $preguntasc = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                                                    ->where('NivelRiesgo', 'C')
+                                                    ->orderBy('Orden')
+                                                    ->get();
+            $preguntasEC = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                                                    ->where('NivelRiesgo', 'EC')
+                                                    ->orderBy('Orden')
+                                                    ->get();
+            $preguntasE = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                                                    ->where('NivelRiesgo', 'E')
+                                                    ->orderBy('Orden')
+                                                    ->get();
             $delegacion = request('zonaf');
 
             $delegaciones = Sucursal::select('delegacion_municipio')
@@ -124,7 +127,7 @@ class MarcaController extends Controller
                                       ->groupBy('delegacion_municipio')
                                       ->get();
 
-            $sucursales = Sucursal::with(['audres' => function($query) use ($marca, $dm, $zona, $graphics){
+            $sucursales = Sucursal::with(['quest' => function($query) use ($marca, $dm, $zona, $graphics){
                 $query->where('created_at', 'LIKE', "%". $graphics ."%");
             }])
                 ->leftJoin('qresults as qr', function($join) use ($marca,$dm, $zona, $graphics){
@@ -139,7 +142,8 @@ class MarcaController extends Controller
 
 
 
-            return view('admin.marcas.show', compact('marca', 'sucursales', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona', 'delegacion'));
+            return view('admin.marcas.show',
+                compact('marca', 'sucursales', 'preguntasE', 'preguntasEC', 'preguntasc', 'preguntasri', 'delegaciones', 'zona', 'delegacion'));
         }
 
 
@@ -161,20 +165,24 @@ class MarcaController extends Controller
                   $query->select('qr.*', 'sucursals.*');
             }])
             ->findOrFail(auth()->user()->id);
-            $preguntas = PreguntasCuestionario::select('IdPregunta','Pregunta')->get();
 
-            $preguntasLeft = collect();
-            $preguntasRigth = collect();
-              foreach ($preguntas as $key => $pregunta) {
-                  if ($key < 15)
-                  {
-                      $preguntasLeft->push($pregunta);
-                  }
-                  else
-                  {
-                      $preguntasRigth->push($pregunta);
-                  }
-              }
+            $preguntasri = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'RI')
+                ->orderBy('Orden')
+                ->get();
+            $preguntasc = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'C')
+                ->orderBy('Orden')
+                ->get();
+            $preguntasEC = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'EC')
+                ->orderBy('Orden')
+                ->get();
+            $preguntasE = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'E')
+                ->orderBy('Orden')
+                ->get();
+
             $delegacion = request('zonaf');
 
             $delegaciones = User::with(['sucursals' => function($query){
@@ -182,7 +190,8 @@ class MarcaController extends Controller
                     $query->groupBy('delegacion_municipio');
               }])
                 ->findOrFail(auth()->user()->id);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona', 'delegacion') );
+            return view('admin.marcas.showquestionnary',
+                compact('marca', 'sucursales', 'preguntasE', 'preguntasEC', 'preguntasc', 'preguntasri', 'delegaciones', 'zona', 'delegacion') );
         //     // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 

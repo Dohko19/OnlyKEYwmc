@@ -8,7 +8,7 @@
 </ol>
 @endsection
 @section('headertitle', '')
-@section('title', 'Key | Mis Sucursales')z
+@section('title', 'Key | Mis Sucursales')
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -71,45 +71,76 @@
                 <ul class="nav nav-pills ml-auto p-2">
                   <li class="nav-item"><a class="nav-link active" href="#tab_2" data-toggle="tab">Riesgos Inminentes</a></li>
                   <li class="nav-item"><a class="nav-link" href="#tab_1" data-toggle="tab">Criticos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Riesgos Extra</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Riesgos Extra(Criticos)</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
-                <div class="tab-content">
-                  <div class="tab-pane " id="tab_1">
-          					<div class="">
-          						<div id="ri" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                      <div class="row">
-                        <div class="col-md-11">
-                        @foreach ($preguntasLeft as $pl)
-                            <small>{{ $pl->IdPregunta }}.- {{ $pl->Pregunta }} </small> <br>
-                        @endforeach
-                        </div>
-                        <div class="col-md-1"></div>
+                  <div class="tab-content">
+                      <div class="tab-pane " id="tab_1">
+                          <div class="">
+                              <div id="ri" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                              <div class="row">
+                                  <div class="col-md-11">
+                                      <ol>
+                                          @foreach ($preguntasri as $pl)
+                                              <li value="{{ $pl->Orden }}"><small>{{ $pl->Pregunta }} </small></li>
+                                          @endforeach
+                                      </ol>
+                                  </div>
+                                  <div class="col-md-1"></div>
+                              </div>
+                          </div>
                       </div>
-          					</div>
-                  </div>
-                  <!-- /.tab-pane -->
-                  <div class="tab-pane active" id="tab_2">
-          					<div class="justify-content-start">
-          						<div id="critico" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                      <div class="row">
-                        <div class="col-md-11">
-                        @foreach ($preguntasRigth as $pr)
-                            <small>{{ $pr->IdPregunta }}.- {{ $pr->Pregunta }}</small> <br>
-                        @endforeach
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane active" id="tab_2">
+                          <div class="justify-content-start">
+                              <div id="critico" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                              <div class="row">
+                                  <div class="col-md-11">
+                                      <ol>
+                                          @foreach ($preguntasc as $pr)
+                                              <li><small>{{ $pr->Pregunta }}</small></li>
+                                          @endforeach
+                                      </ol>
+                                  </div>
+                                  <div class="col-md-1"></div>
+                              </div>
+                          </div>
                       </div>
-                      <div class="col-md-1"></div>
-          					</div>
+                      <div class="tab-pane" id="tab_3">
+                          <div class="justify-content-start">
+                              <div id="extra" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                              <div class="row">
+                                  <div class="col-md-11">
+                                      <ol>
+                                          @foreach ($preguntasE as $pE)
+
+                                              <li value="{{ $pE->Orden }}"><small>{{ $pE->Pregunta }}</small></li>
+                                          @endforeach
+                                      </ol>
+                                  </div>
+                                  <div class="col-md-1"></div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="tab-pane" id="tab_4">
+                          <div class="justify-content-start">
+                              <div id="extraCritico" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                              <div class="row">
+                                  <div class="col-md-11">
+                                      <ol>
+                                          @foreach ($preguntasEC as $pEC)
+                                              <li value="{{ $pEC->Orden }}"><small>{{ $pEC->Pregunta }}</small></li>
+                                          @endforeach
+                                      </ol>
+                                  </div>
+                                  <div class="col-md-1"></div>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                  <!-- /.tab-pane -->
-
-                  <!-- /.tab-pane -->
-                </div>
-                <!-- /.tab-content -->
-              </div><!-- /.card-body -->
-
-            <!-- ./card -->
-          </div>
+              </div>
           <!-- /.col -->
         </div>
         <!-- /.row -->
@@ -438,6 +469,450 @@
     }
     });
 </script>
+        <script>
+            Highcharts.chart('extra', {
+                chart: {
+                    zoomType: 'x',
+                    resetZoomButton: {
+                        position: {
+                            // align: 'right', // by default
+                            // verticalAlign: 'top', // by default
+                            x: -120,
+                            y: -40
+                        }
+                    },
+                    panning: true,
+                    type: 'column',
+                    animation: {
+                        duration: 1000
+                    },
+                    animation: {
+                        duration: 1000
+                    },
+                    events: {
+                        load: function () {
+                            var label = this.renderer.label("")
+                                .css({
+                                    width: '400px',
+                                    fontSize: '13px'
+                                })
+                                .attr({
+                                    'stroke': 'silver',
+                                    'stroke-width': 1,
+                                    'r': 2,
+                                    'padding': 5
+                                })
+                                .add();
+
+                        }
+                    },
+                    marginBottom: 120,
+                    inverted: false,
+                    scrollablePlotArea: {
+                        minWidth: 700,
+                        scrollPositionX: 1
+                    },
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: 'Click en las columnas para ver la calificacion por sucursal Riesgos Extra.'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: 'Preguntas',
+                        title: 'Sucursales'
+                    },
+                    type: 'category',
+                },
+                yAxis: {
+                    title: {
+                        text: 'Calificaciones',
+                        title: 'Sucursales'
+                    },
+                },
+                scrollbar: {
+                    enabled: true,
+                    liveRedraw: false
+                },
+                legend: {
+                    enabled: false,
+                },
+                credits: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}%'
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> total<br/>'
+                },
+
+                series: [ //datos generales como el nombre de la marca
+                    {
+                        name: "Sucursales",
+                        colorByPoint: true,
+                        data: [
+                                @foreach ( $sucursales->sucursals as $ris)
+                            {
+                                name: "{{ $ris->name }}",
+                                y: {{ $ris->E ?? 0 }}, //proemdio
+                                drilldown: "{{ $ris->name }}"
+                            },
+                            @endforeach
+                        ]
+                    }
+                ],
+                drilldown: {
+                    drillUpButton: {
+                        position: {
+                            x: -30,
+                            y: -40,
+                        }
+                    },
+                    series: [
+                            @foreach ($sucursales->sucursals as $sucursal)
+                        {
+                            name: "{{ $sucursal->name }}",
+                            id: "{{ $sucursal->name }}",
+                            data: [
+                                    @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)
+                                    @if($q->riesgo == 'E')
+                                    @if ($q->Value == '1')
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    6.66,
+                                ],
+                                    @else
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    0.0,
+                                ],
+                                    @endif
+                                    @endif
+                                    @empty
+                                [
+                                    "Sin datos",
+                                    0.0,
+                                ],
+                                @endforelse
+                            ]
+                        },
+                        @endforeach
+                    ]
+                }
+            });
+        </script>
+        <script>
+            Highcharts.chart('extraCritico', {
+                chart: {
+                    zoomType: 'x',
+                    resetZoomButton: {
+                        position: {
+                            // align: 'right', // by default
+                            // verticalAlign: 'top', // by default
+                            x: -120,
+                            y: -40
+                        }
+                    },
+                    panning: true,
+                    type: 'column',
+                    animation: {
+                        duration: 1000
+                    },
+                    animation: {
+                        duration: 1000
+                    },
+                    events: {
+                        load: function () {
+                            var label = this.renderer.label("")
+                                .css({
+                                    width: '400px',
+                                    fontSize: '13px'
+                                })
+                                .attr({
+                                    'stroke': 'silver',
+                                    'stroke-width': 1,
+                                    'r': 2,
+                                    'padding': 5
+                                })
+                                .add();
+
+                        }
+                    },
+                    marginBottom: 120,
+                    inverted: false,
+                    scrollablePlotArea: {
+                        minWidth: 700,
+                        scrollPositionX: 1
+                    },
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: 'Click en las columnas para ver la calificacion por sucursal Riesgos Extra (Critico).'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: 'Preguntas',
+                        title: 'Sucursales'
+                    },
+                    type: 'category',
+                },
+                yAxis: {
+                    title: {
+                        text: 'Calificaciones',
+                        title: 'Sucursales'
+                    },
+                },
+                scrollbar: {
+                    enabled: true,
+                    liveRedraw: false
+                },
+                legend: {
+                    enabled: false,
+                },
+                credits: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}%'
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> total<br/>'
+                },
+
+                series: [ //datos generales como el nombre de la marca
+                    {
+                        name: "Sucursales",
+                        colorByPoint: true,
+                        data: [
+                                @foreach ( $sucursales->sucursals as $ris)
+                            {
+                                name: "{{ $ris->name }}",
+                                y: {{ $ris->E ?? 0 }}, //proemdio
+                                drilldown: "{{ $ris->name }}"
+                            },
+                            @endforeach
+                        ]
+                    }
+                ],
+                drilldown: {
+                    drillUpButton: {
+                        position: {
+                            x: -30,
+                            y: -40,
+                        }
+                    },
+                    series: [
+                            @foreach ($sucursales->sucursals as $sucursal)
+                        {
+                            name: "{{ $sucursal->name }}",
+                            id: "{{ $sucursal->name }}",
+                            data: [
+                                    @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)
+                                    @if($q->riesgo == 'E')
+                                    @if ($q->Value == '1')
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    6.66,
+                                ],
+                                    @else
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    0.0,
+                                ],
+                                    @endif
+                                    @endif
+                                    @empty
+                                [
+                                    "Sin datos",
+                                    0.0,
+                                ],
+                                @endforelse
+                            ]
+                        },
+                        @endforeach
+                    ]
+                }
+            });
+        </script>
+        <script>
+            Highcharts.chart('extraCritico', {
+                chart: {
+                    zoomType: 'x',
+                    resetZoomButton: {
+                        position: {
+                            // align: 'right', // by default
+                            // verticalAlign: 'top', // by default
+                            x: -120,
+                            y: -40
+                        }
+                    },
+                    panning: true,
+                    type: 'column',
+                    animation: {
+                        duration: 1000
+                    },
+                    animation: {
+                        duration: 1000
+                    },
+                    events: {
+                        load: function () {
+                            var label = this.renderer.label("")
+                                .css({
+                                    width: '400px',
+                                    fontSize: '13px'
+                                })
+                                .attr({
+                                    'stroke': 'silver',
+                                    'stroke-width': 1,
+                                    'r': 2,
+                                    'padding': 5
+                                })
+                                .add();
+
+                        }
+                    },
+                    marginBottom: 120,
+                    inverted: false,
+                    scrollablePlotArea: {
+                        minWidth: 700,
+                        scrollPositionX: 1
+                    },
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: 'Click en las columnas para ver la calificacion por sucursal Riesgos Extra (Critico).'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: 'Preguntas',
+                        title: 'Sucursales'
+                    },
+                    type: 'category',
+                },
+                yAxis: {
+                    title: {
+                        text: 'Calificaciones',
+                        title: 'Sucursales'
+                    },
+                },
+                scrollbar: {
+                    enabled: true,
+                    liveRedraw: false
+                },
+                legend: {
+                    enabled: false,
+                },
+                credits: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}%'
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> total<br/>'
+                },
+
+                series: [ //datos generales como el nombre de la marca
+                    {
+                        name: "Sucursales",
+                        colorByPoint: true,
+                        data: [
+                                @foreach ( $sucursales->sucursals as $ris)
+                            {
+                                name: "{{ $ris->name }}",
+                                y: {{ $ris->EC ?? 0 }}, //proemdio
+                                drilldown: "{{ $ris->name }}"
+                            },
+                            @endforeach
+                        ]
+                    }
+                ],
+                drilldown: {
+                    drillUpButton: {
+                        position: {
+                            x: -30,
+                            y: -40,
+                        }
+                    },
+                    series: [
+                            @foreach ($sucursales->sucursals as $sucursal)
+                        {
+                            name: "{{ $sucursal->name }}",
+                            id: "{{ $sucursal->name }}",
+                            data: [
+                                    @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)
+                                    @if($q->riesgo == 'EC')
+                                    @if ($q->Value == '1')
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    6.66,
+                                ],
+                                    @else
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    0.0,
+                                ],
+                                    @endif
+                                    @endif
+                                    @empty
+                                [
+                                    "Sin datos",
+                                    0.0,
+                                ],
+                                @endforelse
+                            ]
+                        },
+                        @endforeach
+                    ]
+                }
+            });
+        </script>
 <script>
   $('#datepicker').datepicker({
         autoclose: true,
