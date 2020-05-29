@@ -131,8 +131,9 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
-
-             $sucursales = User::with(['sucursals' => function($query){
+//            ddd($marca->id);
+             $sucursales = User::with(['sucursals' => function($query) use ($marca){
+                $query->where('marca_id', $marca->id);
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('delegacion_municipio dm');
                 $query->selectRaw('region r');
@@ -148,6 +149,20 @@ class AdminController extends Controller
         else
         {
             $marca = Marca::findOrFail($id);
+            if ($marca->grupo_marca_id == 3)
+            {
+                $sucursales = Sucursal::
+                selectRaw('marca_id m')
+                    ->selectRaw('zona z')
+                    ->selectRaw('region r')
+                    ->selectRaw('count(*) sucursals')
+                    ->whereNotNull('zona')
+                    ->groupBy('region')
+                    ->orderBy('region')
+                    ->get();
+                $mil = Sucursal::where('IdCte', '=', 10000)->get();
+                return view('admin.pages.regionVips', compact('sucursales', 'marca', 'mil'));
+            }
             $sucursales = Sucursal::
                  selectRaw('marca_id m')
                  ->selectRaw('delegacion_municipio dm')
@@ -170,7 +185,8 @@ class AdminController extends Controller
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
 
-             $sucursales = User::with(['sucursals' => function($query){
+             $sucursales = User::with(['sucursals' => function($query) use ($marca){
+                $query->where('marca_id', $marca->id);
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('cedula c');
                 $query->whereNotNull('cedula');
@@ -198,49 +214,4 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 
-    // public function promedio()
-    // {
-    //     $marca = Marca::findOrFail( request('id') );
-    //     if ($marca->grupos->tipo == 'auditorias') {
-    //         $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
-    //         ->join('marcas as m', 'm.id', '=', 's.marca_id')
-    //         ->where('m.id', '=', $marca->id)
-    //         ->selectRaw('AVG(aresults.Promedio) prom')
-    //         ->get()->toArray();
-
-    //         for($i=0;$i<count($promedio);$i++) {
-    //             $total = $promedio[$i];
-    //         }
-    //         $prom = Marcaprom::updateOrCreate(
-    //             [
-    //                 'marca_id' => $marca->id,
-    //                 'created_at' => Carbon::now()->format('m'),
-    //             ],
-    //             [
-    //                 $prom->promedio = $total['prom'],
-    //                 $prom->marca_id => $marca->id,
-    //             ]
-    //         );
-    //         // $prom->puntuacion_general = $total['prom'];
-    //         // $prom->save();
-    //         // $success = true;
-    //     }
-    //     else
-    //     {
-    //         $success = true;
-    //         $promedio = "Ningun dato a calcular";
-    //     }
-
-    //     if(request()->ajax()){
-    //         return response()->json([
-    //             'promedio' => $promedio,
-    //             'success' => $success
-    //         ]);
-    //     }
-    //     else
-    //     {
-    //         return 'ajax fail';
-    //     }//procesa la peticion ajax
-
-    // }
 }

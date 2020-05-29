@@ -231,6 +231,44 @@ class MarcaController extends Controller
             ->findOrFail(auth()->user()->id);
             return view('admin.marcas.showcedula', compact('marca', 'cedula', 'graphics', 'avg' ));
     }
+
+    public function showVips(Request $request, Marca $marca)
+    {
+        $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
+        $zona = request('zonaf') ? request('zona') : $request->get('zona');
+
+//        if (auth()->user()->hasRole('Admin'))
+//        {
+//
+//            $avg = Sucursal::with(['audres' => function($query) use ($marca, $cedula, $graphics){
+//                $query->where('created_at', 'LIKE', "%". $graphics ."%");
+//            }])
+//                ->leftJoin('prom_sucs as ps', function($join) use ($graphics){
+//                    $join->on('ps.sucursal_id', '=', 'sucursals.id')
+//                        ->where('ps.fecharegistro', 'like', "%".$graphics."%");
+//                })
+//                ->where('marca_id', $marca->id)
+//                ->where('cedula', 'like', "%".$cedula."%")
+//                ->select('ps.*', 'sucursals.*')
+//                ->get();
+//            return view('admin.marcas.showadmincedula', compact('marca', 'cedula', 'graphics', 'avg' ));
+//        }
+
+        $sucursales = User::with(['sucursals.quest' => function($query) use ($graphics){
+                $query->where('created_at', 'LIKE', "%".$graphics."%");
+            }, 'sucursals' => function($query) use ($marca, $zona, $graphics){
+                $query->leftJoin('qresults as qr', function($join) use ($graphics){
+                    $join->on('qr.sucursal_id', '=', 'sucursals.id')
+                        ->where('qr.created_at', 'like', "%".$graphics."%");
+                });
+                $query->where('marca_id', $marca->id);
+                $query->where('region', 'LIKE', "%".$zona."%");
+                $query->select('qr.*', 'sucursals.*');
+            }])
+            ->findOrFail(auth()->user()->id);
+//            ddd($sucursales);
+        return view('admin.marcas.showvips', compact('marca', 'zona', 'graphics', 'sucursales' ));
+    }
     /**
      * Show the form for editing the specified resource.
      *

@@ -90,7 +90,7 @@
                     <small class="text-muted">Necesitas agregar una marca para poder completar esta informacion</small>
                   </div>
                   <div class="form-group">
-                    <label>Pertece al usurio</label>
+                    <label>Pertece al Usuario</label>
                     <select name="user_id" class="form-control select2" style="width: 100%;" required>
                       @foreach ($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>

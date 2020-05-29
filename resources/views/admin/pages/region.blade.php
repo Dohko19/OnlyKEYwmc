@@ -8,7 +8,7 @@
 @endsection
 <section class="content text-center" >
   <div class="container-fluid">
-    <h5 class="mb-2">Listado de mis sucursales por zona </h5><br>
+    <h5 class="mb-2">Listado de mis sucursales </h5><br>
     @if ( auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dmarca') )
      <div class="row justify-content-center align-items-center minh-100" >
       @foreach ($sucursales->sucursals as $s)
@@ -86,7 +86,7 @@
                                   <!-- /.card-tools -->
                               </div>
                               <!-- /.card-header -->
-                      <a href="{{ route('admin.marcas.show', ['marca' => $m->id]) }}">
+                      <a href="{{ route('admin.marcas.show', ['marca' => $m->id ]) }}">
                           <div class="info-box mb-3 bg-warning">
                               <span class="info-box-icon"><i class="fas fa-tag"></i></span>
 
