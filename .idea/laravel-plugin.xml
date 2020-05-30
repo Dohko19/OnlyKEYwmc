@@ -2,8 +2,11 @@
 <project version="4">
   <component name="LaravelPluginSettings">
     <option name="pluginEnabled" value="true" />
+<<<<<<< HEAD
     <option name="useAutoPopup" value="true" />
     <option name="routerNamespace" value="" />
     <option name="mainLanguage" value="en" />
+=======
+>>>>>>> a1ea524440d744ccab573e13249b9c7a58ce406c
   </component>
 </project>

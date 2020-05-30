@@ -5,10 +5,11 @@ mix.js("resources/js/app.js", "public/js").sass(
     "public/css"
 );
 
-mix.browserSync({
-      proxy: 'http://onlykeywmc.sw/'
-    // proxy: "http://key.test:8001/"
-});
+
+// mix.browserSync({
+//     //   proxy: 'http://onlykeywmc.sw/'
+//     proxy: "http://key.test:8001/"
+// });
 
 if (mix.inProduction()) {
     mix.version();

@@ -44,12 +44,13 @@ class MarcaController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
         $this->authorize('view', new Marca);
-        return view('admin.marcas.create',[
+        return view('admin.marcas.create',
+            [
             'grupos' => GrupoMarca::all(),
             'users' => User::all(),
         ]);
@@ -102,20 +103,22 @@ class MarcaController extends Controller
 
             $zona = request('zone') ? request('zone') : $request->get('zone');
 
-            $preguntas = PreguntasCuestionario::select('IdPregunta','Pregunta')->get();
-
-            $preguntasLeft = collect();
-            $preguntasRigth = collect();
-            foreach ($preguntas as $key => $pregunta) {
-                if ($key < 15)
-                {
-                    $preguntasLeft->push($pregunta);
-                }
-                else
-                {
-                    $preguntasRigth->push($pregunta);
-                }
-            }
+            $preguntasri = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                                                    ->where('NivelRiesgo', 'RI')
+                                                    ->orderBy('Orden')
+                                                    ->get();
+            $preguntasc = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                                                    ->where('NivelRiesgo', 'C')
+                                                    ->orderBy('Orden')
+                                                    ->get();
+            $preguntasEC = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                                                    ->where('NivelRiesgo', 'EC')
+                                                    ->orderBy('Orden')
+                                                    ->get();
+            $preguntasE = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                                                    ->where('NivelRiesgo', 'E')
+                                                    ->orderBy('Orden')
+                                                    ->get();
             $delegacion = request('zonaf');
 
             $delegaciones = Sucursal::select('delegacion_municipio')
@@ -124,7 +127,7 @@ class MarcaController extends Controller
                                       ->groupBy('delegacion_municipio')
                                       ->get();
 
-            $sucursales = Sucursal::with(['audres' => function($query) use ($marca, $dm, $zona, $graphics){
+            $sucursales = Sucursal::with(['quest' => function($query) use ($marca, $dm, $zona, $graphics){
                 $query->where('created_at', 'LIKE', "%". $graphics ."%");
             }])
                 ->leftJoin('qresults as qr', function($join) use ($marca,$dm, $zona, $graphics){
@@ -139,7 +142,8 @@ class MarcaController extends Controller
 
 
 
-            return view('admin.marcas.show', compact('marca', 'sucursales', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona', 'delegacion'));
+            return view('admin.marcas.show',
+                compact('marca', 'sucursales', 'preguntasE', 'preguntasEC', 'preguntasc', 'preguntasri', 'delegaciones', 'zona', 'delegacion'));
         }
 
         $graphics = $request->get('graphics') ? $request->get('graphics') : Carbon::now()->format('Y-m');
@@ -160,20 +164,24 @@ class MarcaController extends Controller
                   $query->select('qr.*', 'sucursals.*');
             }])
             ->findOrFail(auth()->user()->id);
-            $preguntas = PreguntasCuestionario::select('IdPregunta','Pregunta')->get();
 
-            $preguntasLeft = collect();
-            $preguntasRigth = collect();
-              foreach ($preguntas as $key => $pregunta) {
-                  if ($key < 15)
-                  {
-                      $preguntasLeft->push($pregunta);
-                  }
-                  else
-                  {
-                      $preguntasRigth->push($pregunta);
-                  }
-              }
+            $preguntasri = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'RI')
+                ->orderBy('Orden')
+                ->get();
+            $preguntasc = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'C')
+                ->orderBy('Orden')
+                ->get();
+            $preguntasEC = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'EC')
+                ->orderBy('Orden')
+                ->get();
+            $preguntasE = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'E')
+                ->orderBy('Orden')
+                ->get();
+
             $delegacion = request('zonaf');
 
             $delegaciones = User::with(['sucursals' => function($query){
@@ -181,7 +189,8 @@ class MarcaController extends Controller
                     $query->groupBy('delegacion_municipio');
               }])
                 ->findOrFail(auth()->user()->id);
-            return view('admin.marcas.showquestionnary', compact('marca', 'sucursales', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona', 'delegacion') );
+            return view('admin.marcas.showquestionnary',
+                compact('marca', 'sucursales', 'preguntasE', 'preguntasEC', 'preguntasc', 'preguntasri', 'delegaciones', 'zona', 'delegacion') );
         //     // return view('admin.marcas.showquestionnary', compact('marca','sucursales','questions'));
     }
 
@@ -220,6 +229,44 @@ class MarcaController extends Controller
             }])
             ->findOrFail(auth()->user()->id);
             return view('admin.marcas.showcedula', compact('marca', 'cedula', 'graphics', 'avg' ));
+    }
+
+    public function showVips(Request $request, Marca $marca)
+    {
+        $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
+        $zona = request('zonaf') ? request('zona') : $request->get('zona');
+
+//        if (auth()->user()->hasRole('Admin'))
+//        {
+//
+//            $avg = Sucursal::with(['audres' => function($query) use ($marca, $cedula, $graphics){
+//                $query->where('created_at', 'LIKE', "%". $graphics ."%");
+//            }])
+//                ->leftJoin('prom_sucs as ps', function($join) use ($graphics){
+//                    $join->on('ps.sucursal_id', '=', 'sucursals.id')
+//                        ->where('ps.fecharegistro', 'like', "%".$graphics."%");
+//                })
+//                ->where('marca_id', $marca->id)
+//                ->where('cedula', 'like', "%".$cedula."%")
+//                ->select('ps.*', 'sucursals.*')
+//                ->get();
+//            return view('admin.marcas.showadmincedula', compact('marca', 'cedula', 'graphics', 'avg' ));
+//        }
+
+        $sucursales = User::with(['sucursals.quest' => function($query) use ($graphics){
+                $query->where('created_at', 'LIKE', "%".$graphics."%");
+            }, 'sucursals' => function($query) use ($marca, $zona, $graphics){
+                $query->leftJoin('qresults as qr', function($join) use ($graphics){
+                    $join->on('qr.sucursal_id', '=', 'sucursals.id')
+                        ->where('qr.created_at', 'like', "%".$graphics."%");
+                });
+                $query->where('marca_id', $marca->id);
+                $query->where('region', 'LIKE', "%".$zona."%");
+                $query->select('qr.*', 'sucursals.*');
+            }])
+            ->findOrFail(auth()->user()->id);
+//            ddd($sucursales);
+        return view('admin.marcas.showvips', compact('marca', 'zona', 'graphics', 'sucursales' ));
     }
     /**
      * Show the form for editing the specified resource.

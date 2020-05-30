@@ -40,6 +40,7 @@ Route::group(
             Route::resource('marcas', 'MarcaController', ['as' => 'admin']);
 
             Route::get('marcas/cedulas/{marca}', 'MarcaController@showcedula', ['as' => 'admin'])->name('admin.marcas.cedula');
+            Route::get('marcas/vips/{marca}', 'MarcaController@showVips', ['as' => 'admin'])->name('admin.marcas.vips');
 
             Route::resource('sucursales', 'SucursalController', ['as' => 'admin']);
             Route::resource('questions', 'QuestionsController', ['as' => 'admin']);

@@ -71,8 +71,8 @@ class AdminController extends Controller
                     );
                 }
             }
-
-            return view('admin.dashboard', compact('marcas','sj'));
+                ;
+            return view('admin.dashboard', compact('marcas'));
         }
 
         if (auth()->user()->hasRole('dmarca')) {
@@ -85,6 +85,7 @@ class AdminController extends Controller
             ->get();
             return view('admin.dashboard', compact('sucursales', 'sj'));
 
+            return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
         if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional') || auth()->user()->hasRole('asesor')) {
@@ -130,22 +131,38 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
-
-             $sucursales = User::with(['sucursals' => function($query){
+//            ddd($marca->id);
+             $sucursales = User::with(['sucursals' => function($query) use ($marca){
+                $query->where('marca_id', $marca->id);
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('delegacion_municipio dm');
                 $query->selectRaw('region r');
-                $query->selectRaw('count(*) sucursals');
                 $query->whereNotNull('region');
+                $query->selectRaw('count(*) sucursals');
                 $query->groupBy('region');
                 $query->orderBy('region');
             }, 'grupos'])
                 ->findOrFail(auth()->user()->id);
+            //     ddd($sucursales);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
         }
         else
         {
             $marca = Marca::findOrFail($id);
+            if ($marca->grupo_marca_id == 3)
+            {
+                $sucursales = Sucursal::
+                selectRaw('marca_id m')
+                    ->selectRaw('zona z')
+                    ->selectRaw('region r')
+                    ->selectRaw('count(*) sucursals')
+                    ->whereNotNull('zona')
+                    ->groupBy('region')
+                    ->orderBy('region')
+                    ->get();
+                $mil = Sucursal::where('IdCte', '=', 10000)->get();
+                return view('admin.pages.regionVips', compact('sucursales', 'marca', 'mil'));
+            }
             $sucursales = Sucursal::
                  selectRaw('marca_id m')
                  ->selectRaw('delegacion_municipio dm')
@@ -155,7 +172,8 @@ class AdminController extends Controller
                  ->groupBy('region')
                  ->orderBy('region')
                 ->get();
-            return view('admin.pages.region', compact('sucursales', 'marca'));
+            $mil = Sucursal::where('IdCte', '=', 10000)->get();
+            return view('admin.pages.region', compact('sucursales', 'marca', 'mil'));
         }
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
@@ -167,9 +185,11 @@ class AdminController extends Controller
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
 
-             $sucursales = User::with(['sucursals' => function($query){
+             $sucursales = User::with(['sucursals' => function($query) use ($marca){
+                $query->where('marca_id', $marca->id);
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('cedula c');
+                $query->whereNotNull('cedula');
                 $query->selectRaw('count(*) sucursals');
                 $query->groupBy('cedula');
                 $query->orderBy('cedula');
@@ -182,8 +202,7 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
-            $sucursales = Sucursal::
-            selectRaw('marca_id m')
+            $sucursales = Sucursal::selectRaw('marca_id m')
                 ->selectRaw('cedula c')
                 ->selectRaw('count(*) sucursals')
                 ->whereNotNull('cedula')
@@ -195,49 +214,4 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 
-    // public function promedio()
-    // {
-    //     $marca = Marca::findOrFail( request('id') );
-    //     if ($marca->grupos->tipo == 'auditorias') {
-    //         $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
-    //         ->join('marcas as m', 'm.id', '=', 's.marca_id')
-    //         ->where('m.id', '=', $marca->id)
-    //         ->selectRaw('AVG(aresults.Promedio) prom')
-    //         ->get()->toArray();
-
-    //         for($i=0;$i<count($promedio);$i++) {
-    //             $total = $promedio[$i];
-    //         }
-    //         $prom = Marcaprom::updateOrCreate(
-    //             [
-    //                 'marca_id' => $marca->id,
-    //                 'created_at' => Carbon::now()->format('m'),
-    //             ],
-    //             [
-    //                 $prom->promedio = $total['prom'],
-    //                 $prom->marca_id => $marca->id,
-    //             ]
-    //         );
-    //         // $prom->puntuacion_general = $total['prom'];
-    //         // $prom->save();
-    //         // $success = true;
-    //     }
-    //     else
-    //     {
-    //         $success = true;
-    //         $promedio = "Ningun dato a calcular";
-    //     }
-
-    //     if(request()->ajax()){
-    //         return response()->json([
-    //             'promedio' => $promedio,
-    //             'success' => $success
-    //         ]);
-    //     }
-    //     else
-    //     {
-    //         return 'ajax fail';
-    //     }//procesa la peticion ajax
-
-    // }
 }
