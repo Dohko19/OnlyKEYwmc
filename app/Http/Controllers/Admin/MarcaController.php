@@ -146,7 +146,6 @@ class MarcaController extends Controller
                 compact('marca', 'sucursales', 'preguntasE', 'preguntasEC', 'preguntasc', 'preguntasri', 'delegaciones', 'zona', 'delegacion'));
         }
 
-
         $graphics = $request->get('graphics') ? $request->get('graphics') : Carbon::now()->format('Y-m');
         $dm = $request->get('delegacion_municipio') ? $request->get('delegacion_municipio') : request('dm') ;
 
