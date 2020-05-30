@@ -85,7 +85,6 @@ class AdminController extends Controller
             ->get();
             return view('admin.dashboard', compact('sucursales', 'sj'));
 
-            return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
         if ( auth()->user()->hasRole('gzona') || auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dregional') || auth()->user()->hasRole('asesor')) {
@@ -136,13 +135,12 @@ class AdminController extends Controller
                 $query->selectRaw('marca_id m');
                 $query->selectRaw('delegacion_municipio dm');
                 $query->selectRaw('region r');
-                $query->selectRaw('cedula c');
                 $query->selectRaw('count(*) sucursals');
+                $query->whereNotNull('region');
                 $query->groupBy('region');
                 $query->orderBy('region');
             }, 'grupos'])
                 ->findOrFail(auth()->user()->id);
-            //     ddd($sucursales);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
         }
         else
@@ -152,7 +150,6 @@ class AdminController extends Controller
                  selectRaw('marca_id m')
                  ->selectRaw('delegacion_municipio dm')
                  ->selectRaw('region r')
-                 ->selectRaw('cedula c')
                  ->selectRaw('count(*) sucursals')
                  ->whereNotNull('region')
                  ->groupBy('region')

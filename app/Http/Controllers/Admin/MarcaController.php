@@ -142,7 +142,6 @@ class MarcaController extends Controller
             return view('admin.marcas.show', compact('marca', 'sucursales', 'preguntasRigth', 'preguntasLeft', 'delegaciones', 'zona', 'delegacion'));
         }
 
-
         $graphics = $request->get('graphics') ? $request->get('graphics') : Carbon::now()->format('Y-m');
         $dm = $request->get('delegacion_municipio') ? $request->get('delegacion_municipio') : request('dm') ;
 
