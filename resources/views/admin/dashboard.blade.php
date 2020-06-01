@@ -81,11 +81,11 @@
                         <div class="info-box-content ">
                 @if ($data->grupos->tipo == 'auditorias')
                     <a href="{{ route('home.cedula', $data) }}">
-                        <img src="{{ url('marcas/'.$data->photo) }}" alt="{{ $data->name .'-'. $data->id }}" width="300px" height="300" class="img-fluid">
+                        <img src="{{ url('marcas/'.$data->photo) }}" alt="{{ $data->name .'-'. $data->id }}" width="300px" height="300px" class="img-fluid">
                     </a>
                 @else
                     <a href="{{ route('home.region', $data, Carbon\Carbon::now(), $dm ?? '') }}">
-                        <img src="{{ url('marcas/'.$data->photo) }}" alt="{{ $data->name .'-'. $data->id }}" width="300px" height="300" class="img-fluid">
+                        <img src="{{ url('marcas/'.$data->photo) }}" alt="{{ $data->name .'-'. $data->id }}" width="300px" height="300px" class="img-fluid">
                     </a>
                 @endif
                         </div>
