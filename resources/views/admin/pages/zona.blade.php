@@ -3,7 +3,7 @@
 @section('header')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">WMC</a></li>
-        <li class="breadcrumb-item active">Region</li>
+        <li class="breadcrumb-item active"><a href="{{ route('home.region', $marca) }}">Region</a></li>
         <li class="breadcrumb-item active">Zonas</li>
     </ol>
 @endsection
@@ -44,7 +44,7 @@
                             <!-- /.card-tools -->
                         </div>
                         <!-- /.card-header -->
-                        <a href="{{ route('admin.marcas.detail.vips', ['marca' => $marca->id, 'zona' => $s->zona, 'nameSuc' => $s->name ]) }}">
+                        <a href="{{ route('admin.marcas.detail.vips', ['marca' => $marca->id, 'zona' => $s->region, 'nameSuc' => $s->name ]) }}">
                             <div class="card-body">
                                 <b style="color: red;">{{ $s->zona }}</b><br>
                                 <img src="{{ url('/marcas/'.$marca->photo) }}" alt="{{ $marca->id .'-'. $marca->name }}" width="150px">
