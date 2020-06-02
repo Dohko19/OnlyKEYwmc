@@ -162,12 +162,11 @@
 {{-- <script src="{{ asset('adminLTE/js/pages/dashboard.js') }}"></script> --}}
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="{{ asset('adminLTE/js/demo.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+ <script src="{{ asset('js/app.js') }}"></script>
 
 @stack('scripts')
 </script>
 <script>
-  //preLoading
   $(window).on('load', function () {
       setTimeout(function () {
     $(".loader-page").css({visibility:"hidden",opacity:"50"})

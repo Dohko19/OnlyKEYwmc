@@ -79,23 +79,6 @@
                         <!-- /.card -->
                     </div>
                 @endforeach
-                @foreach($mil as $m)
-                    <div class="col-md-12">
-                        <!-- /.card-tools -->
-                    </div>
-                    <!-- /.card-header -->
-                    <a href="{{ route('admin.marcas.show', ['marca' => $m->id ]) }}">
-                        <div class="info-box mb-3 bg-warning">
-                            <span class="info-box-icon"><i class="fas fa-tag"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">El Señor 10,000</span>
-                                <span class="info-box-number">El pasande del WMC</span>
-                            </div>
-                        </div>
-                    </a>
-            </div>
-            @endforeach
     </div>
 @endif
 <!-- /.row -->

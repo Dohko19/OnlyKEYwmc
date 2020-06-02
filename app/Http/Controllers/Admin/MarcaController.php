@@ -213,6 +213,7 @@ class MarcaController extends Controller
                    ->where('cedula', 'like', "%".$cedula."%")
                    ->select('ps.*', 'sucursals.*')
                    ->get();
+
                 return view('admin.marcas.showadmincedula', compact('marca', 'cedula', 'graphics', 'avg' ));
             }
 
@@ -236,21 +237,34 @@ class MarcaController extends Controller
         $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
         $zona = request('zonaf') ? request('zona') : $request->get('zona');
 
-        $sucursales = User::with(['sucursals.quest' => function($query) use ($graphics){
-                $query->where('created_at', 'LIKE', "%".$graphics."%");
-            }, 'sucursals' => function($query) use ($marca, $zona, $graphics){
-                $query->leftJoin('qresults as qr', function($join) use ($graphics){
-                    $join->on('qr.sucursal_id', '=', 'sucursals.id')
-                        ->where('qr.created_at', 'like', "%".$graphics."%");
-                });
-                $query->where('marca_id', $marca->id);
-                $query->where('region', 'LIKE', "%".$zona."%");
-                $query->select('qr.*', 'sucursals.*');
+        if (auth()->user()->hasRole('Admin')) {
+            $sucursales = Sucursal::with(['quest' => function ($query) use ($marca, $zona, $graphics) {
+                $query->where('created_at', 'LIKE', "%" . $graphics . "%");
             }])
-            ->findOrFail(auth()->user()->id);
-            ddd($sucursales);
-        return view('admin.marcas.showvips', compact('marca', 'zona', 'graphics', 'sucursales' ));
+                ->leftJoin('qresults as qr', function ($join) use ($marca, $zona, $graphics) {
+                    $join->on('qr.sucursal_id', '=', 'sucursals.id')
+                        ->where('qr.created_at', 'like', "%" . $graphics . "%");
+                })
+                ->where('marca_id', $marca->id)
+                ->where('region', 'LIKE', "%" . $zona . "%")
+                ->select('qr.*', 'sucursals.*')
+                ->get();
+
+            $preguntasri = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'RI')
+                ->whereBetween('IdPregunta', [47, 49])
+                ->orderBy('Orden')
+                ->get();
+            $preguntasc = PreguntasCuestionario::select('IdPregunta','Pregunta', 'Orden')
+                ->where('NivelRiesgo', 'C')
+                ->whereBetween('IdPregunta', [29, 46])
+
+                ->orderBy('Orden')
+                ->get();
+            return view('admin.marcas.showadminvips', compact('marca', 'zona', 'graphics', 'sucursales', 'preguntasri', 'preguntasc'));
+        }
     }
+
     /**
      * Show the form for editing the specified resource.
      *

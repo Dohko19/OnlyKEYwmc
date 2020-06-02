@@ -54,21 +54,21 @@ class UsersController extends Controller
         // return $request;
         $this->authorize('create', new User);
         $data = $request->validate([
-            'name' => 'required|min:2',
+            'name' => ['required', 'min:2'],
             'email' => ['required', 'email', 'unique:users' ],
             'username' => ['required','string', 'unique:users'],
             'phone' => ['numeric'],
             'lastname' => ['string'],
-            'password' => ['requires', 'confirmed', 'min:6']
+            'password' => ['required', 'confirmed', 'min:6']
         ]);
 
-        $user = User::create($request->validated());
+        $user = User::create($data);
         //Asiganmos los roles
         $user->assignRole($request->roles);
         //Assigamos los permisos
         $user->givePermissionTo($request->permissions);
 
-        UserResetPassword::dispatch($user, $data['password']);
+//        UserResetPassword::dispatch($user, $data['password']);
         return redirect()->back()->withSuccess('Usuario Creado Correctamente');
     }
 
