@@ -2062,39 +2062,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2108,10 +2075,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/admin/datos').then(function (res) {
-      _this.users = res.data[0];
-      _this.gmarca = res.data[1];
-      _this.marcas = res.data[2];
-      _this.sucursales = res.data[3];
+      console.log(res.data);
+      _this.marcas = res.data.marca;
+      _this.sucursales = res.data.sucursales;
     })["catch"](function (err) {
       console.log(err);
     });
@@ -19868,175 +19834,66 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-3 col-6" }, [
-        _c(
-          "div",
-          { staticClass: "small-box bg-info" },
-          [
-            _vm._l(_vm.gmarca, function(g) {
-              return _c("div", { staticClass: "inner" }, [
-                _c("h3", [_vm._v(_vm._s(g.gmarca))]),
-                _vm._v(" "),
-                _c("p", [_vm._v("Grupo de Marca")])
-              ])
-            }),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _vm._m(1)
-          ],
-          2
-        )
-      ]),
+    _c("ul", { staticClass: "container-flex list-unstyled" }, [
+      _c(
+        "li",
+        [
+          _c(
+            "router-link",
+            { staticClass: "text-uppercase", attrs: { to: { name: "home" } } },
+            [_vm._v("Inicio")]
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-6" }, [
+      _c(
+        "li",
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "text-uppercase",
+              attrs: { to: { name: "gmarca" } }
+            },
+            [_vm._v("Grupo Marcas")]
+          )
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "content" }, [
+      _c("div", { staticClass: "container-fluid" }, [
         _c(
           "div",
-          { staticClass: "small-box bg-primary" },
-          [
-            _vm._l(_vm.marcas, function(m) {
-              return _c("div", { staticClass: "inner" }, [
-                _c("h3", [_vm._v(_vm._s(m.marca))]),
-                _vm._v(" "),
-                _c("p", [_vm._v("Marcas")])
-              ])
-            }),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _vm._m(3)
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-6" }, [
-        _c(
-          "div",
-          { staticClass: "small-box bg-danger" },
-          [
-            _vm._l(_vm.sucursales, function(s) {
-              return _c("div", { staticClass: "inner" }, [
-                _c("h3", [_vm._v(_vm._s(s.sucursals))]),
-                _vm._v(" "),
-                _c("p", [_vm._v("Sucursales")])
-              ])
-            }),
-            _vm._v(" "),
-            _vm._m(4),
-            _vm._v(" "),
-            _vm._m(5)
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-6" }, [
-        _c(
-          "div",
-          { staticClass: "small-box bg-warning" },
-          [
-            _vm._l(_vm.users, function(user) {
-              return _c("div", { staticClass: "inner" }, [
-                _c("h3", [_vm._v(_vm._s(user.users))]),
-                _vm._v(" "),
-                _c("p", [_vm._v("Usuarios registrados")])
-              ])
-            }),
-            _vm._v(" "),
-            _vm._m(6),
-            _vm._v(" "),
-            _vm._m(7)
-          ],
-          2
+          { staticClass: "row" },
+          _vm._l(_vm.marcas, function(marca) {
+            return _c(
+              "div",
+              { key: marca.id, staticClass: "col-md-4 col-sm-4 col-4" },
+              [
+                marca.photo
+                  ? _c("span", { staticClass: "info-box-number" }, [
+                      _c("img", {
+                        attrs: {
+                          src: "/marcas/" + marca.photo,
+                          width: "300px",
+                          height: "200px"
+                        }
+                      })
+                    ])
+                  : _vm._e()
+              ]
+            )
+          }),
+          0
         )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon" }, [
-      _c("i", { staticClass: "fas fa-layer-group" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "small-box-footer", attrs: { href: "#" } }, [
-      _vm._v("Mas información"),
-      _c("i", { staticClass: "fas fa-arrow-circle-right" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon" }, [
-      _c("i", { staticClass: "fas fa-layer-group" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "small-box-footer", attrs: { href: "/admin/marcas" } },
-      [
-        _vm._v("Mas información "),
-        _c("i", { staticClass: "fas fa-arrow-circle-right" })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon" }, [
-      _c("i", { staticClass: "fas fa-layer-group" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "small-box-footer", attrs: { href: "/admin/sucursales" } },
-      [
-        _vm._v("Mas información "),
-        _c("i", { staticClass: "fas fa-arrow-circle-right" })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon" }, [
-      _c("i", { staticClass: "ion ion-person-add" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "small-box-footer", attrs: { href: "/admin/users" } },
-      [
-        _vm._v("Mas información "),
-        _c("i", { staticClass: "fas fa-arrow-circle-right" })
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -35142,35 +34999,12 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /* harmony import */ var _mixins_Permissions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mixins/Permissions */ "./resources/js/mixins/Permissions.vue");
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
 Vue.mixin(_mixins_Permissions__WEBPACK_IMPORTED_MODULE_1__["default"]);
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('reportes', require('./components/Reporte.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 var app = new Vue({
   el: "#app",
   router: _routes__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -35293,8 +35127,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); //rutas
-
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
     path: '/',
@@ -35309,7 +35142,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: '*',
     component: __webpack_require__(/*! ./views/404 */ "./resources/js/views/404.vue")["default"]
   }],
-  linkExactActiveClass: 'active'
+  linkExactActiveClass: 'active',
+  mode: 'history',
+  scrollBehavior: function scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return {
+        x: 0,
+        y: 0
+      };
+    }
+  }
 }));
 
 /***/ }),
@@ -35539,8 +35383,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\OnlyKEYwmc\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\OnlyKEYwmc\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\key\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\key\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

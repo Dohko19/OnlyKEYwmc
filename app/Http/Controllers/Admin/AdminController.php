@@ -43,7 +43,7 @@ class AdminController extends Controller
             for($i=0;$i<count($sj);$i++) {
                     $id = $sj[$i];
                 }
-                // dd();
+
                 $marca = Marca::find($id['id']);
             if ($marca->grupos->tipo == 'auditorias') {
                 $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
@@ -71,7 +71,10 @@ class AdminController extends Controller
                     );
                 }
             }
-                ;
+            if (request()->wantsJson())
+            {
+                return $marcas;
+            }
             return view('admin.dashboard', compact('marcas'));
         }
 
@@ -83,8 +86,6 @@ class AdminController extends Controller
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get();
-            return view('admin.dashboard', compact('sucursales', 'sj'));
-
             return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
@@ -109,6 +110,10 @@ class AdminController extends Controller
             $sj = Marca::where('user_id', auth()->user()->id )
             ->selectRaw('id')
             ->get();
+            if (request()->wantsJson())
+            {
+                return $sucursales;
+            }
             return view('admin.dashboard', compact('sucursales', 'sj'));
         }
 
@@ -120,6 +125,12 @@ class AdminController extends Controller
             $sucursales = Sucursal::selectRaw('count(*) sucursals')
             ->get();
             $data =  Marca::with(['grupos', 'average'])->get();
+            if (request()->wantsJson())
+            {
+                return ['sucursales' => $sucursales,
+                        'marca' => $data
+                    ];
+            }
              return view('admin.dashboard', compact('users', 'gmarca', 'marcas', 'sucursales', 'data'));
         }
         abort(403);
@@ -131,20 +142,39 @@ class AdminController extends Controller
         {
             $this->authorize('view', new Sucursal);
             $marca = Marca::findOrFail($id);
-//            ddd($marca->id);
-             $sucursales = User::with(['sucursals' => function($query) use ($marca){
-                $query->where('marca_id', $marca->id);
-                $query->selectRaw('marca_id m');
-                $query->selectRaw('delegacion_municipio dm');
-                $query->selectRaw('region r');
-                $query->whereNotNull('region');
-                $query->selectRaw('count(*) sucursals');
-                $query->groupBy('region');
-                $query->orderBy('region');
-            }, 'grupos'])
-                ->findOrFail(auth()->user()->id);
-            //     ddd($sucursales);
+            if ($marca->grupo_marca_id == 3)
+            {
+                $sucursales = User::with(['sucursals' => function($query) use ($marca) {
+                        $query->where('marca_id', $marca->id);
+                        $query->selectRaw('marca_id m');
+                        $query->selectRaw('zona z');
+                        $query->selectRaw('region r');
+                        $query->selectRaw('count(*) sucursals');
+                        $query->whereNotNull('zona');
+                        $query->groupBy('region');
+                        $query->orderBy('zona');
+
+                }, 'grupos'])->findOrFail(auth()->user()->id);
+
+                return view('admin.pages.regionVips', compact('sucursales', 'marca'));
+            }
+            else
+            {
+                //            ddd($marca->id);
+                $sucursales = User::with(['sucursals' => function($query) use ($marca){
+                    $query->where('marca_id', $marca->id);
+                    $query->selectRaw('marca_id m');
+                    $query->selectRaw('delegacion_municipio dm');
+                    $query->selectRaw('region r');
+                    $query->whereNotNull('region');
+                    $query->selectRaw('count(*) sucursals');
+                    $query->groupBy('region');
+                    $query->orderBy('region');
+                }, 'grupos'])
+                    ->findOrFail(auth()->user()->id);
+                //     ddd($sucursales);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
+            }
         }
         else
         {

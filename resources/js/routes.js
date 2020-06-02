@@ -22,5 +22,13 @@ export default new Router({
 			component:  require('./views/404').default
 		}
 	],
-	linkExactActiveClass: 'active'
+	linkExactActiveClass: 'active',
+    mode: 'history',
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 });

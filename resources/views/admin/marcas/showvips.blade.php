@@ -2,16 +2,13 @@
 @section('content')
 @section('header')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">WMC</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('home.region', $marca) }}">Regiones</a></li>
-        <li class="breadcrumb-item active">Detalle de la Region: {{ request('zona') }}</li>
+{{--        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">WMC</a></li>--}}
+{{--        <li class="breadcrumb-item active"><a href="{{ route('home.region', $marca) }}">Regiones</a></li>--}}
+{{--        <li class="breadcrumb-item active">Detalle de la Region: {{ request('zona') }}</li>--}}
     </ol>
 @endsection
 @section('headertitle', '')
 @section('title', 'Key | Mis Sucursales')
-@foreach($sucursales as $suc)
-{{ $suc }}
-@endforeach
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -36,16 +33,16 @@
                                     <h3 class="text-center">
                                         {{ $marca->name }}
                                     </h3>
-                                    <small class="text-justify"> <b>Calificacion por Region: </b></small>
-                                    {{ request('dm') }}</b>
+                                    <small class="text-justify"> <b>Calificacion por Sucursal: </b></small>
+                                    <b>{{ request('nameSuc') }}</b>
                                 </div>
                                 <div class="col-md-2"></div>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <form action="{{ route('admin.marcas.vips',$marca) }}" method="GET" class="form-inline">
+                            <form action="{{ route('admin.marcas.detail.vips',$marca) }}" method="GET" class="form-inline">
                                 <div class="form-group">
-                                    <input type="hidden" name="zonaf" value="{{ $zona }}">
+                                    <input type="hidden" name="nameSuc" value="{{ $nameSuc }}">
                                     <input type="hidden" name="zona" value="{{ $zona }}">
                                     <input name="graphics" type="text" class="form-control pull-right" id="datepicker" value="{{ old('graphics', request('graphics')) }}" placeholder="mes y año" autocomplete="off"><br>
                                     {{-- {{ request('dm') }} --}}
@@ -109,309 +106,309 @@
         <script src="{{ asset('adminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
         <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
 
-{{--        <script>--}}
-{{--            Highcharts.setOptions({--}}
-{{--                lang: {--}}
-{{--                    resetZoom: 'Alejar',--}}
-{{--                    viewFullscreen: 'Ver en pantalla completa',--}}
-{{--                    downloadJPEG: 'Descargar en JPEG',--}}
-{{--                    downloadPNG: 'Descargar en PNG',--}}
-{{--                    downloadSVG: 'Descargar en SVG imagen de vectores',--}}
-{{--                    downloadPDF: 'Descargar en documento PDF',--}}
-{{--                }--}}
-{{--            });--}}
+        <script>
+            Highcharts.setOptions({
+                lang: {
+                    resetZoom: 'Alejar',
+                    viewFullscreen: 'Ver en pantalla completa',
+                    downloadJPEG: 'Descargar en JPEG',
+                    downloadPNG: 'Descargar en PNG',
+                    downloadSVG: 'Descargar en SVG imagen de vectores',
+                    downloadPDF: 'Descargar en documento PDF',
+                }
+            });
 
-{{--            Highcharts.chart('critico', {--}}
-{{--                chart: {--}}
-{{--                    zoomType: 'x',--}}
-{{--                    resetZoomButton: {--}}
-{{--                        position: {--}}
-{{--                            x: -120,--}}
-{{--                            y: -40--}}
-{{--                        }--}}
-{{--                    },--}}
-{{--                    panning: true,--}}
-{{--                    type: 'column',--}}
-{{--                    animation: {--}}
-{{--                        duration: 1000--}}
-{{--                    },--}}
-{{--                    events: {--}}
-{{--                        load: function () {--}}
-{{--                            var label = this.renderer.label("")--}}
-{{--                                .css({--}}
-{{--                                    width: '400px',--}}
-{{--                                    fontSize: '13px'--}}
-{{--                                })--}}
-{{--                                .attr({--}}
-{{--                                    'stroke': 'silver',--}}
-{{--                                    'stroke-width': 1,--}}
-{{--                                    'r': 2,--}}
-{{--                                    'padding': 5--}}
-{{--                                })--}}
-{{--                                .add();--}}
-{{--                        },--}}
-{{--                    },--}}
-{{--                    marginBottom: 120,--}}
-{{--                    inverted: false,--}}
-{{--                    scrollablePlotArea: {--}}
-{{--                        minWidth: 700,--}}
-{{--                        scrollPositionX: 1--}}
-{{--                    },--}}
-{{--                },--}}
-{{--                title: {--}}
-{{--                    text: ''--}}
-{{--                },--}}
-{{--                subtitle: {--}}
-{{--                    text: 'Click en las columnas para ver la calificacion por sucursal Riesgos Inminentes.'--}}
-{{--                },--}}
-{{--                accessibility: {--}}
-{{--                    announceNewData: {--}}
-{{--                        enabled: true--}}
-{{--                    }--}}
-{{--                },--}}
-{{--                xAxis: {--}}
-{{--                    title: {--}}
-{{--                        text: 'Preguntas',--}}
-{{--                        title: 'Sucursales'--}}
-{{--                    },--}}
-{{--                    type: 'category'--}}
-{{--                },--}}
-{{--                yAxis: {--}}
-{{--                    min: 0,--}}
-{{--                    title: {--}}
-{{--                        text: 'Calificaciones',--}}
-{{--                        title: 'Sucursales',--}}
-{{--                        align: 'high'--}}
-{{--                    },--}}
-{{--                },--}}
-{{--                scrollbar: {--}}
-{{--                    enabled: true,--}}
-{{--                    liveRedraw: false--}}
-{{--                },--}}
-{{--                legend: {--}}
-{{--                    enabled: false,--}}
-{{--                },--}}
-{{--                credits: {--}}
-{{--                    enabled: false--}}
-{{--                },--}}
-{{--                plotOptions: {--}}
-{{--                    series: {--}}
-{{--                        borderWidth: 0,--}}
-{{--                        dataLabels: {--}}
-{{--                            enabled: true,--}}
-{{--                            format: '{point.y:.1f}%'--}}
-{{--                        }--}}
-{{--                    }--}}
-{{--                },--}}
+            Highcharts.chart('critico', {
+                chart: {
+                    zoomType: 'x',
+                    resetZoomButton: {
+                        position: {
+                            x: -120,
+                            y: -40
+                        }
+                    },
+                    panning: true,
+                    type: 'column',
+                    animation: {
+                        duration: 1000
+                    },
+                    events: {
+                        load: function () {
+                            var label = this.renderer.label("")
+                                .css({
+                                    width: '400px',
+                                    fontSize: '13px'
+                                })
+                                .attr({
+                                    'stroke': 'silver',
+                                    'stroke-width': 1,
+                                    'r': 2,
+                                    'padding': 5
+                                })
+                                .add();
+                        },
+                    },
+                    marginBottom: 120,
+                    inverted: false,
+                    scrollablePlotArea: {
+                        minWidth: 700,
+                        scrollPositionX: 1
+                    },
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: 'Click en las columnas para ver la calificacion por sucursal Riesgos Inminentes.'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: 'Preguntas',
+                        title: 'Sucursales'
+                    },
+                    type: 'category'
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Calificaciones',
+                        title: 'Sucursales',
+                        align: 'high'
+                    },
+                },
+                scrollbar: {
+                    enabled: true,
+                    liveRedraw: false
+                },
+                legend: {
+                    enabled: false,
+                },
+                credits: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}%'
+                        }
+                    }
+                },
 
-{{--                tooltip: {--}}
-{{--                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',--}}
-{{--                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> total<br/>'--}}
-{{--                },--}}
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> total<br/>'
+                },
 
-{{--                series: [ //datos generales como el nombre de la marca--}}
-{{--                    {--}}
-{{--                        name: "Sucursales",--}}
-{{--                        colorByPoint: true,--}}
-{{--                        data: [--}}
-{{--                            @foreach ( $sucursales->sucursals as $ris)--}}
-{{--                            {--}}
-{{--                                name: "{{ $ris->name }}",--}}
-{{--                                y: {{ $ris->RI ?? 0 }}, //proemdio--}}
-{{--                                drilldown: "{{ $ris->name }}"--}}
-{{--                            },--}}
-{{--                            @endforeach--}}
-{{--                        ]--}}
-{{--                    }--}}
-{{--                ],--}}
-{{--                drilldown: {--}}
-{{--                    drillUpButton: {--}}
-{{--                        position: {--}}
-{{--                            x: -30,--}}
-{{--                            y: -40,--}}
-{{--                        }--}}
-{{--                    },--}}
-{{--                    series: [--}}
-{{--                            @foreach($sucursales->sucursals as $sucursal)--}}
-{{--                        {--}}
-{{--                            name: "{{ $sucursal->name }}",--}}
-{{--                            id: "{{ $sucursal->name }}",--}}
-{{--                            data: [--}}
-{{--                                    @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)--}}
-{{--                                    @if($q->riesgo == 'RI')--}}
-{{--                                    @if ($q->Value == '1')--}}
-{{--                                [--}}
-{{--                                    "{{ $q->IdPregunta }}",--}}
-{{--                                    33.3,--}}
-{{--                                ],--}}
-{{--                                    @else--}}
-{{--                                [--}}
-{{--                                    "{{ $q->IdPregunta }}",--}}
-{{--                                    0.0,--}}
-{{--                                ],--}}
-{{--                                    @endif--}}
-{{--                                    @endif--}}
-{{--                                    @empty--}}
-{{--                                [--}}
-{{--                                    "Sin datos",--}}
-{{--                                    0.0,--}}
-{{--                                ],--}}
-{{--                                @endforelse--}}
-{{--                            ]--}}
-{{--                        },--}}
-{{--                        @endforeach--}}
-{{--                    ]--}}
-{{--                }--}}
-{{--            });--}}
-{{--        </script>--}}
-{{--        <script>--}}
-{{--            Highcharts.chart('ri', {--}}
-{{--                chart: {--}}
-{{--                    zoomType: 'x',--}}
-{{--                    resetZoomButton: {--}}
-{{--                        position: {--}}
-{{--                            // align: 'right', // by default--}}
-{{--                            // verticalAlign: 'top', // by default--}}
-{{--                            x: -120,--}}
-{{--                            y: -40--}}
-{{--                        }--}}
-{{--                    },--}}
-{{--                    panning: true,--}}
-{{--                    type: 'column',--}}
-{{--                    animation: {--}}
-{{--                        duration: 1000--}}
-{{--                    },--}}
-{{--                    animation: {--}}
-{{--                        duration: 1000--}}
-{{--                    },--}}
-{{--                    events: {--}}
-{{--                        load: function () {--}}
-{{--                            var label = this.renderer.label("")--}}
-{{--                                .css({--}}
-{{--                                    width: '400px',--}}
-{{--                                    fontSize: '13px'--}}
-{{--                                })--}}
-{{--                                .attr({--}}
-{{--                                    'stroke': 'silver',--}}
-{{--                                    'stroke-width': 1,--}}
-{{--                                    'r': 2,--}}
-{{--                                    'padding': 5--}}
-{{--                                })--}}
-{{--                                .add();--}}
+                series: [ //datos generales como el nombre de la marca
+                    {
+                        name: "Sucursales",
+                        colorByPoint: true,
+                        data: [
+                            @foreach ( $sucursales->sucursals as $ris)
+                            {
+                                name: "{{ $ris->name }}",
+                                y: {{ $ris->RI ?? 0 }}, //proemdio
+                                drilldown: "{{ $ris->name }}"
+                            },
+                            @endforeach
+                        ]
+                    }
+                ],
+                drilldown: {
+                    drillUpButton: {
+                        position: {
+                            x: -30,
+                            y: -40,
+                        }
+                    },
+                    series: [
+                            @foreach($sucursales->sucursals as $sucursal)
+                        {
+                            name: "{{ $sucursal->name }}",
+                            id: "{{ $sucursal->name }}",
+                            data: [
+                                    @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)
+                                    @if($q->riesgo == 'RI')
+                                    @if ($q->Value == '1')
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    33.3,
+                                ],
+                                    @else
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    0.0,
+                                ],
+                                    @endif
+                                    @endif
+                                    @empty
+                                [
+                                    "Sin datos",
+                                    0.0,
+                                ],
+                                @endforelse
+                            ]
+                        },
+                        @endforeach
+                    ]
+                }
+            });
+        </script>
+        <script>
+            Highcharts.chart('ri', {
+                chart: {
+                    zoomType: 'x',
+                    resetZoomButton: {
+                        position: {
+                            // align: 'right', // by default
+                            // verticalAlign: 'top', // by default
+                            x: -120,
+                            y: -40
+                        }
+                    },
+                    panning: true,
+                    type: 'column',
+                    animation: {
+                        duration: 1000
+                    },
+                    animation: {
+                        duration: 1000
+                    },
+                    events: {
+                        load: function () {
+                            var label = this.renderer.label("")
+                                .css({
+                                    width: '400px',
+                                    fontSize: '13px'
+                                })
+                                .attr({
+                                    'stroke': 'silver',
+                                    'stroke-width': 1,
+                                    'r': 2,
+                                    'padding': 5
+                                })
+                                .add();
 
-{{--                        }--}}
-{{--                    },--}}
-{{--                    marginBottom: 120,--}}
-{{--                    inverted: false,--}}
-{{--                    scrollablePlotArea: {--}}
-{{--                        minWidth: 700,--}}
-{{--                        scrollPositionX: 1--}}
-{{--                    },--}}
-{{--                },--}}
-{{--                title: {--}}
-{{--                    text: ''--}}
-{{--                },--}}
-{{--                subtitle: {--}}
-{{--                    text: 'Click en las columnas para ver la calificacion por sucursal Criticos.'--}}
-{{--                },--}}
-{{--                accessibility: {--}}
-{{--                    announceNewData: {--}}
-{{--                        enabled: true--}}
-{{--                    }--}}
-{{--                },--}}
-{{--                xAxis: {--}}
-{{--                    title: {--}}
-{{--                        text: 'Preguntas',--}}
-{{--                        title: 'Sucursales'--}}
-{{--                    },--}}
-{{--                    type: 'category',--}}
-{{--                },--}}
-{{--                yAxis: {--}}
-{{--                    title: {--}}
-{{--                        text: 'Calificaciones',--}}
-{{--                        title: 'Sucursales'--}}
-{{--                    },--}}
-{{--                },--}}
-{{--                scrollbar: {--}}
-{{--                    enabled: true,--}}
-{{--                    liveRedraw: false--}}
-{{--                },--}}
-{{--                legend: {--}}
-{{--                    enabled: false,--}}
-{{--                },--}}
-{{--                credits: {--}}
-{{--                    enabled: false--}}
-{{--                },--}}
-{{--                plotOptions: {--}}
-{{--                    series: {--}}
-{{--                        borderWidth: 0,--}}
-{{--                        dataLabels: {--}}
-{{--                            enabled: true,--}}
-{{--                            format: '{point.y:.1f}%'--}}
-{{--                        }--}}
-{{--                    }--}}
-{{--                },--}}
+                        }
+                    },
+                    marginBottom: 120,
+                    inverted: false,
+                    scrollablePlotArea: {
+                        minWidth: 700,
+                        scrollPositionX: 1
+                    },
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: 'Click en las columnas para ver la calificacion por sucursal Criticos.'
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: 'Preguntas',
+                        title: 'Sucursales'
+                    },
+                    type: 'category',
+                },
+                yAxis: {
+                    title: {
+                        text: 'Calificaciones',
+                        title: 'Sucursales'
+                    },
+                },
+                scrollbar: {
+                    enabled: true,
+                    liveRedraw: false
+                },
+                legend: {
+                    enabled: false,
+                },
+                credits: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}%'
+                        }
+                    }
+                },
 
-{{--                tooltip: {--}}
-{{--                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',--}}
-{{--                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> total<br/>'--}}
-{{--                },--}}
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> total<br/>'
+                },
 
-{{--                series: [ //datos generales como el nombre de la marca--}}
-{{--                    {--}}
-{{--                        name: "Sucursales",--}}
-{{--                        colorByPoint: true,--}}
-{{--                        data: [--}}
-{{--                                @foreach ( $sucursales->sucursals as $ris)--}}
-{{--                            {--}}
-{{--                                name: "{{ $ris->name }}",--}}
-{{--                                y: {{ $ris->C ?? 0 }}, //proemdio--}}
-{{--                                drilldown: "{{ $ris->name }}"--}}
-{{--                            },--}}
-{{--                            @endforeach--}}
-{{--                        ]--}}
-{{--                    }--}}
-{{--                ],--}}
-{{--                drilldown: {--}}
-{{--                    drillUpButton: {--}}
-{{--                        position: {--}}
-{{--                            x: -30,--}}
-{{--                            y: -40,--}}
-{{--                        }--}}
-{{--                    },--}}
-{{--                    series: [--}}
-{{--                            @foreach ($sucursales->sucursals as $sucursal)--}}
-{{--                        {--}}
-{{--                            name: "{{ $sucursal->name }}",--}}
-{{--                            id: "{{ $sucursal->name }}",--}}
-{{--                            data: [--}}
-{{--                                    @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)--}}
-{{--                                    @if($q->riesgo == 'C')--}}
-{{--                                    @if ($q->Value == '1')--}}
-{{--                                [--}}
-{{--                                    "{{ $q->IdPregunta }}",--}}
-{{--                                    6.66,--}}
-{{--                                ],--}}
-{{--                                    @else--}}
-{{--                                [--}}
-{{--                                    "{{ $q->IdPregunta }}",--}}
-{{--                                    0.0,--}}
-{{--                                ],--}}
-{{--                                    @endif--}}
-{{--                                    @endif--}}
-{{--                                    @empty--}}
-{{--                                [--}}
-{{--                                    "Sin datos",--}}
-{{--                                    0.0,--}}
-{{--                                ],--}}
-{{--                                @endforelse--}}
-{{--                            ]--}}
-{{--                        },--}}
-{{--                        @endforeach--}}
-{{--                    ]--}}
-{{--                }--}}
-{{--            });--}}
-{{--        </script>--}}
+                series: [ //datos generales como el nombre de la marca
+                    {
+                        name: "Sucursales",
+                        colorByPoint: true,
+                        data: [
+                                @foreach ( $sucursales->sucursals as $ris)
+                            {
+                                name: "{{ $ris->name }}",
+                                y: {{ $ris->C ?? 0 }}, //proemdio
+                                drilldown: "{{ $ris->name }}"
+                            },
+                            @endforeach
+                        ]
+                    }
+                ],
+                drilldown: {
+                    drillUpButton: {
+                        position: {
+                            x: -30,
+                            y: -40,
+                        }
+                    },
+                    series: [
+                            @foreach ($sucursales->sucursals as $sucursal)
+                        {
+                            name: "{{ $sucursal->name }}",
+                            id: "{{ $sucursal->name }}",
+                            data: [
+                                    @forelse ( $sucursal->quest->sortBy('IdPregunta')  as $q)
+                                    @if($q->riesgo == 'C')
+                                    @if ($q->Value == '1')
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    6.66,
+                                ],
+                                    @else
+                                [
+                                    "{{ $q->IdPregunta }}",
+                                    0.0,
+                                ],
+                                    @endif
+                                    @endif
+                                    @empty
+                                [
+                                    "Sin datos",
+                                    0.0,
+                                ],
+                                @endforelse
+                            ]
+                        },
+                        @endforeach
+                    ]
+                }
+            });
+        </script>
         <script>
             $('#datepicker').datepicker({
                 autoclose: true,

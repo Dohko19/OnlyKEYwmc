@@ -263,6 +263,38 @@ class MarcaController extends Controller
                 ->get();
             return view('admin.marcas.showadminvips', compact('marca', 'zona', 'graphics', 'sucursales', 'preguntasri', 'preguntasc'));
         }
+        $sucursales = User::with(['sucursals' => function($query) use ($marca, $zona) {
+            $query->select('id','marca_id','zona','region','name');
+            $query->where('marca_id', $marca->id);
+            $query->where('region', 'LIKE', '%'. $zona .'%');
+            $query->whereNotNull('zona');
+            $query->orderBy('zona');
+
+        }, 'grupos'])->findOrFail(auth()->user()->id);
+//
+        return view('admin.pages.zona', compact('sucursales', 'marca'));
+    }
+
+    public function showVipsDetails(Request $request, Marca $marca)
+    {
+        $graphics = $request->get('graphics') ?? Carbon::now()->format('Y-m');
+        $zona = request('zona');
+        $nameSuc = request('nameSuc');
+        $sucursales = User::with(['sucursals.quest' => function($query) use ($graphics){
+            $query->where('created_at', 'LIKE', "%".$graphics."%");
+        }, 'sucursals' => function($query) use ($marca,$nameSuc, $zona, $graphics){
+            $query->leftJoin('qresults as qr', function($join) use ($graphics){
+                $join->on('qr.sucursal_id', '=', 'sucursals.id')
+                    ->where('qr.created_at', 'like', "%".$graphics."%");
+            });
+            $query->where('marca_id', $marca->id);
+            $query->where('zona', 'LIKE', "%".$zona."%");
+            $query->where('name', 'LIKE', "%".$nameSuc."%");
+            $query->select('qr.*', 'sucursals.*');
+        }])
+            ->findOrFail(auth()->user()->id);
+
+        return view('admin.marcas.showvips', compact('graphics', 'zona', 'nameSuc', 'sucursales', 'marca'));
     }
 
     /**

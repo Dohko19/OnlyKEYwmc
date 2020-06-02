@@ -5,6 +5,7 @@ window.Vue = require("vue");
 import router from "./routes";
 
 import Permissions from "./mixins/Permissions";
+
 Vue.mixin(Permissions);
 
 

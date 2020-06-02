@@ -8,7 +8,7 @@
 @endsection
 <section class="content text-center" >
       <div>
-  <div class="container-fluid" id="app">
+  <div class="container-fluid" id="">
     <h5 class="mb-2">Bienvenido/a {{ Auth::user()->name }} | WMC</h5>
     @if (auth()->user()->hasRole('Admin'))
       <div class="row">

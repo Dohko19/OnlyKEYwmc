@@ -27,6 +27,7 @@ class GruposMarcasController extends Controller
             }
                 return view('admin.grupomarcas.index', compact('grupomarcas'));
         }
+
         $grupomarcas = GrupoMarca::where('user_id', auth()->user()->id)->get();
         if (request()->wantsJson())
         {

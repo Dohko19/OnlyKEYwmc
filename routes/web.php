@@ -3,9 +3,9 @@ Auth::routes(['register' => false]);
 
 
 Route::group(['middleware' => 'auth'], function () {
+//    Route::get('/', 'Admin\AdminController@spa')->name('home.spa'); //vuejs app
 
-      Route::get('planes', 'HomeController@planes')->name('pages.planes');
-      //Route::get('/', 'Admin\AdminController@spa')->name('home.spa'); //vuejs app
+    Route::get('planes', 'HomeController@planes')->name('pages.planes');
       Route::get('/', 'Admin\AdminController@index')->name('home.index');
 
       Route::get('consultareporte', 'Admin\AdminController@index')->name('reporte');
@@ -41,6 +41,7 @@ Route::group(
 
             Route::get('marcas/cedulas/{marca}', 'MarcaController@showcedula', ['as' => 'admin'])->name('admin.marcas.cedula');
             Route::get('marcas/vips/{marca}', 'MarcaController@showVips', ['as' => 'admin'])->name('admin.marcas.vips');
+            Route::get('marcas/vips/detalles/{marca}', 'MarcaController@showVipsDetails', ['as' => 'admin'])->name('admin.marcas.detail.vips');
 
             Route::resource('sucursales', 'SucursalController', ['as' => 'admin']);
             Route::resource('questions', 'QuestionsController', ['as' => 'admin']);
