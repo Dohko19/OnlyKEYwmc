@@ -109,40 +109,40 @@
 			          </div>
 		        	</div>
                     @if ($sucursale->marcas->grupos->tipo == 'auditorias')
-                              @if ($sucursale->marcas->average->promedio >= 90)
-                                        <a href="{{ route('home.cedula', $sucursale->marcas) }}"
-                                        class="btn btn-sm btn-success small-box-footer">
-                                            <i class="fas fa-star"></i> Calificacion de Limpieza:
-                                         <u>
-                                            {{ $sucursale->marcas->average->promedio ?? 'S/D' }}
-                                         </u>
-                                        </a>
-                                    @elseif($sucursale->marcas->average->promedio >= 70)
-                                        <a href="{{ route('home.cedula', $sucursale->marcas) }}"
-                                        class="btn btn-sm btn-warning small-box-footer">
-                                            <i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
-                                         <u>
-                                            {{ $sucursale->marcas->average->promedio ?? 'S/D' }}
-                                         </u>
-                                        </a>
-                                    @elseif($sucursale->marcas->average->promedio < 70)
-                                        <a href="{{ route('home.cedula', $sucursale->marcas) }}"
-                                        class="btn btn-sm btn-danger small-box-footer">
-                                            <i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
-                                         <u>
-                                            {{ $sucursale->marcas->average->promedio ?? 'S/D' }}
-                                         </u>
-                                        </a>
-                                    @else
-                                        <a href="{{ route('home.cedula', $marca) }}"
-                                           class="btn btn-sm btn-danger small-box-footer">
-                                            <i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
-                                            <u>
-                                                Calculando...
-                                            </u>
-                                        </a>
-                              @endif
-                            @endif
+                      @if ($sucursale->marcas->average->promedio >= 90)
+                                <a href="{{ route('home.cedula', $sucursale->marcas) }}"
+                                class="btn btn-sm btn-success small-box-footer">
+                                    <i class="fas fa-star"></i> Calificacion de Limpieza:
+                                 <u>
+                                    {{ $sucursale->marcas->average->promedio ?? 'S/D' }}
+                                 </u>
+                                </a>
+                            @elseif($sucursale->marcas->average->promedio >= 70)
+                                <a href="{{ route('home.cedula', $sucursale->marcas) }}"
+                                class="btn btn-sm btn-warning small-box-footer">
+                                    <i class="fas fa-exclamation-circle"></i> Calificacion de Limpieza:
+                                 <u>
+                                    {{ $sucursale->marcas->average->promedio ?? 'S/D' }}
+                                 </u>
+                                </a>
+                            @elseif($sucursale->marcas->average->promedio < 70)
+                                <a href="{{ route('home.cedula', $sucursale->marcas) }}"
+                                class="btn btn-sm btn-danger small-box-footer">
+                                    <i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
+                                 <u>
+                                    {{ $sucursale->marcas->average->promedio ?? 'S/D' }}
+                                 </u>
+                                </a>
+                            @else
+                                <a href="{{ route('home.cedula', $marca) }}"
+                                   class="btn btn-sm btn-danger small-box-footer">
+                                    <i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza:
+                                    <u>
+                                        Calculando...
+                                    </u>
+                                </a>
+                      @endif
+                    @endif
 					</div>
                           <!-- /.info-box -->
        @endforeach
@@ -195,18 +195,17 @@
                           </div>
                           <!-- /.col -->
                         @empty
-                        <div class="col-md-3 col-sm-6 col-12">
-                            <div class="info-box">
-                            <div class="info-box-content ">
-
-                                              <a href="{{ route('home.region', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
-                                              <img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
-                                              </a>
-                            </div>
-                            </div>
-                        </div>
-              {{-- {->average->promedio{ $sucursales->sucursals }} --}}
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box">
+                    <div class="info-box-content ">
+                      <a href="{{ route('home.region', $marca, Carbon\Carbon::now(), $dm ?? '') }}">
+                      <img src="{{ url('marcas/'.$marca->photo) }}" alt="{{ $marca->name .'-'. $marca->id }}" width="300px" height="300" class="img-fluid">
+                      </a>
+                    </div>
+                </div>
+            </div>
             @endforelse
+              <chart-cuestionario></chart-cuestionario>
         </div>
       @elseif(auth()->user()->hasRole('ddistrital'))
         <div class="row justify-content-center align-items-center minh-100" >
@@ -262,9 +261,9 @@
                           <!-- /.info-box -->
                         @endforeach
     </div>
-      @elseif(auth()->user()->hasRole('asesor'))
+          @elseif(auth()->user()->hasRole('asesor'))
 
-      @endif
+          @endif
     <!-- /.row -->
 </section>
       </div>

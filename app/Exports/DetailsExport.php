@@ -23,7 +23,7 @@ class DetailsExport implements FromView, ShouldAutoSize, WithDrawings
         $drawing = new Drawing();
         $drawing->setName('Logo');
         $drawing->setDescription('Dominos Logo');
-        $drawing->setPath( public_path('/marcas/dominos_pizza_logo.png') );
+//        $drawing->setPath( public_path('/marcas/dominos_pizza_logo.png') );
         $drawing->setHeight(90);
         $drawing->setCoordinates('A1');
 

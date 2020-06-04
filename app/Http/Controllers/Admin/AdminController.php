@@ -149,11 +149,10 @@ class AdminController extends Controller
                         $query->selectRaw('marca_id m');
                         $query->selectRaw('zona z');
                         $query->selectRaw('region r');
-                        $query->selectRaw('count(*) sucursals');
+                        $query->selectRaw('count(*) region');
                         $query->whereNotNull('zona');
-                        $query->groupBy('region');
+                        $query->groupBy('zona');
                         $query->orderBy('zona');
-
                 }, 'grupos'])->findOrFail(auth()->user()->id);
 
                 return view('admin.pages.regionVips', compact('sucursales', 'marca'));
@@ -187,11 +186,11 @@ class AdminController extends Controller
                     ->selectRaw('region r')
                     ->selectRaw('count(*) sucursals')
                     ->whereNotNull('zona')
-                    ->groupBy('region')
-                    ->orderBy('region')
+                    ->groupBy('zona')
+                    ->orderBy('zona')
                     ->get();
-                $mil = Sucursal::where('IdCte', '=', 10000)->get();
-                return view('admin.pages.regionVips', compact('sucursales', 'marca', 'mil'));
+
+                return view('admin.pages.regionVips', compact('sucursales', 'marca'));
             }
             $sucursales = Sucursal::
                  selectRaw('marca_id m')
@@ -244,4 +243,34 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 
+    public function charts()
+    {
+        if (request()->wantsJson())
+        {
+            $month = array('Jan', 'Feb', 'Mar', 'Apr', 'May');
+            $data  = array(1, 2, 3, 4, 5);
+            return ['month' => $month, 'data' => $data];
+        }
+    }
+
+    public function zonaslist(Request $request)
+    {
+        if (request()->wantsJson())
+        {
+            $zona = Carbon::parse($request->zona);
+            $anio = Carbon::parse($request->anio);
+            $zonas = Sucursal::select('zona')
+                ->whereNotNull('zona')
+                ->groupBy('zona')
+                ->orderBy('zona', 'ASC')
+                ->get();
+            $month = array('Jan', 'Feb', 'Mar', 'Apr', 'May');
+            $data  = array(1, 2, 3, 4, 5);
+            return [
+                'zonas' => $zonas,
+                'month' => $month,
+                'data' => $data
+            ];
+        }
+    }
 }

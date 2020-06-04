@@ -6,25 +6,29 @@ Route::group(['middleware' => 'auth'], function () {
 //    Route::get('/', 'Admin\AdminController@spa')->name('home.spa'); //vuejs app
 
     Route::get('planes', 'HomeController@planes')->name('pages.planes');
-      Route::get('/', 'Admin\AdminController@index')->name('home.index');
+    Route::get('/', 'Admin\AdminController@index')->name('home.index');
 
-      Route::get('consultareporte', 'Admin\AdminController@index')->name('reporte');
+    Route::get('consultareporte', 'Admin\AdminController@index')->name('reporte');
 
-      Route::get('/region/{id}', 'Admin\AdminController@region')->name('home.region');
+    Route::get('/region/{id}', 'Admin\AdminController@region')->name('home.region');
 
-      Route::get('/cedula/{id}', 'Admin\AdminController@cedula')->name('home.cedula');
+    Route::get('/cedula/{id}', 'Admin\AdminController@cedula')->name('home.cedula');
 
-      // Exports
-      Route::get('exports/cuestionario', 'ExportsViewsController@index')->name('exports.home');
-      Route::get('exports/download', 'ExportsViewsController@export')->name('exports.export');
-      Route::get('exports/pdf', 'ExportsViewsController@viewpdf')->name('exports.pdf');
-      //endExports// Exports
-      Route::get('exports/auditoria', 'ExportsViewsController@auditoria')->name('export.auditoria');
-      Route::get('exports/auditoria/download', 'ExportsViewsController@exportauditoria')->name('exports.auditoria');
-      Route::get('exports/auditoria/pdf', 'ExportsViewsController@exportauditoriapdf')->name('exports.auditoria.pdf');
-      //endExports
-      Route::get('exports/all/pdf', 'ExportsViewsController@allpdf')->name('exports.all.pdf');
-      Route::get('exports/allauditoria/pdf', 'ExportsViewsController@allauditoriapdf')->name('exports.allauditoria.pdf');
+    // Exports
+    Route::get('exports/cuestionario', 'ExportsViewsController@index')->name('exports.home');
+    Route::get('exports/download', 'ExportsViewsController@export')->name('exports.export');
+    Route::get('exports/pdf', 'ExportsViewsController@viewpdf')->name('exports.pdf');
+    //endExports// Exports
+    Route::get('exports/auditoria', 'ExportsViewsController@auditoria')->name('export.auditoria');
+    Route::get('exports/auditoria/download', 'ExportsViewsController@exportauditoria')->name('exports.auditoria');
+    Route::get('exports/auditoria/pdf', 'ExportsViewsController@exportauditoriapdf')->name('exports.auditoria.pdf');
+    //endExports
+    Route::get('exports/all/pdf', 'ExportsViewsController@allpdf')->name('exports.all.pdf');
+    Route::get('exports/allauditoria/pdf', 'ExportsViewsController@allauditoriapdf')->name('exports.allauditoria.pdf');
+
+    Route::get('chart/cuestionario', 'Admin\AdminController@charts')->name('chart.cuestionario');
+    Route::get('zonas', 'Admin\AdminController@zonaslist')->name('zonas.lista');
+
 });
 
 Route::group(

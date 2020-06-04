@@ -43,7 +43,6 @@
                         <div class="col-md-4 col-sm-4">
                             <form action="{{ route('admin.marcas.detail.vips',$marca) }}" method="GET" class="form-inline">
                                 <div class="form-group">
-                                    <input type="hidden" name="nameSuc" value="{{ $nameSuc }}">
                                     <input type="hidden" name="zona" value="{{ $zona }}">
                                     <input name="graphics" type="text" class="form-control pull-right" id="datepicker" value="{{ old('graphics', request('graphics')) }}" placeholder="mes y año" autocomplete="off"><br>
                                     {{-- {{ request('dm') }} --}}
