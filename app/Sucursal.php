@@ -34,7 +34,7 @@ class Sucursal extends Model
 
     public function quest()
     {
-        return $this->hasMany(Questionnaire::class, 'sucursal_id');
+        return $this->hasMany(Questionnaire::class);
     }
     //
 

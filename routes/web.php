@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('chart/cuestionario', 'Admin\AdminController@charts')->name('chart.cuestionario');
     Route::get('zonas', 'Admin\AdminController@zonaslist')->name('zonas.lista');
+    Route::get('regiones', 'Admin\AdminController@regionList')->name('region.lista');
 
 });
 

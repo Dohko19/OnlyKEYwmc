@@ -4,79 +4,129 @@
             <div class="col-md-12">
                 <div class="input-group ">
                     <select v-model="z" class="form-control col-md-6" id="">
-                        <option value="0" selected>Selecciona Una Zona</option>
                         <option v-for="zona in zonas" :value="zona.zona" v-text="zona.zona"></option>
                     </select>
-                    <datetime v-model="anio" format="yyyy" type="month" class="theme-orange" input-class="form-control" :value="`2020`"></datetime>
-                    <datetime v-model="mes" format="MM" type="year" class="theme-orange" input-class="form-control" :value="`06`"></datetime>
-                    <button type="submit" @click="listarZonas(z,anio,mes)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                    <select v-model="region" class="form-control col-md-6">
+                        <option v-for="r in regiones" :key="r.id" :value="r.region" v-text="r.region"></option>
+                    </select>
+                    <datetime v-model="anio" title="Mes"
+                              format="yyyy"
+                              type="month"
+                              class="theme-orange"
+                              input-class="form-control"
+                              value="2020-01-01T00:06:00.000Z"
+                    ></datetime>
+                    <datetime v-model="mes"
+                              title="Año"
+                              format="MM"
+                              type="year"
+                              class="theme-orange"
+                              input-class="form-control"
+                              value="2020-06-05T00:06:00.000Z"></datetime>
+                    <button type="submit" @click="graficaCuestionario(z,anio,mes)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                 </div>
             </div>
         </div>
-        <h1>Vue laravel Chartjs</h1>
-    <canvas ref="chart"></canvas>
-
+        <h1>Resultados</h1>
+        <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+            <canvas ref="chart" id="chart"></canvas>
+        </div>
     </div>
 </template>
 <script>
     export default{
         data(){
             return{
-            zonas: [],
-            mes: '',
-            anio: '',
-            region: '',
-            z: '0'
+                zonas: [],
+                mes: '',
+                anio: '',
+                regiones: [],
+                region: 'CENTRO',
+                z: 'ZMN',
+                charQuestion: null,
+                varQuestion: null,
+                questions: [],
+                varTotalQuestion: [],
+                varNumQuestion:[]
+
             }
         },
         methods : {
-          listarZonas(z,anio,mes){
+            listarZonas(){
               let me = this;
-              var url = '/zonas?zona=' + z + '&anio=' + anio + '&criterio=' + mes;
+              var url = '/zonas';
               axios.get(url).then(res =>{
-                  const respuesta = res.data;
-                  me.zonas = respuesta.zonas;
-                  var chart = this.$refs.chart;
-                  var ctx = chart.getContext("2d");
-                  var myChart = new Chart(ctx, {
-                      type: 'pie',
-                      data: {
-                          labels: ['1'],
-                          datasets: [{
-                              backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#D30AF2", "#FF380E"],
-                              label: '# of Votes',
-                              data: res.data.data,
-                              borderWidth: 2
-                          }]
-                      },
-                      options: {
-                          scales: {
-                              yAxes: [{
-                                  ticks: {
-                                      beginAtZero: true
-                                  }
-                              }]
-                          }
-                      }
-                  });
+                  const r = res.data;
+                  me.zonas = r;
               })
               .catch(err => {
                   console.log(err);
               });
-          },
-          // graficaCuestionario(){
-          //     let url = '/chart/cuestionario/';
-          //     axios.get(url).then((response) => {
-          //
-          //     }).catch(error => {
-          //         console.log(error)
-          //         this.errored = true
-          //     });
-          //
-          // }
+            },
+            listarRegiones(){
+              let me = this;
+              axios.get('/regiones').then(res =>{
+                  let respuesta = res.data;
+                  this.regiones = respuesta;
+              })
+              .catch(err => {
+                  console.log(err);
+              })
+            },
+            graficaCuestionario(z,anio,mes){
+              let me = this;
+              let url = '/chart/cuestionario?zona=' + z + '&anio=' + anio + '&mes=' + mes;
+              axios.get(url).then(res => {
+                let answer = res.data;
+                me.questions = answer;
+                //Cargamos los datos del cahrt
+                  me.loadQuestions();
+              }).catch(error => {
+                  console.log(error)
+              });
+            },
+            loadQuestions(){
+                let me = this;
+                me.varNumQuestion = [];
+                me.varTotalQuestion = [];
+                me.questions.questionbad.map(function(x){
+                    me.varNumQuestion.push(x.orden);
+                    me.varTotalQuestion.push(x.fails);
+                });
+                me.varQuestion = document.getElementById('chart').getContext('2d');
+                me.charQuestion = new Chart(me.varQuestion, {
+                    type: 'pie',
+                    data: {
+                        labels: me.varNumQuestion,
+                        datasets: [{
+                            label: 'Preguntas',
+                            data: me.varTotalQuestion,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgb(255,99,132)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            }
         },
         mounted(){
             this.listarZonas();
+            this.listarRegiones();
+            this.graficaCuestionario(this.z,this.anio,this.mes);
             // this.graficaCuestionario();
 
         }

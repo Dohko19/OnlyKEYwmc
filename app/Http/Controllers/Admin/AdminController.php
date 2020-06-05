@@ -31,6 +31,8 @@ class AdminController extends Controller
 
     public function index()
     {
+
+//        ddd($questionsbad);
         if (auth()->user()->hasRole('dgral')) {
 
             $marcas = Marca::with(['grupos', 'average' => function($query){
@@ -243,13 +245,91 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
     }
 
-    public function charts()
+    public function charts(Request $request)
     {
         if (request()->wantsJson())
         {
-            $month = array('Jan', 'Feb', 'Mar', 'Apr', 'May');
-            $data  = array(1, 2, 3, 4, 5);
-            return ['month' => $month, 'data' => $data];
+            $mes = $request->mes;
+            $anio = $request->anio;
+            $zona = $request->zona;
+            if ($mes == '' || $anio == '')
+            {
+                $mes = Carbon::now()->format('m');
+                $anio = Carbon::now()->format('Y');
+                $zona = 'ZMN';
+
+//                $sucursales = Sucursal::with(['quest'])
+//                    ->join('questionnaires as q', function ($join) use ($mes, $anio){
+//                        $join->on('q.sucursal_id', '=', 'sucursals.id')
+//                            ->whereMonth('q.created_at', $mes)
+//                            ->whereYear('q.created_at', $anio)
+//                            ->where('Value', 0);
+//                    })
+//                    ->where('sucursals.marca_id', 5)
+//                    ->where('sucursals.zona', 'LIKE', "%" . $zona . "%")
+//                    ->select('sucursals.zona', 'sucursals.region', 'sucursals.name', 'q.value', 'q.riesgo')
+//                    ->get();
+
+                $questionsbad = Sucursal::with(['quest'])
+                    ->join('questionnaires as q', function ($join) use ($mes, $anio){
+                        $join->on('q.sucursal_id', '=', 'sucursals.id')
+                            ->whereMonth('q.created_at', $mes)
+                            ->whereYear('q.created_at', $anio)
+                            ->where('Value', 0);
+                    })
+                    ->join('PreguntasCuestionario as pc', function($join){
+                        $join->on('q.IdPregunta', '=', 'pc.IdPregunta')
+                            ->where('pc.IdCuestionario', '=', 2)
+                            ->orderBy('pc.Orden');
+                    })
+                    ->where('sucursals.marca_id', 5)
+                    ->where('sucursals.zona', 'LIKE', "%" . $zona . "%")
+                    ->selectRaw('pc.Orden orden')
+                    ->selectRaw('count(pc.Pregunta) fails')
+                    ->selectRaw('pc.Pregunta pregunta')
+                    ->groupBy('pc.Pregunta')
+                    ->get();
+            }
+            else
+            {
+                $mes = Carbon::parse($mes)->format('m');
+                $anio = Carbon::parse($anio)->format('Y');
+                $zona = $zona;
+
+//                $sucursales = Sucursal::with(['quest'])
+//                    ->join('questionnaires as q', function ($join) use ($mes, $anio){
+//                        $join->on('q.sucursal_id', '=', 'sucursals.id')
+//                            ->whereMonth('q.created_at', $mes)
+//                            ->whereYear('q.created_at', $anio)
+//                            ->where('Value', 0);
+//                    })
+//                    ->where('sucursals.marca_id', 5)
+//                    ->where('sucursals.zona', 'LIKE', "%" . $zona . "%")
+//                    ->select('sucursals.zona', 'sucursals.region', 'sucursals.name', 'q.value', 'q.riesgo')
+//                    ->get();
+
+                $questionsbad = Sucursal::with(['quest'])
+                    ->join('questionnaires as q', function ($join) use ($mes, $anio){
+                        $join->on('q.sucursal_id', '=', 'sucursals.id')
+                            ->whereMonth('q.created_at', $mes)
+                            ->whereYear('q.created_at', $anio)
+                            ->where('Value', 0);
+                    })
+                    ->join('PreguntasCuestionario as pc', function($join){
+                        $join->on('q.IdPregunta', '=', 'pc.IdPregunta')
+                            ->where('pc.IdCuestionario', '=', 2);
+                    })
+                    ->where('sucursals.marca_id', 5)
+                    ->where('sucursals.zona', 'LIKE', "%" . $zona . "%")
+                    ->selectRaw('pc.Orden orden')
+                    ->selectRaw('count(pc.Pregunta) fails')
+                    ->selectRaw('pc.Pregunta pregunta')
+                    ->orderBy('orden', 'ASC')
+                    ->groupBy('pregunta')
+                    ->get();
+            }
+
+            return ['questionbad' => $questionsbad, 'anio' => $anio];
         }
     }
 
@@ -257,20 +337,27 @@ class AdminController extends Controller
     {
         if (request()->wantsJson())
         {
-            $zona = Carbon::parse($request->zona);
-            $anio = Carbon::parse($request->anio);
+
+
             $zonas = Sucursal::select('zona')
                 ->whereNotNull('zona')
                 ->groupBy('zona')
                 ->orderBy('zona', 'ASC')
                 ->get();
-            $month = array('Jan', 'Feb', 'Mar', 'Apr', 'May');
-            $data  = array(1, 2, 3, 4, 5);
-            return [
-                'zonas' => $zonas,
-                'month' => $month,
-                'data' => $data
-            ];
+
+            return $zonas;
+        }
+    }
+
+    public function regionList()
+    {
+        if (request()->wantsJson())
+        {
+            $regiones = Sucursal::select('id','region')
+                ->where('marca_id', 5)
+                ->groupBy('region')
+                ->get();
+            return $regiones;
         }
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="@wmcbennetts" uuid="f1b6b6e2-b876-463f-aab1-29c2e90f46bb">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://162.241.143.167:3306/wwappb_appmobile</jdbc-url>
+    </data-source>
+  </component>
+</project>
