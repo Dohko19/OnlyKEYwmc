@@ -50,6 +50,12 @@
                   </a>
                 </li>
               @endif
+                  <li class="nav-item">
+                      <a href="{{ route('export.chart') }}" class="nav-link {{ setActiveRoute('export.chart') }}">
+                          <i class="fas fa-chart-pie nav-icon"></i>
+                          <p>Detalle de mis sucursales</p>
+                      </a>
+                  </li>
               @role('Admin')
                 <li class="nav-item ">
                   <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">

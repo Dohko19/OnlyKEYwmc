@@ -193,4 +193,9 @@ class ExportsViewsController extends Controller
                   return 'ajax fail';
             } //procesa la peticion ajax
       }
+
+      public function detailscharts()
+      {
+          return view('pages.ChartReporte');
+      }
 }

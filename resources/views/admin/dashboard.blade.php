@@ -205,7 +205,6 @@
                 </div>
             </div>
             @endforelse
-              <chart-cuestionario></chart-cuestionario>
         </div>
       @elseif(auth()->user()->hasRole('ddistrital'))
         <div class="row justify-content-center align-items-center minh-100" >
@@ -265,6 +264,7 @@
 
           @endif
     <!-- /.row -->
-</section>
+
       </div>
+</section>
 @endsection

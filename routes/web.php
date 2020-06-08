@@ -1,7 +1,9 @@
 <?php
 Auth::routes(['register' => false]);
 
-
+Route::get('chartex', function() {
+    return view('charts');
+});
 Route::group(['middleware' => 'auth'], function () {
 //    Route::get('/', 'Admin\AdminController@spa')->name('home.spa'); //vuejs app
 
@@ -20,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('exports/pdf', 'ExportsViewsController@viewpdf')->name('exports.pdf');
     //endExports// Exports
     Route::get('exports/auditoria', 'ExportsViewsController@auditoria')->name('export.auditoria');
+    Route::get('exports/detalles/sucursales', 'ExportsViewsController@detailscharts')->name('export.chart');
     Route::get('exports/auditoria/download', 'ExportsViewsController@exportauditoria')->name('exports.auditoria');
     Route::get('exports/auditoria/pdf', 'ExportsViewsController@exportauditoriapdf')->name('exports.auditoria.pdf');
     //endExports

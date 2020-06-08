@@ -249,15 +249,16 @@ class AdminController extends Controller
     {
         if (request()->wantsJson())
         {
-            $mes = $request->mes;
-            $anio = $request->anio;
+            $mes = Carbon::parse($request->mes)->format('m');
+            $anio = Carbon::parse($request->anio)->format('Y');
             $zona = $request->zona;
+            $region = $request->region;
             if ($mes == '' || $anio == '')
             {
                 $mes = Carbon::now()->format('m');
                 $anio = Carbon::now()->format('Y');
-                $zona = 'ZMN';
-
+                $zona = 'ZNF';
+                $region = 'CENTRO';
 //                $sucursales = Sucursal::with(['quest'])
 //                    ->join('questionnaires as q', function ($join) use ($mes, $anio){
 //                        $join->on('q.sucursal_id', '=', 'sucursals.id')
@@ -284,6 +285,7 @@ class AdminController extends Controller
                     })
                     ->where('sucursals.marca_id', 5)
                     ->where('sucursals.zona', 'LIKE', "%" . $zona . "%")
+                    ->where('sucursals.region', 'LIKE', "%" . $region . "%")
                     ->selectRaw('pc.Orden orden')
                     ->selectRaw('count(pc.Pregunta) fails')
                     ->selectRaw('pc.Pregunta pregunta')
@@ -292,9 +294,6 @@ class AdminController extends Controller
             }
             else
             {
-                $mes = Carbon::parse($mes)->format('m');
-                $anio = Carbon::parse($anio)->format('Y');
-                $zona = $zona;
 
 //                $sucursales = Sucursal::with(['quest'])
 //                    ->join('questionnaires as q', function ($join) use ($mes, $anio){
@@ -321,15 +320,16 @@ class AdminController extends Controller
                     })
                     ->where('sucursals.marca_id', 5)
                     ->where('sucursals.zona', 'LIKE', "%" . $zona . "%")
+                    ->where('sucursals.region', 'LIKE', "%" . $region . "%")
                     ->selectRaw('pc.Orden orden')
                     ->selectRaw('count(pc.Pregunta) fails')
                     ->selectRaw('pc.Pregunta pregunta')
+                    ->selectRaw('sucursals.name sucursal')
                     ->orderBy('orden', 'ASC')
                     ->groupBy('pregunta')
                     ->get();
             }
-
-            return ['questionbad' => $questionsbad, 'anio' => $anio];
+            return ['questionbad' => $questionsbad];
         }
     }
 
