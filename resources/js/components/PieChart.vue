@@ -1,13 +1,13 @@
 <template>
     <div class="container">
         <div class="form-group row">
-            <div class="col-md-12">
-                <transition name="fade">
-                    <div class="input-group ">
-                        <select v-model="z" class="form-control col-md-6" id="">
+            <div class="col-md-12 card">
+                <div class="card-body">
+                    <div class="row ">
+                        <select v-model="z" class="form-control col-md-3" id="">
                             <option v-for="zona in zonas" :value="zona.zona" v-text="zona.zona"></option>
                         </select>
-                        <select v-model="region" class="form-control col-md-6">
+                        <select v-model="region" class="form-control col-md-3">
                             <option v-for="r in regiones" :key="r.id" :value="r.region" v-text="r.region"></option>
                         </select>
                         <datetime v-model="anio" title="Mes"
@@ -24,14 +24,15 @@
                                   class="theme-orange"
                                   input-class="form-control"
                                   value="2020-06-05T00:06:00.000Z"></datetime>
-                        <button type="submit" @click="graficaCuestionario(z,anio,mes,region)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                        <button type="submit" @click="graficaCuestionario(z,anio,mes,region)" class="btn btn-primary"><i class="fa fa-search"></i></button>
                     </div>
-                </transition>
+                </div>
+
             </div>
         </div>
         <h1>Resultados</h1>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-10">
                     <canvas ref="chart" id="chartjs"></canvas>
                 </div>
                 <div>

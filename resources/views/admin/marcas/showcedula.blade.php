@@ -181,13 +181,13 @@
   });
 </script>
 <script>
-  $('#datepicker').datepicker({
-        autoclose: true,
-        language: 'es',
-        format: 'yyyy-mm',
-        viewMode: "months",
-        minViewMode: "months"
-      });
+    $('#datepicker').datepicker({
+          autoclose: true,
+          language: 'es',
+          format: 'yyyy-mm',
+          viewMode: "months",
+          minViewMode: "months"
+        });
 
 </script>
 @endpush
