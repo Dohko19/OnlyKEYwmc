@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 
-
 class User extends Authenticatable
 {
     use Notifiable, HasRoles;
