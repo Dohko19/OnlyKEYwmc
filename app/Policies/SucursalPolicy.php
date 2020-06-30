@@ -26,7 +26,7 @@ class SucursalPolicy
      */
     public function viewAny(User $user)
     {
-        //
+
     }
 
     /**

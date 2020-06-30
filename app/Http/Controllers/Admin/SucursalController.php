@@ -30,7 +30,7 @@ class SucursalController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -48,7 +48,7 @@ class SucursalController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -58,7 +58,7 @@ class SucursalController extends Controller
         ]);
         $this->authorize('create', new Sucursal);
         $sucursal = Sucursal::create($request->except('users'));
-        $sucursal->users()->attach($request->get('users'));
+            $sucursal->users()->attach($request->get('users'));
         return redirect()->route('admin.sucursales.index')->with('info', 'Agregado Correctamente');
     }
 
