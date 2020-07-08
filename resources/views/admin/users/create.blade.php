@@ -25,7 +25,7 @@
             Crear Usuario
           </h3>
         </div>
-        <div class="card-body">
+          <div class="">
           <form method="POST" action="{{ route('admin.users.store') }}" class="form-horizontal">
             @csrf
             <div class="card-body">
@@ -118,36 +118,38 @@
                 </div>
               </div>
             </div>
-        </div>
+
+              <div class="card card-primary card-outline">
+              <div class="form-group col-md-12 {{ $errors->has('roles') ? 'has-error' : '' }}">
+                <label for="">Roles</label>
+                <select name="roles[]" class="form-control select2"
+                multiple="multiple"
+                data-placeholder="Selecciona uno o mas roles"
+                style="width: 100%;">
+                @foreach ($roles as $role)
+                  <option{{ $user->roles->contains($role->id) ? 'selected' : '' }} value="{{ $role->name }}">{{ $role->name }}</option>
+                @endforeach
+                </select>
+                @error('roles')
+                  <div class="help-block">
+                    <strong>{{ $message }}</strong>
+                  </div>
+                @enderror
+              </div>
+              <div class="form-group col-md-6">
+                <label for="">Permisos</label>
+                @include('admin.permissions.checkboxes', ['model' => $user  ])
+              </div>
+              <button class="btn btn-primary btn-block">Crear Usuario</button>
+            </div>
+
+          </form>
+          </div>
       </div>
     </div>
-      <div class="col-md-4 col-lg-4">
-        <div class="card card-primary card-outline">
-          <div class="form-group col-md-12 {{ $errors->has('roles') ? 'has-error' : '' }}">
-            <label for="">Roles</label>
-            <select name="roles[]" class="form-control select2"
-            multiple="multiple"
-            data-placeholder="Selecciona uno o mas roles"
-            style="width: 100%;">
-            @foreach ($roles as $role)
-              <option{{ $user->roles->contains($role->id) ? 'selected' : '' }} value="{{ $role->name }}">{{ $role->name }}</option>
-            @endforeach
-            </select>
-            @error('roles')
-              <div class="help-block">
-                <strong>{{ $message }}</strong>
-              </div>
-            @enderror
-          </div>
-          <div class="form-group col-md-6">
-            <label for="">Permisos</label>
-            @include('admin.permissions.checkboxes', ['model' => $user  ])
-          </div>
-          <button class="btn btn-primary btn-block">Crear Usuario</button>
-        </div>
-      </div>
-	</div>
+    </div>
 </div>
+
 @endsection
 @push('styles')
   <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2/css/select2.min.css') }}">

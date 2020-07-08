@@ -25,7 +25,7 @@ class AuditoriaExport implements FromView, ShouldAutoSize, WithDrawings
         $drawing = new Drawing();
         $drawing->setName('Logo');
         $drawing->setDescription('Dominos Logo');
-        $drawing->setPath( public_path('/marcas/5e54353d6a8d4-taquearte.png') );
+       // $drawing->setPath( public_path('/marcas/5e54353d6a8d4-taquearte.png') );
         $drawing->setHeight(90);
         $drawing->setCoordinates('A1');
 
@@ -66,13 +66,13 @@ class AuditoriaExport implements FromView, ShouldAutoSize, WithDrawings
 			}
 			else
 			{
-			 $dates = Sucursal::with(['marcas', 'promsuc', 'audres' => function($query) use ($from, $to){
-			 			$query->whereBetween('created_at', array($from, $to) );
-			 		}, 'users' => function($query){
-						$query->findOrFail(auth()->user()->id);
-					}])
-					->where('cedula', request('zr'))
-	                ->get();
+	 		$dates = Sucursal::with(['marcas', 'promsuc', 'audres' => function($query) use ($from, $to){
+		 			$query->whereBetween('created_at', array($from, $to) );
+		 		}, 'users' => function($query){
+					$query->findOrFail(auth()->user()->id);
+				}])
+				->where('cedula', request('zr'))
+                ->get();
 			}
 		}
 
