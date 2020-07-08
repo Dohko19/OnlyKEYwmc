@@ -113,7 +113,6 @@
       @include('layouts.alerts')
         <div id="app">
             @yield('content')
-        <div>
     </section>
     <!-- /.content -->
   </div>
