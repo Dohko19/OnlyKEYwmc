@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Mail\ResendAuthDates;
 use App\User;
+use App\Http\Resources\User as UserCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Excel;
@@ -25,7 +26,8 @@ class UsersController extends Controller
     {
         $this->authorize('view', new User);
         $users = User::allowed()->get();
-
+        // $users = User::paginate(2);
+        // return new UserCollection($users);
         return view('admin.users.index', compact('users'));
     }
 

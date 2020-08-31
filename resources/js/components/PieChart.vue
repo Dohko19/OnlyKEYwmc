@@ -67,8 +67,7 @@
               let me = this;
               var url = '/zonas';
               axios.get(url).then(res =>{
-                  const r = res.data;
-                  me.zonas = r;
+                  me.zonas = res.data;
               })
               .catch(err => {
                   console.log(err);
@@ -86,11 +85,9 @@
             },
             graficaCuestionario(z,anio,mes, region){ //obtengo los datos para graficarlos
               let me = this;
-              me.questions = [];
               let url = '/chart/cuestionario?zona=' + z + '&anio=' + anio + '&mes=' + mes + '&region=' + region;
               axios.get(url).then(res => {
-                let answer = res.data;
-                me.questions = answer;
+                me.questions = res.data;
                 //Cargamos los datos del cahrt
                 me.loadQuestions()
               }).catch(error => {
