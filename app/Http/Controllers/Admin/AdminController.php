@@ -237,6 +237,7 @@ class AdminController extends Controller
                 ->selectRaw('cedula c')
                 ->selectRaw('count(*) sucursals')
                 ->whereNotNull('cedula')
+                ->where('marca_id', $marca->id)
                 ->groupBy('cedula')
                 ->orderBy('cedula')
                 ->get();
