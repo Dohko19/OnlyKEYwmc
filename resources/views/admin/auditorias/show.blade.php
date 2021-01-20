@@ -20,9 +20,15 @@
                         <div class="input-group">
                         <input class="form-control" id="datepicker" type="text" name="FechaRegistro" placeholder="Fecha Registro" autocomplete="off" value="{{ old('FechaRegistro', request('FechaRegistro')) }}">
                               <select class="form-control" name="sucursal" id="">
-                                    @foreach ($sucursales->sucursals as $sucursal)
+                                  @role('Admin')
+                                  @foreach ($sucursales as $sucursal)
+                                      <option  {{ old('sucursal', request('sucursal')) == $sucursal->name ? 'selected' : ''}} value="{{ $sucursal->name }}">{{ $sucursal->name }}</option>
+                                  @endforeach
+                                  @else
+                                      @foreach ($sucursales->sucursals as $sucursal)
                                           <option  {{ old('sucursal', request('sucursal')) == $sucursal->name ? 'selected' : ''}} value="{{ $sucursal->name }}">{{ $sucursal->name }}</option>
-                                    @endforeach
+                                      @endforeach
+                                  @endrole
                               </select>
                         <button class="btn btn-info">Consultar</button>
                         </div>

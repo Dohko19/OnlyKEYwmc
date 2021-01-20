@@ -74,7 +74,7 @@
           </li>
           @can('view', new App\Auditoria)
             <li class="nav-item">
-              <a href="/admin/auditorias/1" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
+              <a href="admin/auditorias/1" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
                 <i class="nav-icon far fa-clipboard"></i>
                 <p>
                   Planes de Accion
@@ -166,8 +166,6 @@
               </a>
             </li>
         @endcan
-      </ul>
-        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
