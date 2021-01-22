@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -41,13 +42,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-        /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
-
      public function getAllPermissionsAttribute() {
       $permissions = [];
       foreach (Permission::all() as $permission) {
@@ -58,7 +52,12 @@ class User extends Authenticatable
       return $permissions;
       }
 
-
+    /**
+     * Send the password reset notification.
+     *
+     * @param $token
+     * @return void
+     */
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
@@ -102,6 +101,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Sucursal::class);
     }
+
      public function hasRoles(array $roles)
     {
             return $this->roles->pluck('name')->intersect($roles)->count();
