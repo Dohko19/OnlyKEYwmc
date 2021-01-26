@@ -46,8 +46,8 @@
     </div>
   </div>
   <div class="row">
-
-    @foreach ($auditoria->segmentos as $segmento)
+    @if($countSegmento > 0)
+        @foreach ($auditoria->segmentos as $segmento)
       <div class="col-md-4">
         <div class="card card-outline card-primary">
           <div class="card-header">
@@ -68,6 +68,21 @@
         <!-- /.card -->
       </div>
     @endforeach
+    @else
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="text-center">
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-exclamation-triangle"></i> Atencion!</h5>
+                    No se encontraron Registros con los filtros seleccionados.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+
+    @endif
+
     <!-- /.col -->
   </div>
         <!-- /.row -->

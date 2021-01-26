@@ -92,7 +92,7 @@ class UsersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View
      */
     public function edit(User $user)
     {
@@ -105,9 +105,10 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateUserRequest $request
+     * @param User $user
      * @return Response
+     * @throws AuthorizationException
      */
     public function update(UpdateUserRequest $request, User $user)
     {

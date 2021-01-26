@@ -47,11 +47,21 @@ class AuditoriasController extends Controller
           $sucursales = Sucursal::get(['name']);
       }
       else{
-          $sucursales = User::with(['sucursals' => function($query) use ($sucursal){
+          $sucursales = User::with(['sucursals.rauditoria','sucursals' => function($query) use ($sucursal){
               $query->orderBy('name');
           }])->findOrFail(auth()->user()->id);
       }
-                // ddd($sucursales);
-       return view('admin.auditorias.show', compact('auditoria', 'fecha', 'sucursal', 'sucursales'));
+        if ($sucursal){
+            $sucursalId = Sucursal::get(['name']);
+        }
+        $countSegmento = Sucursal::with(['rauditoria' => function($query) use ($auditoria, $fecha){
+            $query->where('IdSegmento', $auditoria->IdSegmentoAuditoria);
+            $query->where('FechaRegistro', 'like', "%".$fecha."%");
+        }])
+            ->where('name', request('sucursal'))
+            ->count();
+        return view('admin.auditorias.show',
+           compact('auditoria', 'fecha', 'sucursal', 'sucursales', 'countSegmento')
+        );
     }
 }

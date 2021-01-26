@@ -50,12 +50,14 @@
                   </a>
                 </li>
               @endif
+               @if( auth()->user()->hasRole('dgral') || auth()->user()->hasRole('Admin') )
                   <li class="nav-item">
                       <a href="{{ route('export.chart') }}" class="nav-link {{ setActiveRoute('export.chart') }}">
                           <i class="fas fa-chart-pie nav-icon"></i>
                           <p>Detalle de mis sucursales</p>
                       </a>
                   </li>
+                @endif
               @role('Admin')
                 <li class="nav-item ">
                   <a href="{{ route('exports.home') }}" class="nav-link {{ setActiveRoute('exports.home') }}">
@@ -74,7 +76,7 @@
           </li>
           @can('view', new App\Auditoria)
             <li class="nav-item">
-              <a href="admin/auditorias/1" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
+              <a href="{{ route('admin.auditorias.show', 1) }}" class="nav-link {{ setActiveRoute('admin.auditorias.index') }}">
                 <i class="nav-icon far fa-clipboard"></i>
                 <p>
                   Planes de Accion

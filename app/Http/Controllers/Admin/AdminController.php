@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function index()
     {
 
-//        ddd($questionsbad);
+
         if (auth()->user()->hasRole('dgral')) {
 
             $marcas = Marca::with(['grupos', 'average' => function($query){
