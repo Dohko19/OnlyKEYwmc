@@ -277,10 +277,10 @@
                         </a>
                     @endif
                     @else
-                        {{-- <a href="{{ route('home.cedula', $sucursale->marcas) }}"
+                         <a href="{{ route('home.cedula', $sucursale->marcas) }}"
                         class="btn btn-sm btn-danger small-box-footer">
                             <i class="fas fa-exclamation-triangle"></i> Calificacion de Limpieza: <u>Calculando</u>
-                        </a> --}}
+                        </a>
                     @endif
 
                   @endif
