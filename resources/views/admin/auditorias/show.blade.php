@@ -24,6 +24,7 @@
                                   @foreach ($sucursales as $sucursal)
                                       <option  {{ old('sucursal', request('sucursal')) == $sucursal->name ? 'selected' : ''}} value="{{ $sucursal->name }}">{{ $sucursal->name }}</option>
                                   @endforeach
+                                  
                                   @else
                                       @foreach ($sucursales->sucursals as $sucursal)
                                           <option  {{ old('sucursal', request('sucursal')) == $sucursal->name ? 'selected' : ''}} value="{{ $sucursal->name }}">{{ $sucursal->name }}</option>

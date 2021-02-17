@@ -14,8 +14,8 @@
 		</tr>
 	</thead>
 	<tbody>
-            @foreach ($dates as $date)
-            @foreach ($date->audres as $result)
+        @foreach ($dates as $date)
+        @foreach ($date->audres as $result)
 		<tr>
 			<td></td>
 			<td></td>

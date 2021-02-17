@@ -102,6 +102,7 @@ class ExportsViewsController extends Controller
             }])
                   ->findOrFail(auth()->user()->id);
             }
+            
             return view('exportsviews.auditoria', compact('sucursales'));
       }
 
