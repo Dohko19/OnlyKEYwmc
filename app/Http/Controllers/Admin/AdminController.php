@@ -31,8 +31,6 @@ class AdminController extends Controller
 
     public function index()
     {
-
-
         if (auth()->user()->hasRole('dgral')) {
 
             $marcas = Marca::with(['grupos', 'average' => function($query){
@@ -47,6 +45,7 @@ class AdminController extends Controller
                 }
 
                 $marca = Marca::find($id['id']);
+
             if ($marca->grupos->tipo == 'auditorias') {
                 $promedio = Aresult::join('sucursals as s', 's.id', '=', 'aresults.sucursal_id')
                 ->join('marcas as m', 'm.id', '=', 's.marca_id')
@@ -153,15 +152,12 @@ class AdminController extends Controller
                         $query->selectRaw('region r');
                         $query->selectRaw('count(*) region');
                         $query->whereNotNull('zona');
-                        $query->groupBy('zona');
-                        $query->orderBy('zona');
+                        $query->groupBy('region');
+                        $query->orderBy('region');
                 }, 'grupos'])->findOrFail(auth()->user()->id);
 
                 return view('admin.pages.regionVips', compact('sucursales', 'marca'));
-            }
-            else
-            {
-                //            ddd($marca->id);
+            } else {
                 $sucursales = User::with(['sucursals' => function($query) use ($marca){
                     $query->where('marca_id', $marca->id);
                     $query->selectRaw('marca_id m');
@@ -176,9 +172,7 @@ class AdminController extends Controller
                 //     ddd($sucursales);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
             }
-        }
-        else
-        {
+        } else {
             $marca = Marca::findOrFail($id);
             if ($marca->grupo_marca_id == 3)
             {
@@ -187,11 +181,10 @@ class AdminController extends Controller
                     ->selectRaw('zona z')
                     ->selectRaw('region r')
                     ->selectRaw('count(*) sucursals')
-                    ->whereNotNull('zona')
-                    ->groupBy('zona')
-                    ->orderBy('zona')
+                    ->where('marca_id', $marca->id)
+                    ->groupBy('region')
+                    ->orderBy('region')
                     ->get();
-
                 return view('admin.pages.regionVips', compact('sucursales', 'marca'));
             }
             $sucursales = Sucursal::
@@ -199,11 +192,12 @@ class AdminController extends Controller
                  ->selectRaw('delegacion_municipio dm')
                  ->selectRaw('region r')
                  ->selectRaw('count(*) sucursals')
-                 ->whereNotNull('region')
+                 ->where('marca_id', $marca->id)
                  ->groupBy('region')
                  ->orderBy('region')
                 ->get();
             $mil = Sucursal::where('IdCte', '=', 10000)->get();
+
             return view('admin.pages.region', compact('sucursales', 'marca', 'mil'));
         }
         return redirect()->route('admin.index')->withInfo('Algo salio mal, contacta con soporte para mas información o posiblemente no tengas permitido ver esta parte');
