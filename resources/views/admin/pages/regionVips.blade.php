@@ -12,6 +12,7 @@
         @if ( auth()->user()->hasRole('gsucursal') || auth()->user()->hasRole('dmarca') )
             <div class="row justify-content-center align-items-center minh-100" >
                 @foreach ($sucursales->sucursals as $s)
+
                     <div class="col-md-3">
                         <div class="card card-primary">
                             <div class="card-header">
