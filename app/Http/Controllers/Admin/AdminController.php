@@ -151,13 +151,14 @@ class AdminController extends Controller
                         $query->selectRaw('zona z');
                         $query->selectRaw('region r');
                         $query->selectRaw('count(*) region');
-                        $query->whereNotNull('zona');
-                        $query->groupBy('region');
-                        $query->orderBy('region');
+                        $query->groupBy('zona');
+                        $query->orderBy('zona');
                 }, 'grupos'])->findOrFail(auth()->user()->id);
 
+                // ddd($sucursales);
                 return view('admin.pages.regionVips', compact('sucursales', 'marca'));
             } else {
+
                 $sucursales = User::with(['sucursals' => function($query) use ($marca){
                     $query->where('marca_id', $marca->id);
                     $query->selectRaw('marca_id m');
@@ -169,7 +170,6 @@ class AdminController extends Controller
                     $query->orderBy('region');
                 }, 'grupos'])
                     ->findOrFail(auth()->user()->id);
-                //     ddd($sucursales);
                 return view('admin.pages.region', compact('sucursales', 'marca'));
             }
         } else {
